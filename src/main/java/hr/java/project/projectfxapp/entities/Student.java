@@ -16,7 +16,6 @@ public class Student extends NamedEntity implements Gradable, Serializable {
     private String email;
     private Integer yearOfStudy;
     private Map<String, Integer> grades;
-
     private ClubMembership clubMembership;
 
 

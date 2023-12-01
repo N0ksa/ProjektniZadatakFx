@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.MenuController">
+
+    <MenuBar prefHeight="28.0" prefWidth="673.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="Home">
+            <items>
+               <MenuItem mnemonicParsing="false" onAction="#showMainScreen" text="Main screen" />
+            </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Students">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showStudentsScreen" text="Search" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Clubs">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showClubsScreen" text="Search" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Competitions">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showCompetitionsScreen" text="Search" />
+                </items>
+            </Menu>
+         <Menu mnemonicParsing="false" text="Projects">
+            <items>
+               <MenuItem mnemonicParsing="false" onAction="#showProjectsScreen" text="Search" />
+            </items>
+         </Menu>
+        </menus>
+    </MenuBar>
+
+</AnchorPane>

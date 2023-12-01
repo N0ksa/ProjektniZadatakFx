@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.ClubsSearchController">
+   <children>
+
+       <fx:include source="menu.fxml" />
+      <Label layoutX="205.0" layoutY="112.0" text="Search club:" />
+      <TextField layoutX="300.0" layoutY="108.0" />
+      <Label alignment="CENTER" layoutX="251.0" layoutY="52.0" text="Search clubs">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
