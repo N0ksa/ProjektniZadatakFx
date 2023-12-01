@@ -1,0 +1,60 @@
+100000
+Mirna 2
+16
+Slatina
+100001
+Splitska 6
+14
+Split
+100002
+Vukovarska 7
+25
+Vukovar
+100003
+Dubrovačka 12
+30
+Dubrovnik
+100004
+Križevačka 11
+17
+Križevci
+100005
+Trg Bana Jelačića 10
+18
+Zagreb
+100006
+Franjevačka 5
+29
+Varaždin
+1000007
+Marmontova 18
+6
+Split
+10008
+Šubićeva 7
+38
+Zadar
+100009
+Ilica 22
+12
+Zagreb
+100010
+Preradovićeva 6
+9
+Osijek
+100011
+Ulica grada Vukovara 68
+42
+Zagreb
+100012
+Trg maršala Tita 2
+23
+Split
+100013
+Heinzelova 15
+5
+Zagreb
+100014
+Jurja Žerjavića 14
+32
+Split
