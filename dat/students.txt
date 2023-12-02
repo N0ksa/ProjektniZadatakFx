@@ -1,7 +1,7 @@
 Ivo
 Ivić
 1234567890
-www.ivic@tvz.hr
+ivic@tvz.hr
 2
 4,5,2,4,3,2,3,4,2,4,3,3,4,5,3,4,2
 453251
@@ -10,7 +10,7 @@ www.ivic@tvz.hr
 Blanka
 Vlašić
 9087654321
-www.vblanka@pmf.hr
+vblanka@pmf.hr
 1
 4,3,4,5,5,2,4,3
 556434
@@ -19,7 +19,7 @@ www.vblanka@pmf.hr
 Pero
 Perić
 4321567890
-www.pperic@fer.hr
+pperic@fer.hr
 3
 2,2,3,2,2,3,2,3,4,2,4,2,5,2,3,3,2,4,3,2,2,4,5,4,3,2
 232342
@@ -28,16 +28,16 @@ www.pperic@fer.hr
 Marko
 Marić
 4583745091
-www.mmaric@efos.hr
+mmaric@efos.hr
 1
 2,2,4,2,5,5,2,2
 573857
 28.10.2023.
 
 Iva
-Ivić
+Lucić
 0532532112
-www.iivic.tvz@hr
+ilucic.tvz@hr
 3
 5,4,4,5,5,3,5,5,3,4,4,5,5,5,3,4,4,4,5,5,5,5,2,3,4,3
 231123

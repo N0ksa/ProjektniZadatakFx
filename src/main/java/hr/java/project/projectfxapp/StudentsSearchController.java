@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp;
 
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,7 +74,8 @@ public class StudentsSearchController {
 
         studentJoinDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().getClubMembership().getJoinDate().toString());
+                return new ReadOnlyStringWrapper(param.getValue().getClubMembership().getJoinDate()
+                        .format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
             }
         });
 
@@ -93,7 +96,7 @@ public class StudentsSearchController {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
 
 
-                return new ReadOnlyStringWrapper(param.getValue().calculateAverageGrade().toString());
+                return new ReadOnlyStringWrapper(String.format("%.1f", param.getValue().calculateAverageGrade()));
             }
         });
 

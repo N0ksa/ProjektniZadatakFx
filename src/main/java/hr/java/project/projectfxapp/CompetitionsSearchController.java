@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp;
 
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
+import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +17,7 @@ import javafx.util.Callback;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,7 +70,8 @@ public class CompetitionsSearchController {
 
         competitionDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().getTimeOfCompetition().toLocalDate().toString());
+                return new ReadOnlyStringWrapper(param.getValue().getTimeOfCompetition()
+                        .format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
             }
         });
 
