@@ -12,7 +12,7 @@ public class MenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("mainScreen.fxml"));
         try{
             Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Aplikacija za upravljanje studentskih klubova matematike");
+            JavaFxProjectApplication.getMainStage().setTitle("ProjectApp");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 

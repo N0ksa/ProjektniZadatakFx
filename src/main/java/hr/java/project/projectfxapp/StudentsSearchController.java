@@ -41,14 +41,20 @@ public class StudentsSearchController {
     @FXML
     private TableColumn studentYearOfStudyTableColumn;
 
+    private static List<MathClub> mathClubs;
+    private static List<Student> students  = FileReaderUtil.getStudentsFromFile();
+
 
     public void initialize(){
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        students  = FileReaderUtil.getStudentsFromFile();
+
         ObservableList <String> obeservableMathClubs = FXCollections.observableList(mathClubs.stream()
                 .map(mathClub -> mathClub.getName())
                 .collect(Collectors.toList()));
 
         clubComboBox.setItems(obeservableMathClubs);
+        clubComboBox.getItems().add(0, "Svi klubovi");
 
 
 
@@ -78,7 +84,7 @@ public class StudentsSearchController {
                         .filter(mathClub -> mathClub.hasMember(param.getValue()))
                         .findFirst();
 
-                return new ReadOnlyStringWrapper(clubOfStudent.get().getName());
+                return new ReadOnlyStringWrapper(clubOfStudent.map(MathClub::getName).orElse("Nije član kluba"));
             }
         });
 
@@ -106,24 +112,31 @@ public class StudentsSearchController {
 
 
 
-
-
-
-
-
     }
 
     public void studentSearch(){
-        List<Student> students  = FileReaderUtil.getStudentsFromFile();
+
         String studentName = studentNameTextField.getText();
+        String clubName = clubComboBox.getValue();
+
 
         List<Student> filteredStudents = students.stream()
-                .filter(student -> student.getName()
-                        .contains(studentName))
+                .filter(student -> student.getName().contains(studentName) || student.getSurname().contains(studentName))
+                .filter(student -> {
+
+                    if (Optional.ofNullable(clubName).isEmpty() || clubName.equalsIgnoreCase("svi klubovi")) {
+                        return true;
+                    }
+
+                    Optional<MathClub> clubOfStudent = mathClubs.stream()
+                            .filter(mathClub -> mathClub.hasMember(student))
+                            .findFirst();
+
+                    return clubOfStudent.map(mathClub -> mathClub.getName().equals(clubName)).orElse(false);
+                })
                 .collect(Collectors.toList());
 
-        ObservableList <Student> observableStudentList = FXCollections.observableList(filteredStudents);
-
+        ObservableList<Student> observableStudentList = FXCollections.observableList(filteredStudents);
         studentsTableView.setItems(observableStudentList);
     }
 

@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.ClubsSearchController">
+<AnchorPane prefHeight="516.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.ClubsSearchController">
    <children>
 
        <fx:include source="menu.fxml" />
-      <Label layoutX="205.0" layoutY="112.0" text="Search club:" />
-      <TextField layoutX="300.0" layoutY="108.0" />
-      <Label alignment="CENTER" layoutX="251.0" layoutY="52.0" text="Search clubs">
+      <Label layoutX="220.0" layoutY="96.0" text="Club name:" />
+      <TextField fx:id="clubNameTextField" layoutX="302.0" layoutY="92.0" prefHeight="25.0" prefWidth="168.0" />
+      <Label alignment="CENTER" layoutX="284.0" layoutY="44.0" text="Search clubs">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <TableView fx:id="clubsTableView" layoutX="-2.0" layoutY="173.0" prefHeight="343.0" prefWidth="673.0">
+        <columns>
+          <TableColumn fx:id="clubNameTableColumn" prefWidth="129.0" text="Name" />
+          <TableColumn fx:id="clubAddressTableColumn" prefWidth="110.0" text="Address" />
+            <TableColumn fx:id="clubMembersTableColumn" prefWidth="433.0" text="Members" />
+        </columns>
+      </TableView>
+      <Button layoutX="276.0" layoutY="134.0" mnemonicParsing="false" onAction="#clubSearch" text="Search" />
    </children>
 </AnchorPane>

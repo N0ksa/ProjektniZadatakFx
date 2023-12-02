@@ -14,7 +14,7 @@
       <fx:include source="menu.fxml" />
       <Label alignment="CENTER" layoutX="242.0" layoutY="57.0" prefHeight="17.0" prefWidth="181.0" text="Student search">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="183.0" layoutY="108.0" text="Student name:">
@@ -27,18 +27,18 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="studentNameTextField" layoutX="344.0" layoutY="106.0" promptText="Student name" />
-      <ComboBox fx:id="clubComboBox" layoutX="344.0" layoutY="162.0" prefWidth="150.0" promptText="Choose club:" />
+      <TextField fx:id="studentNameTextField" layoutX="344.0" layoutY="106.0" prefHeight="25.0" prefWidth="171.0" promptText="Student name" />
+      <ComboBox fx:id="clubComboBox" layoutX="344.0" layoutY="162.0" prefHeight="25.0" prefWidth="171.0" promptText="Choose club:" />
       <Button layoutX="307.0" layoutY="203.0" mnemonicParsing="false" onAction="#studentSearch" text="Search" />
       <TableView fx:id="studentsTableView" layoutY="240.0" prefHeight="451.0" prefWidth="673.0">
          <columns>
             <TableColumn fx:id="studentNameTableColumn" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="studentSurnameTableColumn" prefWidth="75.0" text="Surname" />
-            <TableColumn fx:id="studentClubTableColumn" prefWidth="95.0" text="Club" />
-            <TableColumn fx:id="studentJoinDateTableColumn" prefWidth="89.0" text="Join Date" />
-            <TableColumn fx:id="studentAverageGradeTableColumn" prefWidth="122.0" text="Average grade" />
-            <TableColumn fx:id="studentEmailTableColumn" prefWidth="62.0" text="Email" />
-            <TableColumn fx:id="studentYearOfStudyTableColumn" prefWidth="154.0" text="Year of Study" />
+            <TableColumn fx:id="studentSurnameTableColumn" prefWidth="83.0" text="Surname" />
+            <TableColumn fx:id="studentClubTableColumn" prefWidth="100.0" text="Club" />
+            <TableColumn fx:id="studentJoinDateTableColumn" prefWidth="104.0" text="Join Date" />
+            <TableColumn fx:id="studentAverageGradeTableColumn" prefWidth="87.0" text="Average grade" />
+            <TableColumn fx:id="studentEmailTableColumn" prefWidth="140.0" text="Email" />
+            <TableColumn fx:id="studentYearOfStudyTableColumn" prefWidth="83.0" text="Year of Study" />
          </columns>
       </TableView>
    </children>
