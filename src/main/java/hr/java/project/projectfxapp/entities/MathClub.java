@@ -84,7 +84,7 @@ public class MathClub extends NamedEntity implements Gradable, Serializable {
     }
 
     public Boolean hasMember(Student member){
-        return getStudents().stream().anyMatch( student -> student.equals(member));
+        return getStudents().stream().anyMatch( student -> student.getId().equals(member.getId()));
     }
 
     @Override

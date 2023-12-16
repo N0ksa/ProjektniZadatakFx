@@ -99,4 +99,18 @@ public class MenuController {
             throw new RuntimeException(e);
         }
     }
+
+    public void showAddNewMathClub(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewMathClub.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            JavaFxProjectApplication.getMainStage().setTitle("Add new math club");
+            JavaFxProjectApplication.getMainStage().setScene(scene);
+            JavaFxProjectApplication.getMainStage().show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -32,11 +32,12 @@ public class ClubsSearchController {
     private TableColumn clubMembersTableColumn;
 
 
-    private static List<MathClub> mathClubs;
+
 
 
     public void initialize(){
-        mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        mathClubs.removeIf(mathClub -> mathClub.getId().equals(0L));
 
 
         clubNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>, ObservableValue<String>>() {
@@ -71,6 +72,9 @@ public class ClubsSearchController {
 
     public void clubSearch(ActionEvent actionEvent) {
         String clubName = clubNameTextField.getText();
+        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
+                FileReaderUtil.getAddressesFromFile());
+
         List<MathClub> filteredMathClubs = mathClubs.stream()
                 .filter(mathClub -> mathClub.getName()
                         .contains(clubName))

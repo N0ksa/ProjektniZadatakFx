@@ -153,4 +153,9 @@ public class Student extends NamedEntity implements Gradable, Serializable {
     public int hashCode() {
         return Objects.hash(super.hashCode(), surname, email, yearOfStudy, grades, clubMembership);
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getSurname();
+    }
 }

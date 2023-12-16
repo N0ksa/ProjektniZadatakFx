@@ -23,6 +23,7 @@
             <Menu mnemonicParsing="false" text="Clubs">
                 <items>
                     <MenuItem mnemonicParsing="false" onAction="#showClubsScreen" text="Search" />
+               <MenuItem mnemonicParsing="false" onAction="#showAddNewMathClub" text="Add new club" />
                 </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Competitions">

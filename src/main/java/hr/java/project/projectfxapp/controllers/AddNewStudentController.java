@@ -68,9 +68,9 @@ public class AddNewStudentController {
 
         yearOfStudySelection.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                List<YearOfStudy> selectedYears = getSelectedYears(newValue);
+                YearOfStudy selectedYear = getSelectedYears(newValue);
 
-                updateStudentGradesTableView(selectedYears);
+                updateStudentGradesTableView(selectedYear);
             }
         });
 
@@ -82,37 +82,27 @@ public class AddNewStudentController {
     }
 
 
-    private List<YearOfStudy> getSelectedYears(Toggle toggle) {
-        List<YearOfStudy> selectedYears = new ArrayList<>();
+    private YearOfStudy getSelectedYears(Toggle toggle) {
 
-        if(toggle == prvaGodinaRadioButton){
-            selectedYears.add(YearOfStudy.FIRST_YEAR);
+        YearOfStudy selectedYear = YearOfStudy.FIRST_YEAR;
 
-        }
-        else if ( toggle == drugaGodinaRadioButton) {
-            selectedYears.add(YearOfStudy.FIRST_YEAR);
-            selectedYears.add(YearOfStudy.SECOND_YEAR);
+        if ( toggle == drugaGodinaRadioButton) {
+            selectedYear = YearOfStudy.SECOND_YEAR;
         }
         else if (toggle == trecaGodinaRadioButton) {
-
-            selectedYears.add(YearOfStudy.FIRST_YEAR);
-            selectedYears.add(YearOfStudy.SECOND_YEAR);
-            selectedYears.add(YearOfStudy.THIRD_YEAR);
+            selectedYear = YearOfStudy.THIRD_YEAR;
         }
 
-        return selectedYears;
+        return selectedYear;
     }
 
 
-    private void updateStudentGradesTableView(List<YearOfStudy> selectedYears) {
+    private void updateStudentGradesTableView(YearOfStudy yearOfStudy) {
 
         studentGradesTableView.getItems().clear();
-
-        for(YearOfStudy yearOfStudy : selectedYears){
-            for (String subject : yearOfStudy.getAvailableSubjects()) {
-                SubjectGrade subjectGrade = new SubjectGrade(subject, "Unesi ocijenu");
-                studentGradesTableView.getItems().add(subjectGrade);
-            }
+        for (String subject : yearOfStudy.getCombinedSubjectsUpToYear()) {
+            SubjectGrade subjectGrade = new SubjectGrade(subject, "Unesi ocijenu");
+            studentGradesTableView.getItems().add(subjectGrade);
         }
 
     }
@@ -156,8 +146,20 @@ public class AddNewStudentController {
 
         List<Student> students = FileReaderUtil.getStudentsFromFile();
         students.add(newStudent);
-
         FileWriterUtil.saveStudentsToFile(students);
+
+        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+
+        Optional<MathClub> optionalMathClub = mathClubs.stream()
+                .filter(mathClub -> mathClub.getId() == newStudent.getClubMembership().getClubId())
+                .findFirst();
+
+        optionalMathClub.ifPresent(mathClub -> mathClub.getStudents().add(newStudent));
+
+        if (!newStudent.getClubMembership().getClubId().equals(0L)){
+            FileWriterUtil.saveMathClubsToFile(mathClubs);
+        }
+
 
     }
 }

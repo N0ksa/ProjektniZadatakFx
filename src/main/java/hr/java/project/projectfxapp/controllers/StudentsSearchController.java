@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -27,29 +28,29 @@ public class StudentsSearchController {
     @FXML
     private ComboBox <String> clubComboBox;
     @FXML
-    private TableView studentsTableView;
+    private TableView<Student> studentsTableView;
     @FXML
-    private TableColumn studentNameTableColumn;
+    private TableColumn<Student,String> studentNameTableColumn;
     @FXML
-    private TableColumn studentSurnameTableColumn;
+    private TableColumn<Student, String> studentSurnameTableColumn;
     @FXML
-    private TableColumn studentJoinDateTableColumn;
+    private TableColumn<Student, String> studentJoinDateTableColumn;
     @FXML
-    private TableColumn studentClubTableColumn;
+    private TableColumn<Student, String> studentClubTableColumn;
     @FXML
-    private TableColumn studentAverageGradeTableColumn;
+    private TableColumn<Student, String> studentAverageGradeTableColumn;
     @FXML
-    private TableColumn studentEmailTableColumn;
+    private TableColumn<Student, String> studentEmailTableColumn;
     @FXML
-    private TableColumn studentYearOfStudyTableColumn;
+    private TableColumn<Student, String> studentYearOfStudyTableColumn;
 
-    private static List<MathClub> mathClubs;
-    private static List<Student> students  = FileReaderUtil.getStudentsFromFile();
+
+
 
 
     public void initialize(){
-        mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
-        students  = FileReaderUtil.getStudentsFromFile();
+        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        List<Student>  students  = FileReaderUtil.getStudentsFromFile();
 
         ObservableList <String> obeservableMathClubs = FXCollections.observableList(mathClubs.stream()
                 .map(mathClub -> mathClub.getName())
@@ -122,7 +123,7 @@ public class StudentsSearchController {
         String studentName = studentNameTextField.getText();
         String clubName = clubComboBox.getValue();
 
-
+        List<Student> students = FileReaderUtil.getStudentsFromFile();
         List<Student> filteredStudents = students.stream()
                 .filter(student -> student.getName().contains(studentName) || student.getSurname().contains(studentName))
                 .filter(student -> {
@@ -130,6 +131,9 @@ public class StudentsSearchController {
                     if (Optional.ofNullable(clubName).isEmpty() || clubName.equalsIgnoreCase("svi klubovi")) {
                         return true;
                     }
+
+                    List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile()
+                            , FileReaderUtil.getAddressesFromFile());
 
                     Optional<MathClub> clubOfStudent = mathClubs.stream()
                             .filter(mathClub -> mathClub.hasMember(student))

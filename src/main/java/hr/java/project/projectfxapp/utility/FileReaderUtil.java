@@ -203,6 +203,7 @@ public class FileReaderUtil {
                         .map(String::trim)
                         .collect(Collectors.toList());
 
+
                 List <Long> membersId = membersIdString.stream()
                         .map(stringId -> Long.parseLong(stringId))
                         .collect(Collectors.toList());
