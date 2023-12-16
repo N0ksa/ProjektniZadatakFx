@@ -28,8 +28,8 @@ public class FileReaderUtil {
     private static final String STUDENTS_FILE_NAME = "dat/students.txt";
     private static final String PROFESSORS_FILE_NAME = "dat/professors.txt";
     private static final String ADDRESSES_FILE_NAME = "dat/addresses.txt";
-    private static final String MATH_CLUBS_FILE_NAME = "dat/math-clubs.txt";
-    private static final String MATH_PROJECTS_FILE_NAME = "dat/math-projects.txt";
+    private static final String MATH_CLUBS_FILE_NAME = "dat/math_clubs.txt";
+    private static final String MATH_PROJECTS_FILE_NAME = "dat/math_projects.txt";
     private static final String MATH_COMPETITIONS_FILE_NAME = "dat/competitions.txt";
 
     private static final Logger logger = LoggerFactory.getLogger(FileReaderUtil.class);
@@ -50,13 +50,14 @@ public class FileReaderUtil {
             String line;
             while ((Optional.ofNullable(line = reader.readLine()).isPresent())) {
 
-                String studentName = line;
+                Long studentId = Long.parseLong(line);
+                String studentName = reader.readLine();
                 String studentSurname = reader.readLine();
-                Long studentId = Long.parseLong(reader.readLine());
                 String studentWebAddress = reader.readLine();
 
                 Integer studentYearOfStudy = Integer.parseInt(reader.readLine());
                 List<Integer> studentGrades = Stream.of(reader.readLine().split(","))
+                        .map(grade -> grade.trim())
                         .map(grade -> Integer.parseInt(grade))
                         .collect(Collectors.toList());
 
@@ -64,9 +65,9 @@ public class FileReaderUtil {
                 List<String> subjects = new ArrayList<>();
 
                 switch (studentYearOfStudy) {
-                    case 1 -> subjects = YearOfStudy.FIRST_YEAR.getAvailableSubjects();
-                    case 2 -> subjects = YearOfStudy.SECOND_YEAR.getAvailableSubjects();
-                    case 3 -> subjects = YearOfStudy.THIRD_YEAR.getAvailableSubjects();
+                    case 1 -> subjects = YearOfStudy.FIRST_YEAR.getCombinedSubjectsUpToYear();
+                    case 2 -> subjects = YearOfStudy.SECOND_YEAR.getCombinedSubjectsUpToYear();
+                    case 3 -> subjects = YearOfStudy.THIRD_YEAR.getCombinedSubjectsUpToYear();
                 }
 
                 for (int i = 0; i < subjects.size(); i++) {
@@ -74,19 +75,20 @@ public class FileReaderUtil {
                 }
 
 
-                String memberId;
+                Long mathClubId;
                 LocalDate joinDate;
 
-                memberId = reader.readLine();
+                mathClubId = Long.parseLong(reader.readLine());
+
                 joinDate = LocalDate.parse(reader.readLine(),
-                        DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()));
-                ClubMembership membership = new ClubMembership(memberId, joinDate);
+                       DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()));
+                ClubMembership membership = new ClubMembership(mathClubId, joinDate);
 
                 reader.readLine();
 
 
 
-                students.add(new Student(studentName, studentSurname, studentId, studentWebAddress,
+                students.add(new Student(studentId, studentName, studentSurname, studentWebAddress,
                         studentYearOfStudy, grades, membership));
 
             }

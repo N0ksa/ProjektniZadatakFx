@@ -100,4 +100,9 @@ public class MathClub extends NamedEntity implements Gradable, Serializable {
     public int hashCode() {
         return Objects.hash(super.hashCode(), address, students);
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

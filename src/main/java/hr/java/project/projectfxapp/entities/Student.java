@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class Student extends NamedEntity implements Gradable, Serializable {
     private String surname;
     private String email;
     private Integer yearOfStudy;
-    private Map<String, Integer> grades;
+    private Map<String, Integer> grades = new LinkedHashMap<>();
     private ClubMembership clubMembership;
 
 
@@ -28,14 +29,14 @@ public class Student extends NamedEntity implements Gradable, Serializable {
      * @param yearOfStudy Trenutna godina studija studenta.
      * @param grades Mapa koja sadrži ocjene studenta.
      */
-    public Student(String name, String surname, Long studentId, String email, Integer yearOfStudy, Map<String,
+    public Student(Long studentId, String name, String surname, String email, Integer yearOfStudy, Map<String,
             Integer> grades, ClubMembership membership) {
 
         super(studentId, name);
         this.surname = surname;
         this.email = email;
         this.yearOfStudy = yearOfStudy;
-        this.grades = grades;
+        this.grades.putAll(grades);
         this.clubMembership = membership;
     }
 

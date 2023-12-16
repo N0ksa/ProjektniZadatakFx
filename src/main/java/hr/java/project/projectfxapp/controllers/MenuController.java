@@ -1,5 +1,7 @@
-package hr.java.project.projectfxapp;
+package hr.java.project.projectfxapp.controllers;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -84,4 +86,17 @@ public class MenuController {
     }
 
 
+    public void showAddNewStudent(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewStudent.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            JavaFxProjectApplication.getMainStage().setTitle("Add new student");
+            JavaFxProjectApplication.getMainStage().setScene(scene);
+            JavaFxProjectApplication.getMainStage().show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

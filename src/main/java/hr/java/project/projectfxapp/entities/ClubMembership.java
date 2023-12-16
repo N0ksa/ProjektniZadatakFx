@@ -8,17 +8,17 @@ import java.util.Objects;
  * Predstavlja članstvo u matematičkom klubu.
  */
 public class ClubMembership implements Serializable {
-    private String membershipId;
+    private Long clubId;
     private LocalDate joinDate;
 
     /**
      * Konstruktor za stvaranje instance članstva u matematičkom klubu.
      *
      * @param joinDate     Datum pridruživanja klubu.
-     * @param membershipId Identifikacijski broj članstva.
+     * @param clubId Identifikacijski broj članstva.
      */
-    public ClubMembership(String membershipId, LocalDate joinDate) {
-        this.membershipId = membershipId;
+    public ClubMembership(Long clubId, LocalDate joinDate) {
+        this.clubId = clubId;
         this.joinDate = joinDate;
     }
 
@@ -30,12 +30,12 @@ public class ClubMembership implements Serializable {
         this.joinDate = joinDate;
     }
 
-    public String getMembershipId() {
-        return membershipId;
+    public Long getClubId() {
+        return clubId;
     }
 
-    public void setMembershipId(String membershipId) {
-        this.membershipId = membershipId;
+    public void setClubId(Long clubId) {
+        this.clubId = clubId;
     }
 
 
@@ -44,11 +44,11 @@ public class ClubMembership implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClubMembership that = (ClubMembership) o;
-        return Objects.equals(joinDate, that.joinDate) && Objects.equals(membershipId, that.membershipId);
+        return Objects.equals(joinDate, that.joinDate) && Objects.equals(clubId, that.clubId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(joinDate, membershipId);
+        return Objects.hash(joinDate, clubId);
     }
 }

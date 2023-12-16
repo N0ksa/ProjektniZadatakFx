@@ -4,13 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao mogućnost pretrage po natjecanjima i po klubovima.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/ProjectsSearchController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" afterDir="false" />
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao pretraživanje projekata&#10;&#10;-prilikom ispisivanja članova projekata se u jednoj kolumni ispisuje klub, a u drugoj kolumni članovi toga kluba koji su sudjelovali na projektu.&#10;-promijenio format ispisa datuma.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewStudentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/SubjectGrade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileWriterUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/math-projects.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/math-projects.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/CompetitionsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/CompetitionsSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/StudentsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/StudentsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/math-clubs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/math_clubs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/math-projects.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/math_projects.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/students.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/students.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/ClubsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ClubsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/CompetitionsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/CompetitionsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/MainScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/MainScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/ProjectsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ProjectsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/StudentsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/ClubMembership.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/ClubMembership.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/MathClub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/MathClub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/YearOfStudy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/YearOfStudy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubs.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/competitions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/competitions.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/menu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +73,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_directory_selection&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/src/main/java/hr/java/project/projectfxapp&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/src/main/resources/hr/java/project/projectfxapp&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -74,6 +95,7 @@
       <recent name="hr.java.project.projectfxapp.application" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="hr.java.project.projectfxapp.constants" />
       <recent name="hr.java.project.projectfxapp" />
     </key>
   </component>
@@ -87,7 +109,15 @@
       <updated>1701450840853</updated>
       <workItem from="1701450842026" duration="13305000" />
       <workItem from="1701515346976" duration="8782000" />
-      <workItem from="1701531122431" duration="5469000" />
+      <workItem from="1701531122431" duration="5795000" />
+      <workItem from="1701627983676" duration="9000" />
+      <workItem from="1702646706344" duration="2891000" />
+      <workItem from="1702652092991" duration="2834000" />
+      <workItem from="1702659400441" duration="2554000" />
+      <workItem from="1702662569626" duration="1444000" />
+      <workItem from="1702724264445" duration="7329000" />
+      <workItem from="1702737328479" duration="4624000" />
+      <workItem from="1702743221842" duration="3418000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -117,7 +147,14 @@
       <option name="presentableId" value="LOCAL−00004" />
       <updated>1701525264860</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL−00005" summary="Dodao pretraživanje projekata&#10;&#10;-prilikom ispisivanja članova projekata se u jednoj kolumni ispisuje klub, a u drugoj kolumni članovi toga kluba koji su sudjelovali na projektu.&#10;-promijenio format ispisa datuma.">
+      <option name="closed" value="true" />
+      <created>1701536916894</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1701536916894</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +176,24 @@
     <MESSAGE value="Dodao još potrebne datoteke koje služe za učitavanje podataka kao i staru pogreske.log datoteku" />
     <MESSAGE value="Napravio student search ekran i dodao logiku za pretraživanje studenta po imenu.&#10;&#10;-spojio sve elemente iz gui-a s aplikacijom.&#10;-potrebno je još dodatno napraviti funkcionalnost pretraživanja kada se odabere i studentski klub iz combo box-a. &#10;-dodao i ostale ekrane, ali ih nisam uredio niti dodao funkcionalnost." />
     <MESSAGE value="Dodao mogućnost pretrage po natjecanjima i po klubovima.&#10;&#10;-sada se studente može pretraživati po imenu i prezimenu, te po članstvu u klubu.&#10;-za pretraživanje natjecanja dodao mogućnost pretraživanja s obzirom na datum natjecanja koristeći date picker gui element." />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodao mogućnost pretrage po natjecanjima i po klubovima.&#10;&#10;-sada se studente može pretraživati po imenu i prezimenu, te po članstvu u klubu.&#10;-za pretraživanje natjecanja dodao mogućnost pretraživanja s obzirom na datum natjecanja koristeći date picker gui element." />
+    <MESSAGE value="Dodao pretraživanje projekata&#10;&#10;-prilikom ispisivanja članova projekata se u jednoj kolumni ispisuje klub, a u drugoj kolumni članovi toga kluba koji su sudjelovali na projektu.&#10;-promijenio format ispisa datuma." />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodao pretraživanje projekata&#10;&#10;-prilikom ispisivanja članova projekata se u jednoj kolumni ispisuje klub, a u drugoj kolumni članovi toga kluba koji su sudjelovali na projektu.&#10;-promijenio format ispisa datuma." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewStudentController.java</url>
+          <line>47</line>
+          <properties field="studentNameTextField" class="hr.java.project.projectfxapp.controllers.AddNewStudentController" />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

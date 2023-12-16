@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.enums;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Predstavlja različite godine studija sa popisom predmeta koji se pohađaju u svakoj godini.
@@ -39,5 +40,14 @@ public enum YearOfStudy implements Serializable {
     public List<String> getAvailableSubjects() {
         return availableSubjects;
     }
+
+    public List<String> getCombinedSubjectsUpToYear() {
+        return Arrays.stream(YearOfStudy.values())
+                .filter(yearOfStudy -> yearOfStudy.getYear() <= this.getYear())
+                .map(YearOfStudy::getAvailableSubjects)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
 
 }

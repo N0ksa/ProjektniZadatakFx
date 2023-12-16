@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp;
+package hr.java.project.projectfxapp.controllers;
 
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
