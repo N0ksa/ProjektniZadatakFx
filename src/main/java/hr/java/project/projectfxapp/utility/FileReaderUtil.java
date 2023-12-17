@@ -198,15 +198,22 @@ public class FileReaderUtil {
                         .filter(address -> address.getAddressId().compareTo(addressId) == 0)
                         .findFirst();
 
-                List<String> membersIdString = Arrays.asList(reader.readLine().split(","))
-                        .stream()
+                List<String> membersIdString = Arrays
+                        .stream(reader.readLine().split(","))
                         .map(String::trim)
-                        .collect(Collectors.toList());
+                        .toList();
 
 
-                List <Long> membersId = membersIdString.stream()
-                        .map(stringId -> Long.parseLong(stringId))
-                        .collect(Collectors.toList());
+                List<Long> membersId = membersIdString.stream()
+                        .map(stringId -> {
+                            if (!stringId.isEmpty()) {
+                                return Long.parseLong(stringId);
+                            }
+                            return null;
+                        })
+                        .filter(Objects::nonNull)
+                        .toList();
+
 
                 Set <Student> mathClubMembers = membersId.stream()
                         .map(id -> findStudentById(id, students))

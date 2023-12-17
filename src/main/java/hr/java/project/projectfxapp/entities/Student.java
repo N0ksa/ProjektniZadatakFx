@@ -136,6 +136,7 @@ public class Student extends NamedEntity implements Gradable, Serializable {
         return sumOfAllScores;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

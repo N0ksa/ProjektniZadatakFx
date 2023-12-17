@@ -49,17 +49,30 @@ public class AddNewMathClubController {
         Long mathClubId = FileWriterUtil.getNextMathClubId();
         String clubName = clubNameTextField.getText();
         Address clubAddress = clubAddressComboBox.getValue();
-        Set<Student> clubMembers = new HashSet<>(availableStudentListView.getItems());
+        Set<Student> clubMembers = new HashSet<>(availableStudentListView.getSelectionModel().getSelectedItems());
         LocalDate studentsJoinDate = studentJoinDateDatePicker.getValue();
 
-        clubMembers.forEach(member -> member.setClubMembership(new ClubMembership(mathClubId, studentsJoinDate)));
 
-        MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
+
 
         List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
                 FileReaderUtil.getAddressesFromFile());
 
+        mathClubs.forEach(mathClub -> {
+          clubMembers.forEach(clubMember -> {
+              if (mathClub.hasMember(clubMember)){
+                  mathClub.getStudents().remove(clubMember);
+              }
+          });
+        });
+
+        clubMembers.forEach(member -> member.setClubMembership(new ClubMembership(mathClubId, studentsJoinDate)));
+        MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
+
+
         mathClubs.add(newMathClub);
+
+
 
         FileWriterUtil.saveMathClubsToFile(mathClubs);
 
