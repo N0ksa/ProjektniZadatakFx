@@ -46,13 +46,12 @@ public class AddNewMathClubController {
     }
 
     public void saveMathClubs(ActionEvent actionEvent) {
+
         Long mathClubId = FileWriterUtil.getNextMathClubId();
         String clubName = clubNameTextField.getText();
         Address clubAddress = clubAddressComboBox.getValue();
         Set<Student> clubMembers = new HashSet<>(availableStudentListView.getSelectionModel().getSelectedItems());
         LocalDate studentsJoinDate = studentJoinDateDatePicker.getValue();
-
-
 
 
         List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),

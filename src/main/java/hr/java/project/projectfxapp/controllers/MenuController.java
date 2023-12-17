@@ -113,4 +113,32 @@ public class MenuController {
             throw new RuntimeException(e);
         }
     }
+
+    public void showAddNewCompetition(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewCompetition.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novo natjecanje");
+            JavaFxProjectApplication.getMainStage().setScene(scene);
+            JavaFxProjectApplication.getMainStage().show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showAddNewProject(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewProject.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novi projekt");
+            JavaFxProjectApplication.getMainStage().setScene(scene);
+            JavaFxProjectApplication.getMainStage().show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

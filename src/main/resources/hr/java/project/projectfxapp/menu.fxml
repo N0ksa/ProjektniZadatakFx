@@ -28,12 +28,14 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Competitions">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#showCompetitionsScreen" text="Search" />
+                    <MenuItem mnemonicParsing="false" onAction="#showCompetitionsScreen" text="Traži" />
+               <MenuItem mnemonicParsing="false" onAction="#showAddNewCompetition" text="Dodaj novo natjecanje" />
                 </items>
             </Menu>
          <Menu mnemonicParsing="false" text="Projects">
             <items>
                <MenuItem mnemonicParsing="false" onAction="#showProjectsScreen" text="Search" />
+               <MenuItem mnemonicParsing="false" onAction="#showAddNewProject" text="Dodaj novi projekt" />
             </items>
          </Menu>
         </menus>
