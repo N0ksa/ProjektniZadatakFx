@@ -4,8 +4,8 @@ Studentsko matematičko natjecanje koje okuplja mlade matematičare iz različit
 100010
 12.12.2023 09:00:00
 Velika dvorana
-Glavna zgrada
-1-80, 2-95, 3-33, 4-64, 5-50, 6-52, 7-95, 8-80, 9-88,10-65, 11-60, 12-70,13-66, 14-98, 15-34, 16-55, 17-66, 18-20, 19-25
+Velika dvorana
+1-80, 13-66, 10-65, 17-66, 12-70, 18-20, 6-52, 8-80, 3-33, 11-60, 4-64, 19-25, 5-50, 7-95, 14-98, 9-88, 15-34, 2-95, 16-55
 
 1001
 Monom
@@ -13,5 +13,15 @@ Uzbudljivi događaj koji okuplja studente željne rješavanja izazovnih matemati
 100011
 10.02.2024 11:15:00
 Dvorana 505
-Glavna zgrada
-1-75, 2-90, 3-45, 4-75, 5-33, 6-55,7-99, 8-82, 9-43,10-45, 11-78, 12-21,13-99, 14-88, 15-60, 16-47, 17-69, 18-45, 19-34
+Dvorana 505
+8-82, 3-45, 5-33, 1-75, 12-21, 15-60, 16-47, 13-99, 17-69, 6-55, 14-88, 9-43, 7-99, 10-45, 18-45, 2-90, 11-78, 4-75, 19-34
+
+1002
+Kvadrat natjecanje
+Najteže studentsko matematičko natjecanje u regiji
+100009
+20.12.2023 10:45:00
+Velika zgrada
+Velika zgrada
+9-59, 6-32, 3-93, 5-48, 8-21, 7-78, 1-55, 4-25, 2-78
+

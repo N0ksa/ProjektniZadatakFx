@@ -1,29 +1,27 @@
 package hr.java.project.projectfxapp.controllers;
 
-import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.CompetitionResult;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import hr.java.project.projectfxapp.utility.FileWriterUtil;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class AddNewCompetitionController {
 
@@ -36,9 +34,9 @@ public class AddNewCompetitionController {
     @FXML
     private ComboBox<Address> competitionAddressComboBox;
     @FXML
-    private TextField auditoriumNameTextArea;
+    private TextField auditoriumHallNameTextField;
     @FXML
-    private TextField auditoriumBuildingNameTextArea;
+    private TextField auditoriumBuildingNameTextField;
     @FXML
     private DatePicker competitionDateDatePicker;
     @FXML
@@ -80,12 +78,47 @@ public class AddNewCompetitionController {
         });
 
         removeParticipantButton.setDisable(true);
+
+        competitionDescriptionTextArea.setWrapText(true);
     }
 
     public void saveCompetition(ActionEvent actionEvent) {
+        List<Competition> competitions = FileReaderUtil.getMathCompetitionsFromFile(FileReaderUtil.getStudentsFromFile()
+                , FileReaderUtil.getAddressesFromFile());
+
+        Long competitionId = FileWriterUtil.getNextCompetitionId();
+        String competitionName = competitionNameTextField.getText();
+        String competitionDescription = competitionDescriptionTextArea.getText();
+        Address competitionAddress = competitionAddressComboBox.getValue();
+
+        LocalDate competitionDate = competitionDateDatePicker.getValue();
+
+        String competitionTimeText = competitionTimeTextArea.getText();
+
+        LocalTime competitionTime = LocalTime.parse(competitionTimeText,
+                DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+
+        LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
+
+        String buildingName = auditoriumBuildingNameTextField.getText();
+        String hallName = auditoriumHallNameTextField.getText();
+
+        Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
+
+        Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
+
+        Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription
+                ,competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);
+
+
+        competitions.add(newCompetition);
+
+        FileWriterUtil.saveCompetitionsToFile(competitions);
+
     }
 
     public void reset(ActionEvent actionEvent) {
+
     }
 
     public void addPotentialParticipantToTableView(MouseEvent mouseEvent) {
@@ -105,16 +138,15 @@ public class AddNewCompetitionController {
     }
 
     private boolean resultAlreadyExists(Student participant, ObservableList<CompetitionResult> competitionResults) {
-        // Check if a result for the participant already exists in the list
         return competitionResults.stream()
                 .anyMatch(result -> result.participant().equals(participant));
     }
 
     public void removeSelectedParticipantFromTableView(ActionEvent actionEvent) {
+
         ObservableList<CompetitionResult> selectedResults = competitionResultsTableView.getSelectionModel().getSelectedItems();
 
         competitionResultsTableView.getItems().removeAll(selectedResults);
-
 
         removeParticipantButton.setDisable(competitionResultsTableView.getItems().isEmpty());
     }

@@ -17,6 +17,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddNewStudentController {
 
@@ -75,7 +76,12 @@ public class AddNewStudentController {
         });
 
 
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
+                FileReaderUtil.getAddressesFromFile())
+                .stream()
+                .filter(mathClub -> !mathClub.getId().equals(0L))
+                .collect(Collectors.toList());
+
         ObservableList<MathClub> observableMathClubsList = FXCollections.observableList(mathClubs);
         mathClubComboBox.setItems(observableMathClubsList);
 

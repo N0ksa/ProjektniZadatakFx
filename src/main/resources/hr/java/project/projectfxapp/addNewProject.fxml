@@ -3,66 +3,77 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.AddNewProjectController">
-   <children>
-      <ProgressBar fx:id="addNewProjectProgressBar" layoutY="390.0" prefWidth="200.0" progress="0.0" />
-      <GridPane prefHeight="387.0" prefWidth="654.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="66.0" minHeight="0.0" prefHeight="43.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="156.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="202.0" minHeight="9.0" prefHeight="72.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="140.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-             <fx:include source="menu.fxml" />
-            <Label text="Dodaj novi projekt" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+<AnchorPane prefHeight="510.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.AddNewProjectController">
+    <children>
+        <GridPane layoutX="6.0" prefHeight="510.0" prefWidth="699.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="367.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="332.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="66.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="156.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="202.0" minHeight="9.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="95.0" minHeight="34.0" prefHeight="54.0" />
+            </rowConstraints>
+            <children>
+                <fx:include source="menu.fxml" />
+                <Label text="Dodaj novi projekt" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="projectNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </GridPane.margin>
+                </TextField>
+                <Label text="Ime projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                <Label layoutX="10.0" layoutY="246.0" text="Opis projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                <TextArea fx:id="projectDescriptionTextArea" prefHeight="56.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                    </GridPane.margin>
+                </TextArea>
+                <Label text="Odaberi klubove sudionike:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets right="5.0" />
+                    </GridPane.margin>
+                </Label>
+                <ListView fx:id="projectMathClubsParticipantsListView" prefHeight="83.0" prefWidth="317.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </GridPane.margin>
+                </ListView>
+                <ListView fx:id="projectStudentParticipantsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </GridPane.margin>
+                </ListView>
+                <Button mnemonicParsing="false" onAction="#saveProject" text="Dodaj novi projekt" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <Label text="Odaberi studente sudionike:" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
             </Label>
-            <TextField fx:id="projectNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </TextField>
-            <Label text="Ime projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-            <Label layoutX="10.0" layoutY="246.0" text="Opis projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-            <TextArea fx:id="projectDescriptionTextArea" prefHeight="56.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </TextArea>
-            <Label text="Odaberi sudionike:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets right="5.0" />
-               </GridPane.margin>
-            </Label>
-            <TreeView fx:id="projectParticipantsTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
-            </TreeView>
-            <Button mnemonicParsing="false" onAction="#saveProject" text="Dodaj novi projekt" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-         </children>
-      </GridPane>
-   </children>
+              <ProgressBar fx:id="addNewProjectProgressBar" prefHeight="8.0" prefWidth="689.0" progress="0.0" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+            </children>
+        </GridPane>
+    </children>
 </AnchorPane>

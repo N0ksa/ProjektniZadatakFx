@@ -1,9 +1,9 @@
-1000000
+1
 Fraktalna Harmonija
-Istražuje matematičke principe koji leže u osnovi fraktala i njihove primjene u stvaranju vizualno impresivnih umjetničkih djela.\nProjekt također ispituje povezanost fraktala s glazbenim teorijama.
-1-1,2,3/2-8,7,6/3-12,14,15
+Istražuje matematičke principe koji leže u osnovi fraktala i njihove primjene u stvaranju vizualno impresivnih umjetničkih djela. Projekt također ispituje povezanost fraktala s glazbenim teorijama.
+2-8,7,6/3-12,14,15/1-1,2,3
 
-1000001
+2
 Neuralne mreže
 Ovaj projekt analizira matematičke osnove iza neuronskih mreža, proučavajući algebarske, topološke i diferencijalne jednadžbe koje modeliraju ponašanje ovih moćnih alata za strojno učenje.
-1-4,5/2-9/4-22,23,21
+2-9/4-22,23,21/1-4,5

@@ -9,6 +9,7 @@ public enum ValidationRegex {
 
     VALID_LOCAL_DATE_REGEX ("dd.MM.yyyy."),
     VALID_LOCAL_DATE_TIME_REGEX ("dd.MM.yyyy HH:mm:ss"),
+    VALID_LOCAL_TIME_REGEX("HH:mm"),
 
     VALID_MEMBER_ID_REGEX ("\\d{5}");
 

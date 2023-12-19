@@ -1,9 +1,7 @@
 package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.constants.Constants;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.NamedEntity;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -103,6 +102,122 @@ public class FileWriterUtil {
         Long mathClubId = mathClubs.stream().map(NamedEntity::getId).max(Long::compareTo).get();
         return mathClubId + 1;
     }
+
+
+    public static void saveCompetitionsToFile(List <Competition> competitions){
+
+        File competitionsFile = new File(Constants.COMPETITIONS_FILE_NAME);
+        try (PrintWriter pw = new PrintWriter(competitionsFile)) {
+            for (Competition competition : competitions) {
+
+                pw.println(competition.getId());
+                pw.println(competition.getName());
+                pw.println(competition.getDescription());
+                pw.println(competition.getAddress().getAddressId());
+                pw.println(competition.getTimeOfCompetition()
+                        .format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_TIME_REGEX.getRegex())));
+
+                pw.println(competition.getAuditorium().building());
+                pw.println(competition.getAuditorium().building());
+
+                StringBuilder competitionResultsStringBuilder = new StringBuilder();
+                for (CompetitionResult result : competition.getCompetitionResults()) {
+                    competitionResultsStringBuilder.append(result.participant().getId())
+                            .append("-")
+                            .append(result.score().toString())
+                            .append(", ");
+                }
+
+                if (!competitionResultsStringBuilder.isEmpty()) {
+                    competitionResultsStringBuilder.setLength(competitionResultsStringBuilder.length() - 2);
+                }
+                pw.println(competitionResultsStringBuilder);
+
+                pw.println();
+
+
+            }
+
+
+        } catch (IOException ex) {
+            String message = "Dogodila se pogreška kod pisanja datoteke - + " + Constants.COMPETITIONS_FILE_NAME;
+            logger.error(message, ex);
+            System.out.println(message);
+
+        }
+
+
+    }
+
+
+    public static Long getNextCompetitionId() {
+        List<Competition> competitions = FileReaderUtil.getMathCompetitionsFromFile(FileReaderUtil.getStudentsFromFile(),
+                FileReaderUtil.getAddressesFromFile());
+
+        Long competitionId= competitions.stream().map(NamedEntity::getId).max(Long::compareTo).get();
+        return competitionId + 1;
+    }
+
+    public static void saveProjectsToFile(List <MathProject> projects){
+
+        File projectsFile = new File(Constants.MATH_PROJECTS_FILE_NAME);
+        try (PrintWriter pw = new PrintWriter(projectsFile)) {
+            for (MathProject project : projects) {
+
+                pw.println(project.getId());
+                pw.println(project.getName());
+                pw.println(project.getDescription());
+
+                StringBuilder resultBuilder = new StringBuilder();
+                for (Map.Entry<MathClub, List<Student>> entry : project.getCollaborators().entrySet()) {
+                    Long mathClubId = entry.getKey().getId();
+
+                    List<Long> studentIds = entry.getValue().stream().map(NamedEntity::getId).toList();
+
+                    resultBuilder.append(mathClubId).append("-");
+
+                    for (int i = 0; i < studentIds.size(); i++) {
+                        resultBuilder.append(studentIds.get(i));
+                        if (i < studentIds.size() - 1) {
+                            resultBuilder.append(",");
+                        }
+                    }
+
+                    resultBuilder.append("/");
+                }
+
+
+                if (!resultBuilder.isEmpty()) {
+                    resultBuilder.deleteCharAt(resultBuilder.length() - 1);
+                }
+
+                pw.println(resultBuilder);
+
+                pw.println();
+
+            }
+
+
+        } catch (IOException ex) {
+            String message = "Dogodila se pogreška kod pisanja datoteke - + " + Constants.MATH_PROJECTS_FILE_NAME;
+            logger.error(message, ex);
+            System.out.println(message);
+
+        }
+
+
+    }
+
+
+    public static Long getNextProjectId() {
+        List<MathProject> projects = FileReaderUtil.getMathProjectsFromFile
+                (FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),FileReaderUtil.getAddressesFromFile()),
+                        FileReaderUtil.getStudentsFromFile());
+
+        Long mathProjectId= projects.stream().map(NamedEntity::getId).max(Long::compareTo).get();
+        return mathProjectId + 1;
+    }
+
 
 
 
