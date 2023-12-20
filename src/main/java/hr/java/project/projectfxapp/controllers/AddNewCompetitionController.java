@@ -2,8 +2,10 @@ package hr.java.project.projectfxapp.controllers;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +17,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,6 +70,8 @@ public class AddNewCompetitionController {
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
         competitionScoreTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().score()));
         competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+
+
         competitionScoreTableColumn.setOnEditCommit(event -> {
 
             CompetitionResult result = event.getRowValue();
@@ -83,39 +89,51 @@ public class AddNewCompetitionController {
     }
 
     public void saveCompetition(ActionEvent actionEvent) {
-        List<Competition> competitions = FileReaderUtil.getMathCompetitionsFromFile(FileReaderUtil.getStudentsFromFile()
-                , FileReaderUtil.getAddressesFromFile());
-
-        Long competitionId = FileWriterUtil.getNextCompetitionId();
-        String competitionName = competitionNameTextField.getText();
-        String competitionDescription = competitionDescriptionTextArea.getText();
-        Address competitionAddress = competitionAddressComboBox.getValue();
-
-        LocalDate competitionDate = competitionDateDatePicker.getValue();
-
-        String competitionTimeText = competitionTimeTextArea.getText();
-
-        LocalTime competitionTime = LocalTime.parse(competitionTimeText,
-                DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
-
-        LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
-
-        String buildingName = auditoriumBuildingNameTextField.getText();
-        String hallName = auditoriumHallNameTextField.getText();
-
-        Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
-
-        Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
-
-        Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription
-                ,competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);
+        try {
+            ValidationProtocol.validateCompetition(competitionNameTextField, competitionDescriptionTextArea,
+                    competitionAddressComboBox, competitionDateDatePicker, competitionTimeTextArea,
+                    auditoriumBuildingNameTextField, auditoriumHallNameTextField, competitionResultsTableView);
 
 
-        competitions.add(newCompetition);
 
-        FileWriterUtil.saveCompetitionsToFile(competitions);
+            List<Competition> competitions = FileReaderUtil.getMathCompetitionsFromFile(
+                    FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
 
+            Long competitionId = FileWriterUtil.getNextCompetitionId();
+            String competitionName = competitionNameTextField.getText();
+            String competitionDescription = competitionDescriptionTextArea.getText();
+            Address competitionAddress = competitionAddressComboBox.getValue();
+
+            LocalDate competitionDate = competitionDateDatePicker.getValue();
+
+            String competitionTimeText = competitionTimeTextArea.getText();
+
+            LocalTime competitionTime = LocalTime.parse(competitionTimeText,
+                    DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+
+            LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
+
+            String buildingName = auditoriumBuildingNameTextField.getText();
+            String hallName = auditoriumHallNameTextField.getText();
+
+            Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
+
+            Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
+
+            Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription,
+                    competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);
+
+            competitions.add(newCompetition);
+
+            FileWriterUtil.saveCompetitionsToFile(competitions);
+
+        } catch (ValidationException | DateTimeException ex) {
+            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka", ex.getMessage());
+        }
     }
+
+
+
 
     public void reset(ActionEvent actionEvent) {
 

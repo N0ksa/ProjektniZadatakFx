@@ -5,8 +5,10 @@ import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
+import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -121,50 +123,60 @@ public class AddNewStudentController {
 
     public void saveStudent(ActionEvent actionEvent) {
 
-        Long studentId = FileWriterUtil.getNextStudentId();
-        String studentName = studentNameTextField.getText();
-        String studentSurname = studentSurnameTextField.getText();
-        String studentEmail = studentEmailTextField.getText();
+        try{
+            ValidationProtocol.validateStudent(studentNameTextField, studentSurnameTextField, studentEmailTextField,
+                    mathClubComboBox, joinDateDatePicker, subjectGradeTableColumn, yearOfStudySelection);
 
-        MathClub studentClub = mathClubComboBox.getValue();
-        LocalDate joinDate = joinDateDatePicker.getValue();
+            Long studentId = FileWriterUtil.getNextStudentId();
+            String studentName = studentNameTextField.getText();
+            String studentSurname = studentSurnameTextField.getText();
+            String studentEmail = studentEmailTextField.getText();
 
-        Integer yearOfStudy = 0;
+            MathClub studentClub = mathClubComboBox.getValue();
+            LocalDate joinDate = joinDateDatePicker.getValue();
 
-        if (prvaGodinaRadioButton.isSelected()){
-            yearOfStudy = 1;
-        }else if(drugaGodinaRadioButton.isSelected()){
-            yearOfStudy = 2;
-        }else if (trecaGodinaRadioButton.isSelected()){
-            yearOfStudy = 3;
+            Integer yearOfStudy = 0;
+
+            if (prvaGodinaRadioButton.isSelected()){
+                yearOfStudy = 1;
+            }else if(drugaGodinaRadioButton.isSelected()){
+                yearOfStudy = 2;
+            }else if (trecaGodinaRadioButton.isSelected()){
+                yearOfStudy = 3;
+            }
+
+            ClubMembership studentClubMembership = new ClubMembership(studentClub.getId(), joinDate);
+
+            Map<String, Integer> studentGrades = new LinkedHashMap<>();
+            for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
+                studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
+            }
+
+            Student newStudent = new Student(studentId, studentName, studentSurname, studentEmail, yearOfStudy,
+                    studentGrades, studentClubMembership);
+
+
+            List<Student> students = FileReaderUtil.getStudentsFromFile();
+            students.add(newStudent);
+            FileWriterUtil.saveStudentsToFile(students);
+
+            List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+
+            Optional<MathClub> optionalMathClub = mathClubs.stream()
+                    .filter(mathClub -> mathClub.getId() == newStudent.getClubMembership().getClubId())
+                    .findFirst();
+
+            optionalMathClub.ifPresent(mathClub -> mathClub.getStudents().add(newStudent));
+
+            if (!newStudent.getClubMembership().getClubId().equals(0L)){
+                FileWriterUtil.saveMathClubsToFile(mathClubs);
+            }
+
+        }catch (ValidationException ex){
+            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+                    ex.getMessage());
         }
 
-        ClubMembership studentClubMembership = new ClubMembership(studentClub.getId(), joinDate);
-
-        Map<String, Integer> studentGrades = new LinkedHashMap<>();
-        for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
-            studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
-        }
-
-        Student newStudent = new Student(studentId, studentName, studentSurname, studentEmail, yearOfStudy,
-                studentGrades, studentClubMembership);
-
-
-        List<Student> students = FileReaderUtil.getStudentsFromFile();
-        students.add(newStudent);
-        FileWriterUtil.saveStudentsToFile(students);
-
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
-
-        Optional<MathClub> optionalMathClub = mathClubs.stream()
-                .filter(mathClub -> mathClub.getId() == newStudent.getClubMembership().getClubId())
-                .findFirst();
-
-        optionalMathClub.ifPresent(mathClub -> mathClub.getStudents().add(newStudent));
-
-        if (!newStudent.getClubMembership().getClubId().equals(0L)){
-            FileWriterUtil.saveMathClubsToFile(mathClubs);
-        }
 
 
     }

@@ -4,20 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Napravio gui za dodavanje novih natjecanja i projekata i sve povezao sa kontrolerima.&#10;&#10;-potrebno je napisati backend logiku spremanja novih natjecanja i projekata">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao logiku spremanja novih natjecanja i novih projekata u datoteku.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/exception/ValidationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/competitions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/competitions.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/math_clubs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/math_clubs.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/math_projects.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/math_projects.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dat/students.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/students.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewCompetitionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewCompetitionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewStudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Auditorium.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Auditorium.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ValidationRegex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ValidationRegex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileWriterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileWriterUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewCompetition.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewCompetition.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewProject.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewProject.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +113,9 @@
       <workItem from="1702909932307" duration="97000" />
       <workItem from="1702910059384" duration="168000" />
       <workItem from="1702998596532" duration="10531000" />
-      <workItem from="1703012491838" duration="1465000" />
+      <workItem from="1703012491838" duration="3215000" />
+      <workItem from="1703016981393" duration="1561000" />
+      <workItem from="1703088972461" duration="3953000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -176,7 +173,14 @@
       <option name="presentableId" value="LOCAL−00008" />
       <updated>1702847478218</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL−00009" summary="Dodao logiku spremanja novih natjecanja i novih projekata u datoteku.">
+      <option name="closed" value="true" />
+      <created>1703013982654</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1703013982654</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,17 +206,7 @@
     <MESSAGE value="Napravio logiku dodavanja novih studenata u datoteku.&#10;&#10;-kako bi prikazao sve potrebne elemente u tableview-u addNewStudent.fxml-a (predmete i ocijene), napravio sam novu klasu SubjectGrade.java&#10;&#10;&#10;-kolumnu ocijena sam postavio da ima mogućnost editiranja. Na taj način će korisnik unosit podatke o svojim ocijenama.&#10;-kod spremanja se za sada ne provjerava validnost unesenih podataka.&#10;-kod spremanja se također trenutno ne mijenja datoteka math_clubs.txt (mora se promijeniti i treba se dodati studentov id jer su ta dva entiteta međusobno ovisna)" />
     <MESSAGE value="Napravio logiku dodavanja novih klubova u datoteku.&#10;&#10;-dodavanjem kluba u datoteku mora se promijeniti i datoteka students.txt (vjerojatno ću ovo napraviti na neki drugi način kod baze podataka)&#10;&#10;-postoji nekoliko manjih bugova koje trebam ispraviti" />
     <MESSAGE value="Napravio gui za dodavanje novih natjecanja i projekata i sve povezao sa kontrolerima.&#10;&#10;-potrebno je napisati backend logiku spremanja novih natjecanja i projekata" />
-    <option name="LAST_COMMIT_MESSAGE" value="Napravio gui za dodavanje novih natjecanja i projekata i sve povezao sa kontrolerima.&#10;&#10;-potrebno je napisati backend logiku spremanja novih natjecanja i projekata" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java</url>
-          <line>59</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Dodao logiku spremanja novih natjecanja i novih projekata u datoteku." />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodao logiku spremanja novih natjecanja i novih projekata u datoteku." />
   </component>
 </project>

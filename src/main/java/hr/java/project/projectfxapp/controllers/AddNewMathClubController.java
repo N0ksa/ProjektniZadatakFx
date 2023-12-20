@@ -4,8 +4,10 @@ import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.ClubMembership;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,44 +49,52 @@ public class AddNewMathClubController {
 
     public void saveMathClubs(ActionEvent actionEvent) {
 
-        Long mathClubId = FileWriterUtil.getNextMathClubId();
-        String clubName = clubNameTextField.getText();
-        Address clubAddress = clubAddressComboBox.getValue();
-        Set<Student> clubMembers = new HashSet<>(availableStudentListView.getSelectionModel().getSelectedItems());
-        LocalDate studentsJoinDate = studentJoinDateDatePicker.getValue();
+        try{
+            ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox, availableStudentListView,
+                    studentJoinDateDatePicker);
 
 
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
-                FileReaderUtil.getAddressesFromFile());
-
-        mathClubs.forEach(mathClub -> {
-          clubMembers.forEach(clubMember -> {
-              if (mathClub.hasMember(clubMember)){
-                  mathClub.getStudents().remove(clubMember);
-              }
-          });
-        });
-
-        clubMembers.forEach(member -> member.setClubMembership(new ClubMembership(mathClubId, studentsJoinDate)));
-        MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
+            Long mathClubId = FileWriterUtil.getNextMathClubId();
+            String clubName = clubNameTextField.getText();
+            Address clubAddress = clubAddressComboBox.getValue();
+            Set<Student> clubMembers = new HashSet<>(availableStudentListView.getSelectionModel().getSelectedItems());
+            LocalDate studentsJoinDate = studentJoinDateDatePicker.getValue();
 
 
-        mathClubs.add(newMathClub);
+            List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
+                    FileReaderUtil.getAddressesFromFile());
+
+            mathClubs.forEach(mathClub -> {
+                clubMembers.forEach(clubMember -> {
+                    if (mathClub.hasMember(clubMember)){
+                        mathClub.getStudents().remove(clubMember);
+                    }
+                });
+            });
+
+            clubMembers.forEach(member -> member.setClubMembership(new ClubMembership(mathClubId, studentsJoinDate)));
+            MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
 
 
+            mathClubs.add(newMathClub);
 
-        FileWriterUtil.saveMathClubsToFile(mathClubs);
+            FileWriterUtil.saveMathClubsToFile(mathClubs);
 
-        List <Student> studentsToUpdate = FileReaderUtil.getStudentsFromFile();
-        studentsToUpdate.forEach(student -> {
-            for (Student member : clubMembers){
-                if (student.getId().equals(member.getId())){
-                    student.getClubMembership().setClubId(mathClubId);
+            List <Student> studentsToUpdate = FileReaderUtil.getStudentsFromFile();
+            studentsToUpdate.forEach(student -> {
+                for (Student member : clubMembers){
+                    if (student.getId().equals(member.getId())){
+                        student.getClubMembership().setClubId(mathClubId);
+                    }
                 }
-            }
-        });
-        FileWriterUtil.saveStudentsToFile(studentsToUpdate);
+            });
+            FileWriterUtil.saveStudentsToFile(studentsToUpdate);
 
+        }
+        catch (ValidationException ex){
+            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+                    ex.getMessage());
+        }
 
     }
 }

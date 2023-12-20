@@ -22,4 +22,3 @@ Klub Matematike "Euklid"
 Matematički klub "Fibonacci"
 100002
 23, 22, 21
-
