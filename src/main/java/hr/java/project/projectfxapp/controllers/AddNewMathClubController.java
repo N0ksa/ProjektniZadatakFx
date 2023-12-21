@@ -85,10 +85,15 @@ public class AddNewMathClubController {
                 for (Student member : clubMembers){
                     if (student.getId().equals(member.getId())){
                         student.getClubMembership().setClubId(mathClubId);
+                        student.getClubMembership().setJoinDate(studentsJoinDate);
                     }
                 }
             });
             FileWriterUtil.saveStudentsToFile(studentsToUpdate);
+
+
+            ValidationProtocol.showSuccessAlert("Spremanje novog kluba je bilo uspješno",
+                    "Klub " + newMathClub.getName()  + " uspješno se spremio!");
 
         }
         catch (ValidationException ex){

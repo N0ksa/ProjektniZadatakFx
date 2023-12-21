@@ -29,7 +29,7 @@ public class MenuController {
         try {
 
             Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Students");
+            JavaFxProjectApplication.getMainStage().setTitle("Studenti");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 
@@ -45,7 +45,7 @@ public class MenuController {
         try {
             Scene scene = new Scene(fxmlLoader.load());
 
-            JavaFxProjectApplication.getMainStage().setTitle("Clubs");
+            JavaFxProjectApplication.getMainStage().setTitle("Klubovi");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 
@@ -60,7 +60,7 @@ public class MenuController {
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Projects");
+            JavaFxProjectApplication.getMainStage().setTitle("Projekti");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 
@@ -75,7 +75,7 @@ public class MenuController {
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Competitions");
+            JavaFxProjectApplication.getMainStage().setTitle("Natjecanja");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 
@@ -91,7 +91,7 @@ public class MenuController {
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Add new student");
+            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novog studenta");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 
@@ -105,7 +105,7 @@ public class MenuController {
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Add new math club");
+            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novi klub");
             JavaFxProjectApplication.getMainStage().setScene(scene);
             JavaFxProjectApplication.getMainStage().show();
 

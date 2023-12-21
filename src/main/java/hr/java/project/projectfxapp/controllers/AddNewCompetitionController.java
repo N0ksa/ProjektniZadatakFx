@@ -127,8 +127,13 @@ public class AddNewCompetitionController {
 
             FileWriterUtil.saveCompetitionsToFile(competitions);
 
-        } catch (ValidationException | DateTimeException ex) {
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka", ex.getMessage());
+
+            ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
+                    "Natjecanje " + newCompetition.getName()  + " uspješno se spremio!");
+
+        } catch (ValidationException ex) {
+            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+                    ex.getMessage());
         }
     }
 

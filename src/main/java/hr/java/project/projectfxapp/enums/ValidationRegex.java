@@ -11,6 +11,8 @@ public enum ValidationRegex {
     VALID_LOCAL_DATE_TIME_REGEX ("dd.MM.yyyy HH:mm:ss"),
     VALID_LOCAL_TIME_REGEX("HH:mm"),
 
+    VALID_EMAIL_ADDRESS("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"),
+
     VALID_MEMBER_ID_REGEX ("\\d{5}");
 
     private final String regex;

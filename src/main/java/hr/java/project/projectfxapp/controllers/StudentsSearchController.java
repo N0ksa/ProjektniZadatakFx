@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -75,8 +76,16 @@ public class StudentsSearchController {
 
         studentJoinDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().getClubMembership().getJoinDate()
-                        .format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
+                LocalDate joinDate = param.getValue().getClubMembership().getJoinDate();
+
+                if (Optional.ofNullable(joinDate).isPresent()){
+
+                    return new ReadOnlyStringWrapper(param.getValue().getClubMembership().getJoinDate()
+                            .format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
+                }else{
+                    return new ReadOnlyStringWrapper("/");
+                }
+
             }
         });
 

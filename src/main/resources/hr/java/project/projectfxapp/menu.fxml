@@ -9,32 +9,32 @@
 
     <MenuBar prefHeight="28.0" prefWidth="673.0">
         <menus>
-            <Menu mnemonicParsing="false" text="Home">
+            <Menu mnemonicParsing="false" text="Glavni izbornik">
             <items>
-               <MenuItem mnemonicParsing="false" onAction="#showMainScreen" text="Main screen" />
+               <MenuItem mnemonicParsing="false" onAction="#showMainScreen" text="Glavni ekran" />
             </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Students">
+            <Menu mnemonicParsing="false" text="Studenti">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#showStudentsScreen" text="Search" />
-               <MenuItem mnemonicParsing="false" onAction="#showAddNewStudent" text="Add new student" />
+                    <MenuItem mnemonicParsing="false" onAction="#showStudentsScreen" text="Traži" />
+               <MenuItem mnemonicParsing="false" onAction="#showAddNewStudent" text="Dodaj novog studenta" />
                 </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Clubs">
+            <Menu mnemonicParsing="false" text="Klubovi">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#showClubsScreen" text="Search" />
-               <MenuItem mnemonicParsing="false" onAction="#showAddNewMathClub" text="Add new club" />
+                    <MenuItem mnemonicParsing="false" onAction="#showClubsScreen" text="Traži" />
+               <MenuItem mnemonicParsing="false" onAction="#showAddNewMathClub" text="Dodaj novi klub" />
                 </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Competitions">
+            <Menu mnemonicParsing="false" text="Natjecanja">
                 <items>
                     <MenuItem mnemonicParsing="false" onAction="#showCompetitionsScreen" text="Traži" />
                <MenuItem mnemonicParsing="false" onAction="#showAddNewCompetition" text="Dodaj novo natjecanje" />
                 </items>
             </Menu>
-         <Menu mnemonicParsing="false" text="Projects">
+         <Menu mnemonicParsing="false" text="Projekti">
             <items>
-               <MenuItem mnemonicParsing="false" onAction="#showProjectsScreen" text="Search" />
+               <MenuItem mnemonicParsing="false" onAction="#showProjectsScreen" text="Traži" />
                <MenuItem mnemonicParsing="false" onAction="#showAddNewProject" text="Dodaj novi projekt" />
             </items>
          </Menu>

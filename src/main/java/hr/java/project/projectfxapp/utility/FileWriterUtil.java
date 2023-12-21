@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,12 @@ public class FileWriterUtil {
                 pw.println(student.getClubMembership().getClubId());
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex());
-                pw.println(student.getClubMembership().getJoinDate().format(formatter));
+
+                if(Optional.ofNullable(student.getClubMembership().getJoinDate()).isPresent()){
+                    pw.println(student.getClubMembership().getJoinDate().format(formatter));
+                }else{
+                    pw.println();
+                }
 
 
 

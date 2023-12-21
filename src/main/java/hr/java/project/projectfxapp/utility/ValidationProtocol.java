@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class ValidationProtocol {
@@ -91,16 +92,16 @@ public class ValidationProtocol {
         }
     }
 
-    public static void validateProject(TextField nameTextField, TextArea descriptionTextArea,
-                                       ComboBox<MathClub> mathClubsComboBox,
-                                       Set<Student> selectedStudents) throws ValidationException {
+    public static void validateProject(TextField projectNameTextField, TextArea projectDescriptionTextArea,
+                                       ListView<MathClub> mathClubsListView,
+                                       ListView<Student> selectedStudents) throws ValidationException {
 
         List<String> errors = new ArrayList<>();
 
-        validateTextField(nameTextField, "Unesite naziv projekta", errors);
-        validateTextArea(descriptionTextArea, "Unesite opis projekta", errors);
-        validateComboBox(mathClubsComboBox, "Odaberite matematički klub", errors);
-        validateSet(selectedStudents, "Odaberite barem jednog sudionika projekta", errors);
+        validateTextField(projectNameTextField, "Unesite naziv projekta", errors);
+        validateTextArea(projectDescriptionTextArea, "Unesite opis projekta", errors);
+        validateListView(mathClubsListView, "Odaberite matematički klub", errors);
+        validateListView(selectedStudents, "Odaberite barem jednog sudionika projekta", errors);
 
         if (!errors.isEmpty()) {
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));
@@ -109,7 +110,7 @@ public class ValidationProtocol {
 
     public static void validateStudent(TextField nameTextField, TextField surnameTextField,
                                        TextField emailTextField, ComboBox<MathClub> mathClubComboBox,
-                                       DatePicker joinDateDatePicker, TableColumn<SubjectGrade, String> subjectGrades,
+                                       DatePicker joinDateDatePicker, TableView<SubjectGrade> studentGradesTableView,
                                        ToggleGroup yearOfStudyToggleGroup) throws ValidationException {
 
         List<String> errors = new ArrayList<>();
@@ -118,8 +119,9 @@ public class ValidationProtocol {
         validateTextField(surnameTextField, "Unesite prezime studenta", errors);
         validateEmail(emailTextField, errors);
         validateComboBox(mathClubComboBox, "Odaberite matematički klub", errors);
-        validateDatePicker(joinDateDatePicker, "Odaberite datum pridruživanja klubu", errors);
-        validateList(subjectGrades., "Unesite barem jednu ocjenu", errors);
+        validateDatePickerForAddingNewStudent(mathClubComboBox, joinDateDatePicker,
+                "Odaberite datum pridruživanja klubu", errors);
+        validateStudentGradesList(studentGradesTableView, "Unesite sve ocijene", errors);
         validateToggleGroup(yearOfStudyToggleGroup, "Odaberite godinu studija", errors);
 
         if (!errors.isEmpty()) {
@@ -127,6 +129,25 @@ public class ValidationProtocol {
         }
     }
 
+    private static void validateStudentGradesList(TableView<SubjectGrade> studentGradesTableView, String errorMessage, List<String> error) {
+        for (SubjectGrade subjectGrade : studentGradesTableView.getItems()){
+            try{
+               Integer parsedGrade = Integer.parseInt(subjectGrade.getGrade());
+
+               if (!subjectGrade.getGrade().equals(String.valueOf(parsedGrade))){
+                   error.add("Molim unesite cijeli broj za predmet " + subjectGrade.getSubject());
+
+               }else if (parsedGrade.compareTo(1) < 0 || parsedGrade.compareTo(5) > 0){
+                   error.add("Molim unesite ocijenu u rasponu od 1-5 za predmet " + subjectGrade.getSubject());
+               }
+
+
+
+            }catch (NumberFormatException ex){
+                error.add("Molim unesite ispravnu ocijenu za predmet " + subjectGrade.getSubject());
+            }
+        }
+    }
 
 
     private static void validateEmail(TextField emailTextField, List<String> errors) {
@@ -134,7 +155,7 @@ public class ValidationProtocol {
         if (email.isEmpty()) {
             errors.add("Unesite email adresu");
         }
-        else if (!email.matches(ValidationRegex.VALID_WEB_ADDRESS.getRegex())){
+        else if (!email.matches(ValidationRegex.VALID_EMAIL_ADDRESS.getRegex())){
             errors.add("Unesite ispravnu email adresu");
         }
     }
@@ -158,7 +179,7 @@ public class ValidationProtocol {
             LocalTime time = LocalTime.parse(timeText, DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
 
         }catch (DateTimeParseException ex){
-            errors.add("Molim unesite vrijeme u ispravnom formatu - " + ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex());
+            errors.add("Molim unesite vrijeme u ispravnom formatu - " + ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex());
         }
 
     }
@@ -170,10 +191,34 @@ public class ValidationProtocol {
         }
     }
 
-    private static <T> void validateComboBox(ComboBox<T> comboBox, String errorMessage, List<String> errors) {
+
+      private static <T> void validateComboBox(ComboBox<T> comboBox, String errorMessage, List<String> errors) {
         if (comboBox.getValue() == null) {
             errors.add(errorMessage);
         }
+    }
+
+    private static <T> void validateListView(ListView<T> listView, String errorMessage, List<String> errors) {
+        if (listView.getSelectionModel().getSelectedItems().isEmpty()) {
+            errors.add(errorMessage);
+        }
+    }
+
+
+    private static void validateDatePickerForAddingNewStudent(ComboBox<MathClub> selectedMathClub,DatePicker datePicker,
+                                                              String errorMessage, List<String> errors){
+
+
+        MathClub selectedMathClubForStudent = selectedMathClub.getValue();
+
+        if (Optional.ofNullable(selectedMathClubForStudent).isPresent()){
+
+            if (!selectedMathClubForStudent.getId().equals(0L) && Optional.ofNullable(datePicker.getValue()).isEmpty()){
+                errors.add("Odaberite datum učlanjivanja studenta u studentski klub");
+            }
+        }
+
+
     }
 
     private static void validateDatePicker(DatePicker datePicker, String errorMessage, List<String> errors) {
@@ -198,11 +243,6 @@ public class ValidationProtocol {
         }
     }
 
-    private static <T> void validateSet(Set<T> set, String errorMessage, List<String> errors) {
-        if (set.isEmpty()) {
-            errors.add(errorMessage);
-        }
-    }
 
     private static void validateToggleGroup(ToggleGroup toggleGroup, String errorMessage, List<String> errors) {
         if (toggleGroup.getSelectedToggle() == null) {
@@ -211,11 +251,23 @@ public class ValidationProtocol {
     }
 
 
+
     public static void showErrorAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+
+    public static void showSuccessAlert(String header, String content){
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Spremanje uspješno");
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+
     }
 }

@@ -3,8 +3,10 @@ package hr.java.project.projectfxapp.controllers;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -94,36 +96,51 @@ public class AddNewProjectController {
             filledFields++;
         }
 
-        // Calculate the completion percentage
         return (double) filledFields / TOTAL_FIELDS;
     }
 
     public void saveProject(ActionEvent actionEvent) {
+
         List<MathProject> mathProjects = FileReaderUtil.
                 getMathProjectsFromFile(FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
                         FileReaderUtil.getAddressesFromFile()), FileReaderUtil.getStudentsFromFile());
 
 
-        Long projectId = FileWriterUtil.getNextProjectId();
-        String projectName = projectNameTextField.getText();
-        String projectDescription = projectDescriptionTextArea.getText();
+        try{
 
-        Map<MathClub, List<Student>> projectParticipants = new HashMap<>();
+            ValidationProtocol.validateProject(projectNameTextField, projectDescriptionTextArea,
+                    projectMathClubsParticipantsListView, projectStudentParticipantsListView);
+            Long projectId = FileWriterUtil.getNextProjectId();
+            String projectName = projectNameTextField.getText();
+            String projectDescription = projectDescriptionTextArea.getText();
 
-        for (MathClub selectedMathClub : projectMathClubsParticipantsListView.getSelectionModel().getSelectedItems()) {
-            List<Student> selectedStudents = projectStudentParticipantsListView.getSelectionModel().getSelectedItems()
-                    .stream()
-                    .filter(student -> student.getClubMembership().getClubId().equals(selectedMathClub.getId()))
-                            .collect(Collectors.toList());
+            Map<MathClub, List<Student>> projectParticipants = new HashMap<>();
 
-            projectParticipants.put(selectedMathClub, selectedStudents);
+            for (MathClub selectedMathClub : projectMathClubsParticipantsListView.getSelectionModel().getSelectedItems()) {
+                List<Student> selectedStudents = projectStudentParticipantsListView.getSelectionModel().getSelectedItems()
+                        .stream()
+                        .filter(student -> student.getClubMembership().getClubId().equals(selectedMathClub.getId()))
+                        .collect(Collectors.toList());
+
+                projectParticipants.put(selectedMathClub, selectedStudents);
+            }
+
+
+            MathProject newProject = new MathProject(projectId, projectName, projectDescription, projectParticipants);
+
+            mathProjects.add(newProject);
+            FileWriterUtil.saveProjectsToFile(mathProjects);
+
+            ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
+                    "Projekt " + newProject.getName() + "  uspješno se spremio");
+        }
+        catch (ValidationException ex) {
+            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+                    ex.getMessage());
         }
 
 
-        MathProject newProject = new MathProject(projectId, projectName, projectDescription, projectParticipants);
 
-        mathProjects.add(newProject);
-        FileWriterUtil.saveProjectsToFile(mathProjects);
 
 
 

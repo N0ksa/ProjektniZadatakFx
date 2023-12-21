@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -76,20 +77,30 @@ public class FileReaderUtil {
 
 
                 Long mathClubId;
-                LocalDate joinDate;
+
+                LocalDate joinDate = null;
 
                 mathClubId = Long.parseLong(reader.readLine());
 
-                joinDate = LocalDate.parse(reader.readLine(),
-                       DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()));
-                ClubMembership membership = new ClubMembership(mathClubId, joinDate);
+                ClubMembership clubMembership;
+
+                try{
+                    joinDate = LocalDate.parse(reader.readLine(),
+                            DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()));
+
+                     clubMembership = new ClubMembership(mathClubId, joinDate);
+
+                }catch (DateTimeParseException ex){
+                     clubMembership = new ClubMembership(mathClubId, joinDate);
+                }
+
 
                 reader.readLine();
 
 
 
                 students.add(new Student(studentId, studentName, studentSurname, studentWebAddress,
-                        studentYearOfStudy, grades, membership));
+                        studentYearOfStudy, grades, clubMembership));
 
             }
 

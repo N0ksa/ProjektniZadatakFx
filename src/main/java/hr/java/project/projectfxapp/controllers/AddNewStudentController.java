@@ -34,13 +34,9 @@ public class AddNewStudentController {
     @FXML
     private TableColumn<SubjectGrade, String> subjectGradeTableColumn;
     @FXML
-    private RadioButton drugaGodinaRadioButton;
-    @FXML
-    private RadioButton trecaGodinaRadioButton;
+    private RadioButton  prvaGodinaRadioButton, drugaGodinaRadioButton, trecaGodinaRadioButton;
     @FXML
     private ToggleGroup yearOfStudySelection;
-    @FXML
-    private RadioButton prvaGodinaRadioButton;
     @FXML
     private TableView<SubjectGrade> studentGradesTableView;
     @FXML
@@ -79,10 +75,7 @@ public class AddNewStudentController {
 
 
         List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
-                FileReaderUtil.getAddressesFromFile())
-                .stream()
-                .filter(mathClub -> !mathClub.getId().equals(0L))
-                .collect(Collectors.toList());
+                FileReaderUtil.getAddressesFromFile());
 
         ObservableList<MathClub> observableMathClubsList = FXCollections.observableList(mathClubs);
         mathClubComboBox.setItems(observableMathClubsList);
@@ -117,15 +110,25 @@ public class AddNewStudentController {
 
 
     public void showDatePicker(ActionEvent actionEvent) {
-        joinDateDatePicker.setVisible(true);
-        chooseDateLabel.setVisible(true);
+
+        MathClub selectedMathClub = mathClubComboBox.getSelectionModel().getSelectedItem();
+
+        if (!selectedMathClub.getId().equals(0L)){
+            joinDateDatePicker.setVisible(true);
+            chooseDateLabel.setVisible(true);
+        }else{
+            joinDateDatePicker.setVisible(false);
+            chooseDateLabel.setVisible(false);
+        }
+
     }
 
     public void saveStudent(ActionEvent actionEvent) {
 
         try{
+
             ValidationProtocol.validateStudent(studentNameTextField, studentSurnameTextField, studentEmailTextField,
-                    mathClubComboBox, joinDateDatePicker, subjectGradeTableColumn, yearOfStudySelection);
+                    mathClubComboBox, joinDateDatePicker, studentGradesTableView, yearOfStudySelection);
 
             Long studentId = FileWriterUtil.getNextStudentId();
             String studentName = studentNameTextField.getText();
@@ -171,6 +174,12 @@ public class AddNewStudentController {
             if (!newStudent.getClubMembership().getClubId().equals(0L)){
                 FileWriterUtil.saveMathClubsToFile(mathClubs);
             }
+
+            ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
+                    "Student " + newStudent.getName() + " " + newStudent.getSurname() + " uspješno se spremio!");
+
+
+
 
         }catch (ValidationException ex){
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
