@@ -5,6 +5,7 @@ import hr.java.project.projectfxapp.entities.ClubMembership;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -42,7 +43,7 @@ public class AddNewMathClubController {
         ObservableList<Student> availableStudentsObservableList = FXCollections.observableList(availableStudentsList);
         availableStudentListView.setItems(availableStudentsObservableList);
 
-        List<Address> availableAddresses = FileReaderUtil.getAddressesFromFile();
+        List<Address> availableAddresses = DatabaseUtil.getAddresses();
         ObservableList<Address> availableAddressesObservableList = FXCollections.observableList(availableAddresses);
         clubAddressComboBox.setItems(availableAddressesObservableList);
     }

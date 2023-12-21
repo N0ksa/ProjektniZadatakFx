@@ -12,6 +12,7 @@ import java.util.Objects;
  * Predstavlja studenta.
  * Implementira sučelje {@link Gradable}, što znači da se može ocjenjivati.
  */
+
 public class Student extends NamedEntity implements Gradable, Serializable {
     private String surname;
     private String email;

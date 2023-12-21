@@ -12,24 +12,24 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.CompetitionsSearchController">
    <children>
        <fx:include source="menu.fxml" />
-      <Label layoutX="252.0" layoutY="48.0" text="Competitions search">
+      <Label layoutX="252.0" layoutY="48.0" text="Traži natjecanje">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="175.0" layoutY="128.0" text="Competition name:" />
-      <TextField fx:id="competitionNameTextField" layoutX="300.0" layoutY="124.0" prefHeight="25.0" prefWidth="182.0" />
+      <Label layoutX="175.0" layoutY="128.0" text="Ime natjecanja:" />
+      <TextField fx:id="competitionNameTextField" layoutX="300.0" layoutY="124.0" prefHeight="25.0" prefWidth="182.0" promptText="Unesi ime" />
       <DatePicker fx:id="competitionDatePicker" layoutX="300.0" layoutY="188.0" prefHeight="25.0" prefWidth="182.0" />
-      <Label layoutX="178.0" layoutY="192.0" text="Competition date:" />
-      <Button layoutX="275.0" layoutY="233.0" mnemonicParsing="false" onAction="#searchCompetitions" text="Search" />
+      <Label layoutX="178.0" layoutY="192.0" text="Datum natjecanja:" />
+      <Button layoutX="275.0" layoutY="233.0" mnemonicParsing="false" onAction="#searchCompetitions" text="Traži" />
       <TableView fx:id="competitionTableView" layoutX="-3.0" layoutY="275.0" prefHeight="200.0" prefWidth="679.0">
         <columns>
-          <TableColumn fx:id="competitionNameTableColumn" prefWidth="107.0" text="Name" />
-            <TableColumn fx:id="competitionDescriptionTableColumn" prefWidth="196.0" text="Description" />
-            <TableColumn fx:id="competitionAddressTableColumn" prefWidth="105.0" text="Address" />
-          <TableColumn fx:id="competitionDateTableColumn" minWidth="0.0" prefWidth="82.0" text="Date" />
-            <TableColumn fx:id="competitionTimeTableColumn" prefWidth="56.0" text="Time" />
-            <TableColumn fx:id="competitionWinnerTableColumn" prefWidth="132.0" text="Winner" />
+          <TableColumn fx:id="competitionNameTableColumn" prefWidth="107.0" text="Ime" />
+            <TableColumn fx:id="competitionDescriptionTableColumn" prefWidth="196.0" text="Opis" />
+            <TableColumn fx:id="competitionAddressTableColumn" prefWidth="105.0" text="Adresa" />
+          <TableColumn fx:id="competitionDateTableColumn" minWidth="0.0" prefWidth="82.0" text="Datum" />
+            <TableColumn fx:id="competitionTimeTableColumn" prefWidth="56.0" text="Vijeme" />
+            <TableColumn fx:id="competitionWinnerTableColumn" prefWidth="132.0" text="Pobiednik" />
         </columns>
       </TableView>
       <Button layoutX="365.0" layoutY="233.0" mnemonicParsing="false" onAction="#resetCompetitions" text="Reset" />

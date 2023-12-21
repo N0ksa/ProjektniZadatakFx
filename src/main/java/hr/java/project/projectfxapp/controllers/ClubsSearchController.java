@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.controllers;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -36,7 +37,7 @@ public class ClubsSearchController {
 
 
     public void initialize(){
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
         mathClubs.removeIf(mathClub -> mathClub.getId().equals(0L));
 
 
@@ -72,8 +73,7 @@ public class ClubsSearchController {
 
     public void clubSearch(ActionEvent actionEvent) {
         String clubName = clubNameTextField.getText();
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
-                FileReaderUtil.getAddressesFromFile());
+        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
         List<MathClub> filteredMathClubs = mathClubs.stream()
                 .filter(mathClub -> mathClub.getName()

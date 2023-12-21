@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.controllers;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -58,7 +59,7 @@ public class AddNewCompetitionController {
     public void initialize(){
         List<Student> potentialParticipantsList = FileReaderUtil.getStudentsFromFile();
         ObservableList<Student> potentialParticipantsObservableList = FXCollections.observableList(potentialParticipantsList);
-        List<Address> addressesList = FileReaderUtil.getAddressesFromFile();
+        List<Address> addressesList = DatabaseUtil.getAddresses();
         ObservableList<Address> addressObservableList = FXCollections.observableList(addressesList);
 
         competitionParticipantsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

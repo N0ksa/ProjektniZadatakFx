@@ -3,16 +3,14 @@ package hr.java.project.projectfxapp.controllers;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.time.DateTimeException;
@@ -47,11 +45,8 @@ public class StudentsSearchController {
 
 
 
-
-
     public void initialize(){
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
-        List<Student>  students  = FileReaderUtil.getStudentsFromFile();
+        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
         ObservableList <String> obeservableMathClubs = FXCollections.observableList(mathClubs.stream()
                 .map(mathClub -> mathClub.getName())
@@ -60,7 +55,7 @@ public class StudentsSearchController {
         clubComboBox.setItems(obeservableMathClubs);
         clubComboBox.getItems().add(0, "Svi klubovi");
 
-
+        studentsTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         studentNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
@@ -132,7 +127,7 @@ public class StudentsSearchController {
         String studentName = studentNameTextField.getText();
         String clubName = clubComboBox.getValue();
 
-        List<Student> students = FileReaderUtil.getStudentsFromFile();
+        List<Student> students = DatabaseUtil.getStudents();
         List<Student> filteredStudents = students.stream()
                 .filter(student -> student.getName().contains(studentName) || student.getSurname().contains(studentName))
                 .filter(student -> {

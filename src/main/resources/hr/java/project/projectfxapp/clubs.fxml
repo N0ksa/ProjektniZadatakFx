@@ -10,10 +10,9 @@
 
 <AnchorPane prefHeight="516.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.ClubsSearchController">
    <children>
-
        <fx:include source="menu.fxml" />
       <Label layoutX="220.0" layoutY="96.0" text="Club name:" />
-      <TextField fx:id="clubNameTextField" layoutX="302.0" layoutY="92.0" prefHeight="25.0" prefWidth="168.0" />
+      <TextField fx:id="clubNameTextField" layoutX="302.0" layoutY="92.0" prefHeight="25.0" prefWidth="168.0" promptText="Unesi ime" />
       <Label alignment="CENTER" layoutX="284.0" layoutY="44.0" text="Search clubs">
          <font>
             <Font name="System Bold" size="18.0" />
