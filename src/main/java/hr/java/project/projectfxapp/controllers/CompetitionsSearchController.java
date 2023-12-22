@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.controllers;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -29,24 +30,24 @@ public class CompetitionsSearchController {
     @FXML
     private DatePicker competitionDatePicker;
     @FXML
-    private TableView competitionTableView;
+    private TableView<Competition> competitionTableView;
     @FXML
-    private TableColumn competitionNameTableColumn;
+    private TableColumn<Competition, String> competitionNameTableColumn;
     @FXML
-    private TableColumn competitionDescriptionTableColumn;
+    private TableColumn<Competition, String> competitionDescriptionTableColumn;
     @FXML
-    private TableColumn competitionAddressTableColumn;
+    private TableColumn<Competition, String> competitionAddressTableColumn;
     @FXML
-    private TableColumn competitionTimeTableColumn;
+    private TableColumn<Competition, String> competitionTimeTableColumn;
     @FXML
-    private TableColumn competitionDateTableColumn;
+    private TableColumn<Competition, String> competitionDateTableColumn;
     @FXML
-    private TableColumn competitionWinnerTableColumn;
+    private TableColumn<Competition, String>competitionWinnerTableColumn;
 
     private static List<Competition> competitions;
 
     public void initialize(){
-        competitions = FileReaderUtil.getMathCompetitionsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+        competitions = DatabaseUtil.getCompetitions();
 
         competitionNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {

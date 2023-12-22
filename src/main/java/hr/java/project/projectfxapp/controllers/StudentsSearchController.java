@@ -46,6 +46,7 @@ public class StudentsSearchController {
 
 
     public void initialize(){
+
         List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
         ObservableList <String> obeservableMathClubs = FXCollections.observableList(mathClubs.stream()

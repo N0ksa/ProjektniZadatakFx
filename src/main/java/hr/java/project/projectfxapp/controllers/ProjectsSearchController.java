@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -23,28 +24,24 @@ import java.util.stream.Collectors;
 import static hr.java.project.projectfxapp.utility.FileReaderUtil.*;
 public class ProjectsSearchController {
     @FXML
-    private TableView projectsTableView;
+    private TableView<MathProject> projectsTableView;
     @FXML
     private TextField projectNameTextField;
     @FXML
-    private  TableColumn projectNameTableColumn;
+    private  TableColumn<MathProject, String> projectNameTableColumn;
     @FXML
-    private  TableColumn projectDescriptionTableColumn;
+    private  TableColumn<MathProject, String> projectDescriptionTableColumn;
     @FXML
-    private  TableColumn projectCollaboratorsColumnTable;
+    private  TableColumn<MathProject, String> projectCollaboratorsColumnTable;
     @FXML
-    private  TableColumn projectClubColumnTable;
+    private  TableColumn<MathProject, String> projectClubColumnTable;
     @FXML
-    private  TableColumn projectMembersColumnTable;
+    private  TableColumn<MathProject, String> projectMembersColumnTable;
 
-    private static List<MathProject> projects;
-    private static List<Student> students;
 
 
     public void initialize(){
 
-        students = getStudentsFromFile();
-        projects = getMathProjectsFromFile(getMathClubsFromFile(students, getAddressesFromFile()), students);
         projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
@@ -91,8 +88,11 @@ public class ProjectsSearchController {
 
 
     public void projectSearch(){
+
+        List<MathProject> mathProjects = DatabaseUtil.getProjects();
+
         String projectName = projectNameTextField.getText();
-        List<MathProject> filteredProjects = projects.stream()
+        List<MathProject> filteredProjects = mathProjects.stream()
                 .filter(project -> project.getName().contains(projectName))
                 .collect(Collectors.toList());
 

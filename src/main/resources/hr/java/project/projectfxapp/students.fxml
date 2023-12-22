@@ -22,7 +22,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="184.0" layoutY="165.0" text="Odaber klub studenta:">
+      <Label layoutX="184.0" layoutY="165.0" text="Odaberi klub studenta:">
          <font>
             <Font size="14.0" />
          </font>
