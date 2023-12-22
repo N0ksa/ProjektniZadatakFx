@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -486,6 +487,123 @@ public class DatabaseUtil {
             return mathProjectCollaborators;
     }
 
+
+    public static void saveMathClubs(List<MathClub> mathClubs){
+        try (Connection connection = connectToDatabase()) {
+            for (MathClub mathClub : mathClubs) {
+
+                String insertMathClubSql = "INSERT INTO MATH_CLUB(NAME, ADDRESS_ID) VALUES(?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(insertMathClubSql, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, mathClub.getName());
+                pstmt.setLong(2, mathClub.getAddress().getAddressId());
+                pstmt.executeUpdate();
+
+
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    Long mathclubId = generatedKeys.getLong(1);
+
+                    for (Student member : mathClub.getStudents()) {
+                        String insertMembersIntoMathClubStudentsSql = "INSERT INTO MATH_CLUB_STUDENTS(CLUB_ID, STUDENT_ID) VALUES(?, ?);";
+                        pstmt = connection.prepareStatement(insertMembersIntoMathClubStudentsSql);
+                        pstmt.setLong(1, mathclubId);
+                        pstmt.setLong(2, member.getId());
+                        pstmt.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja matematičkih klubova u bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+    public static void saveMathProjects(List<MathProject> mathProjects){
+        try (Connection connection = connectToDatabase()) {
+            for (MathProject mathProject: mathProjects) {
+
+                String insertMathProjectSql = "INSERT INTO MATH_PROJECT(NAME, DESCRIPTION) VALUES(?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(insertMathProjectSql, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, mathProject.getName());
+                pstmt.setString(2, mathProject.getDescription());
+                pstmt.executeUpdate();
+
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+
+                    Long projectId = generatedKeys.getLong(1);
+
+                    for (Map.Entry<MathClub, List<Student>> entry : mathProject.getCollaborators().entrySet()) {
+                        String insertMembersIntoMathClubStudentsSql =
+                                "INSERT INTO PROJECT_COLLABORATORS (PROJECT_ID, MATH_CLUB_ID, STUDENT_ID) VALUES(?,?,?);";
+
+                        pstmt = connection.prepareStatement(insertMembersIntoMathClubStudentsSql);
+                        pstmt.setLong(1, projectId);
+                        pstmt.setLong(2, entry.getKey().getId());
+
+                        List<Student> clubMembersCollaborators = entry.getValue();
+
+                        for (Student clubMemberCollaborator : clubMembersCollaborators) {
+                            System.out.println(clubMemberCollaborator.getId());
+                            pstmt.setLong(3, clubMemberCollaborator.getId());
+                            pstmt.executeUpdate();
+                        }
+
+                    }
+                }
+            }
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja matematičkih projekata u bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+    public static void saveMathCompetitions(List<Competition> mathCompetitions){
+        try (Connection connection = connectToDatabase()) {
+            for (Competition mathCompetition: mathCompetitions) {
+
+                String insertCompetitionProjectSql = "INSERT INTO COMPETITION(NAME, DESCRIPTION, ADDRESS_ID, " +
+                        "TIME_OF_COMPETITION, AUDITORIUM_BUILDING, AUDITORIUM_HALL, DATE_OF_COMPETITION) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(insertCompetitionProjectSql, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, mathCompetition.getName());
+                pstmt.setString(2, mathCompetition.getDescription());
+                pstmt.setLong(3, mathCompetition.getAddress().getAddressId());
+
+                Time sqlTime = Time.valueOf(mathCompetition.getTimeOfCompetition().toLocalTime());
+                pstmt.setTime(4, sqlTime);
+
+                pstmt.setString(5, mathCompetition.getAuditorium().building());
+                pstmt.setString(6, mathCompetition.getAuditorium().hall());
+                pstmt.setDate(7, Date.valueOf(mathCompetition.getTimeOfCompetition().toLocalDate()));
+                pstmt.executeUpdate();
+
+
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+
+                    Long competitionId = generatedKeys.getLong(1);
+
+                    for (CompetitionResult competitionResult : mathCompetition.getCompetitionResults()) {
+                        String insertParticipantScoreIntoCompetitionResultsSql =
+                                "INSERT INTO COMPETITION_RESULTS  (COMPETITION_ID, STUDENT_ID, SCORE) VALUES(?,?,?);";
+
+                        pstmt = connection.prepareStatement(insertParticipantScoreIntoCompetitionResultsSql);
+                        pstmt.setLong(1, competitionId);
+                        pstmt.setLong(2, competitionResult.participant().getId());
+                        pstmt.setBigDecimal(3, competitionResult.score());
+                        pstmt.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
+            logger.error(message, ex);
+        }
+    }
 
 
 }

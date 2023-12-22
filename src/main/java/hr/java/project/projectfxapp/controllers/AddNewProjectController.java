@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -101,9 +102,7 @@ public class AddNewProjectController {
 
     public void saveProject(ActionEvent actionEvent) {
 
-        List<MathProject> mathProjects = FileReaderUtil.
-                getMathProjectsFromFile(FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
-                        FileReaderUtil.getAddressesFromFile()), FileReaderUtil.getStudentsFromFile());
+        List<MathProject> mathProjects = new ArrayList<>();
 
 
         try{
@@ -129,7 +128,7 @@ public class AddNewProjectController {
             MathProject newProject = new MathProject(projectId, projectName, projectDescription, projectParticipants);
 
             mathProjects.add(newProject);
-            FileWriterUtil.saveProjectsToFile(mathProjects);
+            DatabaseUtil.saveMathProjects(mathProjects);
 
             ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
                     "Projekt " + newProject.getName() + "  uspješno se spremio");
@@ -138,9 +137,6 @@ public class AddNewProjectController {
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
-
-
-
 
 
 

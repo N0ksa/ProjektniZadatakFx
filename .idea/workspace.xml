@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Počeo povezivat projekt s bazom podataka&#10;&#10;-napravio novu klasu DatabaseUtil.java koja će služiti za dohvaćanje i pisanje po bazi podataka.&#10;&#10;- za sada napravio nekoliko metoda koje dohvaćaju studente, matematičke klubove i adrese iz baze podataka&#10;&#10;- nisam do kraja sastavio bazu podataka">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/CompetitionsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/CompetitionsSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ProjectsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ProjectsSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/pogreske.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/pogreske.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewCompetitionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewCompetitionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewProjectController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +118,7 @@
       <workItem from="1703158333058" duration="5963000" />
       <workItem from="1703164953006" duration="4870000" />
       <workItem from="1703174772062" duration="15326000" />
-      <workItem from="1703258998688" duration="10809000" />
+      <workItem from="1703258998688" duration="18953000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -204,7 +204,14 @@
       <option name="presentableId" value="LOCAL−00012" />
       <updated>1703192624347</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL−00013" summary="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)">
+      <option name="closed" value="true" />
+      <created>1703270403414</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1703270403415</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,25 +241,30 @@
     <MESSAGE value="Počeo raditi logiku za validaciju korisnikovog unosa.&#10;&#10;-napravio sam novu klasu ValidationProtocol.java koja će služiti za validaciju unešenih podataka prije spremanja." />
     <MESSAGE value="Napravio većinu validacije, još je ostalo par sitnica koje ću napraviti poslije povezivanja s bazom podataka.&#10;&#10;-kod validacije unosa natjecanja moram ispraviti način osvježavanja kolumne ocjena - vjerojatno nova klasa koja će prikazivati ocjenu kao string&#10;-možda promijenim logiku unosa novog matematičkog kluba i uklonim odabir studenata." />
     <MESSAGE value="Počeo povezivat projekt s bazom podataka&#10;&#10;-napravio novu klasu DatabaseUtil.java koja će služiti za dohvaćanje i pisanje po bazi podataka.&#10;&#10;- za sada napravio nekoliko metoda koje dohvaćaju studente, matematičke klubove i adrese iz baze podataka&#10;&#10;- nisam do kraja sastavio bazu podataka" />
-    <option name="LAST_COMMIT_MESSAGE" value="Počeo povezivat projekt s bazom podataka&#10;&#10;-napravio novu klasu DatabaseUtil.java koja će služiti za dohvaćanje i pisanje po bazi podataka.&#10;&#10;- za sada napravio nekoliko metoda koje dohvaćaju studente, matematičke klubove i adrese iz baze podataka&#10;&#10;- nisam do kraja sastavio bazu podataka" />
+    <MESSAGE value="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java</url>
-          <line>204</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java</url>
           <line>130</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="8" />
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java</url>
+          <line>562</line>
+          <properties class="hr.java.project.projectfxapp.utility.DatabaseUtil" method="saveMathCompetitions">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

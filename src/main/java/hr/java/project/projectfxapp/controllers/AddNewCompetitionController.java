@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class AddNewCompetitionController {
 
 
     public void initialize(){
-        List<Student> potentialParticipantsList = FileReaderUtil.getStudentsFromFile();
+        List<Student> potentialParticipantsList = DatabaseUtil.getStudents();
         ObservableList<Student> potentialParticipantsObservableList = FXCollections.observableList(potentialParticipantsList);
         List<Address> addressesList = DatabaseUtil.getAddresses();
         ObservableList<Address> addressObservableList = FXCollections.observableList(addressesList);
@@ -97,8 +98,7 @@ public class AddNewCompetitionController {
 
 
 
-            List<Competition> competitions = FileReaderUtil.getMathCompetitionsFromFile(
-                    FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
+            List<Competition> competitions = new ArrayList<>();
 
             Long competitionId = FileWriterUtil.getNextCompetitionId();
             String competitionName = competitionNameTextField.getText();
@@ -126,7 +126,7 @@ public class AddNewCompetitionController {
 
             competitions.add(newCompetition);
 
-            FileWriterUtil.saveCompetitionsToFile(competitions);
+            DatabaseUtil.saveMathCompetitions(competitions);
 
 
             ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",

@@ -13,12 +13,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,8 +53,9 @@ public class AddNewMathClubController {
     public void saveMathClubs(ActionEvent actionEvent) {
 
         try{
-            ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox, availableStudentListView,
-                    studentJoinDateDatePicker);
+
+            //ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox, availableStudentListView,
+              //      studentJoinDateDatePicker);
 
 
             Long mathClubId = FileWriterUtil.getNextMathClubId();
@@ -62,35 +65,15 @@ public class AddNewMathClubController {
             LocalDate studentsJoinDate = studentJoinDateDatePicker.getValue();
 
 
-            List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
-                    FileReaderUtil.getAddressesFromFile());
-
-            mathClubs.forEach(mathClub -> {
-                clubMembers.forEach(clubMember -> {
-                    if (mathClub.hasMember(clubMember)){
-                        mathClub.getStudents().remove(clubMember);
-                    }
-                });
-            });
-
             clubMembers.forEach(member -> member.setClubMembership(new ClubMembership(mathClubId, studentsJoinDate)));
+
             MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
 
-
+            List<MathClub> mathClubs = new ArrayList<>();
             mathClubs.add(newMathClub);
+            DatabaseUtil.saveMathClubs(mathClubs);
 
-            FileWriterUtil.saveMathClubsToFile(mathClubs);
 
-            List <Student> studentsToUpdate = FileReaderUtil.getStudentsFromFile();
-            studentsToUpdate.forEach(student -> {
-                for (Student member : clubMembers){
-                    if (student.getId().equals(member.getId())){
-                        student.getClubMembership().setClubId(mathClubId);
-                        student.getClubMembership().setJoinDate(studentsJoinDate);
-                    }
-                }
-            });
-            FileWriterUtil.saveStudentsToFile(studentsToUpdate);
 
 
             ValidationProtocol.showSuccessAlert("Spremanje novog kluba je bilo uspješno",
