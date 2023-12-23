@@ -150,7 +150,7 @@ public class AddNewStudentController {
                 yearOfStudy = 3;
             }
 
-            ClubMembership studentClubMembership = new ClubMembership(studentClub.getId(), joinDate);
+            ClubMembership studentClubMembership = new ClubMembership(0L,studentClub.getId(), joinDate);
 
             Map<String, Integer> studentGrades = new LinkedHashMap<>();
             for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){

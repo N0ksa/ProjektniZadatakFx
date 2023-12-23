@@ -1,35 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.ProjectsSearchController">
    <children>
-       <fx:include source="menu.fxml" />
-      <Label layoutX="265.0" layoutY="53.0" text="Traži projekt">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="202.0" layoutY="112.0" text="Ime projekta:" />
-      <TextField fx:id="projectNameTextField" layoutX="318.0" layoutY="108.0" prefHeight="25.0" prefWidth="192.0" promptText="Unesi ime" />
-      <Button layoutX="276.0" layoutY="150.0" mnemonicParsing="false" onAction="#projectSearch" text="Traži" />
-      <TableView fx:id="projectsTableView" layoutX="-8.0" layoutY="200.0" prefHeight="200.0" prefWidth="683.0">
-        <columns>
-          <TableColumn fx:id="projectNameTableColumn" prefWidth="75.0" text="Ime" />
-          <TableColumn fx:id="projectDescriptionTableColumn" prefWidth="172.0" text="Opis" />
-            <TableColumn fx:id="projectCollaboratorsColumnTable" prefWidth="435.0" text="Suradnici">
-               <columns>
-                  <TableColumn fx:id="projectClubColumnTable" prefWidth="89.0" text="Klub" />
-                  <TableColumn fx:id="projectMembersColumnTable" prefWidth="346.0" text="Članovi" />
-               </columns>
-            </TableColumn>
-        </columns>
-      </TableView>
+      <GridPane layoutX="2.0" prefHeight="400.0" prefWidth="675.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="10.0" prefWidth="336.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0" prefWidth="339.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="63.0" minHeight="2.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="110.0" minHeight="6.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="254.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="251.0" minHeight="10.0" prefHeight="248.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+             <fx:include source="menu.fxml" />
+            <Label text="Traži projekt" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Ime projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="projectNameTextField" prefHeight="25.0" prefWidth="192.0" promptText="Unesi ime" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#projectSearch" text="Traži" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#deleteProject" text="Ukloni" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Button>
+            <TableView fx:id="projectsTableView" prefHeight="200.0" prefWidth="683.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+              <columns>
+                <TableColumn fx:id="projectNameTableColumn" prefWidth="75.0" text="Ime" />
+                <TableColumn fx:id="projectDescriptionTableColumn" prefWidth="172.0" text="Opis" />
+                  <TableColumn fx:id="projectCollaboratorsColumnTable" prefWidth="435.0" text="Suradnici">
+                     <columns>
+                        <TableColumn fx:id="projectClubColumnTable" prefWidth="89.0" text="Klub" />
+                        <TableColumn fx:id="projectMembersColumnTable" prefWidth="346.0" text="Članovi" />
+                     </columns>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <Button mnemonicParsing="false" onAction="#reset" text="Reset" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

@@ -32,17 +32,16 @@ public class DatabaseUtil {
     }
 
 
-
-    public static List<Address> getAddresses(){
+    public static List<Address> getAddresses() {
         List<Address> addresses = new ArrayList<>();
 
-        try(Connection connection = connectToDatabase()){
+        try (Connection connection = connectToDatabase()) {
             String sqlQuery = "SELECT * FROM ADDRESS";
             Statement stmt = connection.createStatement();
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 Long addressId = rs.getLong("ADDRESS_ID");
                 String streetName = rs.getString("STREET");
@@ -57,40 +56,42 @@ public class DatabaseUtil {
                 addresses.add(address.build());
             }
 
-        }catch (SQLException | IOException ex){
+        } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
-        };
+        }
+        ;
 
-        return  addresses;
+        return addresses;
 
     }
 
 
-    public static List<MathClub> getMathClubs(){
+    public static List<MathClub> getMathClubs() {
 
         List<MathClub> mathClubs = new ArrayList<>();
 
-        try(Connection connection = connectToDatabase()){
+        try (Connection connection = connectToDatabase()) {
             String sqlQuery = "SELECT * FROM MATH_CLUB ";
             Statement stmt = connection.createStatement();
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 Long mathClubId = rs.getLong("CLUB_ID");
-                Optional <MathClub> mathClub = getMathClub(mathClubId);
+                Optional<MathClub> mathClub = getMathClub(mathClubId);
 
                 mathClub.ifPresent(mathClubs::add);
             }
 
-        }catch (SQLException | IOException ex){
+        } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
-        };
+        }
+        ;
 
-        return  mathClubs;
+        return mathClubs;
 
     }
 
@@ -100,13 +101,13 @@ public class DatabaseUtil {
 
         MathClub mathClub = null;
 
-        try(Connection connection = connectToDatabase()){
+        try (Connection connection = connectToDatabase()) {
             String sqlQuery = String.format("SELECT * FROM MATH_CLUB WHERE CLUB_ID = %d", mathClubId);
             Statement stmt = connection.createStatement();
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 String mathClubName = rs.getString("NAME");
                 Long addressId = rs.getLong("ADDRESS_ID");
@@ -122,12 +123,13 @@ public class DatabaseUtil {
 
             }
 
-        }catch (SQLException | IOException ex){
+        } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
-        };
+        }
+        ;
 
-        return  Optional.ofNullable(mathClub);
+        return Optional.ofNullable(mathClub);
 
 
     }
@@ -247,7 +249,7 @@ public class DatabaseUtil {
                 Long clubId = rs.getLong("CLUB_ID");
                 LocalDate joinDate = rs.getDate("JOIN_DATE").toLocalDate();
 
-                return  new ClubMembership(clubId, joinDate);
+                return new ClubMembership(membershipId, clubId, joinDate);
 
             }
 
@@ -260,7 +262,7 @@ public class DatabaseUtil {
         return null;
     }
 
-    private static Map<String, Integer> getStudentGrades(Long studentId){
+    private static Map<String, Integer> getStudentGrades(Long studentId) {
 
         Map<String, Integer> studentGrades = new HashMap<>();
 
@@ -313,7 +315,6 @@ public class DatabaseUtil {
                 LocalDateTime dateAndTimeOfCompetition = dateOfCompetition.atTime(timeOfCompetition.toLocalTime());
 
 
-
                 String auditoriumBuildingName = rs.getString("AUDITORIUM_BUILDING");
                 String auditoriumHallName = rs.getString("AUDITORIUM_HALL");
                 Auditorium auditorium = new Auditorium(auditoriumBuildingName, auditoriumHallName);
@@ -324,7 +325,7 @@ public class DatabaseUtil {
                 competitionAddress.ifPresent(address -> {
 
                     Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription
-                            ,address, auditorium, dateAndTimeOfCompetition, competitionResults);
+                            , address, auditorium, dateAndTimeOfCompetition, competitionResults);
 
                     competitions.add(newCompetition);
                 });
@@ -374,7 +375,6 @@ public class DatabaseUtil {
 
         return competitionResults;
     }
-
 
 
     private static Optional<Address> getAddress(Long addressId) {
@@ -457,12 +457,11 @@ public class DatabaseUtil {
             ResultSet rs = stmt.getResultSet();
 
 
-
             while (rs.next()) {
                 Long mathClubCollaboratorId = rs.getLong("MATH_CLUB_ID");
                 Optional<MathClub> mathClubCollaborator = getMathClub(mathClubCollaboratorId);
                 Long studentCollaboratorId = rs.getLong("STUDENT_ID");
-                Optional <Student> studentCollaborator = getStudent(studentCollaboratorId);
+                Optional<Student> studentCollaborator = getStudent(studentCollaboratorId);
 
 
                 if (mathClubCollaborator.isPresent() && studentCollaborator.isPresent()) {
@@ -474,18 +473,16 @@ public class DatabaseUtil {
             }
 
 
-
-
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
         }
 
-            return mathProjectCollaborators;
+        return mathProjectCollaborators;
     }
 
 
-    public static void saveMathClubs(List<MathClub> mathClubs){
+    public static void saveMathClubs(List<MathClub> mathClubs) {
         try (Connection connection = connectToDatabase()) {
             for (MathClub mathClub : mathClubs) {
 
@@ -516,9 +513,9 @@ public class DatabaseUtil {
         }
     }
 
-    public static void saveMathProjects(List<MathProject> mathProjects){
+    public static void saveMathProjects(List<MathProject> mathProjects) {
         try (Connection connection = connectToDatabase()) {
-            for (MathProject mathProject: mathProjects) {
+            for (MathProject mathProject : mathProjects) {
 
                 String insertMathProjectSql = "INSERT INTO MATH_PROJECT(NAME, DESCRIPTION) VALUES(?, ?)";
 
@@ -557,9 +554,9 @@ public class DatabaseUtil {
         }
     }
 
-    public static void saveMathCompetitions(List<Competition> mathCompetitions){
+    public static void saveMathCompetitions(List<Competition> mathCompetitions) {
         try (Connection connection = connectToDatabase()) {
-            for (Competition mathCompetition: mathCompetitions) {
+            for (Competition mathCompetition : mathCompetitions) {
 
                 String insertCompetitionProjectSql = "INSERT INTO COMPETITION(NAME, DESCRIPTION, ADDRESS_ID, " +
                         "TIME_OF_COMPETITION, AUDITORIUM_BUILDING, AUDITORIUM_HALL, DATE_OF_COMPETITION) " +
@@ -603,9 +600,9 @@ public class DatabaseUtil {
     }
 
 
-    public static void saveStudents(List<Student> students){
+    public static void saveStudents(List<Student> students) {
         try (Connection connection = connectToDatabase()) {
-            for (Student student: students) {
+            for (Student student : students) {
 
                 Long clubMembershipId = addClubMembershipForStudent(student);
 
@@ -626,7 +623,7 @@ public class DatabaseUtil {
                 if (generatedKeys.next()) {
 
                     Long studentId = generatedKeys.getLong(1);
-                    Map<String,Integer> studentGrades = student.getGrades();
+                    Map<String, Integer> studentGrades = student.getGrades();
                     Long studentMathClubId = student.getClubMembership().getClubId();
 
                     saveStudentGrades(studentId, studentGrades);
@@ -656,7 +653,7 @@ public class DatabaseUtil {
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
             if (generatedKeys.next()) {
 
-               clubMembershipId = generatedKeys.getLong(1);
+                clubMembershipId = generatedKeys.getLong(1);
 
             }
 
@@ -689,7 +686,6 @@ public class DatabaseUtil {
     private static void saveStudentGrades(Long studentId, Map<String, Integer> studentGrades) {
 
 
-
         try (Connection connection = connectToDatabase()) {
             for (Map.Entry<String, Integer> entry : studentGrades.entrySet()) {
 
@@ -710,4 +706,158 @@ public class DatabaseUtil {
     }
 
 
+    public static boolean deleteProject(MathProject mathProjectForDeletion) {
+        boolean projectDeletionSuccess = false;
+
+        try (Connection connection = connectToDatabase()) {
+
+            String deleteProjectCollaboratorsSql = "DELETE FROM PROJECT_COLLABORATORS WHERE PROJECT_ID = ?;";
+
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteProjectCollaboratorsSql)) {
+                pstmtCollaborators.setLong(1, mathProjectForDeletion.getId());
+                pstmtCollaborators.executeUpdate();
+
+            }
+
+
+            String deleteProjectSql = "DELETE FROM MATH_PROJECT WHERE PROJECT_ID = ?;";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(deleteProjectSql)) {
+                pstmt.setLong(1, mathProjectForDeletion.getId());
+                pstmt.executeUpdate();
+                projectDeletionSuccess = true;
+            }
+
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod brisanja projekta iz baze podataka";
+            logger.error(message, ex);
+        }
+
+        return projectDeletionSuccess;
+    }
+
+    public static boolean deleteCompetition(Competition competitionForDeletion) {
+        boolean competitionDeletionSuccess = false;
+
+        try (Connection connection = connectToDatabase()) {
+
+            String deleteCompetitionResultsSql = "DELETE FROM COMPETITION_RESULTS WHERE COMPETITION_ID = ?;";
+
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteCompetitionResultsSql)) {
+                pstmtCollaborators.setLong(1, competitionForDeletion.getId());
+                pstmtCollaborators.executeUpdate();
+
+            }
+
+
+            String deleteCompetitionSql = "DELETE FROM COMPETITION WHERE COMPETITION_ID = ?;";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(deleteCompetitionSql)) {
+                pstmt.setLong(1, competitionForDeletion.getId());
+                pstmt.executeUpdate();
+                competitionDeletionSuccess = true;
+            }
+
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod brisanja natjecanja iz baze podataka";
+            logger.error(message, ex);
+        }
+
+        return competitionDeletionSuccess;
+    }
+
+    public static boolean deleteStudent(Student studentForDeletion) {
+        boolean studentDeletionSuccess = false;
+
+        try (Connection connection = connectToDatabase()) {
+
+            String deleteStudentFromMathClubSql = "DELETE FROM MATH_CLUB_STUDENTS  WHERE STUDENT_ID = ?;";
+
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteStudentFromMathClubSql)) {
+                pstmtCollaborators.setLong(1, studentForDeletion.getId());
+                pstmtCollaborators.executeUpdate();
+
+            }
+
+            String deleteStudentGradesSql = "DELETE FROM STUDENT_GRADES WHERE STUDENT_ID = ?;";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(deleteStudentGradesSql)) {
+                pstmt.setLong(1, studentForDeletion.getId());
+                pstmt.executeUpdate();
+            }
+
+            String deleteStudentCompetitionsResultsSql = "DELETE FROM COMPETITION_RESULTS WHERE STUDENT_ID = ?;";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(deleteStudentCompetitionsResultsSql)) {
+                pstmt.setLong(1, studentForDeletion.getId());
+                pstmt.executeUpdate();
+            }
+
+            String deleteStudentFromProjectsCollaborationsSql = "DELETE FROM PROJECT_COLLABORATORS  WHERE STUDENT_ID = ?;";
+
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteStudentFromProjectsCollaborationsSql)) {
+                pstmtCollaborators.setLong(1, studentForDeletion.getId());
+                pstmtCollaborators.executeUpdate();
+            }
+
+            String deleteStudentSql = "DELETE FROM STUDENT WHERE STUDENT_ID = ?;";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(deleteStudentSql)) {
+                pstmt.setLong(1, studentForDeletion.getId());
+                pstmt.executeUpdate();
+            }
+
+            String deleteClubMembershipFromStudentSql = "DELETE FROM CLUB_MEMBERSHIP WHERE CLUB_MEMBERSHIP_ID = ?;";
+
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteClubMembershipFromStudentSql)) {
+                pstmtCollaborators.setLong(1, studentForDeletion.getClubMembership().getClubMembershipId());
+                pstmtCollaborators.executeUpdate();
+                studentDeletionSuccess = true;
+            }
+
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod brisanja studenta iz baze podataka";
+            logger.error(message, ex);
+        }
+
+        return studentDeletionSuccess;
+    }
+
+    public static boolean deleteMathClub(MathClub mathClubForDeletion) {
+        boolean mathClubDeletionSuccess = false;
+
+        for (Student clubMember : mathClubForDeletion.getStudents()){
+            boolean memberDeletionSuccess = deleteStudent(clubMember);
+            if (!memberDeletionSuccess){
+                return false;
+            }
+        }
+
+        try (Connection connection = connectToDatabase()) {
+
+            String deleteMathClub = "DELETE FROM MATH_CLUB WHERE CLUB_ID = ?;";
+
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteMathClub)) {
+                pstmtCollaborators.setLong(1, mathClubForDeletion.getId());
+                pstmtCollaborators.executeUpdate();
+
+                mathClubDeletionSuccess = true;
+            }
+
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod brisanja matematičkog kluba iz baze podataka";
+            logger.error(message, ex);
+        }
+
+        return mathClubDeletionSuccess;
+
+    }
 }

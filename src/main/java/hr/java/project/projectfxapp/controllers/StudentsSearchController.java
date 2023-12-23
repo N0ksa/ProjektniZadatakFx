@@ -1,14 +1,17 @@
 package hr.java.project.projectfxapp.controllers;
 
+import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -153,15 +156,35 @@ public class StudentsSearchController {
     }
 
 
+    public void deleteStudent(ActionEvent actionEvent) {
 
+        Student studentForDeletion = studentsTableView.getSelectionModel().getSelectedItem();
 
+        if (Optional.ofNullable(studentForDeletion).isPresent()) {
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda brisanja",
+                    "Jeste li sigurni da želite obrisati studenta?",
+                    "Ova radnja je nepovratna.");
 
+            if (positiveConfirmation) {
+                boolean successfulDeletion = DatabaseUtil.deleteStudent(studentForDeletion);
+                if (successfulDeletion) {
+                    ValidationProtocol.showSuccessAlert("Brisanje uspješno",
+                            "Uspješno ste obrisali studenta : " + studentForDeletion.getName() + " " +
+                                    studentForDeletion.getSurname());
+                } else {
+                    ValidationProtocol.showErrorAlert("Brisanje neuspješno",
+                            "Student " + studentForDeletion.getName() + " " + studentForDeletion.getSurname() +
+                                    " nije obrisan", "Nažalost studenta nije moguće obrisati");
+                }
 
+            }
 
+        }
+    }
 
-
-
-
-
-
+    public void reset(ActionEvent actionEvent) {
+        studentNameTextField.setText("");
+        studentsTableView.getItems().clear();
+        clubComboBox.getSelectionModel().clearSelection();
+    }
 }

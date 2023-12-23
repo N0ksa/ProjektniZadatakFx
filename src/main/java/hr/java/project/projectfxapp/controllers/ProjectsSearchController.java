@@ -6,10 +6,12 @@ import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,6 +20,7 @@ import javafx.util.Callback;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -106,5 +109,34 @@ public class ProjectsSearchController {
         projectsTableView.setItems(observableProjectsList);
 
 
+    }
+
+    public void deleteProject(ActionEvent actionEvent) {
+        MathProject mathProjectForDeletion = projectsTableView.getSelectionModel().getSelectedItem();
+
+        if (Optional.ofNullable(mathProjectForDeletion).isPresent()){
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda brisanja",
+                    "Jeste li sigurni da želite obrisati ovaj projekt?",
+                    "Ova radnja je nepovratna.");
+
+            if (positiveConfirmation) {
+                boolean successfulDeletion = DatabaseUtil.deleteProject(mathProjectForDeletion);
+                if (successfulDeletion){
+                    ValidationProtocol.showSuccessAlert("Brisanje uspješno",
+                            "Uspješno ste obrisali projekt : " + mathProjectForDeletion.getName());
+                }else{
+                    ValidationProtocol.showErrorAlert("Brisanje neuspješno",
+                            "Projekt " + mathProjectForDeletion.getName() + " nije obrisan",
+                            "Nažalost projekt nije moguće obrisati");
+                }
+            }
+
+        }
+
+    }
+
+    public void reset(ActionEvent actionEvent) {
+        projectNameTextField.setText("");
+        projectsTableView.getItems().clear();
     }
 }

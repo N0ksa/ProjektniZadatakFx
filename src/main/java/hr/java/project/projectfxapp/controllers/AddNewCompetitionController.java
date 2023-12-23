@@ -142,6 +142,14 @@ public class AddNewCompetitionController {
 
 
     public void reset(ActionEvent actionEvent) {
+        competitionNameTextField.setText("");
+        competitionDescriptionTextArea.setText("");
+        competitionResultsTableView.getItems().clear();
+        competitionAddressComboBox.getSelectionModel().clearSelection();
+        competitionDateDatePicker.setValue(null);
+        competitionTimeTextArea.setText("");
+        auditoriumBuildingNameTextField.setText("");
+        auditoriumHallNameTextField.setText("");
 
     }
 

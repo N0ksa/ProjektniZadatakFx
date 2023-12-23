@@ -265,4 +265,25 @@ public class ValidationProtocol {
         alert.showAndWait();
 
     }
+
+
+
+    public static boolean showConfirmationDialog(String dialogTitle, String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(dialogTitle);
+        alert.setHeaderText(title);
+        alert.setContentText(content);
+
+
+        ButtonType buttonTypeYes = new ButtonType("Da");
+        ButtonType buttonTypeNo = new ButtonType("Ne", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+
+        return result.isPresent() && result.get() == buttonTypeYes;
+    }
+
 }

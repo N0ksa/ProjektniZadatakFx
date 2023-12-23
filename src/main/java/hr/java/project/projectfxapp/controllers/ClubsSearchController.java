@@ -1,10 +1,12 @@
 package hr.java.project.projectfxapp.controllers;
 
 import hr.java.project.projectfxapp.entities.Address;
+import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,6 +20,7 @@ import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ClubsSearchController {
@@ -87,5 +90,34 @@ public class ClubsSearchController {
 
         ObservableList<MathClub> observableMathClubList = FXCollections.observableList(filteredMathClubs);
         clubsTableView.setItems(observableMathClubList);
+    }
+
+    public void deleteMathClub(ActionEvent actionEvent) {
+        MathClub mathClubForDeletion = clubsTableView.getSelectionModel().getSelectedItem();
+
+        if (Optional.ofNullable(mathClubForDeletion).isPresent()){
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda brisanja",
+                    "Jeste li sigurni da želite obrisati matematički klub?",
+                    "Ova radnja je nepovratna.");
+
+            if (positiveConfirmation) {
+                boolean successfulDeletion = DatabaseUtil.deleteMathClub(mathClubForDeletion);
+                if (successfulDeletion){
+                    ValidationProtocol.showSuccessAlert("Brisanje uspješno",
+                            "Uspješno ste obrisali matematički klub : " + mathClubForDeletion.getName());
+                }else{
+                    ValidationProtocol.showErrorAlert("Brisanje neuspješno",
+                            "Matematički klub " + mathClubForDeletion.getName() + " nije obrisan",
+                            "Nažalost matematički klub nije moguće obrisati");
+                }
+            }
+
+        }
+    }
+
+    public void reset(ActionEvent actionEvent) {
+        clubNameTextField.setText("");
+        clubsTableView.getItems().clear();
+
     }
 }

@@ -88,10 +88,10 @@ public class FileReaderUtil {
                     joinDate = LocalDate.parse(reader.readLine(),
                             DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()));
 
-                     clubMembership = new ClubMembership(mathClubId, joinDate);
+                     clubMembership = new ClubMembership(0L,mathClubId, joinDate);
 
                 }catch (DateTimeParseException ex){
-                     clubMembership = new ClubMembership(mathClubId, joinDate);
+                     clubMembership = new ClubMembership(0L, mathClubId, joinDate);
                 }
 
 

@@ -8,6 +8,8 @@ import java.util.Objects;
  * Predstavlja članstvo u matematičkom klubu.
  */
 public class ClubMembership implements Serializable {
+
+    private Long clubMembershipId;
     private Long clubId;
     private LocalDate joinDate;
 
@@ -17,9 +19,18 @@ public class ClubMembership implements Serializable {
      * @param joinDate     Datum pridruživanja klubu.
      * @param clubId Identifikacijski broj članstva.
      */
-    public ClubMembership(Long clubId, LocalDate joinDate) {
+    public ClubMembership(Long clubMembershipId, Long clubId, LocalDate joinDate) {
+        this.clubMembershipId = clubMembershipId;
         this.clubId = clubId;
         this.joinDate = joinDate;
+    }
+
+    public Long getClubMembershipId() {
+        return clubMembershipId;
+    }
+
+    public void setClubMembershipId(Long clubMembershipId) {
+        this.clubMembershipId = clubMembershipId;
     }
 
     public LocalDate getJoinDate() {

@@ -2,13 +2,16 @@ package hr.java.project.projectfxapp.controllers;
 
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
+import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -20,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CompetitionsSearchController {
@@ -119,5 +123,29 @@ public class CompetitionsSearchController {
         competitionNameTextField.setText("");
         competitionTableView.getItems().clear();
         competitionDatePicker.setValue(null);
+    }
+
+    public void deleteCompetition(ActionEvent actionEvent) {
+        Competition competitionForDeletion = competitionTableView.getSelectionModel().getSelectedItem();
+
+        if (Optional.ofNullable(competitionForDeletion).isPresent()){
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda brisanja",
+                    "Jeste li sigurni da želite obrisati ovo natjecanje?",
+                    "Ova radnja je nepovratna.");
+
+            if (positiveConfirmation) {
+                boolean successfulDeletion = DatabaseUtil.deleteCompetition(competitionForDeletion);
+                if (successfulDeletion){
+                    ValidationProtocol.showSuccessAlert("Brisanje uspješno",
+                            "Uspješno ste obrisali natjecanje : " + competitionForDeletion.getName());
+                }else{
+                    ValidationProtocol.showErrorAlert("Brisanje neuspješno",
+                            "Natjecanje " + competitionForDeletion.getName() + " nije obrisano",
+                            "Nažalost natjecanje nije moguće obrisati");
+                }
+            }
+
+        }
+
     }
 }
