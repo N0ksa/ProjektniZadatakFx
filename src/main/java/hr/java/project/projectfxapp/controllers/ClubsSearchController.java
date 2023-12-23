@@ -24,13 +24,13 @@ public class ClubsSearchController {
     @FXML
     private TextField clubNameTextField;
     @FXML
-    private TableView clubsTableView;
+    private TableView<MathClub> clubsTableView;
     @FXML
-    private TableColumn clubNameTableColumn;
+    private TableColumn<MathClub, String> clubNameTableColumn;
     @FXML
-    private TableColumn clubAddressTableColumn;
+    private TableColumn<MathClub, String> clubAddressTableColumn;
     @FXML
-    private TableColumn clubMembersTableColumn;
+    private TableColumn<MathClub, String> clubMembersTableColumn;
 
 
 
@@ -54,19 +54,24 @@ public class ClubsSearchController {
             }
         });
 
-        clubMembersTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>, ObservableValue<String>>() {
+        clubMembersTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub, String>, ObservableValue<String>>() {
+            @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathClub, String> param) {
                 MathClub mathClub = param.getValue();
                 List<Student> students = new ArrayList<>(mathClub.getStudents());
 
-                String studentNames = students.stream()
-                        .map(student -> student.getName() + " " + student.getSurname())
-                        .collect(Collectors.joining(", "));
+                if (students.isEmpty()) {
+                    return new ReadOnlyStringWrapper("Nema članova");
+                } else {
+                    String studentNames = students.stream()
+                            .map(student -> student.getName() + " " + student.getSurname())
+                            .collect(Collectors.joining(", "));
 
-
-                return new ReadOnlyStringWrapper(studentNames);
+                    return new ReadOnlyStringWrapper(studentNames);
+                }
             }
         });
+
 
 
     }

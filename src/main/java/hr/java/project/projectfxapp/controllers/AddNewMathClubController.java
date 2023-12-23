@@ -20,30 +20,19 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddNewMathClubController {
 
     @FXML
-    private DatePicker studentJoinDateDatePicker;
-    @FXML
     private ComboBox<Address> clubAddressComboBox;
     @FXML
     private TextField clubNameTextField;
-    @FXML
-    private ListView<Student> availableStudentListView;
+
 
 
     public void initialize(){
-        List<Student> studentsList = FileReaderUtil.getStudentsFromFile();
-        List<Student> availableStudentsList = studentsList.stream().filter(student -> student.getClubMembership().getClubId().equals(0L)).toList();
-
-        ObservableList<Student> availableStudentsObservableList = FXCollections.observableList(availableStudentsList);
-        availableStudentListView.setItems(availableStudentsObservableList);
 
         List<Address> availableAddresses = DatabaseUtil.getAddresses();
         ObservableList<Address> availableAddressesObservableList = FXCollections.observableList(availableAddresses);
@@ -54,25 +43,20 @@ public class AddNewMathClubController {
 
         try{
 
-            //ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox, availableStudentListView,
-              //      studentJoinDateDatePicker);
+            ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox);
 
 
             Long mathClubId = FileWriterUtil.getNextMathClubId();
             String clubName = clubNameTextField.getText();
             Address clubAddress = clubAddressComboBox.getValue();
-            Set<Student> clubMembers = new HashSet<>(availableStudentListView.getSelectionModel().getSelectedItems());
-            LocalDate studentsJoinDate = studentJoinDateDatePicker.getValue();
+            Set<Student> clubMembers = new HashSet<>();
 
-
-            clubMembers.forEach(member -> member.setClubMembership(new ClubMembership(mathClubId, studentsJoinDate)));
 
             MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
-
             List<MathClub> mathClubs = new ArrayList<>();
+
             mathClubs.add(newMathClub);
             DatabaseUtil.saveMathClubs(mathClubs);
-
 
 
 

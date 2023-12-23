@@ -6,6 +6,7 @@ import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.FileWriterUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -74,8 +75,7 @@ public class AddNewStudentController {
         });
 
 
-        List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(),
-                FileReaderUtil.getAddressesFromFile());
+        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
         ObservableList<MathClub> observableMathClubsList = FXCollections.observableList(mathClubs);
         mathClubComboBox.setItems(observableMathClubsList);
@@ -113,12 +113,14 @@ public class AddNewStudentController {
 
         MathClub selectedMathClub = mathClubComboBox.getSelectionModel().getSelectedItem();
 
-        if (!selectedMathClub.getId().equals(0L)){
-            joinDateDatePicker.setVisible(true);
-            chooseDateLabel.setVisible(true);
-        }else{
+        if (Optional.ofNullable(selectedMathClub).isEmpty()){
             joinDateDatePicker.setVisible(false);
             chooseDateLabel.setVisible(false);
+
+        }
+        else{
+            joinDateDatePicker.setVisible(true);
+            chooseDateLabel.setVisible(true);
         }
 
     }
@@ -130,7 +132,7 @@ public class AddNewStudentController {
             ValidationProtocol.validateStudent(studentNameTextField, studentSurnameTextField, studentEmailTextField,
                     mathClubComboBox, joinDateDatePicker, studentGradesTableView, yearOfStudySelection);
 
-            Long studentId = FileWriterUtil.getNextStudentId();
+            Long studentId = 0L;
             String studentName = studentNameTextField.getText();
             String studentSurname = studentSurnameTextField.getText();
             String studentEmail = studentEmailTextField.getText();
@@ -159,35 +161,25 @@ public class AddNewStudentController {
                     studentGrades, studentClubMembership);
 
 
-            List<Student> students = FileReaderUtil.getStudentsFromFile();
+            List<Student> students = new ArrayList<>();
             students.add(newStudent);
-            FileWriterUtil.saveStudentsToFile(students);
+            DatabaseUtil.saveStudents(students);
 
-            List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile(), FileReaderUtil.getAddressesFromFile());
-
-            Optional<MathClub> optionalMathClub = mathClubs.stream()
-                    .filter(mathClub -> mathClub.getId() == newStudent.getClubMembership().getClubId())
-                    .findFirst();
-
-            optionalMathClub.ifPresent(mathClub -> mathClub.getStudents().add(newStudent));
-
-            if (!newStudent.getClubMembership().getClubId().equals(0L)){
-                FileWriterUtil.saveMathClubsToFile(mathClubs);
-            }
 
             ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
                     "Student " + newStudent.getName() + " " + newStudent.getSurname() + " uspješno se spremio!");
 
 
 
-
-        }catch (ValidationException ex){
+        }
+        catch (ValidationException ex){
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 
 
-
     }
+
+
 }
 

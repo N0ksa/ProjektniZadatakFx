@@ -54,17 +54,23 @@ public class ProjectsSearchController {
             }
         });
 
-        projectClubColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
+        projectClubColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>, ObservableValue<String>>() {
+            @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
-                Map< MathClub, List<Student>> collaborators = param.getValue().getCollaborators();
+                Map<MathClub, List<Student>> collaborators = param.getValue().getCollaborators();
 
-                String clubCollaborators = collaborators.keySet().stream()
-                        .map(MathClub::getName)
-                        .collect(Collectors.joining("\n"));
+                if (collaborators.isEmpty()) {
+                    return new ReadOnlyStringWrapper("Nema članova");
+                } else {
+                    String clubCollaborators = collaborators.keySet().stream()
+                            .map(MathClub::getName)
+                            .collect(Collectors.joining("\n"));
 
-                return new ReadOnlyStringWrapper(clubCollaborators);
+                    return new ReadOnlyStringWrapper(clubCollaborators);
+                }
             }
         });
+
 
 
         projectMembersColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>, ObservableValue<String>>() {

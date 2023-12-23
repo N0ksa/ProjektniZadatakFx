@@ -39,13 +39,7 @@ public class AddNewProjectController {
 
     public void initialize() {
 
-        List<Student> availableStudentsList = FileReaderUtil.getStudentsFromFile();
-
-        List<MathClub> mathClubsList = FileReaderUtil.getMathClubsFromFile(availableStudentsList
-                ,FileReaderUtil.getAddressesFromFile())
-                .stream()
-                .filter(mathClub -> !mathClub.getId().equals(0L))
-                .collect(Collectors.toList());
+        List<MathClub> mathClubsList = DatabaseUtil.getMathClubs();
 
 
         ObservableList<MathClub> mathClubsObservableList = FXCollections.observableList(mathClubsList);

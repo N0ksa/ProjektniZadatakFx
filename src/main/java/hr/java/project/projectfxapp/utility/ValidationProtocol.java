@@ -3,7 +3,6 @@ package hr.java.project.projectfxapp.utility;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.math.BigDecimal;
@@ -14,7 +13,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public class ValidationProtocol {
 
@@ -31,13 +29,13 @@ public class ValidationProtocol {
         validateTextField(competitionNameTextField, "Unesite naziv natjecanja", errors);
         validateTextArea(competitionDescriptionTextArea, "Unesite opis natjecanja", errors);
         validateComboBox(competitionAddressComboBox, "Odaberite adresu natjecanja", errors);
-        validateDatePicker(competitionDateDatePicker, "Odaberite datum natjecanja", errors);
-        validateTimeTextField(competitionTimeTextField,"Unesite vijeme natjecanja", errors);
+        validateDatePicker(competitionDateDatePicker, errors);
+        validateTimeTextField(competitionTimeTextField, errors);
         validateTextField(competitionBuildingNameTextField, "Unesite naziv zgrade", errors);
         validateTextField(competitionHallNameTextField, "Unesite naziv dvorane", errors);
 
         validateCompetitionResultsTableView(competitionResultsTableView,
-                "Mora biti unešen rezultat za barem jednog natjecatelja", errors);
+                errors);
 
         if (!errors.isEmpty()) {
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));
@@ -45,13 +43,13 @@ public class ValidationProtocol {
     }
 
     private static void validateCompetitionResultsTableView(TableView<CompetitionResult> competitionResultsTableView,
-                                                            String errorMessage, List<String> errors) {
+                                                            List<String> errors) {
 
 
         List<CompetitionResult> competitionResultsList = competitionResultsTableView.getItems();
 
         if(competitionResultsList.isEmpty()){
-            errors.add(errorMessage);
+            errors.add("Mora biti unešen rezultat za barem jednog natjecatelja");
         }
         else{
             for(CompetitionResult competitionResult : competitionResultsList){
@@ -76,16 +74,13 @@ public class ValidationProtocol {
     }
 
 
-    public static void validateNewMathClub(TextField mathClubNameTextField, ComboBox<Address> mathClubAddressComboBox,
-                                           ListView<Student> selectedMembers, DatePicker membersJoinDateDatePicker)
+    public static void validateNewMathClub(TextField mathClubNameTextField, ComboBox<Address> mathClubAddressComboBox)
             throws ValidationException {
 
         List<String> errors = new ArrayList<>();
 
         validateTextField(mathClubNameTextField, "Unesite naziv matematičkog kluba", errors);
         validateComboBox(mathClubAddressComboBox, "Odaberite adresu matematičkog kluba", errors);
-        validateList(selectedMembers.getItems(), "Odaberite barem jednog člana kluba", errors);
-        validateDatePicker(membersJoinDateDatePicker, "Odaberite datum pridruživanja klubu", errors);
 
         if (!errors.isEmpty()) {
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));
@@ -120,8 +115,8 @@ public class ValidationProtocol {
         validateEmail(emailTextField, errors);
         validateComboBox(mathClubComboBox, "Odaberite matematički klub", errors);
         validateDatePickerForAddingNewStudent(mathClubComboBox, joinDateDatePicker,
-                "Odaberite datum pridruživanja klubu", errors);
-        validateStudentGradesList(studentGradesTableView, "Unesite sve ocijene", errors);
+                errors);
+        validateStudentGradesList(studentGradesTableView, errors);
         validateToggleGroup(yearOfStudyToggleGroup, "Odaberite godinu studija", errors);
 
         if (!errors.isEmpty()) {
@@ -129,7 +124,7 @@ public class ValidationProtocol {
         }
     }
 
-    private static void validateStudentGradesList(TableView<SubjectGrade> studentGradesTableView, String errorMessage, List<String> error) {
+    private static void validateStudentGradesList(TableView<SubjectGrade> studentGradesTableView, List<String> error) {
         for (SubjectGrade subjectGrade : studentGradesTableView.getItems()){
             try{
                Integer parsedGrade = Integer.parseInt(subjectGrade.getGrade());
@@ -168,11 +163,11 @@ public class ValidationProtocol {
         }
     }
 
-    private static void validateTimeTextField(TextField timeTextField, String errorMessage, List<String> errors) {
+    private static void validateTimeTextField(TextField timeTextField, List<String> errors) {
         String timeText = timeTextField.getText().trim();
 
         if (timeText.isEmpty()) {
-            errors.add(errorMessage);
+            errors.add("Unesite vijeme natjecanja");
         }
 
         try{
@@ -206,7 +201,7 @@ public class ValidationProtocol {
 
 
     private static void validateDatePickerForAddingNewStudent(ComboBox<MathClub> selectedMathClub,DatePicker datePicker,
-                                                              String errorMessage, List<String> errors){
+                                                              List<String> errors){
 
 
         MathClub selectedMathClubForStudent = selectedMathClub.getValue();
@@ -221,9 +216,9 @@ public class ValidationProtocol {
 
     }
 
-    private static void validateDatePicker(DatePicker datePicker, String errorMessage, List<String> errors) {
+    private static void validateDatePicker(DatePicker datePicker, List<String> errors) {
         if (datePicker.getValue() == null) {
-            errors.add(errorMessage);
+            errors.add("Odaberite datum natjecanja");
         }
         else{
             try{

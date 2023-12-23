@@ -69,9 +69,6 @@ public class DatabaseUtil {
 
     public static List<MathClub> getMathClubs(){
 
-        List<Address> addresses = getAddresses();
-        List<Student> students = FileReaderUtil.getStudentsFromFile();
-
         List<MathClub> mathClubs = new ArrayList<>();
 
         try(Connection connection = connectToDatabase()){
@@ -598,6 +595,113 @@ public class DatabaseUtil {
                         pstmt.executeUpdate();
                     }
                 }
+            }
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+
+    public static void saveStudents(List<Student> students){
+        try (Connection connection = connectToDatabase()) {
+            for (Student student: students) {
+
+                Long clubMembershipId = addClubMembershipForStudent(student);
+
+                String insertStudentSql = "INSERT INTO STUDENT(NAME,SURNAME,EMAIL," +
+                        "YEAR_OF_STUDY, CLUB_MEMBERSHIP_ID) " +
+                        "VALUES(?, ?, ?, ?, ?)";
+
+                PreparedStatement pstmt = connection.prepareStatement(insertStudentSql, PreparedStatement.RETURN_GENERATED_KEYS);
+                pstmt.setString(1, student.getName());
+                pstmt.setString(2, student.getSurname());
+                pstmt.setString(3, student.getEmail());
+                pstmt.setInt(4, student.getYearOfStudy());
+                pstmt.setLong(5, clubMembershipId);
+                pstmt.executeUpdate();
+
+
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+
+                    Long studentId = generatedKeys.getLong(1);
+                    Map<String,Integer> studentGrades = student.getGrades();
+                    Long studentMathClubId = student.getClubMembership().getClubId();
+
+                    saveStudentGrades(studentId, studentGrades);
+                    addStudentToClub(studentId, studentMathClubId);
+
+                }
+            }
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja studenata u bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+    private static Long addClubMembershipForStudent(Student student) {
+
+        Long clubMembershipId = 0L;
+        try (Connection connection = connectToDatabase()) {
+
+            String insertStudentSql = "INSERT INTO CLUB_MEMBERSHIP(JOIN_DATE,CLUB_ID) VALUES(?, ?)";
+
+            PreparedStatement pstmt = connection.prepareStatement(insertStudentSql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            pstmt.setDate(1, Date.valueOf(student.getClubMembership().getJoinDate()));
+            pstmt.setLong(2, student.getClubMembership().getClubId());
+            pstmt.executeUpdate();
+
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+
+               clubMembershipId = generatedKeys.getLong(1);
+
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja studenata u bazu podataka";
+            logger.error(message, ex);
+        }
+
+        return clubMembershipId;
+
+    }
+
+    private static void addStudentToClub(Long studentId, Long mathClubId) {
+        try (Connection connection = connectToDatabase()) {
+
+            String insertStudentIntoMathClubSql = "INSERT INTO MATH_CLUB_STUDENTS (CLUB_ID, STUDENT_ID) VALUES (?, ?);";
+
+            PreparedStatement pstmt = connection.prepareStatement(insertStudentIntoMathClubSql);
+            pstmt.setLong(1, mathClubId);
+            pstmt.setLong(2, studentId);
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+    private static void saveStudentGrades(Long studentId, Map<String, Integer> studentGrades) {
+
+
+
+        try (Connection connection = connectToDatabase()) {
+            for (Map.Entry<String, Integer> entry : studentGrades.entrySet()) {
+
+                String insertStudentGradesSql = "INSERT INTO STUDENT_GRADES (STUDENT_ID, SUBJECT_NAME, GRADE) VALUES (?, ?, ?);";
+
+
+                PreparedStatement pstmt = connection.prepareStatement(insertStudentGradesSql);
+                pstmt.setLong(1, studentId);
+                pstmt.setString(2, entry.getKey());
+                pstmt.setInt(3, entry.getValue());
+                pstmt.executeUpdate();
+
             }
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
