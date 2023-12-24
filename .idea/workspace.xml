@@ -4,23 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao logiku brisanja svih entiteta iz baze podataka.&#10;&#10;-malo izmijenio grafički prikaz nekih scena.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/filter/CompetitionFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/filter/MathClubFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/filter/MathProjectFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/filter/StudentFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/pogreske.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/pogreske.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewCompetitionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewCompetitionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewStudentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ClubsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ClubsSearchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/CompetitionsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/CompetitionsSearchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ProjectsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/ProjectsSearchController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/ClubMembership.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/ClubMembership.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewCompetition.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewCompetition.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubs.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/competitions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/competitions.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +59,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "last_directory_selection": "E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/src/main/java/hr/java/project/projectfxapp",
-    "last_opened_file_path": "E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp",
+    "last_opened_file_path": "E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/Laboratorijske vjezbe/Priprema 9/sarko-09",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -132,7 +127,9 @@
       <workItem from="1703258998688" duration="19038000" />
       <workItem from="1703330606937" duration="7283000" />
       <workItem from="1703345964076" duration="5423000" />
-      <workItem from="1703351897726" duration="5649000" />
+      <workItem from="1703351897726" duration="5941000" />
+      <workItem from="1703360436157" duration="26000" />
+      <workItem from="1703431443587" duration="9504000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -239,7 +236,14 @@
       <option name="presentableId" value="LOCAL−00015" />
       <updated>1703338303786</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL−00016" summary="Dodao logiku brisanja svih entiteta iz baze podataka.&#10;&#10;-malo izmijenio grafički prikaz nekih scena.">
+      <option name="closed" value="true" />
+      <created>1703360256883</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1703360256883</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,20 +276,21 @@
     <MESSAGE value="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)" />
     <MESSAGE value="Dodao logiku spremanja novih projekata, natjecanja, studenata i klubova (djelomično, prilagodit ću još) u bazu podataka." />
     <MESSAGE value="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)" />
+    <MESSAGE value="Dodao logiku brisanja svih entiteta iz baze podataka.&#10;&#10;-malo izmijenio grafički prikaz nekih scena." />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodao logiku brisanja svih entiteta iz baze podataka.&#10;&#10;-malo izmijenio grafički prikaz nekih scena." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java</url>
-          <line>133</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/AddNewMathClubController.java</url>
           <line>58</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/StudentsSearchController.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

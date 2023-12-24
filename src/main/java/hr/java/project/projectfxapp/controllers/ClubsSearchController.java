@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -81,12 +82,9 @@ public class ClubsSearchController {
 
     public void clubSearch(ActionEvent actionEvent) {
         String clubName = clubNameTextField.getText();
-        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
-        List<MathClub> filteredMathClubs = mathClubs.stream()
-                .filter(mathClub -> mathClub.getName()
-                        .contains(clubName))
-                .collect(Collectors.toList());
+        MathClubFilter mathClubFilter = new MathClubFilter(clubName);
+        List<MathClub> filteredMathClubs = DatabaseUtil.getMathClubsByFilter(mathClubFilter);
 
         ObservableList<MathClub> observableMathClubList = FXCollections.observableList(filteredMathClubs);
         clubsTableView.setItems(observableMathClubList);

@@ -4,6 +4,8 @@ import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.filter.MathClubFilter;
+import hr.java.project.projectfxapp.filter.MathProjectFilter;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -98,14 +100,13 @@ public class ProjectsSearchController {
 
     public void projectSearch(){
 
-        List<MathProject> mathProjects = DatabaseUtil.getProjects();
-
         String projectName = projectNameTextField.getText();
-        List<MathProject> filteredProjects = mathProjects.stream()
-                .filter(project -> project.getName().contains(projectName))
-                .collect(Collectors.toList());
 
-        ObservableList <MathProject> observableProjectsList = FXCollections.observableList(filteredProjects);
+        MathProjectFilter mathProjectFilter = new MathProjectFilter(projectName);
+
+        List<MathProject> filteredMathProjects = DatabaseUtil.getMathProjectsByFilter(mathProjectFilter);
+
+        ObservableList <MathProject> observableProjectsList = FXCollections.observableList(filteredMathProjects);
         projectsTableView.setItems(observableProjectsList);
 
 

@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.filter.CompetitionFilter;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -109,10 +110,9 @@ public class CompetitionsSearchController {
         LocalDate dateOfCompetition = competitionDatePicker.getValue();
         String competitionName = competitionNameTextField.getText();
 
-        List<Competition> filteredCompetitions = competitions.stream()
-                .filter(competition -> competition.getName().contains(competitionName))
-                .filter(competition -> dateOfCompetition == null || competition.getTimeOfCompetition().toLocalDate().equals(dateOfCompetition))
-                .collect(Collectors.toList());
+        CompetitionFilter competitionFilter = new CompetitionFilter(competitionName, dateOfCompetition);
+
+        List<Competition> filteredCompetitions = DatabaseUtil.getCompetitionsByFilter(competitionFilter);
 
         ObservableList<Competition> observableCompetitionsList = FXCollections.observableList(filteredCompetitions);
         competitionTableView.setItems(observableCompetitionsList);

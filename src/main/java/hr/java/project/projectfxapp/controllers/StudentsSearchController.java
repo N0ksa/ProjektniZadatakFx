@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.filter.StudentFilter;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -26,9 +27,11 @@ import java.util.stream.Collectors;
 public class StudentsSearchController {
 
     @FXML
+    private  TextField studentSurnameTextField;
+    @FXML
     private TextField studentNameTextField;
     @FXML
-    private ComboBox <String> clubComboBox;
+    private ComboBox <MathClub> clubComboBox;
     @FXML
     private TableView<Student> studentsTableView;
     @FXML
@@ -50,14 +53,10 @@ public class StudentsSearchController {
 
     public void initialize(){
 
-        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
+        List<MathClub> mathClubsList = DatabaseUtil.getMathClubs();
+        ObservableList<MathClub> observableMathClubsList = FXCollections.observableList(mathClubsList);
 
-        ObservableList <String> obeservableMathClubs = FXCollections.observableList(mathClubs.stream()
-                .map(mathClub -> mathClub.getName())
-                .collect(Collectors.toList()));
-
-        clubComboBox.setItems(obeservableMathClubs);
-        clubComboBox.getItems().add(0, "Svi klubovi");
+        clubComboBox.setItems(observableMathClubsList);
 
         studentsTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -92,7 +91,7 @@ public class StudentsSearchController {
 
         studentClubTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-                Optional<MathClub> clubOfStudent = mathClubs.stream()
+                Optional<MathClub> clubOfStudent = mathClubsList.stream()
                         .filter(mathClub -> mathClub.hasMember(param.getValue()))
                         .findFirst();
 
@@ -129,27 +128,11 @@ public class StudentsSearchController {
     public void studentSearch(){
 
         String studentName = studentNameTextField.getText();
-        String clubName = clubComboBox.getValue();
+        String studentSurname = studentSurnameTextField.getText();
+        MathClub mathclub = clubComboBox.getValue();
 
-        List<Student> students = DatabaseUtil.getStudents();
-        List<Student> filteredStudents = students.stream()
-                .filter(student -> student.getName().contains(studentName) || student.getSurname().contains(studentName))
-                .filter(student -> {
-
-                    if (Optional.ofNullable(clubName).isEmpty() || clubName.equalsIgnoreCase("svi klubovi")) {
-                        return true;
-                    }
-
-                    List<MathClub> mathClubs = FileReaderUtil.getMathClubsFromFile(FileReaderUtil.getStudentsFromFile()
-                            , FileReaderUtil.getAddressesFromFile());
-
-                    Optional<MathClub> clubOfStudent = mathClubs.stream()
-                            .filter(mathClub -> mathClub.hasMember(student))
-                            .findFirst();
-
-                    return clubOfStudent.map(mathClub -> mathClub.getName().equals(clubName)).orElse(false);
-                })
-                .collect(Collectors.toList());
+        StudentFilter studentFilter = new StudentFilter(studentName, studentSurname, mathclub);
+        List<Student> filteredStudents = DatabaseUtil.getStudentsByFilter(studentFilter);
 
         ObservableList<Student> observableStudentList = FXCollections.observableList(filteredStudents);
         studentsTableView.setItems(observableStudentList);

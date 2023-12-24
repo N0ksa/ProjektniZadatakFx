@@ -2,6 +2,10 @@ package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
+import hr.java.project.projectfxapp.filter.CompetitionFilter;
+import hr.java.project.projectfxapp.filter.MathClubFilter;
+import hr.java.project.projectfxapp.filter.MathProjectFilter;
+import hr.java.project.projectfxapp.filter.StudentFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +17,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class DatabaseUtil {
 
@@ -69,6 +75,9 @@ public class DatabaseUtil {
 
     public static List<MathClub> getMathClubs() {
 
+        List<Student> students = getStudents();
+        List<Address> addresses = getAddresses();
+
         List<MathClub> mathClubs = new ArrayList<>();
 
         try (Connection connection = connectToDatabase()) {
@@ -77,19 +86,13 @@ public class DatabaseUtil {
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while (rs.next()) {
-
-                Long mathClubId = rs.getLong("CLUB_ID");
-                Optional<MathClub> mathClub = getMathClub(mathClubId);
-
-                mathClub.ifPresent(mathClubs::add);
-            }
+         mapResultSetToMathClubsList(rs, addresses, students, mathClubs);
 
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
         }
-        ;
+
 
         return mathClubs;
 
@@ -137,33 +140,10 @@ public class DatabaseUtil {
 
     public static Set<Student> getStudentsForMathClub(Long mathClubId, List<Student> students) {
 
-        Set<Student> studentsForMathClub = new HashSet<>();
-
-        try (Connection connection = connectToDatabase()) {
-            String sqlQuery = String.format("SELECT * FROM MATH_CLUB_STUDENTS MCS JOIN STUDENT S ON MCS.STUDENT_ID" +
-                    " = S.STUDENT_ID WHERE MCS.CLUB_ID = %d;", mathClubId);
-            Statement stmt = connection.createStatement();
-            stmt.execute(sqlQuery);
-            ResultSet rs = stmt.getResultSet();
-
-            while (rs.next()) {
-                Long studentForMathClubId = rs.getLong("STUDENT_ID");
-
-                Optional<Student> studentForMathClub = students.stream()
-                        .filter(student -> student.getId().equals(studentForMathClubId))
-                        .findFirst();
-
-                studentForMathClub.ifPresent(studentsForMathClub::add);
-
-            }
-
-
-        } catch (SQLException | IOException ex) {
-            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
-            logger.error(message, ex);
-        }
-
-        return studentsForMathClub;
+        return students.stream().
+                filter(student -> student.getClubMembership().getClubId()
+                        .equals(mathClubId))
+                .collect(Collectors.toSet());
 
     }
 
@@ -179,13 +159,7 @@ public class DatabaseUtil {
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
-
-                Long studentId = rs.getLong("STUDENT_ID");
-                Optional<Student> newStudent = getStudent(studentId);
-
-                newStudent.ifPresent(students::add);
-
-
+                mapResultSetToStudentsList(rs, students);
             }
 
 
@@ -209,7 +183,8 @@ public class DatabaseUtil {
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
-
+                
+                Long idOfStudent = rs.getLong("STUDENT_ID");
                 String studentName = rs.getString("NAME");
                 String studentSurname = rs.getString("SURNAME");
                 String studentEmail = rs.getString("EMAIL");
@@ -221,9 +196,8 @@ public class DatabaseUtil {
 
                 ClubMembership clubMembership = getStudentClubMembership(membershipId);
 
-                student = new Student(studentId, studentName, studentSurname, studentEmail,
+                student = new Student(idOfStudent, studentName, studentSurname, studentEmail,
                         yearOfStudy, studentGrades, clubMembership);
-
 
             }
 
@@ -301,37 +275,7 @@ public class DatabaseUtil {
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while (rs.next()) {
-                Long competitionId = rs.getLong("COMPETITION_ID");
-                String competitionName = rs.getString("NAME");
-                String competitionDescription = rs.getString("DESCRIPTION");
-
-                Long addressId = rs.getLong("ADDRESS_ID");
-                Optional<Address> competitionAddress = getAddress(addressId);
-
-                Time timeOfCompetition = rs.getTime("TIME_OF_COMPETITION");
-                LocalDate dateOfCompetition = rs.getDate("DATE_OF_COMPETITION").toLocalDate();
-
-                LocalDateTime dateAndTimeOfCompetition = dateOfCompetition.atTime(timeOfCompetition.toLocalTime());
-
-
-                String auditoriumBuildingName = rs.getString("AUDITORIUM_BUILDING");
-                String auditoriumHallName = rs.getString("AUDITORIUM_HALL");
-                Auditorium auditorium = new Auditorium(auditoriumBuildingName, auditoriumHallName);
-
-                Set<CompetitionResult> competitionResults = getCompetitionResults(competitionId);
-
-
-                competitionAddress.ifPresent(address -> {
-
-                    Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription
-                            , address, auditorium, dateAndTimeOfCompetition, competitionResults);
-
-                    competitions.add(newCompetition);
-                });
-
-
-            }
+            mapResultSetToCompetitionsList(rs, competitions);
 
 
         } catch (SQLException | IOException ex) {
@@ -342,6 +286,7 @@ public class DatabaseUtil {
         return competitions;
 
     }
+
 
     private static Set<CompetitionResult> getCompetitionResults(Long competitionId) {
 
@@ -421,19 +366,7 @@ public class DatabaseUtil {
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while (rs.next()) {
-                Long projectId = rs.getLong("PROJECT_ID");
-                String projectName = rs.getString("NAME");
-                String projectDescription = rs.getString("DESCRIPTION");
-
-                Map<MathClub, List<Student>> projectCollaborators = getProjectCollaborators(projectId);
-
-                MathProject newMathProject = new MathProject(projectId, projectName, projectDescription, projectCollaborators);
-
-                mathProjects.add(newMathProject);
-
-
-            }
+            mapResultSetToMathProjectsList(rs, mathProjects);
 
 
         } catch (SQLException | IOException ex) {
@@ -445,10 +378,10 @@ public class DatabaseUtil {
 
     }
 
+
+
     private static Map<MathClub, List<Student>> getProjectCollaborators(Long projectId) {
         Map<MathClub, List<Student>> mathProjectCollaborators = new HashMap<>();
-
-        List<Student> studentCollaborators = new ArrayList<>();
 
         try (Connection connection = connectToDatabase()) {
             String sqlQuery = String.format("SELECT * FROM PROJECT_COLLABORATORS WHERE PROJECT_ID = %d", projectId);
@@ -729,7 +662,6 @@ public class DatabaseUtil {
             }
 
 
-
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod brisanja projekta iz baze podataka";
             logger.error(message, ex);
@@ -759,7 +691,6 @@ public class DatabaseUtil {
                 pstmt.executeUpdate();
                 competitionDeletionSuccess = true;
             }
-
 
 
         } catch (SQLException | IOException ex) {
@@ -820,7 +751,6 @@ public class DatabaseUtil {
             }
 
 
-
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod brisanja studenta iz baze podataka";
             logger.error(message, ex);
@@ -832,9 +762,9 @@ public class DatabaseUtil {
     public static boolean deleteMathClub(MathClub mathClubForDeletion) {
         boolean mathClubDeletionSuccess = false;
 
-        for (Student clubMember : mathClubForDeletion.getStudents()){
+        for (Student clubMember : mathClubForDeletion.getStudents()) {
             boolean memberDeletionSuccess = deleteStudent(clubMember);
-            if (!memberDeletionSuccess){
+            if (!memberDeletionSuccess) {
                 return false;
             }
         }
@@ -851,7 +781,6 @@ public class DatabaseUtil {
             }
 
 
-
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod brisanja matematičkog kluba iz baze podataka";
             logger.error(message, ex);
@@ -860,4 +789,270 @@ public class DatabaseUtil {
         return mathClubDeletionSuccess;
 
     }
+
+
+    public static List<Student> getStudentsByFilter(StudentFilter studentFilter) {
+        List<Student> filteredStudents = new ArrayList<>();
+        Map<Integer, Object> queryParams = new HashMap<>();
+        Integer paramOrdinalNumber = 1;
+
+        try (Connection connection = connectToDatabase()) {
+            String baseSqlQuery = "SELECT * FROM STUDENT WHERE 1=1";
+
+            if (!studentFilter.getName().isEmpty()) {
+                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, studentFilter.getName() + "%");
+                paramOrdinalNumber++;
+            }
+
+            if (!studentFilter.getSurname().isEmpty()) {
+                baseSqlQuery += " AND LOWER(SURNAME) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, studentFilter.getSurname() + "%");
+                paramOrdinalNumber++;
+            }
+
+            PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
+
+            for (Integer paramNumber: queryParams.keySet()){
+                pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
+            }
+
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+
+            mapResultSetToStudentsList(rs, filteredStudents);
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+        return filteredStudents;
+
+    }
+
+    public static List<MathClub> getMathClubsByFilter(MathClubFilter mathClubFilter) {
+
+        List<Student> students = getStudents();
+        List<Address> addresses = getAddresses();
+
+        List<MathClub> filteredMathClubs = new ArrayList<>();
+        Map<Integer, Object> queryParams = new HashMap<>();
+        Integer paramOrdinalNumber = 1;
+
+        try (Connection connection = connectToDatabase()) {
+            String baseSqlQuery = "SELECT * FROM MATH_CLUB WHERE 1=1";
+
+            if (!mathClubFilter.getName().isEmpty()) {
+                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, mathClubFilter.getName() + "%");
+                paramOrdinalNumber++;
+            }
+
+
+            PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
+
+            for (Integer paramNumber: queryParams.keySet()){
+                pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
+            }
+
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+
+            mapResultSetToMathClubsList(rs, addresses, students, filteredMathClubs);
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+        return filteredMathClubs;
+
+    }
+
+    public static List<MathProject> getMathProjectsByFilter(MathProjectFilter mathProjectFilter) {
+
+        List<MathProject> filteredMathProjects = new ArrayList<>();
+        Map<Integer, Object> queryParams = new HashMap<>();
+        Integer paramOrdinalNumber = 1;
+
+        try (Connection connection = connectToDatabase()) {
+            String baseSqlQuery = "SELECT * FROM MATH_PROJECT WHERE 1=1";
+
+            if (!mathProjectFilter.getName().isEmpty()) {
+                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, mathProjectFilter.getName() + "%");
+                paramOrdinalNumber++;
+            }
+
+            PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
+
+            for (Integer paramNumber: queryParams.keySet()){
+                pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
+            }
+
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+
+            mapResultSetToMathProjectsList(rs, filteredMathProjects);
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+        return filteredMathProjects;
+
+    }
+
+
+    public static List<Competition> getCompetitionsByFilter(CompetitionFilter competitionFilter) {
+
+        List<Competition> filteredCompetitions = new ArrayList<>();
+        Map<Integer, Object> queryParams = new HashMap<>();
+        Integer paramOrdinalNumber = 1;
+
+        try (Connection connection = connectToDatabase()) {
+            String baseSqlQuery = "SELECT * FROM COMPETITION WHERE 1=1";
+
+            if (!competitionFilter.getName().isEmpty()) {
+                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, competitionFilter.getName() + "%");
+                paramOrdinalNumber++;
+            }
+
+            if(Optional.ofNullable(competitionFilter.getDateOfCompetition()).isPresent()){
+                baseSqlQuery += " AND DATE_OF_COMPETITION = ?";
+                queryParams.put(paramOrdinalNumber, Date.valueOf(competitionFilter.getDateOfCompetition()));
+            }
+
+            PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
+
+            for (Integer paramNumber: queryParams.keySet()){
+                if (queryParams.get(paramNumber) instanceof  String sqp){
+                    pstmt.setString(paramNumber, sqp);
+                }
+                else if (queryParams.get(paramNumber) instanceof Date dqp){
+                    pstmt.setDate(paramNumber, dqp);
+                }
+            }
+
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+
+            mapResultSetToCompetitionsList(rs, filteredCompetitions);
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+        return filteredCompetitions;
+
+    }
+
+    private static void mapResultSetToMathClubsList(ResultSet rs, List<Address> addresses, List<Student> students,
+                                                    List<MathClub> filteredMathClubs) throws SQLException {
+
+        while (rs.next()) {
+
+            Long mathClubId = rs.getLong("CLUB_ID");
+            String mathClubName = rs.getString("NAME");
+            Long addressId = rs.getLong("ADDRESS_ID");
+
+            Address mathClubAddress = addresses.stream()
+                    .filter(address -> address.getAddressId().equals(addressId))
+                    .findFirst()
+                    .get();
+
+            Set<Student> studentsForMathClub = getStudentsForMathClub(mathClubId, students);
+
+           MathClub filteredMathClub = new MathClub(mathClubId, mathClubName, mathClubAddress, studentsForMathClub);
+
+           filteredMathClubs.add(filteredMathClub);
+
+        }
+    }
+
+
+    private static void mapResultSetToStudentsList(ResultSet rs, List<Student> filteredStudents) throws SQLException {
+
+        while (rs.next()) {
+            
+            Long studentId = rs.getLong("STUDENT_ID");
+            String studentName = rs.getString("NAME");
+            String studentSurname = rs.getString("SURNAME");
+            String studentEmail = rs.getString("EMAIL");
+            Integer yearOfStudy = rs.getInt("YEAR_OF_STUDY");
+
+            Map<String, Integer> studentGrades = getStudentGrades(studentId);
+
+            Long membershipId = rs.getLong("CLUB_MEMBERSHIP_ID");
+
+            ClubMembership clubMembership = getStudentClubMembership(membershipId);
+
+            Student filteredStudent = new Student(studentId, studentName, studentSurname, studentEmail,
+                    yearOfStudy, studentGrades, clubMembership);
+            
+            
+            filteredStudents.add(filteredStudent);
+
+        }
+    }
+
+    private static void mapResultSetToMathProjectsList(ResultSet rs, List<MathProject> mathProjects) throws SQLException {
+        while (rs.next()) {
+            Long projectId = rs.getLong("PROJECT_ID");
+            String projectName = rs.getString("NAME");
+            String projectDescription = rs.getString("DESCRIPTION");
+
+            Map<MathClub, List<Student>> projectCollaborators = getProjectCollaborators(projectId);
+
+            MathProject newMathProject = new MathProject(projectId, projectName, projectDescription, projectCollaborators);
+
+            mathProjects.add(newMathProject);
+
+
+        }
+    }
+
+
+    private static void mapResultSetToCompetitionsList(ResultSet rs, List<Competition> competitions) throws SQLException {
+        while (rs.next()) {
+            Long competitionId = rs.getLong("COMPETITION_ID");
+            String competitionName = rs.getString("NAME");
+            String competitionDescription = rs.getString("DESCRIPTION");
+
+            Long addressId = rs.getLong("ADDRESS_ID");
+            Optional<Address> competitionAddress = getAddress(addressId);
+
+            Time timeOfCompetition = rs.getTime("TIME_OF_COMPETITION");
+            LocalDate dateOfCompetition = rs.getDate("DATE_OF_COMPETITION").toLocalDate();
+
+            LocalDateTime dateAndTimeOfCompetition = dateOfCompetition.atTime(timeOfCompetition.toLocalTime());
+
+
+            String auditoriumBuildingName = rs.getString("AUDITORIUM_BUILDING");
+            String auditoriumHallName = rs.getString("AUDITORIUM_HALL");
+            Auditorium auditorium = new Auditorium(auditoriumBuildingName, auditoriumHallName);
+
+            Set<CompetitionResult> competitionResults = getCompetitionResults(competitionId);
+
+
+            competitionAddress.ifPresent(address -> {
+
+                Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription
+                        , address, auditorium, dateAndTimeOfCompetition, competitionResults);
+
+                competitions.add(newCompetition);
+            });
+
+
+        }
+    }
+
 }
