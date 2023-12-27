@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.utility;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +113,7 @@ public class FileWriterUtil {
 
     public static void saveCompetitionsToFile(List <Competition> competitions){
 
-        File competitionsFile = new File(Constants.COMPETITIONS_FILE_NAME);
+        File competitionsFile = new File(Constants.MATH_COMPETITIONS_FILE_NAME);
         try (PrintWriter pw = new PrintWriter(competitionsFile)) {
             for (Competition competition : competitions) {
 
@@ -146,7 +147,7 @@ public class FileWriterUtil {
 
 
         } catch (IOException ex) {
-            String message = "Dogodila se pogreška kod pisanja datoteke - + " + Constants.COMPETITIONS_FILE_NAME;
+            String message = "Dogodila se pogreška kod pisanja datoteke - + " + Constants.MATH_COMPETITIONS_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
 
@@ -223,6 +224,27 @@ public class FileWriterUtil {
         Long mathProjectId= projects.stream().map(NamedEntity::getId).max(Long::compareTo).get();
         return mathProjectId + 1;
     }
+
+
+    public static void saveUsers(List<User> users) {
+        File usersFile = new File(Constants.USER_FILE_NAME);
+
+        try (PrintWriter pw = new PrintWriter(usersFile)) {
+            for (User user : users) {
+                try {
+                    pw.println(user.getUsername() + ":" + PasswordUtil.hashPassword(user.getPassword()) + ":" + user.getRole().getName());
+                } catch (UnsupportedAlgorithmException ex) {
+                    String errorMessage = "Sustav ne podržava SHA-256";
+                    logger.error(errorMessage, ex);
+                }
+            }
+        } catch (IOException ex) {
+            String message ="Dogodila se pogreška kod pisanja datoteke - + " + Constants.USER_FILE_NAME;
+            logger.error(message, ex);
+            System.out.println(message);
+        }
+    }
+
 
 
 

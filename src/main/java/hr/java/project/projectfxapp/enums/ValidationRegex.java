@@ -1,5 +1,7 @@
 package hr.java.project.projectfxapp.enums;
 
+import java.util.regex.Pattern;
+
 /**
  * Predstavlja regularne izraze za provjeru valjanosti.
  */
@@ -14,6 +16,8 @@ public enum ValidationRegex {
     VALID_EMAIL_ADDRESS("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$"),
 
     VALID_MEMBER_ID_REGEX ("\\d{5}");
+
+    private static final Pattern VALID_USERNAME_PATTERN = Pattern.compile("^[A-Za-z0-9\\-_ ]{4,32}$");
 
     private final String regex;
 

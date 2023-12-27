@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.LoginController">
+   <left>
+      <AnchorPane prefHeight="503.0" prefWidth="448.0" style="-fx-background-color: #F4F9FF;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="53.0" fitWidth="49.0" layoutX="223.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../img/login/lokot.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="59.0" layoutY="229.0" text="Korisničko ime:" textFill="#374151">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="105.0" layoutY="298.0" text="Lozinka:" textFill="#374151">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField" layoutX="173.0" layoutY="227.0" promptText="Unesi korisničko ime" />
+            <Button layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: ffc900;" text="Login" textFill="#374151" />
+            <PasswordField fx:id="passwordPasswordField" layoutX="173.0" layoutY="296.0" promptText="Unesi lozinku" />
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="503.0" prefWidth="306.0" style="-fx-background-color: #4a92f7;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="233.0" fitWidth="306.0" layoutX="2.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../img/login/projekt_matematika_logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

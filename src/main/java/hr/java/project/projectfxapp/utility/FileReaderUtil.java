@@ -1,8 +1,10 @@
 package hr.java.project.projectfxapp.utility;
 
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
+import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import org.slf4j.Logger;
@@ -26,12 +28,7 @@ import java.util.stream.Stream;
  */
 public class FileReaderUtil {
 
-    private static final String STUDENTS_FILE_NAME = "dat/students.txt";
-    private static final String PROFESSORS_FILE_NAME = "dat/professors.txt";
-    private static final String ADDRESSES_FILE_NAME = "dat/addresses.txt";
-    private static final String MATH_CLUBS_FILE_NAME = "dat/math_clubs.txt";
-    private static final String MATH_PROJECTS_FILE_NAME = "dat/math_projects.txt";
-    private static final String MATH_COMPETITIONS_FILE_NAME = "dat/competitions.txt";
+
 
     private static final Logger logger = LoggerFactory.getLogger(FileReaderUtil.class);
 
@@ -44,7 +41,7 @@ public class FileReaderUtil {
      */
     public static List<Student> getStudentsFromFile() {
         List<Student> students = new ArrayList<>();
-        File studentsFile = new File(STUDENTS_FILE_NAME);
+        File studentsFile = new File(Constants.STUDENTS_FILE_NAME);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(studentsFile))) {
 
@@ -105,7 +102,7 @@ public class FileReaderUtil {
             }
 
         } catch (IOException ex) {
-            String message = "Dogodila se pogreška kod čitanja datoteke - + " + STUDENTS_FILE_NAME;
+            String message = "Dogodila se pogreška kod čitanja datoteke - + " + Constants.STUDENTS_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
         }
@@ -122,7 +119,7 @@ public class FileReaderUtil {
      * @throws IOException Ako dođe do pogreške prilikom čitanja datoteke.
      */
     public static List<Professor> getProfessorsFromFile() {
-        File itemsFile = new File(PROFESSORS_FILE_NAME);
+        File itemsFile = new File(Constants.PROFESSORS_FILE_NAME);
         List<Professor> professors = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(itemsFile))) {
@@ -140,7 +137,7 @@ public class FileReaderUtil {
             }
 
         } catch (IOException ex) {
-            String message = "Dogodila se pogreška kod čitanja datoteke - + " + PROFESSORS_FILE_NAME;
+            String message = "Dogodila se pogreška kod čitanja datoteke - + " + Constants.PROFESSORS_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
         }
@@ -156,7 +153,7 @@ public class FileReaderUtil {
      */
     public static List<Address> getAddressesFromFile() {
 
-        File categoriesFile = new File(ADDRESSES_FILE_NAME);
+        File categoriesFile = new File(Constants.ADDRESSES_FILE_NAME);
         List<Address> addresses = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(categoriesFile))) {
@@ -181,7 +178,7 @@ public class FileReaderUtil {
             }
 
         } catch (IOException ex) {
-            String message = "Dogodila se pogreška kod čitanja datoteke - + " + ADDRESSES_FILE_NAME;
+            String message = "Dogodila se pogreška kod čitanja datoteke - + " + Constants.ADDRESSES_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
         }
@@ -197,7 +194,7 @@ public class FileReaderUtil {
     public static List<MathClub> getMathClubsFromFile(List <Student> students, List <Address> addresses) {
         List<MathClub> mathClubs = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(MATH_CLUBS_FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.MATH_CLUBS_FILE_NAME))) {
 
             String line;
             while ((Optional.ofNullable(line = reader.readLine()).isPresent())) {
@@ -240,7 +237,7 @@ public class FileReaderUtil {
 
 
         } catch (IOException ex) {
-            String message = "Dogodila se pogreška kod čitanja datoteke - + " + MATH_CLUBS_FILE_NAME;
+            String message = "Dogodila se pogreška kod čitanja datoteke - + " + Constants.MATH_CLUBS_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
         }
@@ -252,7 +249,7 @@ public class FileReaderUtil {
 
     public static List<Competition> getMathCompetitionsFromFile(List<Student> students, List<Address> addresses){
         List<Competition> mathCompetitions = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(MATH_COMPETITIONS_FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.MATH_COMPETITIONS_FILE_NAME))) {
 
             String line;
 
@@ -301,7 +298,7 @@ public class FileReaderUtil {
 
         }
         catch (IOException ex) {
-            String message = "Dogodila se pogreška kod čitanja datoteke - + " + MATH_COMPETITIONS_FILE_NAME;
+            String message = "Dogodila se pogreška kod čitanja datoteke - + " + Constants.MATH_COMPETITIONS_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
         }
@@ -313,7 +310,7 @@ public class FileReaderUtil {
     public static List<MathProject> getMathProjectsFromFile(List<MathClub> studentClubs, List<Student> students){
 
         List<MathProject> mathProjects = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(MATH_PROJECTS_FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.MATH_PROJECTS_FILE_NAME))) {
 
             String line;
             while ((Optional.ofNullable(line = reader.readLine()).isPresent())) {
@@ -354,7 +351,7 @@ public class FileReaderUtil {
 
             }
         }catch (IOException ex) {
-            String message = "Dogodila se pogreška kod čitanja datoteke - + " + MATH_PROJECTS_FILE_NAME;
+            String message = "Dogodila se pogreška kod čitanja datoteke - + " + Constants.MATH_PROJECTS_FILE_NAME;
             logger.error(message, ex);
             System.out.println(message);
         }
@@ -387,5 +384,37 @@ public class FileReaderUtil {
                 .filter(mathClub -> mathClub.getId().compareTo(id) == 0)
                 .findFirst();
     }
+
+
+    public static List<User> getUsers() {
+        List<User> userList = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(Constants.USER_FILE_NAME))) {
+            String line;
+            while ((Optional.ofNullable(line = reader.readLine()).isPresent())) {
+
+                String[] parts = line.split(":");
+
+                if (parts.length == 3) {
+                    String username = parts[0];
+                    String hashedPassword = parts[1];
+                    String roleName = parts[2];
+
+                    UserRole role = UserRole.getRoleByName(roleName);
+                    userList.add(new User(username, hashedPassword, role));
+
+                } else {
+                    logger.warn("Pogrešan broj argumenata");
+                }
+            }
+        } catch (IOException | IllegalArgumentException e) {
+            String message = "Dogodila se pogreška kod čitanja datoteke: " + Constants.USER_FILE_NAME;
+            logger.error(message, e);
+            System.out.println(message);
+        }
+
+        return userList;
+    }
+
 
 }

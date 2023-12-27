@@ -66,7 +66,6 @@ public class DatabaseUtil {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
         }
-        ;
 
         return addresses;
 
