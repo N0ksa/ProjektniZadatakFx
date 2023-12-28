@@ -80,6 +80,11 @@ public class Address implements Serializable {
             return this;
         }
 
+        public AdressBuilder setAddressId(Long addressId) {
+            this.id = addressId;
+            return this;
+        }
+
 
         /**
          * Generira objekt tipa {@link Address}.

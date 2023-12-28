@@ -4,24 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Zamijenio logiku pretraživanja za sve entitete. Umjesto da se iz baze podataka dohvati lista svih entiteta, postavlja se sql upit s pomoću kojeg se dohvaćaju samo filtrirani rezultati.&#10;&#10;- kako bi implementirao navedeno dodao sam nove klase koje služe za filtraciju entiteta">
-      <change afterPath="$PROJECT_DIR$/dat/users.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ChangeApplicationScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/UserRole.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/exception/UnsupportedAlgorithmException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/PasswordUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/login.fxml" afterDir="false" />
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Napravio login screen i login controller.&#10;&#10;- dodao datoteku gdje će se spremati korisnikovi podaci (username i password)&#10;- dodao odgovarajuće metode koje provjeravaju je li user registriran, odnosno da li njegov input odgovara informacijama iz datoteke users.txt&#10;- ako je user admin, nakon što se klikne login poziva se metoda switchScene, te se scena prebacuje na glavni ekran.&#10;&#10;-potrebno je sada napraviti obične korisnike (matematičke klubove) i povezati ih nekako s bazom podataka, te napraviti grafičko sučelje za njih">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/UserMainScreenController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/userMainScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/users.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dat/users.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/pogreske.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/pogreske.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ChangeApplicationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ApplicationScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ValidationRegex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ValidationRegex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileWriterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileWriterUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/PasswordUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/PasswordUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +33,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="FxmlFile" />
         <option value="Class" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -65,7 +67,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_directory_selection&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/src/main/java/hr/java/project/projectfxapp&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Downloads/University-Management-System-in-JavaFX-main/UniversitiyManagementSystem&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -73,7 +75,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -148,7 +150,13 @@
       <workItem from="1703690115080" duration="611000" />
       <workItem from="1703693268416" duration="7853000" />
       <workItem from="1703702381293" duration="301000" />
-      <workItem from="1703703183672" duration="378000" />
+      <workItem from="1703703183672" duration="823000" />
+      <workItem from="1703704025691" duration="168000" />
+      <workItem from="1703709288707" duration="2615000" />
+      <workItem from="1703712463798" duration="19000" />
+      <workItem from="1703713162289" duration="913000" />
+      <workItem from="1703767916041" duration="13437000" />
+      <workItem from="1703782873040" duration="1334000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -269,7 +277,14 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1703441586334</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="Napravio login screen i login controller.&#10;&#10;- dodao datoteku gdje će se spremati korisnikovi podaci (username i password)&#10;- dodao odgovarajuće metode koje provjeravaju je li user registriran, odnosno da li njegov input odgovara informacijama iz datoteke users.txt&#10;- ako je user admin, nakon što se klikne login poziva se metoda switchScene, te se scena prebacuje na glavni ekran.&#10;&#10;-potrebno je sada napraviti obične korisnike (matematičke klubove) i povezati ih nekako s bazom podataka, te napraviti grafičko sučelje za njih">
+      <option name="closed" value="true" />
+      <created>1703703593960</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1703703593960</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -304,7 +319,8 @@
     <MESSAGE value="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)" />
     <MESSAGE value="Dodao logiku brisanja svih entiteta iz baze podataka.&#10;&#10;-malo izmijenio grafički prikaz nekih scena." />
     <MESSAGE value="Zamijenio logiku pretraživanja za sve entitete. Umjesto da se iz baze podataka dohvati lista svih entiteta, postavlja se sql upit s pomoću kojeg se dohvaćaju samo filtrirani rezultati.&#10;&#10;- kako bi implementirao navedeno dodao sam nove klase koje služe za filtraciju entiteta" />
-    <option name="LAST_COMMIT_MESSAGE" value="Zamijenio logiku pretraživanja za sve entitete. Umjesto da se iz baze podataka dohvati lista svih entiteta, postavlja se sql upit s pomoću kojeg se dohvaćaju samo filtrirani rezultati.&#10;&#10;- kako bi implementirao navedeno dodao sam nove klase koje služe za filtraciju entiteta" />
+    <MESSAGE value="Napravio login screen i login controller.&#10;&#10;- dodao datoteku gdje će se spremati korisnikovi podaci (username i password)&#10;- dodao odgovarajuće metode koje provjeravaju je li user registriran, odnosno da li njegov input odgovara informacijama iz datoteke users.txt&#10;- ako je user admin, nakon što se klikne login poziva se metoda switchScene, te se scena prebacuje na glavni ekran.&#10;&#10;-potrebno je sada napraviti obične korisnike (matematičke klubove) i povezati ih nekako s bazom podataka, te napraviti grafičko sučelje za njih" />
+    <option name="LAST_COMMIT_MESSAGE" value="Napravio login screen i login controller.&#10;&#10;- dodao datoteku gdje će se spremati korisnikovi podaci (username i password)&#10;- dodao odgovarajuće metode koje provjeravaju je li user registriran, odnosno da li njegov input odgovara informacijama iz datoteke users.txt&#10;- ako je user admin, nakon što se klikne login poziva se metoda switchScene, te se scena prebacuje na glavni ekran.&#10;&#10;-potrebno je sada napraviti obične korisnike (matematičke klubove) i povezati ih nekako s bazom podataka, te napraviti grafičko sučelje za njih" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -319,25 +335,11 @@
           <line>134</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/FileReaderUtil.java</url>
-          <line>388</line>
-          <properties class="hr.java.project.projectfxapp.utility.FileReaderUtil" method="getUsers">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/PasswordUtil.java</url>
-          <line>32</line>
-          <properties class="hr.java.project.projectfxapp.utility.PasswordUtil" method="isPasswordCorrect">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

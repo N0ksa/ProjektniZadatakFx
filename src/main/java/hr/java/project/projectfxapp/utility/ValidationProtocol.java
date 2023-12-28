@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import javafx.scene.control.*;
@@ -142,6 +143,66 @@ public class ValidationProtocol {
                 error.add("Molim unesite ispravnu ocijenu za predmet " + subjectGrade.getSubject());
             }
         }
+    }
+
+
+    public static void validateRegistrationInformation(TextField usernameRegisterTextField,
+                                                       PasswordField passwordRegisterPasswordField,
+                                                       PasswordField passwordConfirmPasswordField,
+                                                       TextField clubNameTextField,
+                                                       TextField streetNameTextField,
+                                                       TextField houseNumberTextField,
+                                                       ComboBox<City> cityComboBox) throws ValidationException {
+
+        List<String> errors = new ArrayList<>();
+
+        validateUsername(usernameRegisterTextField, errors);
+        validatePasswordField(passwordRegisterPasswordField, passwordConfirmPasswordField, errors);
+        validateTextField(clubNameTextField, "Unesite naziv matematičkog kluba", errors);
+        validateComboBox(cityComboBox, "Odaberite grad", errors);
+        validateTextField(streetNameTextField, "Unesite naziv ulice", errors);
+        validateHouseNumber(houseNumberTextField, errors);
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+    }
+
+    private static void validateUsername(TextField usernameRegisterTextField, List<String> errors) {
+        if (usernameRegisterTextField.getText().isEmpty()){
+            errors.add("Unesite korisničko ime");
+        }
+        else if (!usernameRegisterTextField.getText().matches(ValidationRegex.VALID_USERNAME_PATTERN.getRegex())){
+            errors.add("Korisničko ime mora sadržavati barem 4 znakova i ne smije sadržavati specijalne znakove");
+        }
+    }
+
+    private static void validateHouseNumber(TextField houseNumberTextField, List<String> errors) {
+        if (houseNumberTextField.getText().isEmpty()){
+
+            errors.add("Unesite kućni broj");
+
+        }else if (!houseNumberTextField.getText().matches(ValidationRegex.VALID_HOUSE_NUMBER.getRegex())){
+            errors.add("Unesite kućni broj u ispravnom formatu");
+        }
+    }
+
+    private static void validatePasswordField(PasswordField passwordRegisterPasswordField,
+                                              PasswordField passwordConfirmPasswordField, List<String> errors) {
+        if (passwordRegisterPasswordField.getText().isEmpty()){
+            errors.add("Unesite lozinku");
+        }
+        else if (passwordRegisterPasswordField.getText().length() < 8){
+            errors.add("Lozinka mora sadržavati barem 8 znakova");
+        }
+        else if (!passwordRegisterPasswordField.getText().equals(passwordConfirmPasswordField.getText())){
+            errors.add("Lozinke se ne podudaraju");
+        }
+
+        if (passwordConfirmPasswordField.getText().isEmpty()){
+            errors.add("Potvrdite lozinku");
+        }
+
     }
 
 

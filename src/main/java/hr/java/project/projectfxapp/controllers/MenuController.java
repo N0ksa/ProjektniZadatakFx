@@ -1,9 +1,9 @@
 package hr.java.project.projectfxapp.controllers;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -11,134 +11,39 @@ import java.io.IOException;
 public class MenuController {
 
     public void showMainScreen(){
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("mainScreen.fxml"));
-        try{
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("ProjectApp");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
+        JavaFxProjectApplication.switchScene(ApplicationScreen.MainScreen);
 
-
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
     }
     public void showStudentsScreen(){
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("students.fxml"));
-
-        try {
-
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Studenti");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        JavaFxProjectApplication.switchScene(ApplicationScreen.Students);
     }
 
     public void showClubsScreen(){
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("clubs.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-
-            JavaFxProjectApplication.getMainStage().setTitle("Klubovi");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        JavaFxProjectApplication.switchScene(ApplicationScreen.Clubs);
     }
 
     public void showProjectsScreen(){
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("projects.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Projekti");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+      JavaFxProjectApplication.switchScene(ApplicationScreen.Projects);
     }
 
     public void showCompetitionsScreen(){
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("competitions.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Natjecanja");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        JavaFxProjectApplication.switchScene(ApplicationScreen.Competition);
     }
 
 
     public void showAddNewStudent(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewStudent.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novog studenta");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewStudent);
     }
 
     public void showAddNewMathClub(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewMathClub.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novi klub");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+       JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewMathClub);
     }
 
     public void showAddNewCompetition(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewCompetition.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novo natjecanje");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewCompetition);
     }
 
     public void showAddNewProject(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("addNewProject.fxml"));
-
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            JavaFxProjectApplication.getMainStage().setTitle("Dodaj novi projekt");
-            JavaFxProjectApplication.getMainStage().setScene(scene);
-            JavaFxProjectApplication.getMainStage().show();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+       JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewProject);
     }
 }

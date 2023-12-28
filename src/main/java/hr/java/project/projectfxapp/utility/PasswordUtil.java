@@ -30,15 +30,16 @@ public class PasswordUtil {
     }
 
 
-    public static boolean isPasswordCorrect(String enteredPassword, String hashedPassword) {
+    public static boolean isPasswordCorrect(String enteredPassword, String hashedPassword){
         try {
-            String enteredPasswordHash = hashPassword(enteredPassword);
-            return hashedPassword.equals(enteredPasswordHash);
+            return hashPassword(enteredPassword).equals(hashedPassword);
         } catch (UnsupportedAlgorithmException e) {
-            logger.error(e.getMessage());
+            logger.error("Sustav ne podržava SHA-256");
             return false;
         }
     }
+
+
 
 }
 

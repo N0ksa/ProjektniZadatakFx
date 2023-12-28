@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -8,42 +12,180 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.LoginController">
-   <left>
-      <AnchorPane prefHeight="503.0" prefWidth="448.0" style="-fx-background-color: #F4F9FF;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="53.0" fitWidth="49.0" layoutX="223.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../img/login/lokot.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="59.0" layoutY="229.0" text="Korisničko ime:" textFill="#374151">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="105.0" layoutY="298.0" text="Lozinka:" textFill="#374151">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="usernameTextField" layoutX="173.0" layoutY="227.0" promptText="Unesi korisničko ime" />
-            <Button layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: ffc900;" text="Login" textFill="#374151" />
-            <PasswordField fx:id="passwordPasswordField" layoutX="173.0" layoutY="296.0" promptText="Unesi lozinku" />
-         </children>
-      </AnchorPane>
-   </left>
-   <right>
-      <AnchorPane prefHeight="503.0" prefWidth="306.0" style="-fx-background-color: #4a92f7;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="233.0" fitWidth="306.0" layoutX="2.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../img/login/projekt_matematika_logo.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-   </right>
-</BorderPane>
+<StackPane prefHeight="584.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.LoginController">
+   <children>
+      <BorderPane fx:id="loginBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="758.0">
+         <right>
+            <AnchorPane prefHeight="503.0" prefWidth="306.0" style="-fx-background-color: #4a92f7;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="233.0" fitWidth="306.0" layoutX="2.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../img/login/projekt_matematika_logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </right>
+         <left>
+            <AnchorPane prefHeight="519.0" prefWidth="447.0" style="-fx-background-color: #F4F9FF;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="53.0" fitWidth="49.0" layoutX="223.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../img/login/lokot.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="59.0" layoutY="217.0" text="Korisničko ime:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="105.0" layoutY="282.0" text="Lozinka:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="usernameTextField" layoutX="170.0" layoutY="207.0" prefHeight="39.0" prefWidth="182.0" promptText="Unesi korisničko ime">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding></TextField>
+                  <Button layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: ffc900;" text="Login" textFill="#374151" />
+                  <PasswordField fx:id="passwordPasswordField" layoutX="170.0" layoutY="273.0" prefHeight="37.0" prefWidth="181.0" promptText="Unesi lozinku">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding></PasswordField>
+                  <Label fx:id="wrongCredentialsLabel" alignment="CENTER" layoutX="139.0" layoutY="165.0" prefHeight="42.0" prefWidth="248.0" textFill="#374151" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#374151" glyphName="USER" layoutX="183.0" layoutY="233.0" size="20" text="" wrappingWidth="17.571428298950195">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </FontAwesomeIconView>
+                  <FontAwesomeIconView fill="#374151" glyphName="KEY" layoutX="182.0" layoutY="298.0" size="20" />
+                  <Label layoutX="219.0" layoutY="30.0" text="Login">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="160.0" layoutY="437.0" text="Nemate račun? " />
+                  <Hyperlink layoutX="241.0" layoutY="434.0" onAction="#switchToRegisterForm" text="Registrirajte se" />
+               </children>
+            </AnchorPane>
+         </left>
+      </BorderPane>
+      <BorderPane fx:id="registerClubBorderPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="758.0" visible="false">
+         <right>
+            <AnchorPane prefHeight="668.0" prefWidth="308.0" style="-fx-background-color: #4a92f7;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="233.0" fitWidth="306.0" layoutX="2.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../img/login/projekt_matematika_logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </right>
+         <center>
+            <AnchorPane prefHeight="653.0" prefWidth="450.0" style="-fx-background-color: #F4F9FF;" BorderPane.alignment="CENTER">
+               <children>
+                  <PasswordField fx:id="passwordRegisterPasswordField" layoutX="179.0" layoutY="149.0" prefHeight="38.0" prefWidth="244.0" promptText="Unesi lozinku">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </PasswordField>
+                  <Label layoutX="69.0" layoutY="97.0" text="Korisničko ime:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="120.0" layoutY="158.0" text="Lozinka:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="usernameRegisterTextField" layoutX="181.0" layoutY="89.0" prefHeight="37.0" prefWidth="241.0" promptText="Unesi korisničko ime">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </TextField>
+                  <Button layoutX="190.0" layoutY="505.0" mnemonicParsing="false" onAction="#register" prefHeight="35.0" prefWidth="89.0" style="-fx-background-color: ffc900;" text="Registriraj se" textFill="#374151" />
+                  <FontAwesomeIconView fill="#374151" glyphName="USER" layoutX="188.0" layoutY="114.0" size="20" text="" wrappingWidth="17.571428298950195">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </FontAwesomeIconView>
+                  <Label layoutX="184.0" layoutY="32.0" text="Registracija kluba">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="67.0" layoutY="214.0" text="Potvrdi lozinku:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <FontAwesomeIconView fill="#374151" glyphName="KEY" layoutX="187.0" layoutY="175.0" size="20" wrappingWidth="19.0" />
+                  <Label layoutX="103.0" layoutY="266.0" text="Ime kluba:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="clubNameTextField" layoutX="181.0" layoutY="257.0" prefHeight="37.0" prefWidth="241.0" promptText="Unesi ime kluba">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </TextField>
+                  <FontAwesomeIconView glyphName="UNIVERSITY" layoutX="186.0" layoutY="283.0" size="20" />
+                  <Label layoutX="82.0" layoutY="329.0" text="Odaberi grad:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cityComboBox" layoutX="181.0" layoutY="323.0" prefHeight="33.0" prefWidth="242.0" />
+                  <Label layoutX="99.0" layoutY="378.0" text="Unesi ulicu: " textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="streetNameTextField" layoutX="181.0" layoutY="369.0" prefHeight="37.0" prefWidth="241.0" promptText="Unesi ulicu">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </TextField>
+                  <Label layoutX="63.0" layoutY="430.0" text="Unesi kućni broj:" textFill="#374151">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="houseNumberTextField" layoutX="181.0" layoutY="422.0" prefHeight="37.0" prefWidth="241.0" promptText="Unesi kućni broj">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </TextField>
+                  <PasswordField fx:id="passwordConfirmPasswordField" layoutX="179.0" layoutY="205.0" prefHeight="38.0" prefWidth="244.0" promptText="Unesi lozinku">
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </PasswordField>
+                  <FontAwesomeIconView fill="#374151" glyphName="KEY" layoutX="186.0" layoutY="231.0" size="20" wrappingWidth="19.0" />
+                  <FontAwesomeIconView glyphName="LOCATION_ARROW" layoutX="186.0" layoutY="395.0" selectionEnd="0" size="20" />
+                  <FontAwesomeIconView glyphName="HOME" layoutX="186.0" layoutY="447.0" selectionEnd="0" size="20" />
+                  <Label layoutX="134.0" layoutY="589.0" text="Već imate račun? " />
+                  <Hyperlink layoutX="234.0" layoutY="586.0" onAction="#switchToLogin" text="Prijavite se" />
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

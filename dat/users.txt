@@ -1,1 +1,2 @@
 admin:jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=:Admin
+klub:ZLIIWZXMCo/shs0tvvOptiuP1fgO9VDmlDUsPMKmEpA=:User

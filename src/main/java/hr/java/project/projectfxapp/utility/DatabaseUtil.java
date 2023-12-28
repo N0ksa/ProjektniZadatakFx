@@ -355,6 +355,35 @@ public class DatabaseUtil {
 
     }
 
+    public static Long saveAddress(Address addressToSave) {
+
+        Long addresId = 0L;
+        try (Connection connection = connectToDatabase()) {
+
+            String insertAddressSql = "INSERT INTO ADDRESS(STREET, HOUSE_NUMBER, CITY) VALUES(?, ?, ?)";
+
+            PreparedStatement pstmt = connection.prepareStatement(insertAddressSql, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, addressToSave.getStreet());
+            pstmt.setLong(2, Long.parseLong(addressToSave.getHouseNumber()));
+            pstmt.setString(3, addressToSave.getCity().getName());
+            pstmt.executeUpdate();
+
+
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+
+            if (generatedKeys.next()) {
+                addresId = generatedKeys.getLong(1);
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja adrese u bazu podataka";
+            logger.error(message, ex);
+        }
+
+        return addresId;
+
+    }
+
     public static List<MathProject> getProjects() {
 
         List<MathProject> mathProjects = new ArrayList<>();

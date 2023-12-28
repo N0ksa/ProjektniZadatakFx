@@ -9,4 +9,5 @@ module hr.java.project.projectfxapp {
     exports hr.java.project.projectfxapp;
     exports hr.java.project.projectfxapp.controllers;
     opens hr.java.project.projectfxapp.controllers to javafx.fxml;
+    exports hr.java.project.projectfxapp.enums;
 }

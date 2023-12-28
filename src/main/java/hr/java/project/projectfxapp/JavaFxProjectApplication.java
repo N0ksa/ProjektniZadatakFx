@@ -1,10 +1,8 @@
 package hr.java.project.projectfxapp;
 
-import hr.java.project.projectfxapp.enums.ChangeApplicationScreen;
-import hr.java.project.projectfxapp.utility.PasswordUtil;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -25,6 +23,7 @@ public class JavaFxProjectApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("ProjektMatematika");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -37,12 +36,11 @@ public class JavaFxProjectApplication extends Application {
 
 
 
-    public static void switchScene(ChangeApplicationScreen screen) {
+    public static void switchScene(ApplicationScreen screen) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource(screen.getPathOfFxml()));
-            Parent root = fxmlLoader.load();
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(fxmlLoader.load());
 
             mainStage.setTitle(screen.getTitle());
             mainStage.setScene(scene);
@@ -51,6 +49,7 @@ public class JavaFxProjectApplication extends Application {
 
         } catch (IOException e) {
             logger.error("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(), e);
+            throw new RuntimeException(e);
         }
     }
 

@@ -1,6 +1,6 @@
 package hr.java.project.projectfxapp.enums;
 
-public enum ChangeApplicationScreen {
+public enum ApplicationScreen {
 
     MainScreen("Glavni ekran", "mainScreen.fxml", true),
     AddNewCompetition("Dodaj natjecanje", "addNewCompetition.fxml", true),
@@ -8,18 +8,18 @@ public enum ChangeApplicationScreen {
     AddNewProject("Dodaj projekt", "addNewProject.fxml", true),
     AddNewStudent("Dodaj studenta", "addNewStudent.fxml", true),
     Clubs("Klubovi", "clubs.fxml", true),
+
     Competition("Natjecanja", "competitions.fxml", true),
     Projects("Projekti", "projects.fxml", true),
-    Students("Studenti", "students.fxml", true);
-
-
+    Students("Studenti", "students.fxml", true),
+    UserMainScreen("Glavni ekran", "userMainScreen.fxml", true);
 
     private final String title;
     private final String pathOfFxml;
 
     private final boolean resizable;
 
-    ChangeApplicationScreen(String title, String pathOfFxml, boolean resizable){
+    ApplicationScreen(String title, String pathOfFxml, boolean resizable){
         this.title = title;
         this.pathOfFxml = pathOfFxml;
         this.resizable = resizable;

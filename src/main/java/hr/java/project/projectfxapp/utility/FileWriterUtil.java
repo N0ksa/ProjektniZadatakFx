@@ -231,12 +231,8 @@ public class FileWriterUtil {
 
         try (PrintWriter pw = new PrintWriter(usersFile)) {
             for (User user : users) {
-                try {
-                    pw.println(user.getUsername() + ":" + PasswordUtil.hashPassword(user.getPassword()) + ":" + user.getRole().getName());
-                } catch (UnsupportedAlgorithmException ex) {
-                    String errorMessage = "Sustav ne podržava SHA-256";
-                    logger.error(errorMessage, ex);
-                }
+                pw.println(user.getUsername() + ":" + user.getHashedPassword() + ":" + user.getRole().getName());
+
             }
         } catch (IOException ex) {
             String message ="Dogodila se pogreška kod pisanja datoteke - + " + Constants.USER_FILE_NAME;
@@ -244,9 +240,6 @@ public class FileWriterUtil {
             System.out.println(message);
         }
     }
-
-
-
 
 
 }
