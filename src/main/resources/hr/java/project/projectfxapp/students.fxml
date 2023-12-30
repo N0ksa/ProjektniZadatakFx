@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.StudentsSearchController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.StudentsSearchController">
    <children>
       <GridPane prefHeight="635.0" prefWidth="673.0">
         <columnConstraints>
@@ -30,7 +30,7 @@
             <RowConstraints maxHeight="481.0" minHeight="10.0" prefHeight="400.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <fx:include source="menu.fxml" />
+             <fx:include source="menuForAdmin.fxml" />
             <TableView fx:id="studentsTableView" prefHeight="397.0" prefWidth="647.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
                <columns>
                   <TableColumn fx:id="studentNameTableColumn" prefWidth="58.0" text="Ime" />

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.AddNewCompetitionController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.AddNewCompetitionController">
    <children>
       <GridPane prefHeight="495.0" prefWidth="672.0">
         <columnConstraints>
@@ -39,7 +39,7 @@
             <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <fx:include source="menu.fxml" />
+             <fx:include source="menuForAdmin.fxml" />
             <Label text="Dodaj novo natjecanje" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />

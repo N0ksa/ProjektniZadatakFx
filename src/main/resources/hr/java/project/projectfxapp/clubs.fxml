@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="516.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.ClubsSearchController">
+<AnchorPane prefHeight="516.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.ClubsSearchController">
    <children>
       <GridPane prefHeight="516.0" prefWidth="673.0">
         <columnConstraints>
@@ -27,7 +27,7 @@
             <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="330.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <fx:include source="menu.fxml" />
+             <fx:include source="menuForAdmin.fxml" />
             <TableView fx:id="clubsTableView" prefHeight="343.0" prefWidth="673.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
               <columns>
                 <TableColumn fx:id="clubNameTableColumn" prefWidth="129.0" text="Name" />

@@ -401,7 +401,7 @@ public class FileReaderUtil {
                     String roleName = parts[2];
 
                     UserRole role = UserRole.getRoleByName(roleName);
-                    userList.add(new User(username, hashedPassword, role));
+                    userList.add(new User(username , hashedPassword, role));
 
                 } else {
                     logger.warn("Pogrešan broj argumenata");
@@ -415,6 +415,7 @@ public class FileReaderUtil {
 
         return userList;
     }
+
 
 
 }

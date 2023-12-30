@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,24 @@ public class JavaFxProjectApplication extends Application {
         } catch (IOException e) {
             logger.error("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(), e);
             throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void showPopup(ApplicationScreen screen) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource(screen.getPathOfFxml()));
+            Scene popupScene = new Scene(fxmlLoader.load());
+
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle(screen.getTitle());
+            popupStage.setScene(popupScene);
+            popupStage.setResizable(screen.isResizable());
+            popupStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp.controllers;
+package hr.java.project.projectfxapp.controllers.shared;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Address;
@@ -12,6 +12,7 @@ import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
@@ -68,23 +69,31 @@ public class LoginController {
         String enteredPassword = passwordPasswordField.getText();
 
 
-        User loginUser = new User(enteredUsername, enteredPassword, UserRole.ADMIN);
-
-
         List<User> users = FileReaderUtil.getUsers();
 
         for (User user : users) {
 
-            if (user.getUsername().equals(loginUser.getUsername())
-                    && PasswordUtil.isPasswordCorrect(loginUser.getHashedPassword(), user.getHashedPassword())
+            if (user.getUsername().equals(enteredUsername)
+                    && PasswordUtil.isPasswordCorrect(enteredPassword, user.getHashedPassword())
                     && user.getRole().equals(UserRole.ADMIN)) {
+
+               User currentUser = DatabaseUtil.getCurrentUser(enteredUsername, PasswordUtil.hashPassword(enteredPassword)).get();
+               SessionManager.getInstance().setCurrentUser(currentUser);
+
                 JavaFxProjectApplication.switchScene(ApplicationScreen.MainScreen);
             }
-            else if (user.getUsername().equals(loginUser.getUsername())
-                    && PasswordUtil.isPasswordCorrect(loginUser.getHashedPassword(), user.getHashedPassword())
+            else if (user.getUsername().equals(enteredUsername)
+                    && PasswordUtil.isPasswordCorrect(enteredPassword, user.getHashedPassword())
                     && user.getRole().equals(UserRole.USER)) {
-                JavaFxProjectApplication.switchScene(ApplicationScreen.UserMainScreen);
+
+
+                User currentUser = DatabaseUtil.getCurrentUser(enteredUsername, PasswordUtil.hashPassword(enteredPassword)).get();
+                SessionManager.getInstance().setCurrentUser(currentUser);
+
+
+                JavaFxProjectApplication.switchScene(ApplicationScreen.MainScreenForUser);
             }
+
             else{
                 wrongCredentialsLabel.setVisible(true);
                 wrongCredentialsLabel.setText("Pogrešno korisničko ime ili lozinka");
@@ -103,34 +112,40 @@ public class LoginController {
                     , passwordConfirmPasswordField, clubNameTextField,
                     streetNameTextField, houseNumberTextField, cityComboBox);
 
-            String hashedPassword = PasswordUtil.hashPassword(enteredPassword);
 
-            User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER);
+
             List<User> users = FileReaderUtil.getUsers();
 
             for (User user : users){
-                if (user.getUsername().equals(registerUser.getUsername())){
+                if (user.getUsername().equals(enteredUsername)){
                     throw new ValidationException("Korisničko ime već postoji");
                 }
             }
-
-            users.add(registerUser);
-            FileWriterUtil.saveUsers(users);
 
             Address.AdressBuilder addressBuilder = new Address.AdressBuilder(cityComboBox.getValue())
                     .setHouseNumber(houseNumberTextField.getText())
                     .setStreet(streetNameTextField.getText())
                     .setAddressId(0L);
 
-           Long addressId =  DatabaseUtil.saveAddress(addressBuilder.build());
+            Long addressId =  DatabaseUtil.saveAddress(addressBuilder.build());
 
-           addressBuilder.setAddressId(addressId);
+            addressBuilder.setAddressId(addressId);
 
             MathClub newMathClub = new MathClub(0L, clubNameTextField.getText(), addressBuilder.build(),
-            new HashSet<>());
+                    new HashSet<>());
             List<MathClub> mathClubs = new ArrayList<>();
             mathClubs.add(newMathClub);
-            DatabaseUtil.saveMathClubs(mathClubs);
+
+
+            Long mathClubId = DatabaseUtil.saveMathClubs(mathClubs);
+
+            String hashedPassword = PasswordUtil.hashPassword(enteredPassword);
+            User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER, mathClubId);
+
+            users.add(registerUser);
+            FileWriterUtil.saveUsers(users);
+
+            DatabaseUtil.saveUser(registerUser);
 
 
             ValidationProtocol.showSuccessAlert("Registracija uspješna", "Registracija korisnika " +

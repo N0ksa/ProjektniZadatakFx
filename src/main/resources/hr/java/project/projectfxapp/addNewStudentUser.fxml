@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="632.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.AddNewStudentUserController">
+   <FontAwesomeIconView glyphName="USERS" layoutX="638.0" layoutY="562.0" opacity="0.18" size="15EM" wrappingWidth="200.0" />
+   <Label layoutX="193.0" layoutY="108.0" text="Ime:" />
+   <Label layoutX="171.0" layoutY="169.0" text="Prezime:" />
+   <Label layoutX="189.0" layoutY="223.0" text="Email:" />
+   <Label layoutX="141.0" layoutY="281.0" prefHeight="17.0" prefWidth="79.0" text="Godina studija:" />
+   <TextField fx:id="studentNameTextField" layoutX="234.0" layoutY="102.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi ime" />
+   <TextField fx:id="studentEmailTextField" layoutX="234.0" layoutY="216.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi email" />
+   <TextField fx:id="studentSurnameTextField" layoutX="234.0" layoutY="162.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi prezime" />
+   <RadioButton fx:id="prvaGodinaRadioButton" layoutX="250.0" layoutY="281.0" mnemonicParsing="false" text="Prva godina">
+      <toggleGroup>
+         <ToggleGroup fx:id="yearOfStudySelection" />
+      </toggleGroup></RadioButton>
+   <RadioButton fx:id="trecaGodinaRadioButton" layoutX="462.0" layoutY="281.0" mnemonicParsing="false" text="Treća godina" toggleGroup="$yearOfStudySelection" />
+   <RadioButton fx:id="drugaGodinaRadioButton" layoutX="350.0" layoutY="281.0" mnemonicParsing="false" text="Druga godina" toggleGroup="$yearOfStudySelection" />
+   <AnchorPane layoutX="119.0" layoutY="315.0" prefHeight="244.0" prefWidth="536.0">
+      <children>
+         <TableView fx:id="studentGradesTableView" layoutX="7.0" layoutY="7.0" prefHeight="244.0" prefWidth="622.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <columns>
+             <TableColumn fx:id="subjectNameTableColumn" prefWidth="119.0" text="Predmet" />
+             <TableColumn fx:id="subjectGradeTableColumn" prefWidth="347.0" text="Ocijena" />
+           </columns>
+         </TableView>
+      </children>
+   </AnchorPane>
+   <Button layoutX="320.0" layoutY="576.0" mnemonicParsing="false" onAction="#saveMember" text="Dodaj studenta" />
+   <AnchorPane layoutX="862.0" layoutY="89.0" prefHeight="200.0" prefWidth="200.0" />
+   <Button layoutX="693.0" layoutY="303.0" mnemonicParsing="false" onAction="#addImage" text="Dodaj sliku" />
+   <ImageView fx:id="studentImageView" fitHeight="200.0" fitWidth="200.0" layoutX="630.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true" />
+   <Label layoutX="330.0" layoutY="28.0" text="Dodaj novog člana">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+
+</AnchorPane>

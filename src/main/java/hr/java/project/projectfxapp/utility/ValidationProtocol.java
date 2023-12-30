@@ -104,6 +104,23 @@ public class ValidationProtocol {
         }
     }
 
+    public static void validateClubMember(TextField nameTextField, TextField surnameTextField,
+                                          TextField emailTextField, TableView<SubjectGrade> studentGradesTableView,
+                                          ToggleGroup yearOfStudyToggleGroup) throws ValidationException {
+
+        List<String> errors = new ArrayList<>();
+
+        validateTextField(nameTextField, "Unesite ime studenta", errors);
+        validateTextField(surnameTextField, "Unesite prezime studenta", errors);
+        validateEmail(emailTextField, errors);
+        validateStudentGradesList(studentGradesTableView, errors);
+        validateToggleGroup(yearOfStudyToggleGroup, "Odaberite godinu studija", errors);
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+    }
+
     public static void validateStudent(TextField nameTextField, TextField surnameTextField,
                                        TextField emailTextField, ComboBox<MathClub> mathClubComboBox,
                                        DatePicker joinDateDatePicker, TableView<SubjectGrade> studentGradesTableView,

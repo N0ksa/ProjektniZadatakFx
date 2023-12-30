@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="584.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.LoginController">
+<StackPane prefHeight="584.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.shared.LoginController">
    <children>
       <BorderPane fx:id="loginBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="758.0">
          <right>
@@ -23,7 +23,7 @@
                <children>
                   <ImageView fitHeight="233.0" fitWidth="306.0" layoutX="2.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../img/login/projekt_matematika_logo.png" />
+                        <Image url="@../../../../images/projekt_matematika_logo.png" />
                      </image>
                   </ImageView>
                </children>
@@ -34,7 +34,7 @@
                <children>
                   <ImageView fitHeight="53.0" fitWidth="49.0" layoutX="223.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../img/login/lokot.png" />
+                        <Image url="@../../../../images/lokot.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="59.0" layoutY="217.0" text="Korisničko ime:" textFill="#374151">
@@ -90,7 +90,7 @@
                <children>
                   <ImageView fitHeight="233.0" fitWidth="306.0" layoutX="2.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../img/login/projekt_matematika_logo.png" />
+                        <Image url="@../../../../img/img/projekt_matematika_logo.png" />
                      </image>
                   </ImageView>
                </children>

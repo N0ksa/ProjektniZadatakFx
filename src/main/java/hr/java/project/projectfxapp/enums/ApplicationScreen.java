@@ -12,8 +12,12 @@ public enum ApplicationScreen {
     Competition("Natjecanja", "competitions.fxml", true),
     Projects("Projekti", "projects.fxml", true),
     Students("Studenti", "students.fxml", true),
-    UserMainScreen("Glavni ekran", "userMainScreen.fxml", true);
+    AddNewClubMember("Dodaj člana kluba", "addNewStudentUser.fxml", true),
 
+    MainScreenForUser("Glavni ekran", "mainScreenForUser.fxml", true),
+    AddNewCCompetitionUser("Dodaj natjecanje", "addNewCompetitionUser.fxml", false),
+
+    AddNewProjectUser("Dodaj projekt", "addNewProjectUser.fxml", false);
     private final String title;
     private final String pathOfFxml;
 

@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp.controllers;
+package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.Competition;

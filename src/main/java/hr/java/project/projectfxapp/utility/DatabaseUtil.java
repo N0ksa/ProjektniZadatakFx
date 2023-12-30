@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
+import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.filter.MathProjectFilter;
@@ -97,7 +98,7 @@ public class DatabaseUtil {
 
     }
 
-    private static Optional<MathClub> getMathClub(Long mathClubId) {
+    public static Optional<MathClub> getMathClub(Long mathClubId) {
         List<Address> addresses = getAddresses();
         List<Student> students = getStudents();
 
@@ -443,7 +444,8 @@ public class DatabaseUtil {
     }
 
 
-    public static void saveMathClubs(List<MathClub> mathClubs) {
+    public static Long saveMathClubs(List<MathClub> mathClubs) {
+        Long mathClubId = 0L;
         try (Connection connection = connectToDatabase()) {
             for (MathClub mathClub : mathClubs) {
 
@@ -457,12 +459,11 @@ public class DatabaseUtil {
 
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    Long mathclubId = generatedKeys.getLong(1);
-
+                    mathClubId = generatedKeys.getLong(1);
                     for (Student member : mathClub.getStudents()) {
                         String insertMembersIntoMathClubStudentsSql = "INSERT INTO MATH_CLUB_STUDENTS(CLUB_ID, STUDENT_ID) VALUES(?, ?);";
                         pstmt = connection.prepareStatement(insertMembersIntoMathClubStudentsSql);
-                        pstmt.setLong(1, mathclubId);
+                        pstmt.setLong(1, mathClubId);
                         pstmt.setLong(2, member.getId());
                         pstmt.executeUpdate();
                     }
@@ -472,6 +473,8 @@ public class DatabaseUtil {
             String message = "Dogodila se pogreška kod spremanja matematičkih klubova u bazu podataka";
             logger.error(message, ex);
         }
+
+        return mathClubId;
     }
 
     public static void saveMathProjects(List<MathProject> mathProjects) {
@@ -1083,4 +1086,57 @@ public class DatabaseUtil {
         }
     }
 
+
+
+    public static Optional <User> getCurrentUser(String enteredUsername, String enteredPassword) {
+        User currentUser = null;
+
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = String.format("SELECT * FROM USERS WHERE USERNAME = '%s' AND PASSWORD = '%s'",
+                    enteredUsername, enteredPassword);
+            Statement stmt = connection.createStatement();
+            stmt.execute(sqlQuery);
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                String username = rs.getString("USERNAME");
+                String password = rs.getString("PASSWORD");
+                Long mathClubId = rs.getLong("MATH_CLUB_ID");
+                String role = rs.getString("ROLE");
+
+                currentUser = new User(username, password, UserRole.getRoleByName(role), mathClubId);
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+
+        return Optional.ofNullable(currentUser);
+
+    }
+
+
+    public static void saveUser(User registerUser){
+
+        try (Connection connection = connectToDatabase()) {
+
+            String insertStudentSql = "INSERT INTO USERS(USERNAME, PASSWORD, MATH_CLUB_ID, ROLE) VALUES(?, ?, ?, ?)";
+
+            PreparedStatement pstmt = connection.prepareStatement(insertStudentSql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            pstmt.setString(1, registerUser.getUsername());
+            pstmt.setString(2, registerUser.getHashedPassword());
+            pstmt.setLong(3, registerUser.getMathClubId());
+            pstmt.setString(4, registerUser.getRole().getName());
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod spremanja korisnika u bazu podataka";
+            logger.error(message, ex);
+        }
+
+    }
 }

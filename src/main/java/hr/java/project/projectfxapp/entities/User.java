@@ -14,7 +14,15 @@ public final class User implements Serializable {
     private String username;
     private String hashedPassword;
     private UserRole role;
+    private Long mathClubId;
 
+
+    public User(String username, String hashedPassword, UserRole role, Long mathClubId) {
+        this.username = username;
+        this.hashedPassword = hashedPassword;
+        this.role = role;
+        this.mathClubId = mathClubId;
+    }
 
     public User(String username, String hashedPassword, UserRole role) {
         this.username = username;
@@ -22,6 +30,13 @@ public final class User implements Serializable {
         this.role = role;
     }
 
+    public Long getMathClubId() {
+        return mathClubId;
+    }
+
+    public void setMathClubId(Long mathClubId) {
+        this.mathClubId = mathClubId;
+    }
 
     public String getUsername() {
         return username;
