@@ -86,8 +86,8 @@ public class LoginController {
                     && PasswordUtil.isPasswordCorrect(enteredPassword, user.getHashedPassword())
                     && user.getRole().equals(UserRole.USER)) {
 
-
                 User currentUser = DatabaseUtil.getCurrentUser(enteredUsername, PasswordUtil.hashPassword(enteredPassword)).get();
+                SessionManager.getInstance().setCurrentClub(DatabaseUtil.getMathClub(currentUser.getMathClubId()).get());
                 SessionManager.getInstance().setCurrentUser(currentUser);
 
 
@@ -127,12 +127,15 @@ public class LoginController {
                     .setStreet(streetNameTextField.getText())
                     .setAddressId(0L);
 
-            Long addressId =  DatabaseUtil.saveAddress(addressBuilder.build());
+            Address address = addressBuilder.build();
+
+            Long addressId =  DatabaseUtil.saveAddress(address);
 
             addressBuilder.setAddressId(addressId);
 
-            MathClub newMathClub = new MathClub(0L, clubNameTextField.getText(), addressBuilder.build(),
+            MathClub newMathClub = new MathClub(0L, clubNameTextField.getText(), address,
                     new HashSet<>());
+
             List<MathClub> mathClubs = new ArrayList<>();
             mathClubs.add(newMathClub);
 
@@ -141,6 +144,7 @@ public class LoginController {
 
             String hashedPassword = PasswordUtil.hashPassword(enteredPassword);
             User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER, mathClubId);
+
 
             users.add(registerUser);
             FileWriterUtil.saveUsers(users);

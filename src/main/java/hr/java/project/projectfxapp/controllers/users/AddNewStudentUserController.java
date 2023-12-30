@@ -91,11 +91,6 @@ public class AddNewStudentUserController {
             }
         });
 
-
-
-
-
-
         studentImageView.setImage(new Image(getClass().getResource("/images/question_mark_person_logo.png")
                 .toExternalForm()));
 
