@@ -19,7 +19,8 @@ public enum ApplicationScreen {
 
     AddNewProjectUser("Dodaj projekt", "addNewProjectUser.fxml", false),
     ClubMembers("Članovi kluba", "clubMembers.fxml", true),
-    MemberCard("Članska iskaznica", "memberCard.fxml", false);
+    MemberCard("Članska iskaznica", "memberCard.fxml", false),
+    AddNewStudentUser("Dodaj studenta", "addNewStudentUser.fxml", false);
 
     private final String title;
     private final String pathOfFxml;

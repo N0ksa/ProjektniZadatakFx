@@ -120,7 +120,6 @@ public class Student extends NamedEntity implements Gradable, Serializable {
                 .add(normalizedAverageGrade.multiply(averageGradeWeight))
                 .add(numberOfCollaborationsWeight.multiply(new BigDecimal(numberOfCollaborations)));
 
-
     }
 
     /**

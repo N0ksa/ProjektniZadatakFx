@@ -70,6 +70,7 @@ public class AddNewCompetitionController {
 
         competitionResultsTableView.editableProperty().set(true);
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
+
         competitionScoreTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().score()));
         competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
 
@@ -89,6 +90,8 @@ public class AddNewCompetitionController {
 
         competitionDescriptionTextArea.setWrapText(true);
     }
+
+
 
     public void saveCompetition(ActionEvent actionEvent) {
         try {
@@ -167,6 +170,7 @@ public class AddNewCompetitionController {
         competitionResultsTableView.setItems(competitionResults);
 
         removeParticipantButton.setDisable(competitionResults.isEmpty());
+
     }
 
     private boolean resultAlreadyExists(Student participant, ObservableList<CompetitionResult> competitionResults) {

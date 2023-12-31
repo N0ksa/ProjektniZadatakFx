@@ -27,7 +27,7 @@
       </children>
    </AnchorPane>
    <TextField fx:id="filterMembers" layoutX="472.0" layoutY="54.0" prefHeight="37.0" prefWidth="407.0" promptText="filtriraj članove" />
-   <Button layoutX="495.0" layoutY="321.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="131.0" text="Dodaj novog člana" />
+   <Button layoutX="495.0" layoutY="321.0" mnemonicParsing="false" onAction="#showAddNewStudentUserScreen" prefHeight="37.0" prefWidth="131.0" text="Dodaj novog člana" />
    <Button layoutX="662.0" layoutY="321.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="172.0" text="Editiraj postojećeg člana" />
    <TableView fx:id="leaderBoardTableView" layoutX="303.0" layoutY="422.0" prefHeight="263.0" prefWidth="234.0">
      <columns>

@@ -4,19 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao različite stvari, ali većinom je to sve još nedovršeno i nedorečeno&#10;&#10;- najbitnija stvar je što sam skužio kako informaciju prilikom logiranja dalje proslijediti drugim kontrolerima (napravio sam novu klasu SessionManager.java)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/MemberCardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ClubMembersController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubMembers.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" afterDir="false" />
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Smislio kako će izgledati sučelje za članove studentskog kluba.&#10;&#10;-testirao neke stvari kao što je dvoklik na table view (kada se klikne dva puta na tableview izbacivat će se članska kartica)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/AddNewStudentUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/AddNewStudentUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/NavigationForUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/NavigationForUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/pogreske.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/pogreske.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/MemberCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MemberCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewCompetitionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewCompetitionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ClubMembersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ClubMembersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MainScreenForUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MainScreenForUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ApplicationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ApplicationScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SessionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SessionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubMembers.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubMembers.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/navigationForUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/navigationForUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +161,8 @@
       <workItem from="1703945982485" duration="644000" />
       <workItem from="1703947844905" duration="4824000" />
       <workItem from="1703954727210" duration="1164000" />
-      <workItem from="1703955970300" duration="13198000" />
+      <workItem from="1703955970300" duration="13648000" />
+      <workItem from="1704030904904" duration="12266000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -303,7 +304,14 @@
       <option name="presentableId" value="LOCAL−00020" />
       <updated>1703961482381</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL−00021" summary="Smislio kako će izgledati sučelje za članove studentskog kluba.&#10;&#10;-testirao neke stvari kao što je dvoklik na table view (kada se klikne dva puta na tableview izbacivat će se članska kartica)">
+      <option name="closed" value="true" />
+      <created>1703972915245</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1703972915245</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +349,8 @@
     <MESSAGE value="Napravio login screen i login controller.&#10;&#10;- dodao datoteku gdje će se spremati korisnikovi podaci (username i password)&#10;- dodao odgovarajuće metode koje provjeravaju je li user registriran, odnosno da li njegov input odgovara informacijama iz datoteke users.txt&#10;- ako je user admin, nakon što se klikne login poziva se metoda switchScene, te se scena prebacuje na glavni ekran.&#10;&#10;-potrebno je sada napraviti obične korisnike (matematičke klubove) i povezati ih nekako s bazom podataka, te napraviti grafičko sučelje za njih" />
     <MESSAGE value="Promijenio izgled login.fxml ekrana tako što sam dodao stack pane i unutra njega napravio dva anchor pane-a. Jedan je vidljiv, dok je drugi sakriven sve dok korisnik ne klikne na odgovarajući link (registriraj se).&#10;&#10;-dodao sam logiku dodavanja novih usera (samo se može dodati role User, jer postoji jedan role Admin) - prilikom registracije se u bazi podataka kreira uneseni klub i nova adresa.&#10;- sada je potrebno povezati korisnika (Studentski klub) i njegove informacije, te sve prikazati na ekranu samo za rolu User-a" />
     <MESSAGE value="Dodao različite stvari, ali većinom je to sve još nedovršeno i nedorečeno&#10;&#10;- najbitnija stvar je što sam skužio kako informaciju prilikom logiranja dalje proslijediti drugim kontrolerima (napravio sam novu klasu SessionManager.java)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodao različite stvari, ali većinom je to sve još nedovršeno i nedorečeno&#10;&#10;- najbitnija stvar je što sam skužio kako informaciju prilikom logiranja dalje proslijediti drugim kontrolerima (napravio sam novu klasu SessionManager.java)" />
+    <MESSAGE value="Smislio kako će izgledati sučelje za članove studentskog kluba.&#10;&#10;-testirao neke stvari kao što je dvoklik na table view (kada se klikne dva puta na tableview izbacivat će se članska kartica)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Smislio kako će izgledati sučelje za članove studentskog kluba.&#10;&#10;-testirao neke stvari kao što je dvoklik na table view (kada se klikne dva puta na tableview izbacivat će se članska kartica)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

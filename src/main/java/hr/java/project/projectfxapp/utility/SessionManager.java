@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.entities.MathClub;
+import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.User;
 
 public class SessionManager {
@@ -9,6 +10,8 @@ public class SessionManager {
     private User currentUser;
 
     private MathClub currentClub;
+
+    private Student currentStudent;
 
     private SessionManager() {
     }
@@ -34,6 +37,14 @@ public class SessionManager {
 
     public void setCurrentClub(MathClub club) {
         this.currentClub = club;
+    }
+
+    public Student getCurrentStudent() {
+        return currentStudent;
+    }
+
+    public void setCurrentStudent(Student student) {
+        this.currentStudent = student;
     }
 
     public void clearSession() {

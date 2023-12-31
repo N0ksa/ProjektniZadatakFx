@@ -10,6 +10,8 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -66,11 +68,36 @@ public class ClubMembersController {
        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
 
-       initializeMemberTableView(FXCollections.observableList(clubMembers));
+       FilteredList<Student> filteredMembers = getMembersFilteredList(clubMembers);
+
+       initializeMemberTableView(filteredMembers);
+
        initializeLeaderBoardTableView(FXCollections.observableList(clubMembers));
 
 
    }
+
+
+    private FilteredList<Student> getMembersFilteredList(List<Student> clubMembers) {
+
+        FilteredList<Student> filteredMembers = new FilteredList<>(FXCollections.observableList(clubMembers), p -> true);
+
+        filterMembers.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredMembers.setPredicate(student -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return student.getName().toLowerCase().contains(lowerCaseFilter)
+                        || student.getSurname().toLowerCase().contains(lowerCaseFilter)
+                        || student.getEmail().toLowerCase().contains(lowerCaseFilter)
+                        ||student.getClubMembership().getJoinDate().format(DateTimeFormatter.
+                        ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())).toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+        return filteredMembers;
+    }
 
     private void initializeLeaderBoardTableView(ObservableList<Student> students) {
         leaderBoardTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
@@ -164,10 +191,12 @@ public class ClubMembersController {
 
 
     private void handleMemberDoubleClick(Student selectedStudent) {
+        SessionManager.getInstance().setCurrentStudent(selectedStudent);
         JavaFxProjectApplication.showPopup(ApplicationScreen.MemberCard);
     }
 
 
-
-
+    public void showAddNewStudentUserScreen(ActionEvent actionEvent) {
+        JavaFxProjectApplication.showPopup(ApplicationScreen.AddNewStudentUser);
+    }
 }
