@@ -1,11 +1,15 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import hr.java.project.projectfxapp.entities.CompetitionResult;
 import hr.java.project.projectfxapp.entities.MathClub;
+import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,10 +23,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ClubMembersController {
     @FXML
@@ -56,11 +64,7 @@ public class ClubMembersController {
     private TableColumn<Student, String> memberYearOfStudyTableColumn;
 
     @FXML
-    private TableColumn<Student, String> overallScoreTableColumn;
-
-    @FXML
-    private TableColumn<Student, String> leaderBoardTableColumn;
-
+    private TableColumn<Student, BigDecimal> overallScoreTableColumn;
 
 
    public void initialize(){
@@ -68,11 +72,19 @@ public class ClubMembersController {
        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
 
+       List<CompetitionResult> competitionResults = DatabaseUtil.getCompetitions().stream()
+               .flatMap(competition -> competition.getCompetitionResults().stream())
+               .toList();
+
+        List<MathProject> mathProjects = DatabaseUtil.getProjects();
+
+
+
        FilteredList<Student> filteredMembers = getMembersFilteredList(clubMembers);
 
        initializeMemberTableView(filteredMembers);
 
-       initializeLeaderBoardTableView(FXCollections.observableList(clubMembers));
+       initializeLeaderBoardTableView(FXCollections.observableList(clubMembers), competitionResults, mathProjects);
 
 
    }
@@ -99,31 +111,49 @@ public class ClubMembersController {
         return filteredMembers;
     }
 
-    private void initializeLeaderBoardTableView(ObservableList<Student> students) {
-        leaderBoardTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-                return new ReadOnlyStringWrapper(String.valueOf(students.indexOf(param.getValue()) +1));
-            }
+    private void initializeLeaderBoardTableView(ObservableList<Student> students, List<CompetitionResult> competitionResults,
+                                                List<MathProject> mathProjects) {
+
+
+        NameAndSurnameTableColumn.setCellValueFactory(param ->
+                new ReadOnlyStringWrapper(param.getValue().getName() + " " + param.getValue().getSurname()));
+
+        overallScoreTableColumn.setCellValueFactory(param -> {
+            List<CompetitionResult> studentCompetitionResults = competitionResults.stream()
+                    .filter(result -> result.participant().equals(param.getValue()))
+                    .collect(Collectors.toList());
+
+            Integer numberOfCollaborations = mathProjects.stream()
+                    .filter(project -> project.hasStudentCollaborator(param.getValue()))
+                    .toList().size();
+
+            BigDecimal overallScore = param.getValue().calculateScore(studentCompetitionResults, numberOfCollaborations);
+            overallScore = overallScore.setScale(2, RoundingMode.HALF_UP);
+            return new ReadOnlyObjectWrapper<>(overallScore);
+
         });
 
-        NameAndSurnameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().getName() + " " + param.getValue().getSurname());
+        List<Student> sortedStudents = students.sorted((s1, s2) -> {
+            BigDecimal score1 = overallScoreTableColumn.getCellObservableValue(s1).getValue();
+            BigDecimal score2 = overallScoreTableColumn.getCellObservableValue(s2).getValue();
+            if (score1 == null && score2 == null) {
+                return 0;
+            } else if (score1 == null) {
+                return 1;
+            } else if (score2 == null) {
+                return -1;
             }
+            return score2.compareTo(score1);
         });
 
 
-        overallScoreTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-                return new ReadOnlyStringWrapper(String.valueOf(param.getValue().calculateAverageGrade().toString()));
-            }
-        });
-
-        leaderBoardTableView.setItems(students);
+        leaderBoardTableView.setItems(FXCollections.observableList(sortedStudents));
     }
 
 
-    private void initializeMemberTableView(ObservableList<Student> clubMembers) {
+
+
+        private void initializeMemberTableView(ObservableList<Student> clubMembers) {
         memberNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
@@ -198,5 +228,13 @@ public class ClubMembersController {
 
     public void showAddNewStudentUserScreen(ActionEvent actionEvent) {
         JavaFxProjectApplication.showPopup(ApplicationScreen.AddNewStudentUser);
+    }
+
+    public void showUpdateMemberInformationScreen(ActionEvent actionEvent) {
+        if(Optional.ofNullable(memberTableView.getSelectionModel().getSelectedItem()).isPresent()){
+            SessionManager.getInstance().setCurrentStudent(memberTableView.getSelectionModel().getSelectedItem());
+            JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateMemberInformation);
+        }
+
     }
 }

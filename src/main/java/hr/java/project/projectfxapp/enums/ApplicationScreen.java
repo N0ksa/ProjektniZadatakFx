@@ -15,12 +15,15 @@ public enum ApplicationScreen {
     AddNewClubMember("Dodaj člana kluba", "addNewStudentUser.fxml", true),
 
     MainScreenForUser("Glavni ekran", "mainScreenForUser.fxml", true),
-    AddNewCCompetitionUser("Dodaj natjecanje", "addNewCompetitionUser.fxml", false),
+    AddNewCCompetitionUser("Dodaj natjecanje", "competitionsUser.fxml", false),
 
-    AddNewProjectUser("Dodaj projekt", "addNewProjectUser.fxml", false),
+    AddNewProjectUser("Dodaj projekt", "projectsUser.fxml", false),
     ClubMembers("Članovi kluba", "clubMembers.fxml", true),
     MemberCard("Članska iskaznica", "memberCard.fxml", false),
-    AddNewStudentUser("Dodaj studenta", "addNewStudentUser.fxml", false);
+    AddNewStudentUser("Dodaj studenta", "addNewStudentUser.fxml", false),
+    UpdateMemberInformation("Ažuriraj podatke", "updateMemberInformation.fxml", false),
+    CompetitionsUser("Natjecanja", "competitionsUser.fxml", true),
+    ProjectsUser("Projekti", "projectsUser.fxml", true);
 
     private final String title;
     private final String pathOfFxml;

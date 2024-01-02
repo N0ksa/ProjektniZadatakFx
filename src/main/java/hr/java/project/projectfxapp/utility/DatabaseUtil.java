@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
+import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
@@ -187,17 +188,28 @@ public class DatabaseUtil {
                 Long idOfStudent = rs.getLong("STUDENT_ID");
                 String studentName = rs.getString("NAME");
                 String studentSurname = rs.getString("SURNAME");
+                Student.StudentBuilder studentBuilder = new Student.StudentBuilder(idOfStudent, studentName, studentSurname);
+
                 String studentEmail = rs.getString("EMAIL");
+                studentBuilder.email(studentEmail);
                 Integer yearOfStudy = rs.getInt("YEAR_OF_STUDY");
+                studentBuilder.yearOfStudy(yearOfStudy);
+
 
                 Map<String, Integer> studentGrades = getStudentGrades(studentId);
+                studentBuilder.grades(studentGrades);
 
                 Long membershipId = rs.getLong("CLUB_MEMBERSHIP_ID");
-
                 ClubMembership clubMembership = getStudentClubMembership(membershipId);
+                studentBuilder.clubMembership(clubMembership);
 
-                student = new Student(idOfStudent, studentName, studentSurname, studentEmail,
-                        yearOfStudy, studentGrades, clubMembership);
+                String picturePath = rs.getString("PICTURE_PATH");
+                studentBuilder.picturePath(picturePath);
+
+                String gender = rs.getString("GENDER");
+                studentBuilder.gender(Gender.getGenderFromString(gender).getGender());
+
+                student = studentBuilder.build();
 
             }
 
@@ -571,8 +583,8 @@ public class DatabaseUtil {
                 Long clubMembershipId = addClubMembershipForStudent(student);
 
                 String insertStudentSql = "INSERT INTO STUDENT(NAME,SURNAME,EMAIL," +
-                        "YEAR_OF_STUDY, CLUB_MEMBERSHIP_ID) " +
-                        "VALUES(?, ?, ?, ?, ?)";
+                        "YEAR_OF_STUDY, CLUB_MEMBERSHIP_ID, GENDER, PICTURE_PATH) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement pstmt = connection.prepareStatement(insertStudentSql, PreparedStatement.RETURN_GENERATED_KEYS);
                 pstmt.setString(1, student.getName());
@@ -580,6 +592,8 @@ public class DatabaseUtil {
                 pstmt.setString(3, student.getEmail());
                 pstmt.setInt(4, student.getYearOfStudy());
                 pstmt.setLong(5, clubMembershipId);
+                pstmt.setString(6, student.getGender());
+                pstmt.setString(7, student.getPicture().getPicturePath());
                 pstmt.executeUpdate();
 
 
@@ -1017,18 +1031,29 @@ public class DatabaseUtil {
             Long studentId = rs.getLong("STUDENT_ID");
             String studentName = rs.getString("NAME");
             String studentSurname = rs.getString("SURNAME");
+
+            Student.StudentBuilder studentBuilder = new Student.StudentBuilder(studentId, studentName, studentSurname);
+
             String studentEmail = rs.getString("EMAIL");
+            studentBuilder.email(studentEmail);
+
             Integer yearOfStudy = rs.getInt("YEAR_OF_STUDY");
+            studentBuilder.yearOfStudy(yearOfStudy);
 
             Map<String, Integer> studentGrades = getStudentGrades(studentId);
+            studentBuilder.grades(studentGrades);
 
             Long membershipId = rs.getLong("CLUB_MEMBERSHIP_ID");
-
             ClubMembership clubMembership = getStudentClubMembership(membershipId);
+            studentBuilder.clubMembership(clubMembership);
 
-            Student filteredStudent = new Student(studentId, studentName, studentSurname, studentEmail,
-                    yearOfStudy, studentGrades, clubMembership);
-            
+            String gender = rs.getString("GENDER");
+            studentBuilder.gender(Gender.getGenderFromString(gender).getGender());
+
+            String filePath = rs.getString("PICTURE_PATH");
+            studentBuilder.picturePath(filePath);
+
+            Student filteredStudent = studentBuilder.build();
             
             filteredStudents.add(filteredStudent);
 
@@ -1139,4 +1164,57 @@ public class DatabaseUtil {
         }
 
     }
+
+    public static void updateStudent(Student updatedStudent) {
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE STUDENT SET NAME = ?, SURNAME = ?, EMAIL = ?, YEAR_OF_STUDY = ?, GENDER = ?," +
+                    " PICTURE_PATH = ? WHERE STUDENT_ID = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, updatedStudent.getName());
+                preparedStatement.setString(2, updatedStudent.getSurname());
+                preparedStatement.setString(3, updatedStudent.getEmail());
+                preparedStatement.setInt(4, updatedStudent.getYearOfStudy());
+                preparedStatement.setString(5, updatedStudent.getGender());
+                preparedStatement.setString(6, updatedStudent.getPicture().getPicturePath());
+                preparedStatement.setLong(7, updatedStudent.getId());
+
+                preparedStatement.executeUpdate();
+            }
+
+            updateStudentGrades(updatedStudent.getId(), updatedStudent.getGrades());
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+
+    private static void updateStudentGrades(Long studentId, Map<String, Integer> updatedGrades) {
+        try (Connection connection = connectToDatabase()) {
+            String deleteQuery = "DELETE FROM STUDENT_GRADES WHERE STUDENT_ID = ?";
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+                deleteStatement.setLong(1, studentId);
+                deleteStatement.executeUpdate();
+            }
+
+            String insertQuery = "INSERT INTO STUDENT_GRADES (STUDENT_ID, SUBJECT_NAME, GRADE) VALUES (?, ?, ?)";
+            try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                for (Map.Entry<String, Integer> entry : updatedGrades.entrySet()) {
+                    insertStatement.setLong(1, studentId);
+                    insertStatement.setString(2, entry.getKey());
+                    insertStatement.setInt(3, entry.getValue());
+                    insertStatement.executeUpdate();
+                }
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+    }
+
+
 }

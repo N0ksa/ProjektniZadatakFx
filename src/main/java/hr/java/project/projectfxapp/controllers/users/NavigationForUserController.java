@@ -15,15 +15,12 @@ public class NavigationForUserController {
         JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);
     }
 
-    public void showAddNewProjectForClub(ActionEvent actionEvent) {
-        JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewProjectUser);
+    public void showCompetitions(ActionEvent actionEvent) {
+        JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
     }
 
-    public void showAddNewCompetitionForClub(ActionEvent actionEvent) {
-        JavaFxProjectApplication.showPopup(ApplicationScreen.AddNewCCompetitionUser);
-    }
-
-    public void showProjectsForClub(ActionEvent actionEvent) {
+    public void showProjects(ActionEvent actionEvent) {
+        JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);
     }
 
     public void showCompetitionsForClub(ActionEvent actionEvent) {

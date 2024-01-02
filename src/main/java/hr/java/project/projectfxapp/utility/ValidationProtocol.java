@@ -104,7 +104,7 @@ public class ValidationProtocol {
         }
     }
 
-    public static void validateClubMember(TextField nameTextField, TextField surnameTextField,
+    public static void validateClubMember(TextField nameTextField, TextField surnameTextField, ToggleGroup genderSelection,
                                           TextField emailTextField, TableView<SubjectGrade> studentGradesTableView,
                                           ToggleGroup yearOfStudyToggleGroup) throws ValidationException {
 
@@ -112,6 +112,7 @@ public class ValidationProtocol {
 
         validateTextField(nameTextField, "Unesite ime studenta", errors);
         validateTextField(surnameTextField, "Unesite prezime studenta", errors);
+        validateToggleGroup(genderSelection, "Odaberite spol", errors);
         validateEmail(emailTextField, errors);
         validateStudentGradesList(studentGradesTableView, errors);
         validateToggleGroup(yearOfStudyToggleGroup, "Odaberite godinu studija", errors);
@@ -122,7 +123,7 @@ public class ValidationProtocol {
     }
 
     public static void validateStudent(TextField nameTextField, TextField surnameTextField,
-                                       TextField emailTextField, ComboBox<MathClub> mathClubComboBox,
+                                      ToggleGroup genderToggleGroup, TextField emailTextField, ComboBox<MathClub> mathClubComboBox,
                                        DatePicker joinDateDatePicker, TableView<SubjectGrade> studentGradesTableView,
                                        ToggleGroup yearOfStudyToggleGroup) throws ValidationException {
 
@@ -130,6 +131,7 @@ public class ValidationProtocol {
 
         validateTextField(nameTextField, "Unesite ime studenta", errors);
         validateTextField(surnameTextField, "Unesite prezime studenta", errors);
+        validateToggleGroup(genderToggleGroup, "Odaberite spol", errors);
         validateEmail(emailTextField, errors);
         validateComboBox(mathClubComboBox, "Odaberite matematički klub", errors);
         validateDatePickerForAddingNewStudent(mathClubComboBox, joinDateDatePicker,

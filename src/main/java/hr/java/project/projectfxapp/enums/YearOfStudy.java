@@ -49,5 +49,12 @@ public enum YearOfStudy implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    public static YearOfStudy getYearOfStudy(Integer year) {
+        return Arrays.stream(YearOfStudy.values())
+                .filter(yearOfStudy -> yearOfStudy.getYear().equals(year))
+                .findFirst()
+                .orElse(null);
+    }
+
 
 }

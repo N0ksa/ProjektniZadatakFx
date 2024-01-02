@@ -15,12 +15,12 @@
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="632.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.AddNewStudentUserController">
    <FontAwesomeIconView glyphName="USERS" layoutX="638.0" layoutY="562.0" opacity="0.18" size="15EM" wrappingWidth="200.0" />
    <Label layoutX="193.0" layoutY="108.0" text="Ime:" />
-   <Label layoutX="171.0" layoutY="169.0" text="Prezime:" />
-   <Label layoutX="189.0" layoutY="223.0" text="Email:" />
+   <Label layoutX="172.0" layoutY="154.0" text="Prezime:" />
+   <Label layoutX="191.0" layoutY="202.0" text="Email:" />
    <Label layoutX="141.0" layoutY="281.0" prefHeight="17.0" prefWidth="79.0" text="Godina studija:" />
    <TextField fx:id="studentNameTextField" layoutX="234.0" layoutY="102.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi ime" />
-   <TextField fx:id="studentEmailTextField" layoutX="234.0" layoutY="216.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi email" />
-   <TextField fx:id="studentSurnameTextField" layoutX="234.0" layoutY="162.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi prezime" />
+   <TextField fx:id="studentEmailTextField" layoutX="236.0" layoutY="195.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi email" />
+   <TextField fx:id="studentSurnameTextField" layoutX="235.0" layoutY="147.0" prefHeight="30.0" prefWidth="368.0" promptText="Unesi prezime" />
    <RadioButton fx:id="prvaGodinaRadioButton" layoutX="250.0" layoutY="281.0" mnemonicParsing="false" text="Prva godina">
       <toggleGroup>
          <ToggleGroup fx:id="yearOfStudySelection" />
@@ -37,14 +37,23 @@
          </TableView>
       </children>
    </AnchorPane>
-   <Button layoutX="320.0" layoutY="576.0" mnemonicParsing="false" onAction="#saveMember" text="Dodaj studenta" />
-   <AnchorPane layoutX="862.0" layoutY="89.0" prefHeight="200.0" prefWidth="200.0" />
+   <Button layoutX="338.0" layoutY="588.0" mnemonicParsing="false" onAction="#saveMember" text="Dodaj studenta" />
+   <AnchorPane layoutX="638.0" layoutY="71.0" prefHeight="200.0" prefWidth="200.0">
+      <children>
+         <ImageView fx:id="studentImageView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      </children></AnchorPane>
    <Button layoutX="693.0" layoutY="303.0" mnemonicParsing="false" onAction="#addImage" text="Dodaj sliku" />
-   <ImageView fx:id="studentImageView" fitHeight="200.0" fitWidth="200.0" layoutX="630.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true" />
    <Label layoutX="330.0" layoutY="28.0" text="Dodaj novog člana">
       <font>
          <Font size="24.0" />
       </font>
    </Label>
+   <Label layoutX="191.0" layoutY="250.0" text="Spol:" />
+   <RadioButton fx:id="maleGenderRadioButton" layoutX="250.0" layoutY="250.0" mnemonicParsing="false" text="Muški">
+      <toggleGroup>
+         <ToggleGroup fx:id="genderSelection" />
+      </toggleGroup>
+   </RadioButton>
+   <RadioButton fx:id="femaleGenderRadioButton" layoutX="350.0" layoutY="250.0" mnemonicParsing="false" text="Ženski" toggleGroup="$genderSelection" />
 
 </AnchorPane>

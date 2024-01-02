@@ -1,12 +1,15 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.ClubMembership;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
+import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
@@ -26,6 +29,12 @@ import java.util.Map;
 
 public class AddNewStudentUserController {
 
+    @FXML
+    private RadioButton maleGenderRadioButton;
+    @FXML
+    private ToggleGroup genderSelection;
+    @FXML
+    private RadioButton femaleGenderRadioButton;
     @FXML
     private ToggleGroup yearOfStudySelection;
 
@@ -59,8 +68,7 @@ public class AddNewStudentUserController {
     @FXML
     private RadioButton trecaGodinaRadioButton;
 
-
-
+    private static String imagePath = "/images/question_mark_person_logo.png";
 
 
     public void initialize(){
@@ -91,64 +99,40 @@ public class AddNewStudentUserController {
             }
         });
 
-        studentImageView.setImage(new Image(getClass().getResource("/images/question_mark_person_logo.png")
-                .toExternalForm()));
+        studentImageView.setImage(new Image(getClass().getResource("/images/question_mark_person_logo.png").toExternalForm()));
+
 
     }
 
 
-   public void addImage(ActionEvent event) {
+    public void addImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Odaberi sliku");
 
-
-         fileChooser.getExtensionFilters().addAll(
-                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
-
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
 
         File selectedFile = fileChooser.showOpenDialog(null);
+
         if (selectedFile != null) {
+            String imageName = selectedFile.getName();
 
-            Image newImage = new Image(selectedFile.toURI().toString());
+            String relativePath = "/images/" + imageName;
+
+            Image newImage = new Image(getClass().getResource(relativePath).toExternalForm());
             studentImageView.setImage(newImage);
+            imagePath = relativePath;
         }
-
     }
 
 
     public void saveMember(ActionEvent event) {
         try{
 
-            ValidationProtocol.validateClubMember(studentNameTextField, studentSurnameTextField, studentEmailTextField
+            ValidationProtocol.validateClubMember(studentNameTextField, studentSurnameTextField, genderSelection, studentEmailTextField
                     ,studentGradesTableView, yearOfStudySelection);
 
-            Long studentId = 0L;
-            String studentName = studentNameTextField.getText();
-            String studentSurname = studentSurnameTextField.getText();
-            String studentEmail = studentEmailTextField.getText();
-
-            MathClub studentClub = null;
-            LocalDate joinDate = LocalDate.now();
-
-            Integer yearOfStudy = 0;
-
-            if (prvaGodinaRadioButton.isSelected()){
-                yearOfStudy = 1;
-            }else if(drugaGodinaRadioButton.isSelected()){
-                yearOfStudy = 2;
-            }else if (trecaGodinaRadioButton.isSelected()){
-                yearOfStudy = 3;
-            }
-
-            ClubMembership studentClubMembership = new ClubMembership(0L,studentClub.getId(), joinDate);
-
-            Map<String, Integer> studentGrades = new LinkedHashMap<>();
-            for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
-                studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
-            }
-
-            Student newStudent = new Student(studentId, studentName, studentSurname, studentEmail, yearOfStudy,
-                    studentGrades, studentClubMembership);
+            Student newStudent = buildNewStudent();
 
 
             List<Student> students = new ArrayList<>();
@@ -169,6 +153,61 @@ public class AddNewStudentUserController {
 
     }
 
+    private Student buildNewStudent() {
+        Long studentId = 0L;
+        String studentName = studentNameTextField.getText();
+        String studentSurname = studentSurnameTextField.getText();
+        String studentEmail = studentEmailTextField.getText();
+
+        Student.StudentBuilder studentBuilder = new Student.StudentBuilder(studentId, studentName, studentSurname)
+                .email(studentEmail);
+
+        MathClub studentClub = SessionManager.getInstance().getCurrentClub();
+        LocalDate joinDate = LocalDate.now();
+        ClubMembership studentClubMembership = new ClubMembership(0L,studentClub.getId(), joinDate);
+        studentBuilder.clubMembership(studentClubMembership);
+
+        Integer yearOfStudy = getYearOfStudy();
+        studentBuilder.yearOfStudy(yearOfStudy);
+
+        Gender gender = getStudentGender();
+        studentBuilder.gender(gender.getGender());
+
+
+        Map<String, Integer> studentGrades = new LinkedHashMap<>();
+        for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
+            studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
+        }
+        studentBuilder.grades(studentGrades);
+
+        studentBuilder.picturePath(imagePath);
+
+        return studentBuilder.build();
+    }
+
+
+    private Gender getStudentGender() {
+        if (femaleGenderRadioButton.isSelected()){
+            return Gender.Female;
+        }
+        else{
+            return Gender.Male;
+        }
+    }
+
+
+    private Integer getYearOfStudy() {
+        Integer yearOfStudy = 0;
+
+        if (prvaGodinaRadioButton.isSelected()){
+            yearOfStudy = 1;
+        }else if(drugaGodinaRadioButton.isSelected()){
+            yearOfStudy = 2;
+        }else if (trecaGodinaRadioButton.isSelected()){
+            yearOfStudy = 3;
+        }
+        return yearOfStudy;
+    }
 
 
     private YearOfStudy getSelectedYears(Toggle toggle) {

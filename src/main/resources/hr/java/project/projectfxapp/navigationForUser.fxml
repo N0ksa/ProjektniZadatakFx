@@ -22,8 +22,8 @@
                         <Button layoutX="23.0" layoutY="227.0" mnemonicParsing="false" onAction="#showUserMainScreen" prefHeight="41.0" prefWidth="225.0" style="-fx-background-color: ffc900;" text="Kontrolna ploča" />
                         <Button layoutX="23.0" layoutY="293.0" mnemonicParsing="false" onAction="#showClubMembers" prefHeight="41.0" prefWidth="225.0" style="-fx-background-color: ffc900;" text="Članovi" />
                         <FontAwesomeIconView glyphName="USERS" layoutX="39.0" layoutY="322.0" size="25" />
-                        <Button layoutX="23.0" layoutY="425.0" mnemonicParsing="false" onAction="#showAddNewProjectForClub" prefHeight="41.0" prefWidth="225.0" style="-fx-background-color: ffc900;" text="Projekti" />
-                        <Button layoutX="23.0" layoutY="360.0" mnemonicParsing="false" onAction="#showAddNewCompetitionForClub" prefHeight="41.0" prefWidth="225.0" style="-fx-background-color: ffc900;" text="Natjecanja" />
+                        <Button layoutX="23.0" layoutY="425.0" mnemonicParsing="false" onAction="#showProjects" prefHeight="41.0" prefWidth="225.0" style="-fx-background-color: ffc900;" text="Projekti" />
+                        <Button layoutX="23.0" layoutY="360.0" mnemonicParsing="false" onAction="#showCompetitions" prefHeight="41.0" prefWidth="225.0" style="-fx-background-color: ffc900;" text="Natjecanja" />
                         <FontAwesomeIconView glyphName="DASHBOARD" layoutX="37.0" layoutY="256.0" size="25" />
                         <FontAwesomeIconView glyphName="TROPHY" layoutX="39.0" layoutY="389.0" size="25" />
                         <FontAwesomeIconView glyphName="ROCKET" layoutX="38.0" layoutY="454.0" size="25" />

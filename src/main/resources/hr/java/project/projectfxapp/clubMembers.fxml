@@ -28,12 +28,11 @@
    </AnchorPane>
    <TextField fx:id="filterMembers" layoutX="472.0" layoutY="54.0" prefHeight="37.0" prefWidth="407.0" promptText="filtriraj članove" />
    <Button layoutX="495.0" layoutY="321.0" mnemonicParsing="false" onAction="#showAddNewStudentUserScreen" prefHeight="37.0" prefWidth="131.0" text="Dodaj novog člana" />
-   <Button layoutX="662.0" layoutY="321.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="172.0" text="Editiraj postojećeg člana" />
+   <Button layoutX="662.0" layoutY="321.0" mnemonicParsing="false" onAction="#showUpdateMemberInformationScreen" prefHeight="37.0" prefWidth="172.0" text="Editiraj postojećeg člana" />
    <TableView fx:id="leaderBoardTableView" layoutX="303.0" layoutY="422.0" prefHeight="263.0" prefWidth="234.0">
      <columns>
-       <TableColumn fx:id="leaderBoardTableColumn" prefWidth="57.0" text="Mjesto" />
-       <TableColumn fx:id="NameAndSurnameTableColumn" prefWidth="106.0" text="Ime i prezime" />
-         <TableColumn fx:id="overallScoreTableColumn" prefWidth="70.0" text="Bodovi" />
+       <TableColumn fx:id="NameAndSurnameTableColumn" prefWidth="139.0" sortable="false" text="Ime i prezime" />
+         <TableColumn fx:id="overallScoreTableColumn" prefWidth="94.0" sortType="DESCENDING" text="Bodovi" />
      </columns>
    </TableView>
    <AnchorPane layoutX="643.0" layoutY="422.0" prefHeight="263.0" prefWidth="419.0" style="-fx-background-color: ffffff;">

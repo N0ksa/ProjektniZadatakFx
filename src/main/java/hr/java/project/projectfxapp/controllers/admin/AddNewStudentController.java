@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.ClubMembership;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
+import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
@@ -24,6 +25,12 @@ import java.util.stream.Collectors;
 
 public class AddNewStudentController {
 
+    @FXML
+    private RadioButton femaleGenderRadioButton;
+    @FXML
+    private ToggleGroup genderSelection;
+    @FXML
+    private RadioButton maleGenderRadioButton;
     @FXML
     private Label chooseDateLabel;
     @FXML
@@ -129,47 +136,16 @@ public class AddNewStudentController {
 
         try{
 
-            ValidationProtocol.validateStudent(studentNameTextField, studentSurnameTextField, studentEmailTextField,
+            ValidationProtocol.validateStudent(studentNameTextField, studentSurnameTextField, genderSelection, studentEmailTextField,
                     mathClubComboBox, joinDateDatePicker, studentGradesTableView, yearOfStudySelection);
 
-            Long studentId = 0L;
-            String studentName = studentNameTextField.getText();
-            String studentSurname = studentSurnameTextField.getText();
-            String studentEmail = studentEmailTextField.getText();
-
-            MathClub studentClub = mathClubComboBox.getValue();
-            LocalDate joinDate = joinDateDatePicker.getValue();
-
-            Integer yearOfStudy = 0;
-
-            if (prvaGodinaRadioButton.isSelected()){
-                yearOfStudy = 1;
-            }else if(drugaGodinaRadioButton.isSelected()){
-                yearOfStudy = 2;
-            }else if (trecaGodinaRadioButton.isSelected()){
-                yearOfStudy = 3;
-            }
-
-            ClubMembership studentClubMembership = new ClubMembership(0L,studentClub.getId(), joinDate);
-
-            Map<String, Integer> studentGrades = new LinkedHashMap<>();
-            for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
-                studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
-            }
-
-            Student newStudent = new Student(studentId, studentName, studentSurname, studentEmail, yearOfStudy,
-                    studentGrades, studentClubMembership);
-
-
+            Student newStudent = buildNewStudent();
             List<Student> students = new ArrayList<>();
             students.add(newStudent);
             DatabaseUtil.saveStudents(students);
 
-
             ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
                     "Student " + newStudent.getName() + " " + newStudent.getSurname() + " uspješno se spremio!");
-
-
 
         }
         catch (ValidationException ex){
@@ -178,6 +154,59 @@ public class AddNewStudentController {
         }
 
 
+    }
+
+    private Student buildNewStudent() {
+
+        Long studentId = 0L;
+        String studentName = studentNameTextField.getText();
+        String studentSurname = studentSurnameTextField.getText();
+        String studentEmail = studentEmailTextField.getText();
+        Student.StudentBuilder studentBuilder = new Student.StudentBuilder(studentId, studentName, studentSurname)
+                .email(studentEmail);
+
+        MathClub studentClub = mathClubComboBox.getValue();
+        LocalDate joinDate = joinDateDatePicker.getValue();
+
+
+        Integer yearOfStudy = getYearOfStudy();
+        studentBuilder.yearOfStudy(yearOfStudy);
+
+        ClubMembership studentClubMembership = new ClubMembership(0L,studentClub.getId(), joinDate);
+        studentBuilder.clubMembership(studentClubMembership);
+
+        Map<String, Integer> studentGrades = new LinkedHashMap<>();
+        for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
+            studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
+        }
+        studentBuilder.grades(studentGrades);
+
+
+        Gender gender = getStudentGender();
+        studentBuilder.gender(gender.getGender());
+        return studentBuilder.build();
+    }
+
+    private Gender getStudentGender() {
+        if (femaleGenderRadioButton.isSelected()){
+            return Gender.Female;
+        }
+        else{
+            return Gender.Male;
+        }
+    }
+
+    private Integer getYearOfStudy() {
+        Integer yearOfStudy = 0;
+
+        if (prvaGodinaRadioButton.isSelected()){
+            yearOfStudy = 1;
+        }else if(drugaGodinaRadioButton.isSelected()){
+            yearOfStudy = 2;
+        }else if (trecaGodinaRadioButton.isSelected()){
+            yearOfStudy = 3;
+        }
+        return yearOfStudy;
     }
 
 

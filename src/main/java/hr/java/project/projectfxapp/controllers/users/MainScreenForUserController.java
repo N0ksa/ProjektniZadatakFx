@@ -3,11 +3,10 @@ package hr.java.project.projectfxapp.controllers.users;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.Node;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
@@ -18,6 +17,8 @@ import java.util.Set;
 public class MainScreenForUserController {
 
 
+    @FXML
+    private PieChart genderNumberDifferencePieChart;
     @FXML
     private Label welcomeMessageLabel;
 
@@ -58,16 +59,76 @@ public class MainScreenForUserController {
 
 
         setOverallScoreComparisonBarChart(currentClub,mathClubList, competitionList, mathProjectsList);
-
-
-
+        setGenderNumberDifferencePieChart(currentClub);
 
 
     }
 
+
+    private void setGenderNumberDifferencePieChart(MathClub currentClub) {
+        Set<Student> currentClubMembers = currentClub.getStudents();
+
+        long numberOfMaleMembers = currentClubMembers.stream()
+                .filter(student -> "Male".equalsIgnoreCase(student.getGender()))
+                .count();
+
+        long numberOfFemaleMembers = currentClubMembers.stream()
+                .filter(student -> "Female".equalsIgnoreCase(student.getGender()))
+                .count();
+
+        PieChart.Data maleMembersData = new PieChart.Data("Muški", numberOfMaleMembers);
+        PieChart.Data femaleMembersData = new PieChart.Data("Ženski", numberOfFemaleMembers);
+
+        genderNumberDifferencePieChart.setData(FXCollections.observableArrayList(maleMembersData, femaleMembersData));
+
+
+        genderNumberDifferencePieChart.getData().forEach(data -> data.setName(data.getName() + "-" + (int) data.getPieValue()));
+
+        genderNumberDifferencePieChart.setTitle("Distribucija članova po spolu");
+
+
+    }
+
+
     private void setOverallScoreComparisonBarChart(MathClub currentClub, List<MathClub> mathClubList,
                                                    List<Competition> competitionList, List<MathProject> mathProjectsList) {
-        //
+
+
+        overallScoreComparisonBarChart.setTitle("Usporedba bodova s drugim klubovima");
+
+        XYChart.Series<String, BigDecimal> series = new XYChart.Series<>();
+
+        for (MathClub club : mathClubList){
+
+            List<CompetitionResult> competitionResultList = competitionList.stream()
+                    .flatMap(competition -> competition.getCompetitionResults().stream())
+                    .filter(result -> result.participant().getClubMembership().getClubId().equals(club.getId()))
+                    .toList();
+
+            Integer numberOfColaborations = mathProjectsList.stream()
+                    .filter(project -> project.hasMathClubCollaborator(club))
+                    .toList()
+                    .size();
+
+            BigDecimal clubScore = club.calculateScore(competitionResultList, numberOfColaborations);
+
+            XYChart.Data<String, BigDecimal> data = new XYChart.Data<>(club.getName(), clubScore);
+
+            series.getData().add(data);
+
+
+            if (club.equals(currentClub)) {
+                data.nodeProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        newValue.setStyle("-fx-bar-fill: #374151;");
+                    }
+                });
+            }
+
+        }
+
+        overallScoreComparisonBarChart.getData().add(series);
+
     }
 
     private void setTodayRegisteredMembersLabel(MathClub currentClub) {

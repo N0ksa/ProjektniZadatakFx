@@ -94,11 +94,13 @@ public class FileReaderUtil {
 
                 reader.readLine();
 
+                Student.StudentBuilder studentBuilder = new Student.StudentBuilder(studentId, studentName, studentSurname)
+                        .email(studentWebAddress)
+                        .yearOfStudy(studentYearOfStudy)
+                        .grades(grades)
+                        .clubMembership(clubMembership);
 
-
-                students.add(new Student(studentId, studentName, studentSurname, studentWebAddress,
-                        studentYearOfStudy, grades, clubMembership));
-
+                students.add(studentBuilder.build());
             }
 
         } catch (IOException ex) {

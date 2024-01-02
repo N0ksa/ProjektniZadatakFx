@@ -11,11 +11,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class MemberCardController {
@@ -70,15 +73,26 @@ public class MemberCardController {
         setNumberOfParticipationsInProjectsLabel(projects, currentStudent);
         setMemberGradesTableView(currentStudent);
         setDaysAsMemberLabel(currentStudent);
+        setStudentPicture(currentStudent);
 
 
+    }
+
+    private void setStudentPicture(Student currentStudent) {
+        String picturePath = currentStudent.getPicture().getPicturePath();
+        if (picturePath != null) {
+            Image image = new Image(getClass().getResource(picturePath).toExternalForm());
+            memberImage.setImage(image);
+        }
     }
 
     private void setDaysAsMemberLabel(Student currentStudent) {
         LocalDate today = LocalDate.now();
         LocalDate joinDate = currentStudent.getClubMembership().getJoinDate();
-        Integer daysAsMember = today.getDayOfYear() - joinDate.getDayOfYear();
-        daysAsMemberLabel.setText(daysAsMember.toString());
+
+        long daysAsMember = ChronoUnit.DAYS.between(joinDate, today);
+
+        daysAsMemberLabel.setText(String.valueOf(daysAsMember));
     }
 
     private void setMemberGradesTableView(Student currentStudent) {

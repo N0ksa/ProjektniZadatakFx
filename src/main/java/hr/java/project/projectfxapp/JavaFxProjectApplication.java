@@ -25,6 +25,7 @@ public class JavaFxProjectApplication extends Application {
         stage.setTitle("ProjektMatematika");
         stage.setScene(scene);
         stage.setResizable(false);
+
         stage.show();
     }
 
