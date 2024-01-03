@@ -1165,7 +1165,7 @@ public class DatabaseUtil {
 
     }
 
-    public static void updateStudent(Student updatedStudent) {
+    public static boolean updateStudent(Student updatedStudent) {
         try (Connection connection = connectToDatabase()) {
             String updateQuery = "UPDATE STUDENT SET NAME = ?, SURNAME = ?, EMAIL = ?, YEAR_OF_STUDY = ?, GENDER = ?," +
                     " PICTURE_PATH = ? WHERE STUDENT_ID = ?";
@@ -1188,11 +1188,14 @@ public class DatabaseUtil {
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
+            return false;
         }
+
+        return true;
     }
 
 
-    private static void updateStudentGrades(Long studentId, Map<String, Integer> updatedGrades) {
+    private static void updateStudentGrades(Long studentId, Map<String, Integer> updatedGrades) throws SQLException, IOException{
         try (Connection connection = connectToDatabase()) {
             String deleteQuery = "DELETE FROM STUDENT_GRADES WHERE STUDENT_ID = ?";
             try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
@@ -1210,9 +1213,6 @@ public class DatabaseUtil {
                 }
             }
 
-        } catch (SQLException | IOException ex) {
-            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
-            logger.error(message, ex);
         }
     }
 

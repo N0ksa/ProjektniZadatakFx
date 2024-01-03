@@ -199,13 +199,29 @@ public class UpdateMemberInformationController {
 
             Student memberToUpdate = SessionManager.getInstance().getCurrentStudent();
 
-            updateMember(memberToUpdate);
+           boolean positiveConfirmation =  ValidationProtocol.showConfirmationDialog
+                   ("Potvrda ažuriranja člana", "Ažuriranje člana",
+                    "Jeste li sigurni da želite ažurirati člana " + memberToUpdate.getName() +
+                            " " + memberToUpdate.getSurname() + "?" +
+                            "\nAko ste sigurni pritisnite Da");
 
 
-            ValidationProtocol.showSuccessAlert("Ažuriranje člana je bilo uspješno",
-                    "Član " + memberToUpdate.getName() + " " + memberToUpdate.getSurname() + " uspješno se ažurirao!");
+            if (positiveConfirmation) {
+
+                boolean updateSuccessful = updateMember(memberToUpdate);
+
+                if (updateSuccessful){
+                    ValidationProtocol.showSuccessAlert("Ažuriranje člana je bilo uspješno",
+                            "Član " + memberToUpdate.getName() + " " + memberToUpdate.getSurname() + " uspješno se ažurirao!");
+                }
+                else{
+                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje člana nije uspjelo",
+                            "Pokušajte ponovno");
+                }
 
 
+
+            }
 
         } catch (ValidationException ex){
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
@@ -214,7 +230,7 @@ public class UpdateMemberInformationController {
 
     }
 
-    private void updateMember(Student memberToUpdate) {
+    private boolean updateMember(Student memberToUpdate) {
 
         memberToUpdate.setName(studentNameTextField.getText());
         memberToUpdate.setSurname(studentSurnameTextField.getText());
@@ -237,7 +253,7 @@ public class UpdateMemberInformationController {
 
         memberToUpdate.getPicture().setPicturePath(imagePath);
 
-        DatabaseUtil.updateStudent(memberToUpdate);
+        return DatabaseUtil.updateStudent(memberToUpdate);
     }
 
 }

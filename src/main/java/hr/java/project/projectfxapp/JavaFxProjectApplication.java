@@ -22,6 +22,7 @@ public class JavaFxProjectApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("login.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getResource("/design/design.css").toExternalForm());
         stage.setTitle("ProjektMatematika");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -44,10 +45,13 @@ public class JavaFxProjectApplication extends Application {
 
             Scene scene = new Scene(fxmlLoader.load());
 
+            scene.getStylesheets().add(JavaFxProjectApplication.class.getResource("/design/design.css").toExternalForm());
             mainStage.setTitle(screen.getTitle());
             mainStage.setScene(scene);
             mainStage.setResizable(screen.isResizable());
             mainStage.show();
+
+
 
         } catch (IOException e) {
             logger.error("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(), e);
@@ -60,6 +64,7 @@ public class JavaFxProjectApplication extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource(screen.getPathOfFxml()));
             Scene popupScene = new Scene(fxmlLoader.load());
+            popupScene.getStylesheets().add(JavaFxProjectApplication.class.getResource("/design/design.css").toExternalForm());
 
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);

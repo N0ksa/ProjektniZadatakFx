@@ -1,0 +1,85 @@
+/* design.css */
+
+.button{
+    -fx-background-color:  #ffc900;
+    -fx-text-fill: #374151;
+}
+
+.button:hover {
+    -fx-background-color: #ffea00;
+}
+
+.button:pressed {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+
+.clubStatisticsCards {
+    -fx-background-color: #4a92f7;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #374151;
+    -fx-border-width: 2;
+
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 1, 1);
+}
+
+.clubStatisticsCards:hover {
+    -fx-rotate: 5;
+}
+
+
+
+
+.table-view .column-header-background {
+    -fx-background-color: #4a92f7;
+    -fx-text-fill: white;
+}
+
+
+.table-view .table-row-cell {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Alternating Row Styles */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #e0e0e0;
+}
+
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #c0c0c0;
+}
+
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #4a92f7;
+    -fx-text-fill: white;
+}
+
+
+.table-view .table-cell {
+    -fx-border-color: #dddddd;
+    -fx-border-width: 0.5;
+}
+
+
+.table-view .table-cell {
+    -fx-padding: 5;
+}
+
+
+.table-view .column-header,
+.table-view .table-cell {
+    -fx-border-color: transparent #dddddd transparent transparent;
+    -fx-border-width: 0.5;
+}
+
+
+.table-view .table-row-cell {
+    -fx-border-color: transparent transparent #dddddd transparent;
+    -fx-border-width: 0.5;
+}
+
+
