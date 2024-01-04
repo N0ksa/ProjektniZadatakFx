@@ -23,13 +23,15 @@ public class ValidationProtocol {
                                            ComboBox<Address> competitionAddressComboBox, DatePicker competitionDateDatePicker,
                                            TextField competitionTimeTextField, TextField competitionBuildingNameTextField,
                                            TextField competitionHallNameTextField,
-                                           TableView<CompetitionResult> competitionResultsTableView) throws ValidationException {
+                                           TableView<CompetitionResult> competitionResultsTableView,
+                                           ComboBox<MathClub> organizer) throws ValidationException {
 
         List<String> errors = new ArrayList<>();
 
         validateTextField(competitionNameTextField, "Unesite naziv natjecanja", errors);
         validateTextArea(competitionDescriptionTextArea, "Unesite opis natjecanja", errors);
         validateComboBox(competitionAddressComboBox, "Odaberite adresu natjecanja", errors);
+        validateComboBox(organizer, "Odaberite organizatora natjecanja", errors);
         validateDatePicker(competitionDateDatePicker, errors);
         validateTimeTextField(competitionTimeTextField, errors);
         validateTextField(competitionBuildingNameTextField, "Unesite naziv zgrade", errors);
@@ -41,6 +43,56 @@ public class ValidationProtocol {
         if (!errors.isEmpty()) {
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));
         }
+    }
+
+
+    public static void validateCompetitionForUser(TextField competitionNameTextField,
+                                                  TextArea competitionDescriptionTextArea,
+                                                  DatePicker dateOfCompetitionDatePicker,
+                                                  TextField timeOfCompetitionTextField,
+                                                  TextField auditoriumBuildingNameTextField,
+                                                  TextField auditoriumHallNameTextField,
+                                                  ListView<Student> competitionParticipantsListView) {
+
+        List<String> errors = new ArrayList<>();
+        validateTextField(competitionNameTextField, "Unesite naziv natjecanja", errors);
+        validateTextArea(competitionDescriptionTextArea, "Unesite opis natjecanja", errors);
+        validateDatePicker(dateOfCompetitionDatePicker, errors);
+        validateTimeTextField(timeOfCompetitionTextField, errors);
+        validateTextField(auditoriumBuildingNameTextField, "Unesite naziv zgrade", errors);
+        validateTextField(auditoriumHallNameTextField, "Unesite naziv dvorane", errors);
+        validateList(competitionParticipantsListView.getItems(), "Odaberite barem jednog sudionika natjecanja", errors);
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+
+    }
+
+    public static void validateUpdateCompetition(TextField competitionNameTextField,
+                                                 TextArea competitionDescriptionTextArea,
+                                                 ComboBox<City> cityComboBox,
+                                                 DatePicker dateOfCompetitionDatePicker,
+                                                 TextField timeOfCompetitionTextField,
+                                                 TextField auditoriumBuildingNameTextField,
+                                                 TextField auditoriumHallNameTextField,
+                                                 TableView<CompetitionResult> competitionResultsTableView) {
+
+        List<String> errors = new ArrayList<>();
+
+        validateTextField(competitionNameTextField, "Unesite naziv natjecanja", errors);
+        validateTextArea(competitionDescriptionTextArea, "Unesite opis natjecanja", errors);
+        validateComboBox(cityComboBox, "Odaberite grad", errors);
+        validateDatePicker(dateOfCompetitionDatePicker, errors);
+        validateTimeTextField(timeOfCompetitionTextField, errors);
+        validateTextField(auditoriumBuildingNameTextField, "Unesite naziv zgrade", errors);
+        validateTextField(auditoriumHallNameTextField, "Unesite naziv dvorane", errors);
+        validateCompetitionResultsTableView(competitionResultsTableView, errors);
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+
     }
 
     private static void validateCompetitionResultsTableView(TableView<CompetitionResult> competitionResultsTableView,
@@ -297,18 +349,9 @@ public class ValidationProtocol {
     }
 
     private static void validateDatePicker(DatePicker datePicker, List<String> errors) {
-        if (datePicker.getValue() == null) {
+        if (datePicker.getValue() == null || datePicker.getValue().toString().isEmpty()) {
             errors.add("Odaberite datum natjecanja");
         }
-        else{
-            try{
-                LocalDate.parse(datePicker.getValue().toString());
-            }
-            catch (DateTimeParseException ex){
-                errors.add("Unesi datum u ispravnom formatu");
-            }
-        }
-
 
     }
 
@@ -365,5 +408,6 @@ public class ValidationProtocol {
 
         return result.isPresent() && result.get() == buttonTypeYes;
     }
+
 
 }

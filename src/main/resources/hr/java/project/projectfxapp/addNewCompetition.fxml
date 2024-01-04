@@ -26,17 +26,17 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="438.0" minWidth="10.0" prefWidth="190.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="101.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="73.0" minHeight="6.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="73.0" minHeight="6.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
              <fx:include source="menuForAdmin.fxml" />
@@ -127,7 +127,7 @@
                </GridPane.margin>
             </ListView>
             <Label text="Unesi rezultate:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <TableView fx:id="competitionResultsTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="4">
+            <TableView fx:id="competitionResultsTableView" prefHeight="163.0" prefWidth="286.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="4">
               <columns>
                 <TableColumn fx:id="competitionParticipantTableColumn" prefWidth="161.0" text="Natjecatelj" />
                 <TableColumn fx:id="competitionScoreTableColumn" prefWidth="123.0" text="Bodovi" />
@@ -142,6 +142,16 @@
                </GridPane.margin>
             </Button>
             <Button fx:id="removeParticipantButton" mnemonicParsing="false" onAction="#removeSelectedParticipantFromTableView" text="Ukloni natjecatelja" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="10" GridPane.valignment="TOP" />
+            <Label text="Organizator natjecanja:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+            </Label>
+            <ComboBox fx:id="organizerComboBox" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </ComboBox>
          </children>
       </GridPane>
    </children>

@@ -103,7 +103,7 @@ public class AddNewProjectController {
 
             ValidationProtocol.validateProject(projectNameTextField, projectDescriptionTextArea,
                     projectMathClubsParticipantsListView, projectStudentParticipantsListView);
-            Long projectId = FileWriterUtil.getNextProjectId();
+            Long projectId = 0L;
             String projectName = projectNameTextField.getText();
             String projectDescription = projectDescriptionTextArea.getText();
 

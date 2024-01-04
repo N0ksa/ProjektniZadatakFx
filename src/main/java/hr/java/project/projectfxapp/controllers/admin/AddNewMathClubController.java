@@ -46,7 +46,7 @@ public class AddNewMathClubController {
             ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox);
 
 
-            Long mathClubId = FileWriterUtil.getNextMathClubId();
+            Long mathClubId = 0L;
             String clubName = clubNameTextField.getText();
             Address clubAddress = clubAddressComboBox.getValue();
             Set<Student> clubMembers = new HashSet<>();

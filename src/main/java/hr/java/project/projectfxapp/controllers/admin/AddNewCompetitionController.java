@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
@@ -32,6 +33,8 @@ import java.util.Set;
 public class AddNewCompetitionController {
 
     @FXML
+    private ComboBox<MathClub> organizerComboBox;
+    @FXML
     private Button removeParticipantButton;
     @FXML
     private TextField competitionNameTextField;
@@ -62,6 +65,10 @@ public class AddNewCompetitionController {
         ObservableList<Student> potentialParticipantsObservableList = FXCollections.observableList(potentialParticipantsList);
         List<Address> addressesList = DatabaseUtil.getAddresses();
         ObservableList<Address> addressObservableList = FXCollections.observableList(addressesList);
+
+        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
+        ObservableList<MathClub> mathClubsObservableList = FXCollections.observableList(mathClubs);
+        organizerComboBox.setItems(mathClubsObservableList);
 
         competitionParticipantsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         competitionParticipantsListView.setItems(potentialParticipantsObservableList);
@@ -97,13 +104,14 @@ public class AddNewCompetitionController {
         try {
             ValidationProtocol.validateCompetition(competitionNameTextField, competitionDescriptionTextArea,
                     competitionAddressComboBox, competitionDateDatePicker, competitionTimeTextArea,
-                    auditoriumBuildingNameTextField, auditoriumHallNameTextField, competitionResultsTableView);
+                    auditoriumBuildingNameTextField, auditoriumHallNameTextField, competitionResultsTableView,
+                    organizerComboBox);
 
 
 
             List<Competition> competitions = new ArrayList<>();
 
-            Long competitionId = FileWriterUtil.getNextCompetitionId();
+            Long competitionId = 0L;
             String competitionName = competitionNameTextField.getText();
             String competitionDescription = competitionDescriptionTextArea.getText();
             Address competitionAddress = competitionAddressComboBox.getValue();
@@ -124,8 +132,15 @@ public class AddNewCompetitionController {
 
             Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
 
-            Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription,
-                    competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);
+            MathClub organizer = organizerComboBox.getValue();
+
+            Status status = Status.FINISHED;
+            if (competitionDateTime.isAfter(LocalDateTime.now())) {
+                status = Status.PLANNED;
+            }
+
+            Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription,
+                    competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
 
             competitions.add(newCompetition);
 

@@ -1,20 +1,26 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Competition;
+import hr.java.project.projectfxapp.entities.CompetitionResult;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,6 +28,11 @@ import java.util.Optional;
 
 public class CompetitionsUserController {
 
+    @FXML
+    private TableColumn<Competition, String> competitionOrganizerTableColumn;
+
+    @FXML
+    private TableColumn<Competition, String> competitionStatusTableColumn;
     @FXML
     private TableColumn<Competition, String> competitionAddressTableColumn;
 
@@ -53,6 +64,7 @@ public class CompetitionsUserController {
 
         FilteredList<Competition> filteredCompetitions = getCompetitionsFilteredList(competitionList);
         initializeCompetitionsTableView(filteredCompetitions);
+
     }
 
 
@@ -76,7 +88,9 @@ public class CompetitionsUserController {
                         || competition.getAddress().toString().contains(lowerCaseFilter)
                         ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("dd.MM.yyyy.")).contains(lowerCaseFilter)
                         ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("HH:mm")).contains(lowerCaseFilter)
-                        ||competition.findWinner().isPresent() && competition.findWinner().get().getName().toLowerCase().contains(lowerCaseFilter);
+                        ||competition.findWinner().isPresent() && competition.findWinner().get().getName().toLowerCase().contains(lowerCaseFilter)
+                        ||competition.getStatus().getStatusDescription().toLowerCase().contains(lowerCaseFilter)
+                        ||competition.getOrganizer().getName().toLowerCase().contains(lowerCaseFilter);
             });
         });
         return filteredCompetitions;
@@ -118,14 +132,27 @@ public class CompetitionsUserController {
 
         competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
-                String winner;
-                if (param.getValue().findWinner().isPresent()) {
-                    winner = param.getValue().findWinner().get().getName() + " " +
-                            param.getValue().findWinner().get().getSurname();
+                String winnerString;
+                if (param.getValue().getStatus().getStatusDescription().equals("Planirano")) {
+                    winnerString = "Nema pobjednika";
                 } else {
-                    winner = "Nema pobjednika";
+                    Optional<Student> winner = param.getValue().findWinner();
+                    winnerString = winner.map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika");
                 }
-                return new ReadOnlyStringWrapper(winner);
+
+                return new ReadOnlyStringWrapper(winnerString);
+            }
+        });
+
+        competitionOrganizerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
+                return new ReadOnlyStringWrapper(param.getValue().getOrganizer().getName());
+            }
+        });
+
+        competitionStatusTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
+                return new ReadOnlyStringWrapper(param.getValue().getStatus().getStatusDescription());
             }
         });
 
@@ -133,4 +160,36 @@ public class CompetitionsUserController {
         competitionTableView.setItems(competitions);
     }
 
+    public void addNewCompetitionUser(ActionEvent actionEvent) {
+        JavaFxProjectApplication.showPopup(ApplicationScreen.AddNewCompetitionUser);
+
+    }
+
+    public void addMembersToCompetitionUser(ActionEvent actionEvent) {
+        if(competitionTableView.getSelectionModel().getSelectedItem() != null) {
+
+            Competition selectedCompetition = competitionTableView.getSelectionModel().getSelectedItem();
+            SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
+
+            if (Optional.ofNullable(selectedCompetition).isPresent()) {
+                if (selectedCompetition.getStatus().getStatusDescription().equals("Planirano")) {
+                    JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoCompetition);
+                }
+            }
+        }
+
+    }
+
+    public void updateCompetitionUser(ActionEvent actionEvent) {
+
+        if(competitionTableView.getSelectionModel().getSelectedItem() != null) {
+            Competition selectedCompetition = competitionTableView.getSelectionModel().getSelectedItem();
+            SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
+
+            if (selectedCompetition != null || selectedCompetition.getStatus().getStatusDescription().equals("Planirano")) {
+                JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateCompetitionUser);
+            }
+        }
+
+    }
 }

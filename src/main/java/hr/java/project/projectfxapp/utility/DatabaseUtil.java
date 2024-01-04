@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.utility;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.Gender;
+import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
@@ -535,8 +536,9 @@ public class DatabaseUtil {
             for (Competition mathCompetition : mathCompetitions) {
 
                 String insertCompetitionProjectSql = "INSERT INTO COMPETITION(NAME, DESCRIPTION, ADDRESS_ID, " +
-                        "TIME_OF_COMPETITION, AUDITORIUM_BUILDING, AUDITORIUM_HALL, DATE_OF_COMPETITION) " +
-                        "VALUES(?, ?, ?, ?, ?, ?, ?)";
+                        "TIME_OF_COMPETITION, AUDITORIUM_BUILDING, AUDITORIUM_HALL, DATE_OF_COMPETITION, STATUS, " +
+                        "ORGANIZER_ID) " +
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement pstmt = connection.prepareStatement(insertCompetitionProjectSql, PreparedStatement.RETURN_GENERATED_KEYS);
                 pstmt.setString(1, mathCompetition.getName());
@@ -549,6 +551,8 @@ public class DatabaseUtil {
                 pstmt.setString(5, mathCompetition.getAuditorium().building());
                 pstmt.setString(6, mathCompetition.getAuditorium().hall());
                 pstmt.setDate(7, Date.valueOf(mathCompetition.getTimeOfCompetition().toLocalDate()));
+                pstmt.setString(8, mathCompetition.getStatus().getStatusDescription());
+                pstmt.setLong(9, mathCompetition.getOrganizer().getId());
                 pstmt.executeUpdate();
 
 
@@ -1089,7 +1093,10 @@ public class DatabaseUtil {
             Time timeOfCompetition = rs.getTime("TIME_OF_COMPETITION");
             LocalDate dateOfCompetition = rs.getDate("DATE_OF_COMPETITION").toLocalDate();
 
+
             LocalDateTime dateAndTimeOfCompetition = dateOfCompetition.atTime(timeOfCompetition.toLocalTime());
+
+            Status status = Status.getStatusFromString(rs.getString("STATUS"));
 
 
             String auditoriumBuildingName = rs.getString("AUDITORIUM_BUILDING");
@@ -1098,11 +1105,15 @@ public class DatabaseUtil {
 
             Set<CompetitionResult> competitionResults = getCompetitionResults(competitionId);
 
+            Long organizerId = rs.getLong("ORGANIZER_ID");
+
+            MathClub organizer = getMathClub(organizerId).get();
+
 
             competitionAddress.ifPresent(address -> {
 
-                Competition newCompetition = new Competition(competitionId, competitionName, competitionDescription
-                        , address, auditorium, dateAndTimeOfCompetition, competitionResults);
+                Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription
+                        , address, auditorium, dateAndTimeOfCompetition, status, competitionResults);
 
                 competitions.add(newCompetition);
             });
@@ -1217,4 +1228,65 @@ public class DatabaseUtil {
     }
 
 
+    public static boolean updateCompetition(Competition competitionToUpdate) {
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE COMPETITION SET NAME = ?, DESCRIPTION = ?, ADDRESS_ID = ?, TIME_OF_COMPETITION = ?" +
+                    ",AUDITORIUM_BUILDING = ?, AUDITORIUM_HALL = ?, DATE_OF_COMPETITION = ?, STATUS = ?, ORGANIZER_ID = ?" +
+                    " WHERE COMPETITION_ID = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, competitionToUpdate.getName());
+                preparedStatement.setString(2, competitionToUpdate.getDescription());
+                preparedStatement.setLong(3, competitionToUpdate.getAddress().getAddressId());
+                preparedStatement.setTime(4, Time.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalTime()));
+                preparedStatement.setString(5, competitionToUpdate.getAuditorium().building());
+                preparedStatement.setString(6, competitionToUpdate.getAuditorium().hall());
+                preparedStatement.setDate(7, Date.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalDate()));
+                preparedStatement.setString(8, competitionToUpdate.getStatus().getStatusDescription());
+                preparedStatement.setLong(9, competitionToUpdate.getOrganizer().getId());
+                preparedStatement.setLong(10, competitionToUpdate.getId());
+
+
+                preparedStatement.executeUpdate();
+            }
+
+            updateCompetitionScores(competitionToUpdate.getOrganizer().getId(), competitionToUpdate.getCompetitionResults());
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static void updateCompetitionScores(Long competitionId, Set<CompetitionResult> competitionResults) {
+
+        try (Connection connection = connectToDatabase()) {
+            String deleteQuery = "DELETE FROM COMPETITION_RESULTS WHERE COMPETITION_ID = ?";
+
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+                deleteStatement.setLong(1, competitionId);
+                deleteStatement.executeUpdate();
+            }
+
+            String insertQuery = "INSERT INTO COMPETITION_RESULTS (COMPETITION_ID, STUDENT_ID, SCORE) VALUES (?, ?, ?)";
+            try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                for (CompetitionResult result : competitionResults) {
+                    insertStatement.setLong(1, competitionId);
+                    insertStatement.setLong(2, result.participant().getId());
+                    insertStatement.setBigDecimal(3, result.score());
+                    insertStatement.executeUpdate();
+                }
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+
+        }
+    }
 }
+

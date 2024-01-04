@@ -1,5 +1,7 @@
 package hr.java.project.projectfxapp.entities;
 
+import hr.java.project.projectfxapp.enums.Status;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -12,11 +14,14 @@ import java.util.Set;
  */
 public class Competition extends NamedEntity implements Serializable {
 
+    private MathClub organizer;
     private String description;
     private Address address;
     private Auditorium auditorium;
     private LocalDateTime timeOfCompetition;
     private Set <CompetitionResult> competitionResults;
+
+    private Status status;
 
     /**
      * Konstruktor za stvaranje nove instance matematičkog natjecanja.
@@ -26,7 +31,8 @@ public class Competition extends NamedEntity implements Serializable {
      * @param timeOfCompetition Vrijeme održavanja natjecanja.
      * @param competitionResults Rezultati natjecatelja.
      */
-    public Competition(Long competitionId, String name, String description, Address address, Auditorium auditorium, LocalDateTime timeOfCompetition,
+    public Competition(Long competitionId, MathClub organizer, String name, String description, Address address,
+                       Auditorium auditorium, LocalDateTime timeOfCompetition, Status status,
                        Set<CompetitionResult> competitionResults) {
         super(competitionId, name);
         this.description = description;
@@ -34,8 +40,26 @@ public class Competition extends NamedEntity implements Serializable {
         this.auditorium = auditorium;
         this.timeOfCompetition = timeOfCompetition;
         this.competitionResults = competitionResults;
+        this.status = status;
+        this.organizer = organizer;
     }
 
+
+    public MathClub getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(MathClub organizer) {
+        this.organizer = organizer;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public String getDescription() {
         return description;
