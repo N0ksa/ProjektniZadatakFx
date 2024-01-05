@@ -15,9 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.chart.*;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.math.BigDecimal;
@@ -28,6 +27,12 @@ import java.util.Optional;
 
 public class CompetitionsUserController {
 
+    @FXML
+    private Label currentClubNameTextField;
+    @FXML
+    private BarChart<String, Integer> numberOfParticipantsInCompetitionBarChart;
+    @FXML
+    private LineChart<String, BigDecimal> averageCompetitionScoreLineChart;
     @FXML
     private TableColumn<Competition, String> competitionOrganizerTableColumn;
 
@@ -60,14 +65,58 @@ public class CompetitionsUserController {
 
 
     public void initialize() {
+        currentClubNameTextField.setText(SessionManager.getInstance().getCurrentClub().getName());
         List<Competition> competitionList = DatabaseUtil.getCompetitions();
 
         FilteredList<Competition> filteredCompetitions = getCompetitionsFilteredList(competitionList);
         initializeCompetitionsTableView(filteredCompetitions);
 
+        initializeBarChart(competitionList);
+        initializeLineChart(competitionList);
+
     }
 
+    private void initializeLineChart(List<Competition> competitionList) {
+        averageCompetitionScoreLineChart.getData().clear();
 
+        averageCompetitionScoreLineChart.getYAxis().setLabel("Prosječni rezultat");
+        averageCompetitionScoreLineChart.getYAxis().setTickLabelGap(1);
+
+
+        XYChart.Series<String, BigDecimal> series = new XYChart.Series<>();
+        series.setName("Prosječni rezultat");
+
+        for (Competition competition : competitionList) {
+            BigDecimal averageScore = competition.getAverageScoreForCompetition();
+            if (averageScore.compareTo(BigDecimal.ZERO) > 0) {
+                series.getData().add(new XYChart.Data<>(competition.getName(), averageScore));
+            }
+        }
+
+        averageCompetitionScoreLineChart.getData().add(series);
+    }
+
+    private void initializeBarChart(List<Competition> competitionList) {
+        numberOfParticipantsInCompetitionBarChart.getData().clear();
+
+        numberOfParticipantsInCompetitionBarChart.getYAxis().setTickLabelGap(1);
+        numberOfParticipantsInCompetitionBarChart.getYAxis().setLabel("Broj natjecatelja");
+
+
+        for (Competition competition : competitionList) {
+
+            int numberOfParticipants = competition.getNumberOfParticipants();
+            if (numberOfParticipants > 0) {
+                XYChart.Series<String, Integer> series = new XYChart.Series<>();
+                series.setName(competition.getName());
+                series.getData().add(new XYChart.Data<>("Natjecanja", numberOfParticipants));
+                numberOfParticipantsInCompetitionBarChart.getData().add(series);
+            }
+        }
+
+
+
+    }
 
 
     private FilteredList<Competition> getCompetitionsFilteredList(List<Competition> competitions) {
@@ -157,7 +206,24 @@ public class CompetitionsUserController {
         });
 
 
+        competitionTableView.setRowFactory(tv -> {
+            TableRow<Competition> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    Competition selectedCompetition = row.getItem();
+                    handleCompetitionDoubleClick(selectedCompetition);
+                }
+            });
+            return row;
+        });
+
+
         competitionTableView.setItems(competitions);
+    }
+
+    private void handleCompetitionDoubleClick(Competition selectedCompetition) {
+        SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
+        JavaFxProjectApplication.showPopup(ApplicationScreen.CompetitionDetailsCard);
     }
 
     public void addNewCompetitionUser(ActionEvent actionEvent) {

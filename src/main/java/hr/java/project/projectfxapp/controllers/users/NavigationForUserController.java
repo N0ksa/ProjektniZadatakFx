@@ -23,6 +23,8 @@ public class NavigationForUserController {
         JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);
     }
 
-    public void showCompetitionsForClub(ActionEvent actionEvent) {
+
+    public void showSettings(ActionEvent actionEvent) {
+        JavaFxProjectApplication.switchScene(ApplicationScreen.Settings);
     }
 }

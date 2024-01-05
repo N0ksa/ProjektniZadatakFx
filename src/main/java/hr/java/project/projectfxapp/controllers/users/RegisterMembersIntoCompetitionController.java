@@ -6,6 +6,7 @@ import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,19 +58,40 @@ public class RegisterMembersIntoCompetitionController {
         refreshListViews();
     }
 
-    public void registerClubMembersForCompetition(ActionEvent event) {
-        Competition currentCompetition = SessionManager.getInstance().getCurrentCompetition();
+    public void register(ActionEvent event) {
 
-        currentCompetition.getCompetitionResults().clear();
+        boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda",
+                "Jeste li sigurni da želite promijeniti registrirane članove u natjecanju?",
+                    "Ako ste sigurni da želite promijeniti registrirane članove u natjecanju, pritisnite Da");
 
-        registeredMembersForCompetition.forEach(student -> {
-            CompetitionResult competitionResult = new CompetitionResult(student, BigDecimal.ZERO);
 
-            currentCompetition.getCompetitionResults().add(competitionResult);
+        if (positiveConfirmation){
+            Competition currentCompetition = SessionManager.getInstance().getCurrentCompetition();
 
-            DatabaseUtil.updateCompetitionScores(currentCompetition.getId(), currentCompetition.getCompetitionResults());
+            currentCompetition.getCompetitionResults().clear();
 
-        });
+            registeredMembersForCompetition.forEach(student -> {
+                CompetitionResult competitionResult = new CompetitionResult(student, BigDecimal.ZERO);
+
+                currentCompetition.getCompetitionResults().add(competitionResult);
+
+            });
+
+            boolean successfullyUpdated  = DatabaseUtil.updateCompetitionScores(currentCompetition.getId(),
+                    currentCompetition.getCompetitionResults());
+
+            if (successfullyUpdated){
+                ValidationProtocol.showSuccessAlert("Uspješno ste promijenili registrirane članove u natjecanju",
+                        "Uspješno ste promijenili registrirane članove u natjecanju");
+
+            }
+            else{
+                ValidationProtocol.showErrorAlert("Pogreška", "Pogreška prilikom promjene registriranih članova u natjecanju",
+                        "Pogreška prilikom promjene registriranih članova u natjecanju");
+            }
+
+        }
+
     }
 
 
@@ -92,6 +114,7 @@ public class RegisterMembersIntoCompetitionController {
     }
 
     public void registerClubMemberToCompetition(MouseEvent mouseEvent) {
+
         Student selectedStudent = availableClubMembersListView.getSelectionModel().getSelectedItem();
         if (Optional.ofNullable(selectedStudent).isPresent()) {
             registeredClubMembers.add(selectedStudent);

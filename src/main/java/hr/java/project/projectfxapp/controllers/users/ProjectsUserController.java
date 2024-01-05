@@ -5,6 +5,7 @@ import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +22,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProjectsUserController {
+    @FXML
+    private Label currentClubNameTextField;
     @FXML
     private TextField filterProjects;
 
@@ -46,6 +49,7 @@ public class ProjectsUserController {
 
     public void initialize(){
 
+        currentClubNameTextField.setText(SessionManager.getInstance().getCurrentClub().getName());
         List<MathProject> mathProjectsList = DatabaseUtil.getProjects();
         FilteredList<MathProject> filteredMathProjects = getMathProjectsFilteredList(mathProjectsList);
 

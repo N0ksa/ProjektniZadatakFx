@@ -1,13 +1,13 @@
 package hr.java.project.projectfxapp.entities;
 
+import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.Status;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Predstavlja matematičko natjecanje.
@@ -139,6 +139,55 @@ public class Competition extends NamedEntity implements Serializable {
        return competitionResults.stream()
                .max(Comparator.comparing(CompetitionResult::score))
                .map(CompetitionResult::participant);
+    }
+
+    public Integer getNumberOfParticipants(){
+        return competitionResults.size();
+    }
+
+    public BigDecimal getAverageScoreForCompetition(){
+        BigDecimal sumOfScores = BigDecimal.ZERO;
+        for (CompetitionResult competitionResult : competitionResults){
+            sumOfScores = sumOfScores.add(competitionResult.score());
+        }
+
+        if(sumOfScores.equals(BigDecimal.ZERO)){
+            return BigDecimal.ZERO;
+        }
+
+        return sumOfScores.divide(BigDecimal.valueOf(competitionResults.size()), 2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getAverageFemaleScoreForCompetition(){
+        BigDecimal sumOfScores = BigDecimal.ZERO;
+        List<CompetitionResult> femaleResults = getCompetitionResults().stream()
+                .filter(competitionResult -> competitionResult.participant().getGender().equals("Female")).toList();
+
+        for (CompetitionResult competitionResult : femaleResults){
+            sumOfScores = sumOfScores.add(competitionResult.score());
+        }
+
+        if(sumOfScores.equals(BigDecimal.ZERO)){
+            return BigDecimal.ZERO;
+        }
+
+        return sumOfScores.divide(BigDecimal.valueOf(femaleResults.size()), 2, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getAverageMaleScoreForCompetition(){
+        BigDecimal sumOfScores = BigDecimal.ZERO;
+        List<CompetitionResult> maleResults = getCompetitionResults().stream()
+                .filter(competitionResult -> competitionResult.participant().getGender().equals("Male")).toList();
+
+        for (CompetitionResult competitionResult : maleResults){
+            sumOfScores = sumOfScores.add(competitionResult.score());
+        }
+
+        if(sumOfScores.equals(BigDecimal.ZERO)){
+            return BigDecimal.ZERO;
+        }
+
+        return sumOfScores.divide(BigDecimal.valueOf(maleResults.size()), 2, RoundingMode.HALF_UP);
     }
 
 

@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -90,7 +91,7 @@
          </ScrollPane>
       </children>
    </AnchorPane>
-   <AnchorPane layoutX="698.0" layoutY="322.0" prefHeight="276.0" prefWidth="373.0">
+   <AnchorPane layoutX="698.0" layoutY="488.0" prefHeight="174.0" prefWidth="373.0">
       <children>
          <PieChart fx:id="genderNumberDifferencePieChart" layoutX="-72.0" layoutY="14.0" prefHeight="386.0" prefWidth="373.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       </children></AnchorPane>
@@ -105,5 +106,18 @@
            </yAxis>
          </BarChart>
       </children></AnchorPane>
+   <AnchorPane layoutX="698.0" layoutY="290.0" prefHeight="174.0" prefWidth="373.0">
+      <children>
+         <PieChart fx:id="yearNumberDifferencePieChart" prefHeight="386.0" prefWidth="373.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      </children>
+   </AnchorPane>
+   <Separator layoutX="702.0" layoutY="472.0" prefHeight="13.0" prefWidth="366.0" />
+   <Separator layoutX="684.0" layoutY="298.0" orientation="VERTICAL" prefHeight="361.0" prefWidth="16.0" />
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="6.0" prefHeight="44.0" prefWidth="846.0" text="Glavni ekran" textFill="WHITE">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <FontAwesomeIconView fill="WHITE" glyphName="DASHBOARD" layoutX="573.0" layoutY="40.0" opacity="0.18" size="3EM" />
 
 </AnchorPane>

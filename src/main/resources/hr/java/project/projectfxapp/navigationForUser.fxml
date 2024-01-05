@@ -29,7 +29,7 @@
                         <FontAwesomeIconView glyphName="ROCKET" layoutX="38.0" layoutY="454.0" size="25" />
                         <Line endX="162.0" layoutX="95.0" layoutY="192.0" startX="-88.0" style="-fx-fill: #374151;" />
                         <Line endX="165.0" layoutX="95.0" layoutY="490.0" startX="-88.0" style="-fx-fill: #374151;" />
-                        <Button layoutX="24.0" layoutY="544.0" mnemonicParsing="false" onAction="#showCompetitionsForClub" prefHeight="41.0" prefWidth="225.0" text="Postavke" />
+                        <Button layoutX="24.0" layoutY="544.0" mnemonicParsing="false" onAction="#showSettings" prefHeight="41.0" prefWidth="225.0" text="Postavke" />
                         <FontAwesomeIconView glyphName="GEAR" layoutX="41.0" layoutY="573.0" size="25" />
                      </children>
                   </AnchorPane>

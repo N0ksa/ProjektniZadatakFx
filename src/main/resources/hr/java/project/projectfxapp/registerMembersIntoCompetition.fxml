@@ -33,7 +33,7 @@
       </AnchorPane>
       <Label layoutX="339.0" layoutY="340.0" text="Svi registirani članovi za natjecanje" />
       <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="400.0" layoutY="257.0" opacity="0.18" size="6EM" />
-      <Button layoutX="358.0" layoutY="571.0" mnemonicParsing="false" onAction="#registerClubMembersForCompetition" prefHeight="38.0" prefWidth="128.0" text="Registriraj članove" />
+      <Button layoutX="358.0" layoutY="571.0" mnemonicParsing="false" onAction="#register" prefHeight="38.0" prefWidth="128.0" text="Registriraj članove" />
       <Button layoutX="589.0" layoutY="323.0" mnemonicParsing="false" onAction="#removeClubMemberFromCompetition" prefHeight="25.0" prefWidth="88.0" text="Ukloni člana" />
       <FontAwesomeIconView glyphName="USER_PLUS" layoutX="410.0" layoutY="181.0" opacity="0.2" size="3EM" />
    </children>

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.CompetitionsUserController">
 
     <fx:include source="navigationForUser.fxml" />
-   <AnchorPane layoutX="305.0" layoutY="109.0" prefHeight="241.0" prefWidth="737.0">
+   <AnchorPane layoutX="305.0" layoutY="109.0" prefHeight="213.0" prefWidth="737.0">
       <children>
-         <TableView fx:id="competitionTableView" layoutX="-6.0" prefHeight="241.0" prefWidth="737.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+         <TableView fx:id="competitionTableView" layoutX="-6.0" prefHeight="241.0" prefWidth="737.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columns>
                <TableColumn fx:id="competitionOrganizerTableColumn" prefWidth="81.0" text="Organizator" />
                <TableColumn fx:id="competitionNameTableColumn" prefWidth="108.0" text="Ime natjecanja" />
@@ -26,8 +33,45 @@
       </children>
    </AnchorPane>
    <TextField fx:id="filterCompetitions" layoutX="477.0" layoutY="60.0" prefHeight="37.0" prefWidth="407.0" promptText="filtriraj natjecanja" />
-   <Button layoutX="392.0" layoutY="376.0" mnemonicParsing="false" onAction="#addNewCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Dodaj natjecanje" />
-   <Button layoutX="824.0" layoutY="376.0" mnemonicParsing="false" onAction="#addMembersToCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Prijavi članove " />
-   <Button layoutX="550.0" layoutY="376.0" mnemonicParsing="false" onAction="#updateCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Ažuriraj natjecanje" />
+   <Button layoutX="391.0" layoutY="339.0" mnemonicParsing="false" onAction="#addNewCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Dodaj natjecanje" />
+   <Button layoutX="813.0" layoutY="339.0" mnemonicParsing="false" onAction="#addMembersToCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Prijavi članove " />
+   <Button layoutX="564.0" layoutY="339.0" mnemonicParsing="false" onAction="#updateCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Ažuriraj natjecanje" />
+   <AnchorPane layoutX="305.0" layoutY="435.0" prefHeight="224.0" prefWidth="400.0">
+      <children>
+         <LineChart fx:id="averageCompetitionScoreLineChart" layoutX="-92.0" layoutY="-142.0" prefHeight="258.0" prefWidth="408.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <xAxis>
+             <CategoryAxis side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+             <NumberAxis side="LEFT" />
+           </yAxis>
+         </LineChart>
+      </children>
+   </AnchorPane>
+   <Label layoutX="391.0" layoutY="409.0" text="Prosjek bodova po svakom natjecanju" />
+   <AnchorPane layoutX="760.0" layoutY="435.0" prefHeight="224.0" prefWidth="282.0">
+      <children>
+         <BarChart fx:id="numberOfParticipantsInCompetitionBarChart" layoutY="-29.0" prefHeight="224.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <xAxis>
+             <CategoryAxis side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+             <NumberAxis side="LEFT" />
+           </yAxis>
+         </BarChart>
+      </children>
+   </AnchorPane>
+   <Label layoutX="834.0" layoutY="409.0" prefHeight="17.0" prefWidth="208.0" text="Broj sudionika na svakom natjecanju" />
+   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="31.0" layoutY="207.0" prefHeight="17.0" prefWidth="200.0" text="Label" textFill="#374151">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="6.0" prefHeight="45.0" prefWidth="839.0" text="Natjecanja" textFill="WHITE">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <FontAwesomeIconView fill="WHITE" glyphName="TROPHY" layoutX="580.0" layoutY="41.0" opacity="0.18" size="3em" wrappingWidth="21.142857551574707" />
 
 </AnchorPane>

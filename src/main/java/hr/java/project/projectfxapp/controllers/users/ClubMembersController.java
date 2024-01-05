@@ -1,10 +1,7 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
-import hr.java.project.projectfxapp.entities.CompetitionResult;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.MathProject;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
@@ -17,10 +14,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.math.BigDecimal;
@@ -33,6 +29,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ClubMembersController {
+
+    @FXML
+    private Label currentClubNameTextField;
+    @FXML
+    private LineChart<String, BigDecimal> clubMemberScoreOverDifferentCompetitionsLineChart;
     @FXML
     private TableColumn<Student, String> NameAndSurnameTableColumn;
 
@@ -70,6 +71,7 @@ public class ClubMembersController {
    public void initialize(){
 
        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
+         currentClubNameTextField.setText(currentClub.getName());
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
 
        List<CompetitionResult> competitionResults = DatabaseUtil.getCompetitions().stream()
@@ -78,6 +80,8 @@ public class ClubMembersController {
 
         List<MathProject> mathProjects = DatabaseUtil.getProjects();
 
+        List<Competition> competitions = DatabaseUtil.getCompetitions();
+
 
 
        FilteredList<Student> filteredMembers = getMembersFilteredList(clubMembers);
@@ -85,9 +89,34 @@ public class ClubMembersController {
        initializeMemberTableView(filteredMembers);
 
        initializeLeaderBoardTableView(FXCollections.observableList(clubMembers), competitionResults, mathProjects);
+       setClubMemberScoreOverDifferentCompetitionsLineChart(clubMembers, competitions);
 
 
    }
+
+    private void setClubMemberScoreOverDifferentCompetitionsLineChart(List<Student> clubMembers, List<Competition> competitionsList) {
+        clubMemberScoreOverDifferentCompetitionsLineChart.getData().clear();
+
+        for (Student clubMember : clubMembers) {
+            XYChart.Series<String, BigDecimal> series = new XYChart.Series<>();
+            series.setName(clubMember.getName() + " " + clubMember.getSurname());
+
+            for (Competition competition : competitionsList) {
+                Optional<CompetitionResult> resultOptional = competition.getCompetitionResultForParticipant(clubMember);
+
+                resultOptional.ifPresent(result -> {
+                    BigDecimal competitionScore = result.score();
+                    series.getData().add(new XYChart.Data<>(competition.getName(), competitionScore));
+                });
+            }
+
+            clubMemberScoreOverDifferentCompetitionsLineChart.getData().add(series);
+        }
+    }
+
+
+
+
 
 
     private FilteredList<Student> getMembersFilteredList(List<Student> clubMembers) {

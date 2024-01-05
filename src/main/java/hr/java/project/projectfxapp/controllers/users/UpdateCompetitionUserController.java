@@ -75,10 +75,23 @@ public class UpdateCompetitionUserController {
 
        if (dateOfCompetitionDatePicker.getValue().isBefore(LocalDate.now())
                 || dateOfCompetitionDatePicker.getValue().isEqual(LocalDate.now())) {
+
     	   enterResultsLabel.setVisible(true);
     	   competitionResultsTableView.setVisible(true);
 
        }
+
+        dateOfCompetitionDatePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                if (date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
+            }
+        });
 
         competitionResultsTableView.editableProperty().set(true);
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
@@ -106,6 +119,8 @@ public class UpdateCompetitionUserController {
     private void setCurrentCompetitionInformation(Competition currentCompetition) {
         auditoriumBuildingNameTextField.setText(currentCompetition.getAuditorium().building());
         auditoriumHallNameTextField.setText(currentCompetition.getAuditorium().hall());
+
+        cityComboBox.setItems(FXCollections.observableList(List.of(City.values())));
         cityComboBox.setValue(currentCompetition.getAddress().getCity());
         competitionDescriptionTextArea.setText(currentCompetition.getDescription());
         competitionNameTextField.setText(currentCompetition.getName());

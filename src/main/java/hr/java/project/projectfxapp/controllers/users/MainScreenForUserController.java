@@ -10,6 +10,7 @@ import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,8 @@ import java.util.Set;
 public class MainScreenForUserController {
 
 
+    @FXML
+    private PieChart yearNumberDifferencePieChart;
     @FXML
     private PieChart genderNumberDifferencePieChart;
     @FXML
@@ -60,8 +63,39 @@ public class MainScreenForUserController {
 
         setOverallScoreComparisonBarChart(currentClub,mathClubList, competitionList, mathProjectsList);
         setGenderNumberDifferencePieChart(currentClub);
+        setYearNumberDifferencePieChart(currentClub);
 
 
+
+
+    }
+
+    private void setYearNumberDifferencePieChart(MathClub currentClub) {
+        Set<Student> currentClubMembers = currentClub.getStudents();
+
+        long numberOfFirstYearMembers = currentClubMembers.stream()
+                .filter(student -> student.getYearOfStudy().equals(1))
+                .count();
+
+        long numberOfSecondYearMembers = currentClubMembers.stream()
+                .filter(student -> student.getYearOfStudy().equals(2))
+                .count();
+
+        long numberOfThirdYearMembers = currentClubMembers.stream()
+                .filter(student -> student.getYearOfStudy().equals(3))
+                .count();
+
+
+        PieChart.Data firstYearMembersData = new PieChart.Data("1. godina", numberOfFirstYearMembers);
+        PieChart.Data secondYearMembersData = new PieChart.Data("2. godina", numberOfSecondYearMembers);
+        PieChart.Data thirdYearMembersData = new PieChart.Data("3. godina", numberOfThirdYearMembers);
+
+        yearNumberDifferencePieChart.setData(FXCollections.observableArrayList(firstYearMembersData, secondYearMembersData,
+                thirdYearMembersData));
+
+        yearNumberDifferencePieChart.getData().forEach(data -> data.setName(data.getName() + ":\nBroj članova: " + (int) data.getPieValue()));
+
+        yearNumberDifferencePieChart.setTitle("Distribucija članova po godini studija");
     }
 
 
@@ -82,7 +116,7 @@ public class MainScreenForUserController {
         genderNumberDifferencePieChart.setData(FXCollections.observableArrayList(maleMembersData, femaleMembersData));
 
 
-        genderNumberDifferencePieChart.getData().forEach(data -> data.setName(data.getName() + "-" + (int) data.getPieValue()));
+        genderNumberDifferencePieChart.getData().forEach(data -> data.setName(data.getName() + ":\nBroj članova: " + (int) data.getPieValue()));
 
         genderNumberDifferencePieChart.setTitle("Distribucija članova po spolu");
 

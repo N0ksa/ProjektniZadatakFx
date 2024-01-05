@@ -160,9 +160,8 @@ public class DatabaseUtil {
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while (rs.next()) {
-                mapResultSetToStudentsList(rs, students);
-            }
+            mapResultSetToStudentsList(rs, students);
+
 
 
         } catch (SQLException | IOException ex) {
@@ -1250,7 +1249,7 @@ public class DatabaseUtil {
                 preparedStatement.executeUpdate();
             }
 
-            updateCompetitionScores(competitionToUpdate.getOrganizer().getId(), competitionToUpdate.getCompetitionResults());
+            updateCompetitionScores(competitionToUpdate.getId(), competitionToUpdate.getCompetitionResults());
 
 
         } catch (SQLException | IOException ex) {
@@ -1262,8 +1261,9 @@ public class DatabaseUtil {
         return true;
     }
 
-    public static void updateCompetitionScores(Long competitionId, Set<CompetitionResult> competitionResults) {
+    public static boolean updateCompetitionScores(Long competitionId, Set<CompetitionResult> competitionResults) {
 
+        boolean successfullyUpdated = true;
         try (Connection connection = connectToDatabase()) {
             String deleteQuery = "DELETE FROM COMPETITION_RESULTS WHERE COMPETITION_ID = ?";
 
@@ -1283,10 +1283,13 @@ public class DatabaseUtil {
             }
 
         } catch (SQLException | IOException ex) {
+            successfullyUpdated = false;
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
 
         }
+
+        return successfullyUpdated;
     }
 }
 

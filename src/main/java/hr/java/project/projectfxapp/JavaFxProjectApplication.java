@@ -4,12 +4,14 @@ import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class JavaFxProjectApplication extends Application {
 
@@ -26,6 +28,9 @@ public class JavaFxProjectApplication extends Application {
         stage.setTitle("ProjektMatematika");
         stage.setScene(scene);
         stage.setResizable(false);
+
+        Image logo = new Image(Objects.requireNonNull(getClass().getResource("/images/projekt_matematika_logo.png")).toExternalForm());
+        stage.getIcons().add(logo);
 
         stage.show();
     }

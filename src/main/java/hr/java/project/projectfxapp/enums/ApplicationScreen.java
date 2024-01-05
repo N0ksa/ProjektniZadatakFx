@@ -25,7 +25,9 @@ public enum ApplicationScreen {
     ProjectsUser("Projekti", "projectsUser.fxml", true),
     AddNewCompetitionUser("Dodaj natjecanje", "addNewCompetitionUser.fxml", false),
     UpdateCompetitionUser("Ažuriraj natjecanje", "updateCompetitionUser.fxml", false),
-    RegisterMembersIntoCompetition("Prijavi studente na natjecanje", "registerMembersIntoCompetition.fxml", false);
+    RegisterMembersIntoCompetition("Prijavi studente na natjecanje", "registerMembersIntoCompetition.fxml", false),
+    CompetitionDetailsCard("Detalji natjecanja", "competitionDetailsCard.fxml", false),
+    Settings("Postavke", "settings.fxml", false);
 
     private final String title;
     private final String pathOfFxml;
