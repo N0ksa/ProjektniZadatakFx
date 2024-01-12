@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -62,7 +63,7 @@
       </children>
    </AnchorPane>
    <Label layoutX="834.0" layoutY="409.0" prefHeight="17.0" prefWidth="208.0" text="Broj sudionika na svakom natjecanju" />
-   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="31.0" layoutY="207.0" prefHeight="17.0" prefWidth="200.0" text="Label" textFill="#374151">
+   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="31.0" layoutY="208.0" prefHeight="17.0" prefWidth="200.0" text="Label" textFill="#374151">
       <font>
          <Font size="18.0" />
       </font>
@@ -73,5 +74,6 @@
       </font>
    </Label>
    <FontAwesomeIconView fill="WHITE" glyphName="TROPHY" layoutX="580.0" layoutY="41.0" opacity="0.18" size="3em" wrappingWidth="21.142857551574707" />
+   <Separator layoutX="732.0" layoutY="376.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="21.0" />
 
 </AnchorPane>

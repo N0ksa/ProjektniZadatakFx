@@ -7,6 +7,7 @@
 
 .button:hover {
     -fx-background-color: #ffea00;
+    -fx-cursor: hand;
 }
 
 .button:pressed {
@@ -83,3 +84,44 @@
 }
 
 
+/*Member card */
+
+#memberInformation{
+    -fx-background-color: #4a92f7;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #374151;
+    -fx-border-width: 2;
+
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 1, 1);
+
+}
+
+#memberImageView{
+    -fx-background-color: #fff;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #374151;
+    -fx-border-width: 2;
+
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 1, 1);
+}
+
+
+
+/* ------------------------------------------------------------- */
+
+/* settings */
+
+.settingsForm{
+    -fx-background-color: #4a92f7;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #374151;
+    -fx-border-width: 2;
+
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 1, 1);
+
+
+
+    }

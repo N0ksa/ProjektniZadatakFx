@@ -3,8 +3,13 @@ package hr.java.project.projectfxapp.controllers.users;
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 
 public class NavigationForUserController {
+
+    @FXML
+    private ImageView clubLogoImageView;
 
     public void showUserMainScreen(ActionEvent actionEvent) {
         JavaFxProjectApplication.switchScene(ApplicationScreen.MainScreenForUser);

@@ -248,6 +248,81 @@ public class ValidationProtocol {
         }
     }
 
+
+    public static void validateUsernameChange(User currentUser, TextField changeUserNameTextField,
+                                              PasswordField enterPasswordForUsernameChangePasswordField) {
+
+        List<String> errors = new ArrayList<>();
+        validateUserNameTextField(currentUser, changeUserNameTextField, errors);
+        validatePasswordFieldForUsernameChange(currentUser, enterPasswordForUsernameChangePasswordField, errors);
+
+        if(!errors.isEmpty()){
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+
+    }
+
+    private static void validatePasswordFieldForUsernameChange(User currentUser, PasswordField enterPasswordForUsernameChangePasswordField,
+                                                               List<String> errors) {
+
+        if (enterPasswordForUsernameChangePasswordField.getText().isEmpty()){
+            errors.add("Lozinka ne smije biti prazna");
+        }
+        else if (!PasswordUtil.isPasswordCorrect(enterPasswordForUsernameChangePasswordField.getText(), currentUser.getHashedPassword())){
+            errors.add("Unijeli ste krivu lozinku. Molim pokušajte ponovno.");
+        }
+
+    }
+
+    private static void validateUserNameTextField(User currentUser, TextField changeUserNameTextField, List<String> errors) {
+
+        if (changeUserNameTextField.getText().isEmpty()){
+            errors.add("Korisničko ime ne smije biti prazno");
+
+        }
+        else{
+            if (!changeUserNameTextField.getText().matches(ValidationRegex.VALID_USERNAME_PATTERN.getRegex())){
+                errors.add("Korisničko ime mora sadržavati barem 4 znakova i ne smije sadržavati specijalne znakove");
+            }
+            else if (changeUserNameTextField.getText().equals(currentUser.getUsername())){
+                errors.add("Unesite novo korisničko ime");
+            }
+
+            else{
+                List<User> users = FileReaderUtil.getUsers();
+                for (User user : users){
+                    if (user.getUsername().equals(changeUserNameTextField.getText())){
+                        errors.add("Korisničko ime već postoji");
+                        break;
+                    }
+                }
+            }
+
+
+        }
+
+
+    }
+
+    public static void validatePasswordChange(User currentUser, PasswordField changePasswordPasswordField,
+                                              PasswordField confirmChangePasswordPasswordField,
+                                              PasswordField enterOldPasswordPasswordField) {
+
+        if (enterOldPasswordPasswordField.getText().isEmpty()){
+            throw new ValidationException("Unesite staru lozinku");
+        }
+        else if (!PasswordUtil.isPasswordCorrect(enterOldPasswordPasswordField.getText(), currentUser.getHashedPassword())){
+            throw new ValidationException("Unijeli ste krivu lozinku. Molim pokušajte ponovno.");
+        }
+
+        List<String> errors = new ArrayList<>();
+        validatePasswordField(changePasswordPasswordField, confirmChangePasswordPasswordField, errors);
+
+
+
+
+    }
+
     private static void validateHouseNumber(TextField houseNumberTextField, List<String> errors) {
         if (houseNumberTextField.getText().isEmpty()){
 
@@ -408,6 +483,7 @@ public class ValidationProtocol {
 
         return result.isPresent() && result.get() == buttonTypeYes;
     }
+
 
 
 }

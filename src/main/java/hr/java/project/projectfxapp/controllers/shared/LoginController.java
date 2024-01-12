@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.controllers.shared;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.User;
@@ -143,7 +144,8 @@ public class LoginController {
             Long mathClubId = DatabaseUtil.saveMathClubs(mathClubs);
 
             String hashedPassword = PasswordUtil.hashPassword(enteredPassword);
-            User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER, mathClubId);
+            User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER, mathClubId,
+                    new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
 
 
             users.add(registerUser);

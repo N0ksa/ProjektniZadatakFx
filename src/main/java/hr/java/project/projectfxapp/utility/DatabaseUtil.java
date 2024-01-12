@@ -1138,8 +1138,9 @@ public class DatabaseUtil {
                 String password = rs.getString("PASSWORD");
                 Long mathClubId = rs.getLong("MATH_CLUB_ID");
                 String role = rs.getString("ROLE");
+                String imagePath = rs.getString("PICTURE_PATH");
 
-                currentUser = new User(username, password, UserRole.getRoleByName(role), mathClubId);
+                currentUser = new User(username, password, UserRole.getRoleByName(role), mathClubId, new Picture(imagePath));
             }
 
         } catch (SQLException | IOException ex) {
@@ -1153,11 +1154,42 @@ public class DatabaseUtil {
     }
 
 
+    public static List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = "SELECT * FROM USERS";
+            Statement stmt = connection.createStatement();
+            stmt.execute(sqlQuery);
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                String username = rs.getString("USERNAME");
+                String password = rs.getString("PASSWORD");
+                Long mathClubId = rs.getLong("MATH_CLUB_ID");
+                String role = rs.getString("ROLE");
+                String picturePath = rs.getString("PICTURE_PATH");
+
+                User user = new User(username, password, UserRole.getRoleByName(role), mathClubId, new Picture(picturePath));
+                users.add(user);
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+
+        return users;
+
+    }
+
+
     public static void saveUser(User registerUser){
 
         try (Connection connection = connectToDatabase()) {
 
-            String insertStudentSql = "INSERT INTO USERS(USERNAME, PASSWORD, MATH_CLUB_ID, ROLE) VALUES(?, ?, ?, ?)";
+            String insertStudentSql = "INSERT INTO USERS(USERNAME, PASSWORD, MATH_CLUB_ID, ROLE, PICTURE_PATH) VALUES(?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(insertStudentSql, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -1165,6 +1197,7 @@ public class DatabaseUtil {
             pstmt.setString(2, registerUser.getHashedPassword());
             pstmt.setLong(3, registerUser.getMathClubId());
             pstmt.setString(4, registerUser.getRole().getName());
+            pstmt.setString(5, registerUser.getPicture().getPicturePath());
             pstmt.executeUpdate();
 
 
@@ -1280,6 +1313,78 @@ public class DatabaseUtil {
                     insertStatement.setBigDecimal(3, result.score());
                     insertStatement.executeUpdate();
                 }
+            }
+
+        } catch (SQLException | IOException ex) {
+            successfullyUpdated = false;
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+
+        }
+
+        return successfullyUpdated;
+    }
+
+    public static boolean updateUsername(User currentUser, String newUsername) {
+        boolean successfullyUpdated = true;
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE USERS SET USERNAME = ? WHERE USERNAME = ? AND PASSWORD = ?";
+
+            try (PreparedStatement insertStatement = connection.prepareStatement(updateQuery)) {
+
+                    insertStatement.setString(1, newUsername);
+                    insertStatement.setString(2, currentUser.getUsername());
+                    insertStatement.setString(3, currentUser.getHashedPassword());
+                    insertStatement.executeUpdate();
+
+            }
+
+        } catch (SQLException | IOException ex) {
+            successfullyUpdated = false;
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+
+        }
+
+        return successfullyUpdated;
+    }
+
+    public static boolean updatePassword(User currentUser, String newPassword) {
+        boolean successfullyUpdated = true;
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE USERS SET PASSWORD = ? WHERE USERNAME = ? AND PASSWORD = ?";
+
+            try (PreparedStatement insertStatement = connection.prepareStatement(updateQuery)) {
+
+                insertStatement.setString(1, newPassword);
+                insertStatement.setString(2, currentUser.getUsername());
+                insertStatement.setString(3, currentUser.getHashedPassword());
+                insertStatement.executeUpdate();
+
+            }
+
+        } catch (SQLException | IOException ex) {
+            successfullyUpdated = false;
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+
+        }
+
+        return successfullyUpdated;
+    }
+
+    public static boolean updateUserProfilePicture(User currentUser, String newImagePath) {
+        boolean successfullyUpdated = true;
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE USERS SET PICTURE_PATH = ? WHERE USERNAME = ? AND PASSWORD = ?";
+
+            try (PreparedStatement insertStatement = connection.prepareStatement(updateQuery)) {
+
+                insertStatement.setString(1, newImagePath);
+                insertStatement.setString(2, currentUser.getUsername());
+                insertStatement.setString(3, currentUser.getHashedPassword());
+                insertStatement.executeUpdate();
+
             }
 
         } catch (SQLException | IOException ex) {

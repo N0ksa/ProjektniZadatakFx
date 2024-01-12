@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.entities;
 
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.utility.PasswordUtil;
+import hr.java.project.projectfxapp.utility.Picture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,18 +17,30 @@ public final class User implements Serializable {
     private UserRole role;
     private Long mathClubId;
 
+    private Picture picture;
 
-    public User(String username, String hashedPassword, UserRole role, Long mathClubId) {
+
+    public User(String username, String hashedPassword, UserRole role, Long mathClubId, Picture picture) {
         this.username = username;
         this.hashedPassword = hashedPassword;
         this.role = role;
         this.mathClubId = mathClubId;
+        this.picture = picture;
     }
 
     public User(String username, String hashedPassword, UserRole role) {
         this.username = username;
         this.hashedPassword = hashedPassword;
         this.role = role;
+    }
+
+
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 
     public Long getMathClubId() {

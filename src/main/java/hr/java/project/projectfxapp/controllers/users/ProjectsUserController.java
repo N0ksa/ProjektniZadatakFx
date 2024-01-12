@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
