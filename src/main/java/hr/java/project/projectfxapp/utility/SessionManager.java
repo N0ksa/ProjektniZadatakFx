@@ -1,9 +1,6 @@
 package hr.java.project.projectfxapp.utility;
 
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Student;
-import hr.java.project.projectfxapp.entities.User;
+import hr.java.project.projectfxapp.entities.*;
 
 public class SessionManager {
     private static SessionManager instance;
@@ -16,6 +13,9 @@ public class SessionManager {
 
     private Competition currentCompetition;
 
+    private MathProject currentProject;
+
+
     private SessionManager() {
     }
 
@@ -24,6 +24,14 @@ public class SessionManager {
             instance = new SessionManager();
         }
         return instance;
+    }
+
+    public MathProject getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(MathProject project) {
+        this.currentProject = project;
     }
 
     public Competition getCurrentCompetition() {

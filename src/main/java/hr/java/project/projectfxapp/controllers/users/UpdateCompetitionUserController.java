@@ -134,8 +134,8 @@ public class UpdateCompetitionUserController {
         competitionResultsTableView.setItems(FXCollections.observableList(competitionResults));
     }
 
-    @FXML
-    void updateCompetition(ActionEvent event) {
+
+   public void updateCompetition(ActionEvent event) {
         try{
             ValidationProtocol.validateUpdateCompetition(competitionNameTextField, competitionDescriptionTextArea,
                     cityComboBox, dateOfCompetitionDatePicker, timeOfCompetitionTextField,

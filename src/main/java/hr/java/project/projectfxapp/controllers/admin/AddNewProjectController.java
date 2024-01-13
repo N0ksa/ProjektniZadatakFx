@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
@@ -20,10 +21,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddNewProjectController {
+    @FXML
+    private ComboBox<Address> projectAddressComboBox;
+    @FXML
+    private ComboBox <MathClub> projectOrganizerComboBox;
+    @FXML
+    private DatePicker beginningDateOfProjectDatePicker;
     @FXML
     private ListView<MathClub> projectMathClubsParticipantsListView;
     @FXML
@@ -73,6 +81,13 @@ public class AddNewProjectController {
         });
 
         projectStudentParticipantsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+
+        projectOrganizerComboBox.setItems(FXCollections.observableList(mathClubsList));
+
+        List<Address> addresses = DatabaseUtil.getAddresses();
+        projectAddressComboBox.setItems(FXCollections.observableList(addresses));
+
     }
 
 
@@ -98,28 +113,13 @@ public class AddNewProjectController {
 
         List<MathProject> mathProjects = new ArrayList<>();
 
-
         try{
 
             ValidationProtocol.validateProject(projectNameTextField, projectDescriptionTextArea,
-                    projectMathClubsParticipantsListView, projectStudentParticipantsListView);
-            Long projectId = 0L;
-            String projectName = projectNameTextField.getText();
-            String projectDescription = projectDescriptionTextArea.getText();
+                    projectMathClubsParticipantsListView, projectStudentParticipantsListView, projectOrganizerComboBox,
+                    beginningDateOfProjectDatePicker, projectAddressComboBox);
 
-            Map<MathClub, List<Student>> projectParticipants = new HashMap<>();
-
-            for (MathClub selectedMathClub : projectMathClubsParticipantsListView.getSelectionModel().getSelectedItems()) {
-                List<Student> selectedStudents = projectStudentParticipantsListView.getSelectionModel().getSelectedItems()
-                        .stream()
-                        .filter(student -> student.getClubMembership().getClubId().equals(selectedMathClub.getId()))
-                        .collect(Collectors.toList());
-
-                projectParticipants.put(selectedMathClub, selectedStudents);
-            }
-
-
-            MathProject newProject = new MathProject(projectId, projectName, projectDescription, projectParticipants);
+            MathProject newProject = constructNewProject();
 
             mathProjects.add(newProject);
             DatabaseUtil.saveMathProjects(mathProjects);
@@ -134,5 +134,31 @@ public class AddNewProjectController {
 
 
 
+    }
+
+    private MathProject constructNewProject() {
+
+        Long projectId = 0L;
+        String projectName = projectNameTextField.getText();
+        String projectDescription = projectDescriptionTextArea.getText();
+        MathClub projectOrganizer = projectOrganizerComboBox.getSelectionModel().getSelectedItem();
+        LocalDate beginningDateOfProject = beginningDateOfProjectDatePicker.getValue();
+
+        Address projectAddress = projectAddressComboBox.getSelectionModel().getSelectedItem();
+
+        Map<MathClub, List<Student>> projectParticipants = new HashMap<>();
+
+        for (MathClub selectedMathClub : projectMathClubsParticipantsListView.getSelectionModel().getSelectedItems()) {
+            List<Student> selectedStudents = projectStudentParticipantsListView.getSelectionModel().getSelectedItems()
+                    .stream()
+                    .filter(student -> student.getClubMembership().getClubId().equals(selectedMathClub.getId()))
+                    .collect(Collectors.toList());
+
+            projectParticipants.put(selectedMathClub, selectedStudents);
+        }
+
+
+        return new MathProject(projectId, projectOrganizer,
+                beginningDateOfProject, projectAddress, projectName, projectDescription, projectParticipants);
     }
 }

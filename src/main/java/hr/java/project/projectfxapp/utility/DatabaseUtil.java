@@ -489,15 +489,21 @@ public class DatabaseUtil {
         return mathClubId;
     }
 
-    public static void saveMathProjects(List<MathProject> mathProjects) {
+    public static boolean saveMathProjects(List<MathProject> mathProjects) {
+        boolean success = true;
         try (Connection connection = connectToDatabase()) {
             for (MathProject mathProject : mathProjects) {
 
-                String insertMathProjectSql = "INSERT INTO MATH_PROJECT(NAME, DESCRIPTION) VALUES(?, ?)";
+                String insertMathProjectSql = "INSERT INTO MATH_PROJECT(NAME, DESCRIPTION, START_DATE, ORGANIZER_ID, " +
+                        "ADDRESS_ID, END_DATE) VALUES(?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement pstmt = connection.prepareStatement(insertMathProjectSql, PreparedStatement.RETURN_GENERATED_KEYS);
                 pstmt.setString(1, mathProject.getName());
                 pstmt.setString(2, mathProject.getDescription());
+                pstmt.setDate(3, Date.valueOf(mathProject.getStartDate()));
+                pstmt.setLong(4, mathProject.getOrganizer().getId());
+                pstmt.setLong(5, mathProject.getAddress().getAddressId());
+                pstmt.setDate(6, mathProject.getEndDate() != null ? Date.valueOf(mathProject.getEndDate()) : null);
                 pstmt.executeUpdate();
 
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
@@ -527,7 +533,11 @@ public class DatabaseUtil {
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod spremanja matematičkih projekata u bazu podataka";
             logger.error(message, ex);
+            success = false;
         }
+
+
+        return success;
     }
 
     public static void saveMathCompetitions(List<Competition> mathCompetitions) {
@@ -1068,11 +1078,28 @@ public class DatabaseUtil {
             Long projectId = rs.getLong("PROJECT_ID");
             String projectName = rs.getString("NAME");
             String projectDescription = rs.getString("DESCRIPTION");
+            LocalDate startDate = rs.getDate("START_DATE").toLocalDate();
 
+
+            Date endDate = rs.getDate("END_DATE");
+
+            LocalDate endDateOfProject = null;
+            if (Optional.ofNullable(endDate).isPresent()){
+                endDateOfProject = endDate.toLocalDate();
+            }
+
+            Long mathClubOrganizerId = rs.getLong("ORGANIZER_ID");
+            Long addressId = rs.getLong("ADDRESS_ID");
+
+
+            Address projectAddress = getAddress(addressId).get();
             Map<MathClub, List<Student>> projectCollaborators = getProjectCollaborators(projectId);
+            MathClub organizer = getMathClub(mathClubOrganizerId).get();
 
-            MathProject newMathProject = new MathProject(projectId, projectName, projectDescription, projectCollaborators);
+            MathProject newMathProject = new MathProject(projectId, organizer, startDate, projectAddress,
+                    projectName, projectDescription, projectCollaborators);
 
+            newMathProject.setEndDate(endDateOfProject);
             mathProjects.add(newMathProject);
 
 
@@ -1262,26 +1289,26 @@ public class DatabaseUtil {
 
     public static boolean updateCompetition(Competition competitionToUpdate) {
         try (Connection connection = connectToDatabase()) {
-            String updateQuery = "UPDATE COMPETITION SET NAME = ?, DESCRIPTION = ?, ADDRESS_ID = ?, TIME_OF_COMPETITION = ?" +
+            String updateQuery = "UPDATE COMPETITION SET NAME = ?, DESCRIPTION = ?, TIME_OF_COMPETITION = ?" +
                     ",AUDITORIUM_BUILDING = ?, AUDITORIUM_HALL = ?, DATE_OF_COMPETITION = ?, STATUS = ?, ORGANIZER_ID = ?" +
                     " WHERE COMPETITION_ID = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 preparedStatement.setString(1, competitionToUpdate.getName());
                 preparedStatement.setString(2, competitionToUpdate.getDescription());
-                preparedStatement.setLong(3, competitionToUpdate.getAddress().getAddressId());
-                preparedStatement.setTime(4, Time.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalTime()));
-                preparedStatement.setString(5, competitionToUpdate.getAuditorium().building());
-                preparedStatement.setString(6, competitionToUpdate.getAuditorium().hall());
-                preparedStatement.setDate(7, Date.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalDate()));
-                preparedStatement.setString(8, competitionToUpdate.getStatus().getStatusDescription());
-                preparedStatement.setLong(9, competitionToUpdate.getOrganizer().getId());
-                preparedStatement.setLong(10, competitionToUpdate.getId());
+                preparedStatement.setTime(3, Time.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalTime()));
+                preparedStatement.setString(4, competitionToUpdate.getAuditorium().building());
+                preparedStatement.setString(5, competitionToUpdate.getAuditorium().hall());
+                preparedStatement.setDate(6, Date.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalDate()));
+                preparedStatement.setString(7, competitionToUpdate.getStatus().getStatusDescription());
+                preparedStatement.setLong(8, competitionToUpdate.getOrganizer().getId());
+                preparedStatement.setLong(9, competitionToUpdate.getId());
 
 
                 preparedStatement.executeUpdate();
             }
 
+            updateAddress(competitionToUpdate.getAddress());
             updateCompetitionScores(competitionToUpdate.getId(), competitionToUpdate.getCompetitionResults());
 
 
@@ -1292,6 +1319,25 @@ public class DatabaseUtil {
         }
 
         return true;
+    }
+
+    private static void updateAddress(Address address) {
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE ADDRESS SET STREET = ?, HOUSE_NUMBER = ?, CITY = ? WHERE ADDRESS_ID = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, address.getStreet());
+                preparedStatement.setString(2, address.getHouseNumber());
+                preparedStatement.setString(3, address.getCity().getName());
+                preparedStatement.setLong(4, address.getAddressId());
+
+                preparedStatement.executeUpdate();
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod ažuriranja adrese u bazi podataka";
+            logger.error(message, ex);
+        }
     }
 
     public static boolean updateCompetitionScores(Long competitionId, Set<CompetitionResult> competitionResults) {
@@ -1396,5 +1442,65 @@ public class DatabaseUtil {
 
         return successfullyUpdated;
     }
+
+    public static boolean updateProject(MathProject projectToUpdate) {
+        try (Connection connection = connectToDatabase()) {
+            String updateQuery = "UPDATE MATH_PROJECT  SET NAME = ?, DESCRIPTION = ?, END_DATE = ? WHERE PROJECT_ID = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, projectToUpdate.getName());
+                preparedStatement.setString(2, projectToUpdate.getDescription());
+                preparedStatement.setDate(3, projectToUpdate.getEndDate() != null ?
+                        Date.valueOf(projectToUpdate.getEndDate()) : null);
+                preparedStatement.setLong(4, projectToUpdate.getId());
+
+                preparedStatement.executeUpdate();
+            }
+
+
+            updateAddress(projectToUpdate.getAddress());
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean updateProjectCollaborators(Long projectId, Map<MathClub, List<Student>> projectCollaborators){
+        boolean successfullyUpdated = true;
+        try (Connection connection = connectToDatabase()) {
+            String deleteQuery = "DELETE FROM PROJECT_COLLABORATORS WHERE PROJECT_ID = ?";
+
+            try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+                deleteStatement.setLong(1, projectId);
+                deleteStatement.executeUpdate();
+            }
+
+            String insertQuery = "INSERT INTO PROJECT_COLLABORATORS (PROJECT_ID, MATH_CLUB_ID, STUDENT_ID) VALUES (?, ?, ?)";
+            try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                for (Map.Entry<MathClub, List<Student>> entry : projectCollaborators.entrySet()) {
+                    insertStatement.setLong(1, projectId);
+                    insertStatement.setLong(2, entry.getKey().getId());
+                    for (Student student : entry.getValue()) {
+                        insertStatement.setLong(3, student.getId());
+                        insertStatement.executeUpdate();
+                    }
+                }
+            }
+
+        } catch (SQLException | IOException ex) {
+            successfullyUpdated = false;
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+
+        }
+
+        return successfullyUpdated;
+    }
+
 }
 

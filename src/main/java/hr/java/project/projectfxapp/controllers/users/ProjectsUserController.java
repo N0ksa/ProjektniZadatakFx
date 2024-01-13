@@ -1,10 +1,12 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -14,15 +16,27 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ProjectsUserController {
+
+
+    @FXML
+    private LineChart<String, Integer> comparisonOfProjectOrganizationsBetweenClubsLineChart;
+    @FXML
+    private BarChart<String, Integer> projectSizeComparisonChart;
     @FXML
     private Label currentClubNameTextField;
     @FXML
@@ -35,7 +49,7 @@ public class ProjectsUserController {
     private TableColumn<MathProject, String> projectCollaboratorsColumnTable;
 
     @FXML
-    private TableColumn<MathProject, String> projectDescriptionTableColumn;
+    private TableColumn<MathProject, String> projectOrganizerTableColumn;
 
     @FXML
     private TableColumn<MathProject, String> projectMembersColumnTable;
@@ -55,8 +69,55 @@ public class ProjectsUserController {
         FilteredList<MathProject> filteredMathProjects = getMathProjectsFilteredList(mathProjectsList);
 
         initializeProjectsTableView(filteredMathProjects);
+        setProjectSizeComparisonChart(mathProjectsList);
+        setComparisonOfProjectOrganizationsBetweenClubsLineChart(mathProjectsList);
+
 
     }
+
+    public void setComparisonOfProjectOrganizationsBetweenClubsLineChart(List<MathProject> mathProjectsList) {
+
+        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
+        comparisonOfProjectOrganizationsBetweenClubsLineChart.getData().clear();
+
+        comparisonOfProjectOrganizationsBetweenClubsLineChart.getYAxis().setLabel("Broj projekata");
+
+        Map<MathClub, Integer> numberOfProjectsPerClub = mathProjectsList.stream()
+                .collect(Collectors.groupingBy(MathProject::getOrganizer, Collectors.summingInt(project -> 1)));
+
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+
+        for (Map.Entry<MathClub, Integer> entry : numberOfProjectsPerClub.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey().getName(), entry.getValue()));
+
+        }
+
+        comparisonOfProjectOrganizationsBetweenClubsLineChart.getData().add(series);
+
+
+    }
+
+
+        private void setProjectSizeComparisonChart(List<MathProject> mathProjectsList) {
+        projectSizeComparisonChart.getData().clear();
+        projectSizeComparisonChart.getYAxis().setTickLabelGap(1);
+        projectSizeComparisonChart.getYAxis().setLabel("Broj sudionika");
+
+        for (MathProject project : mathProjectsList) {
+            Integer numberOfParticipants = project.getTotalNumberOfCollaborators();
+
+            if(numberOfParticipants > 0){
+                XYChart.Series<String, Integer> series = new XYChart.Series<>();
+                series.setName(project.getName());
+                series.getData().add(new XYChart.Data<>("Projekti", numberOfParticipants));
+                projectSizeComparisonChart.getData().add(series);
+            }
+
+        }
+
+
+    }
+
 
     private void initializeProjectsTableView(ObservableList<MathProject> mathProjectsList) {
         projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
@@ -65,9 +126,9 @@ public class ProjectsUserController {
             }
         });
 
-        projectDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
+        projectOrganizerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().getDescription());
+                return new ReadOnlyStringWrapper(param.getValue().getOrganizer().getName());
             }
         });
 
@@ -105,8 +166,25 @@ public class ProjectsUserController {
         });
 
         projectsTableView.setItems(mathProjectsList);
+        projectsTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        projectsTableView.setRowFactory(tv -> {
+            TableRow<MathProject> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    handleProjectDoubleClick(row.getItem());
+                }
+            });
+            return row;
+        });
 
 
+
+    }
+
+    private void handleProjectDoubleClick(MathProject selectedProject) {
+        SessionManager.getInstance().setCurrentProject(selectedProject);
+        JavaFxProjectApplication.showPopup(ApplicationScreen.ProjectDetailsCard);
     }
 
 
@@ -141,6 +219,23 @@ public class ProjectsUserController {
     }
 
 
+    public void addNewProject(ActionEvent actionEvent) {
+        JavaFxProjectApplication.showPopup(ApplicationScreen.AddNewProjectUser);
+    }
+
+    public void joinProject(ActionEvent actionEvent) {
+        if (Optional.ofNullable(projectsTableView.getSelectionModel().getSelectedItem()).isPresent()){
+            SessionManager.getInstance().setCurrentProject(projectsTableView.getSelectionModel().getSelectedItem());
+            JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoProject);
+        }
+    }
+
+    public void updateProject(ActionEvent actionEvent) {
+        if (Optional.ofNullable(projectsTableView.getSelectionModel().getSelectedItem()).isPresent()){
+            SessionManager.getInstance().setCurrentProject(projectsTableView.getSelectionModel().getSelectedItem());
+            JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateProjectUser);
+        }
 
 
+    }
 }

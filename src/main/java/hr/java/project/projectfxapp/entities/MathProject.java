@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,7 +11,12 @@ import java.util.Objects;
  */
 
 public class MathProject extends NamedEntity implements Serializable {
+
+    private MathClub organizer;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String description;
+    private Address address;
     private Map<MathClub, List<Student>> collaborators;
 
     /**
@@ -19,10 +25,46 @@ public class MathProject extends NamedEntity implements Serializable {
      * @param description Opis projekta.
      * @param collaborators Mapa koja povezuje matematičke klubove s njihovim članovima koji sudjeluju u projektu.
      */
-    public MathProject(Long projectId, String name, String description, Map<MathClub, List<Student>> collaborators) {
+    public MathProject(Long projectId, MathClub organizer, LocalDate startDate, Address address, String name, String description,
+                       Map<MathClub, List<Student>> collaborators) {
         super(projectId, name);
+        this.address = address;
         this.description = description;
         this.collaborators = collaborators;
+        this.organizer = organizer;
+        this.startDate = startDate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public MathClub getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(MathClub organizer) {
+        this.organizer = organizer;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String getDescription() {
@@ -64,6 +106,10 @@ public class MathProject extends NamedEntity implements Serializable {
      */
     public boolean hasMathClubCollaborator(MathClub mathClubToCheck){
         return collaborators.containsKey(mathClubToCheck);
+    }
+
+    public Integer getTotalNumberOfCollaborators(){
+        return collaborators.values().stream().mapToInt(List::size).sum();
     }
 
     @Override

@@ -142,7 +142,9 @@ public class ValidationProtocol {
 
     public static void validateProject(TextField projectNameTextField, TextArea projectDescriptionTextArea,
                                        ListView<MathClub> mathClubsListView,
-                                       ListView<Student> selectedStudents) throws ValidationException {
+                                       ListView<Student> selectedStudents, ComboBox <MathClub> organizerComboBox,
+                                       DatePicker startOfProjectDatePicker, ComboBox<Address> projectAddressComboBox)
+            throws ValidationException {
 
         List<String> errors = new ArrayList<>();
 
@@ -150,8 +152,47 @@ public class ValidationProtocol {
         validateTextArea(projectDescriptionTextArea, "Unesite opis projekta", errors);
         validateListView(mathClubsListView, "Odaberite matematički klub", errors);
         validateListView(selectedStudents, "Odaberite barem jednog sudionika projekta", errors);
+        validateComboBox(organizerComboBox, "Odaberite organizatora projekta", errors);
+        validateComboBox(projectAddressComboBox, "Odaberite adresu projekta", errors);
+        validateDatePicker(startOfProjectDatePicker, errors);
 
         if (!errors.isEmpty()) {
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+    }
+
+
+
+    public static void validateProjectForUser(TextField projectNameTextField, TextArea projectDescriptionTextArea,
+                                              ListView<Student> projectMathClubsParticipantsListView,
+                                              DatePicker beginningDateOfProjectDatePicker, ComboBox<City> cityComboBox,
+                                              TextField streetNameTextField, TextField houseNumberTextField) {
+
+        List<String> errors = new ArrayList<>();
+        validateTextField(projectNameTextField, "Unesite naziv projekta", errors);
+        validateTextArea(projectDescriptionTextArea, "Unesite opis projekta", errors);
+        validateDatePicker(beginningDateOfProjectDatePicker, errors);
+        validateList(projectMathClubsParticipantsListView.getItems(), "Odaberite barem jednog sudionika projekta", errors);
+        validateComboBox(cityComboBox, "Odaberite grad", errors);
+        validateTextField(streetNameTextField, "Unesite naziv ulice", errors);
+        validateHouseNumber(houseNumberTextField, errors);
+
+        if(!errors.isEmpty()){
+            throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+        }
+    }
+
+    public static void validateUpdateProject(TextField newProjectNameTextField, TextArea projectDescriptionTextArea,
+                                             TextField streetNameTextField, TextField houseNumberTextField, ComboBox<City> cityComboBox) {
+
+        List<String> errors = new ArrayList<>();
+        validateTextField(newProjectNameTextField, "Unesite naziv projekta", errors);
+        validateTextArea(projectDescriptionTextArea, "Unesite opis projekta", errors);
+        validateTextField(streetNameTextField, "Unesite naziv ulice", errors);
+        validateHouseNumber(houseNumberTextField, errors);
+        validateComboBox(cityComboBox, "Odaberite grad", errors);
+
+        if (!errors.isEmpty()){
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));
         }
     }
@@ -425,7 +466,7 @@ public class ValidationProtocol {
 
     private static void validateDatePicker(DatePicker datePicker, List<String> errors) {
         if (datePicker.getValue() == null || datePicker.getValue().toString().isEmpty()) {
-            errors.add("Odaberite datum natjecanja");
+            errors.add("Odaberite datum");
         }
 
     }
