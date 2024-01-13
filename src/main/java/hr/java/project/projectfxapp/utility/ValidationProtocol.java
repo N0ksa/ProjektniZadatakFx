@@ -127,13 +127,16 @@ public class ValidationProtocol {
     }
 
 
-    public static void validateNewMathClub(TextField mathClubNameTextField, ComboBox<Address> mathClubAddressComboBox)
-            throws ValidationException {
+    public static void validateNewMathClub(TextField mathClubNameTextField, ComboBox<Address> mathClubAddressComboBox,
+                                           TextField usernameRegisterTextField, PasswordField passwordRegisterPasswordField,
+                                           PasswordField passwordConfirmPasswordField) throws ValidationException {
 
         List<String> errors = new ArrayList<>();
 
         validateTextField(mathClubNameTextField, "Unesite naziv matematičkog kluba", errors);
         validateComboBox(mathClubAddressComboBox, "Odaberite adresu matematičkog kluba", errors);
+        validateUsername(usernameRegisterTextField, errors);
+        validatePasswordField(passwordRegisterPasswordField, passwordConfirmPasswordField, errors);
 
         if (!errors.isEmpty()) {
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));

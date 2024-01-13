@@ -144,6 +144,7 @@ public class LoginController {
             Long mathClubId = DatabaseUtil.saveMathClubs(mathClubs);
 
             String hashedPassword = PasswordUtil.hashPassword(enteredPassword);
+
             User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER, mathClubId,
                     new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
 

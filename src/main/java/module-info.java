@@ -3,6 +3,7 @@ module hr.java.project.projectfxapp {
     requires javafx.fxml;
     requires org.slf4j;
     requires java.sql;
+    requires javafx.web;
 
 
     opens hr.java.project.projectfxapp to javafx.fxml;

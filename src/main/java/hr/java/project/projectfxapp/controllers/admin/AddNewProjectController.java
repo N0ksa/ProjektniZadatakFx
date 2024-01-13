@@ -36,14 +36,12 @@ public class AddNewProjectController {
     private ListView<MathClub> projectMathClubsParticipantsListView;
     @FXML
     private  ListView<Student> projectStudentParticipantsListView;
-    @FXML
-    private ProgressBar addNewProjectProgressBar;
+
     @FXML
     private TextField projectNameTextField;
     @FXML
     private TextArea projectDescriptionTextArea;
 
-    private static final int TOTAL_FIELDS = 3;
 
     public void initialize() {
 
@@ -52,13 +50,6 @@ public class AddNewProjectController {
 
         ObservableList<MathClub> mathClubsObservableList = FXCollections.observableList(mathClubsList);
 
-
-        addNewProjectProgressBar.progressProperty().bind(Bindings.createDoubleBinding(
-                () -> calculateCompletionPercentage(),
-                projectNameTextField.textProperty(),
-                projectDescriptionTextArea.textProperty(),
-                projectStudentParticipantsListView.getSelectionModel().getSelectedItems()
-        ));
 
         projectMathClubsParticipantsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         projectMathClubsParticipantsListView.setItems(mathClubsObservableList);
@@ -88,25 +79,6 @@ public class AddNewProjectController {
         List<Address> addresses = DatabaseUtil.getAddresses();
         projectAddressComboBox.setItems(FXCollections.observableList(addresses));
 
-    }
-
-
-    private double calculateCompletionPercentage() {
-        int filledFields = 0;
-
-        if (!projectNameTextField.getText().isEmpty()) {
-            filledFields++;
-        }
-
-        if (!projectDescriptionTextArea.getText().isEmpty()) {
-            filledFields++;
-        }
-
-        if (projectStudentParticipantsListView.getSelectionModel().getSelectedItem() != null) {
-            filledFields++;
-        }
-
-        return (double) filledFields / TOTAL_FIELDS;
     }
 
     public void saveProject(ActionEvent actionEvent) {

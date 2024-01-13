@@ -1,23 +1,17 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.ClubMembership;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.constants.Constants;
+import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.UserRole;
+import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.FileWriterUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -25,6 +19,12 @@ import java.util.stream.Collectors;
 
 public class AddNewMathClubController {
 
+    @FXML
+    private TextField newUserUsernameTextField;
+    @FXML
+    private PasswordField passwordPasswordField;
+    @FXML
+    private PasswordField confirmPasswordPasswordField;
     @FXML
     private ComboBox<Address> clubAddressComboBox;
     @FXML
@@ -42,32 +42,53 @@ public class AddNewMathClubController {
     public void saveMathClubs(ActionEvent actionEvent) {
 
         try{
+            
+            ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox, newUserUsernameTextField,
+                    passwordPasswordField, confirmPasswordPasswordField);
 
-            ValidationProtocol.validateNewMathClub(clubNameTextField, clubAddressComboBox);
+            List<User> users = FileReaderUtil.getUsers();
 
+            for (User user : users){
+                if (user.getUsername().equals(newUserUsernameTextField.getText())){
+                    throw new ValidationException("Korisničko ime već postoji");
+                }
+            }
 
-            Long mathClubId = 0L;
-            String clubName = clubNameTextField.getText();
-            Address clubAddress = clubAddressComboBox.getValue();
-            Set<Student> clubMembers = new HashSet<>();
-
-
-            MathClub newMathClub = new MathClub(mathClubId, clubName, clubAddress, clubMembers);
+            MathClub newMathClub = createNewMathClub();
             List<MathClub> mathClubs = new ArrayList<>();
-
             mathClubs.add(newMathClub);
-            DatabaseUtil.saveMathClubs(mathClubs);
+            Long mathClubId = DatabaseUtil.saveMathClubs(mathClubs);
 
+            String hashedPassword = PasswordUtil.hashPassword(passwordPasswordField.getText());
 
+            User registerUser = new User(newUserUsernameTextField.getText(), hashedPassword, UserRole.USER, mathClubId,
+                    new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
 
-            ValidationProtocol.showSuccessAlert("Spremanje novog kluba je bilo uspješno",
+            users.add(registerUser);
+            FileWriterUtil.saveUsers(users);
+
+            DatabaseUtil.saveUser(registerUser);
+
+            ValidationProtocol.showSuccessAlert("Spremanje novog korisnika je bilo uspješno",
                     "Klub " + newMathClub.getName()  + " uspješno se spremio!");
 
         }
         catch (ValidationException ex){
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
+
+        } catch (UnsupportedAlgorithmException e) {
+            throw new RuntimeException(e);
         }
 
+    }
+
+    private MathClub createNewMathClub() {
+        Long mathClubId = 0L;
+        String clubName = clubNameTextField.getText();
+        Address clubAddress = clubAddressComboBox.getValue();
+        Set<Student> clubMembers = new HashSet<>();
+
+        return new MathClub(mathClubId, clubName, clubAddress, clubMembers);
     }
 }

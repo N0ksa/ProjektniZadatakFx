@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -13,32 +14,32 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.StudentsSearchController">
+<AnchorPane prefHeight="630.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.StudentsSearchController">
    <children>
-      <GridPane prefHeight="635.0" prefWidth="673.0">
+      <GridPane prefHeight="549.0" prefWidth="860.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="343.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="330.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="541.0" minWidth="10.0" prefWidth="406.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="454.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="34.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="231.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="385.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="436.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="481.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="481.0" minHeight="10.0" prefHeight="400.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="231.0" minHeight="0.0" prefHeight="63.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="385.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="436.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="481.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="481.0" minHeight="10.0" prefHeight="294.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
              <fx:include source="menuForAdmin.fxml" />
-            <TableView fx:id="studentsTableView" prefHeight="397.0" prefWidth="647.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <TableView fx:id="studentsTableView" prefHeight="304.0" prefWidth="860.0" GridPane.columnSpan="2" GridPane.rowIndex="6">
                <columns>
-                  <TableColumn fx:id="studentNameTableColumn" prefWidth="58.0" text="Ime" />
-                  <TableColumn fx:id="studentSurnameTableColumn" prefWidth="70.0" text="Prezime" />
-                  <TableColumn fx:id="studentClubTableColumn" prefWidth="96.0" text="Klub" />
-                  <TableColumn fx:id="studentJoinDateTableColumn" prefWidth="138.0" text="Datum učlanjivanja" />
-                  <TableColumn fx:id="studentAverageGradeTableColumn" prefWidth="137.0" text="Prosječna ocijena" />
-                  <TableColumn fx:id="studentEmailTableColumn" prefWidth="76.0" text="Email" />
+                  <TableColumn fx:id="studentNameTableColumn" prefWidth="152.0" text="Ime" />
+                  <TableColumn fx:id="studentSurnameTableColumn" prefWidth="121.0" text="Prezime" />
+                  <TableColumn fx:id="studentClubTableColumn" prefWidth="141.0" text="Klub" />
+                  <TableColumn fx:id="studentJoinDateTableColumn" prefWidth="120.0" text="Datum učlanjivanja" />
+                  <TableColumn fx:id="studentAverageGradeTableColumn" prefWidth="111.0" text="Prosječna ocijena" />
+                  <TableColumn fx:id="studentEmailTableColumn" prefWidth="117.0" text="Email" />
                   <TableColumn fx:id="studentYearOfStudyTableColumn" prefWidth="97.0" text="Godina studija" />
                </columns>
             </TableView>
@@ -59,12 +60,12 @@
             </Label>
             <TextField fx:id="studentNameTextField" prefHeight="25.0" prefWidth="171.0" promptText="Unesi ime" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </TextField>
-            <ComboBox fx:id="clubComboBox" prefHeight="25.0" prefWidth="171.0" promptText="Odaberi klub" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <ComboBox fx:id="clubComboBox" prefHeight="25.0" prefWidth="423.0" promptText="Odaberi klub" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </ComboBox>
             <Button mnemonicParsing="false" onAction="#studentSearch" text="Traži" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
@@ -88,10 +89,15 @@
             </Label>
             <TextField fx:id="studentSurnameTextField" layoutX="358.0" layoutY="84.0" prefHeight="25.0" prefWidth="171.0" promptText="Unesi prezime" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </TextField>
          </children>
       </GridPane>
+      <AnchorPane layoutX="330.0" layoutY="541.0" prefHeight="52.0" prefWidth="200.0">
+         <children>
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="72.0" layoutY="73.0" opacity="0.18" size="5EM" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

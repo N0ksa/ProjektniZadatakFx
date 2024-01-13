@@ -17,7 +17,7 @@
       <font>
          <Font size="18.0" />
       </font></Label>
-   <AnchorPane layoutX="288.0" layoutY="61.0" prefHeight="199.0" prefWidth="783.0">
+   <AnchorPane layoutX="288.0" layoutY="61.0" prefHeight="199.0" prefWidth="783.0" AnchorPane.bottomAnchor="440.0" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="61.0">
       <children>
          <ScrollPane layoutX="14.0" layoutY="7.0" prefHeight="199.0" prefWidth="783.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="7.0">
            <content>
@@ -91,11 +91,11 @@
          </ScrollPane>
       </children>
    </AnchorPane>
-   <AnchorPane layoutX="698.0" layoutY="488.0" prefHeight="174.0" prefWidth="373.0">
+   <AnchorPane layoutX="698.0" layoutY="488.0" prefHeight="174.0" prefWidth="373.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="698.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="488.0">
       <children>
          <PieChart fx:id="genderNumberDifferencePieChart" layoutX="-72.0" layoutY="14.0" prefHeight="386.0" prefWidth="373.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       </children></AnchorPane>
-   <AnchorPane layoutX="301.0" layoutY="282.0" prefHeight="392.0" prefWidth="386.0">
+   <AnchorPane layoutX="301.0" layoutY="282.0" prefHeight="392.0" prefWidth="386.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="301.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="282.0">
       <children>
          <BarChart id="chart" fx:id="overallScoreComparisonBarChart" legendVisible="false" prefHeight="392.0" prefWidth="386.0" stylesheets="@../../../../design/design.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <xAxis>
@@ -106,7 +106,7 @@
            </yAxis>
          </BarChart>
       </children></AnchorPane>
-   <AnchorPane layoutX="698.0" layoutY="290.0" prefHeight="174.0" prefWidth="373.0">
+   <AnchorPane layoutX="698.0" layoutY="290.0" prefHeight="174.0" prefWidth="373.0" AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="698.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="290.0">
       <children>
          <PieChart fx:id="yearNumberDifferencePieChart" prefHeight="386.0" prefWidth="373.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       </children>

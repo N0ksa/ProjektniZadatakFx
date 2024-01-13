@@ -38,6 +38,14 @@
 
     <dependency>
       <groupId>org.openjfx</groupId>
+      <artifactId>javafx-web</artifactId>
+      <version>22-ea+16</version>
+    </dependency>
+
+
+
+    <dependency>
+      <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>21-ea+24</version>
     </dependency>

@@ -43,7 +43,6 @@ public class JavaFxProjectApplication extends Application {
     }
 
 
-
     public static void switchScene(ApplicationScreen screen) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource(screen.getPathOfFxml()));

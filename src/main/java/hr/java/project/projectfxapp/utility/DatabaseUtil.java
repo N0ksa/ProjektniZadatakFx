@@ -41,6 +41,7 @@ public class DatabaseUtil {
     }
 
 
+
     public static List<Address> getAddresses() {
         List<Address> addresses = new ArrayList<>();
 
