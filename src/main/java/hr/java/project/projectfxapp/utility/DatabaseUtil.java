@@ -5,10 +5,7 @@ import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.UserRole;
-import hr.java.project.projectfxapp.filter.CompetitionFilter;
-import hr.java.project.projectfxapp.filter.MathClubFilter;
-import hr.java.project.projectfxapp.filter.MathProjectFilter;
-import hr.java.project.projectfxapp.filter.StudentFilter;
+import hr.java.project.projectfxapp.filter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +38,6 @@ public class DatabaseUtil {
     }
 
 
-
     public static List<Address> getAddresses() {
         List<Address> addresses = new ArrayList<>();
 
@@ -51,20 +47,7 @@ public class DatabaseUtil {
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-            while (rs.next()) {
-
-                Long addressId = rs.getLong("ADDRESS_ID");
-                String streetName = rs.getString("STREET");
-                String houseNumber = rs.getString("HOUSE_NUMBER");
-                City city = City.getCityFromStringName(rs.getString("CITY"));
-
-                Address.AdressBuilder address = new Address.AdressBuilder(city)
-                        .setHouseNumber(houseNumber)
-                        .setId(addressId)
-                        .setStreet(streetName);
-
-                addresses.add(address.build());
-            }
+            mapResultSetToAddressesList(rs, addresses);
 
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
@@ -89,7 +72,7 @@ public class DatabaseUtil {
             stmt.execute(sqlQuery);
             ResultSet rs = stmt.getResultSet();
 
-         mapResultSetToMathClubsList(rs, addresses, students, mathClubs);
+            mapResultSetToMathClubsList(rs, addresses, students, mathClubs);
 
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
@@ -164,7 +147,6 @@ public class DatabaseUtil {
             mapResultSetToStudentsList(rs, students);
 
 
-
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
@@ -185,7 +167,7 @@ public class DatabaseUtil {
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
-                
+
                 Long idOfStudent = rs.getLong("STUDENT_ID");
                 String studentName = rs.getString("NAME");
                 String studentSurname = rs.getString("SURNAME");
@@ -419,7 +401,6 @@ public class DatabaseUtil {
         return mathProjects;
 
     }
-
 
 
     private static Map<MathClub, List<Student>> getProjectCollaborators(Long projectId) {
@@ -859,7 +840,7 @@ public class DatabaseUtil {
             String baseSqlQuery = "SELECT * FROM STUDENT WHERE 1=1";
 
             if (!studentFilter.getName().isEmpty()) {
-                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                baseSqlQuery += " AND LOWER(NAME) LIKE LOWER(?)";
                 queryParams.put(paramOrdinalNumber, studentFilter.getName() + "%");
                 paramOrdinalNumber++;
             }
@@ -872,7 +853,7 @@ public class DatabaseUtil {
 
             PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
 
-            for (Integer paramNumber: queryParams.keySet()){
+            for (Integer paramNumber : queryParams.keySet()) {
                 pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
             }
 
@@ -904,7 +885,7 @@ public class DatabaseUtil {
             String baseSqlQuery = "SELECT * FROM MATH_CLUB WHERE 1=1";
 
             if (!mathClubFilter.getName().isEmpty()) {
-                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                baseSqlQuery += " AND LOWER(NAME) LIKE LOWER(?)";
                 queryParams.put(paramOrdinalNumber, mathClubFilter.getName() + "%");
                 paramOrdinalNumber++;
             }
@@ -912,7 +893,7 @@ public class DatabaseUtil {
 
             PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
 
-            for (Integer paramNumber: queryParams.keySet()){
+            for (Integer paramNumber : queryParams.keySet()) {
                 pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
             }
 
@@ -941,14 +922,14 @@ public class DatabaseUtil {
             String baseSqlQuery = "SELECT * FROM MATH_PROJECT WHERE 1=1";
 
             if (!mathProjectFilter.getName().isEmpty()) {
-                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                baseSqlQuery += " AND LOWER(NAME) LIKE LOWER(?)";
                 queryParams.put(paramOrdinalNumber, mathProjectFilter.getName() + "%");
                 paramOrdinalNumber++;
             }
 
             PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
 
-            for (Integer paramNumber: queryParams.keySet()){
+            for (Integer paramNumber : queryParams.keySet()) {
                 pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
             }
 
@@ -978,23 +959,22 @@ public class DatabaseUtil {
             String baseSqlQuery = "SELECT * FROM COMPETITION WHERE 1=1";
 
             if (!competitionFilter.getName().isEmpty()) {
-                baseSqlQuery +=" AND LOWER(NAME) LIKE LOWER(?)";
+                baseSqlQuery += " AND LOWER(NAME) LIKE LOWER(?)";
                 queryParams.put(paramOrdinalNumber, competitionFilter.getName() + "%");
                 paramOrdinalNumber++;
             }
 
-            if(Optional.ofNullable(competitionFilter.getDateOfCompetition()).isPresent()){
+            if (Optional.ofNullable(competitionFilter.getDateOfCompetition()).isPresent()) {
                 baseSqlQuery += " AND DATE_OF_COMPETITION = ?";
                 queryParams.put(paramOrdinalNumber, Date.valueOf(competitionFilter.getDateOfCompetition()));
             }
 
             PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
 
-            for (Integer paramNumber: queryParams.keySet()){
-                if (queryParams.get(paramNumber) instanceof  String sqp){
+            for (Integer paramNumber : queryParams.keySet()) {
+                if (queryParams.get(paramNumber) instanceof String sqp) {
                     pstmt.setString(paramNumber, sqp);
-                }
-                else if (queryParams.get(paramNumber) instanceof Date dqp){
+                } else if (queryParams.get(paramNumber) instanceof Date dqp) {
                     pstmt.setDate(paramNumber, dqp);
                 }
             }
@@ -1030,9 +1010,9 @@ public class DatabaseUtil {
 
             Set<Student> studentsForMathClub = getStudentsForMathClub(mathClubId, students);
 
-           MathClub filteredMathClub = new MathClub(mathClubId, mathClubName, mathClubAddress, studentsForMathClub);
+            MathClub filteredMathClub = new MathClub(mathClubId, mathClubName, mathClubAddress, studentsForMathClub);
 
-           filteredMathClubs.add(filteredMathClub);
+            filteredMathClubs.add(filteredMathClub);
 
         }
     }
@@ -1041,7 +1021,7 @@ public class DatabaseUtil {
     private static void mapResultSetToStudentsList(ResultSet rs, List<Student> filteredStudents) throws SQLException {
 
         while (rs.next()) {
-            
+
             Long studentId = rs.getLong("STUDENT_ID");
             String studentName = rs.getString("NAME");
             String studentSurname = rs.getString("SURNAME");
@@ -1068,7 +1048,7 @@ public class DatabaseUtil {
             studentBuilder.picturePath(filePath);
 
             Student filteredStudent = studentBuilder.build();
-            
+
             filteredStudents.add(filteredStudent);
 
         }
@@ -1085,7 +1065,7 @@ public class DatabaseUtil {
             Date endDate = rs.getDate("END_DATE");
 
             LocalDate endDateOfProject = null;
-            if (Optional.ofNullable(endDate).isPresent()){
+            if (Optional.ofNullable(endDate).isPresent()) {
                 endDateOfProject = endDate.toLocalDate();
             }
 
@@ -1150,8 +1130,7 @@ public class DatabaseUtil {
     }
 
 
-
-    public static Optional <User> getCurrentUser(String enteredUsername, String enteredPassword) {
+    public static Optional<User> getCurrentUser(String enteredUsername, String enteredPassword) {
         User currentUser = null;
 
         try (Connection connection = connectToDatabase()) {
@@ -1213,7 +1192,7 @@ public class DatabaseUtil {
     }
 
 
-    public static void saveUser(User registerUser){
+    public static void saveUser(User registerUser) {
 
         try (Connection connection = connectToDatabase()) {
 
@@ -1266,7 +1245,7 @@ public class DatabaseUtil {
     }
 
 
-    private static void updateStudentGrades(Long studentId, Map<String, Integer> updatedGrades) throws SQLException, IOException{
+    private static void updateStudentGrades(Long studentId, Map<String, Integer> updatedGrades) throws SQLException, IOException {
         try (Connection connection = connectToDatabase()) {
             String deleteQuery = "DELETE FROM STUDENT_GRADES WHERE STUDENT_ID = ?";
             try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
@@ -1379,10 +1358,10 @@ public class DatabaseUtil {
 
             try (PreparedStatement insertStatement = connection.prepareStatement(updateQuery)) {
 
-                    insertStatement.setString(1, newUsername);
-                    insertStatement.setString(2, currentUser.getUsername());
-                    insertStatement.setString(3, currentUser.getHashedPassword());
-                    insertStatement.executeUpdate();
+                insertStatement.setString(1, newUsername);
+                insertStatement.setString(2, currentUser.getUsername());
+                insertStatement.setString(3, currentUser.getHashedPassword());
+                insertStatement.executeUpdate();
 
             }
 
@@ -1471,7 +1450,7 @@ public class DatabaseUtil {
         return true;
     }
 
-    public static boolean updateProjectCollaborators(Long projectId, Map<MathClub, List<Student>> projectCollaborators){
+    public static boolean updateProjectCollaborators(Long projectId, Map<MathClub, List<Student>> projectCollaborators) {
         boolean successfullyUpdated = true;
         try (Connection connection = connectToDatabase()) {
             String deleteQuery = "DELETE FROM PROJECT_COLLABORATORS WHERE PROJECT_ID = ?";
@@ -1503,5 +1482,91 @@ public class DatabaseUtil {
         return successfullyUpdated;
     }
 
-}
+    public static List<Address> getAddressesByFilter(AddressFilter addressFilter) {
+        List<Address> filteredAddresses = new ArrayList<>();
+        Map<Integer, Object> queryParams = new HashMap<>();
+        Integer paramOrdinalNumber = 1;
 
+        try (Connection connection = connectToDatabase()) {
+            String baseSqlQuery = "SELECT * FROM ADDRESS WHERE 1=1";
+
+            if (!addressFilter.getStreetName().isEmpty()) {
+                baseSqlQuery += " AND LOWER(STREET) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, addressFilter.getStreetName() + "%");
+                paramOrdinalNumber++;
+            }
+
+            if (!addressFilter.getHouseNumber().isEmpty()) {
+                baseSqlQuery += " AND LOWER(HOUSE_NUMBER) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, addressFilter.getHouseNumber() + "%");
+                paramOrdinalNumber++;
+            }
+
+            if (Optional.ofNullable(addressFilter.getCity()).isPresent()) {
+                baseSqlQuery += " AND LOWER(CITY) LIKE LOWER(?)";
+                queryParams.put(paramOrdinalNumber, addressFilter.getCity().getName() + "%");
+                paramOrdinalNumber++;
+            }
+
+            PreparedStatement pstmt = connection.prepareStatement(baseSqlQuery);
+
+            for (Integer paramNumber : queryParams.keySet()) {
+                pstmt.setString(paramNumber, (String) queryParams.get(paramNumber));
+            }
+
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+            mapResultSetToAddressesList(rs, filteredAddresses);
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+
+        return filteredAddresses;
+    }
+
+    private static void mapResultSetToAddressesList(ResultSet rs, List<Address> filteredAddresses) throws SQLException {
+        while (rs.next()) {
+
+            Long addressId = rs.getLong("ADDRESS_ID");
+            String street = rs.getString("STREET");
+            String houseNumber = rs.getString("HOUSE_NUMBER");
+            String cityName = rs.getString("CITY");
+
+
+            City city = City.getCityFromStringName(cityName);
+            Address.AdressBuilder addressBuilder = new Address.AdressBuilder(city).setAddressId(addressId)
+                    .setStreet(street).setHouseNumber(houseNumber);
+
+            Address filteredAddress = addressBuilder.build();
+
+            filteredAddresses.add(filteredAddress);
+
+        }
+    }
+
+    public static boolean deleteAddress(Address addressForDeletion) {
+        boolean addressDeletionSuccess = false;
+
+        try (Connection connection = connectToDatabase()) {
+
+            String deleteAddressSql = "DELETE FROM ADDRESS WHERE ADDRESS_ID = ?;";
+
+            try (PreparedStatement pstmt = connection.prepareStatement(deleteAddressSql)) {
+                pstmt.setLong(1, addressForDeletion.getAddressId());
+                pstmt.executeUpdate();
+                addressDeletionSuccess = true;
+            }
+
+        }
+      catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod brisanja adrese iz baze podataka";
+            logger.error(message, ex);
+        }
+
+        return addressDeletionSuccess;
+    }
+}

@@ -71,7 +71,7 @@
       </GridPane>
       <AnchorPane layoutX="332.0" layoutY="527.0" prefHeight="89.0" prefWidth="200.0">
          <children>
-            <FontAwesomeIconView glyphName="SEARCH" layoutX="72.0" layoutY="66.0" opacity="0.18" size="5EM" />
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="72.0" layoutY="66.0" opacity="0.18" size="5EM" text="" />
          </children>
       </AnchorPane>
    </children>

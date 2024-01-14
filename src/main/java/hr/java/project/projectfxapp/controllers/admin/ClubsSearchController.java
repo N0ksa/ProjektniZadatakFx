@@ -41,9 +41,6 @@ public class ClubsSearchController {
 
 
     public void initialize(){
-        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
-        mathClubs.removeIf(mathClub -> mathClub.getId().equals(0L));
-
 
         clubNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathClub, String> param) {

@@ -46,4 +46,12 @@ public class MenuController {
     public void showAddNewProject(ActionEvent actionEvent) {
        JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewProject);
     }
+
+    public void showSearchAddressScreen(ActionEvent actionEvent) {
+        JavaFxProjectApplication.switchScene(ApplicationScreen.AddressSearch);
+    }
+
+    public void showAddNewAddress(ActionEvent actionEvent) {
+        JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewAddress);
+    }
 }

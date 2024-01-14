@@ -529,5 +529,16 @@ public class ValidationProtocol {
     }
 
 
+    public static void validateAddress(TextField streetNameTextField, TextField houseNumberTextField, ComboBox<City> cityPickerComboBox) {
 
+            List<String> errors = new ArrayList<>();
+
+            validateTextField(streetNameTextField, "Unesite naziv ulice", errors);
+            validateHouseNumber(houseNumberTextField, errors);
+            validateComboBox(cityPickerComboBox, "Odaberite grad", errors);
+
+            if (!errors.isEmpty()){
+                throw new ValidationException(String.join(LINE_SEPARATOR, errors));
+            }
+    }
 }

@@ -4,29 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao sve što mislim da je potrebno za projekt. Nemam puno ideja što još dodati za projekt.&#10;&#10;-planiram stavit lokaciju projekta u obliku google maps-a pa zbog toga preventivno commitam.">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Promijenio veličinu ekrana za admina, te dodao font-awesome ikone.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewAddressController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddressSearchController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/filter/AddressFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewAddress.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addressSearch.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewMathClubController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewMathClubController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ProjectDetailsCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ProjectDetailsCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/pogreske.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/pogreske.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ClubsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ClubsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ApplicationScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ApplicationScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ValidationProtocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewCompetition.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewCompetition.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewMathClub.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewMathClub.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewProject.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewProject.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubs.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/clubs.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/competitions.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/competitions.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/menuForAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/menuForAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projectDetailsCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projectDetailsCard.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/projects.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/students.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +196,8 @@
       <workItem from="1705150670146" duration="6851000" />
       <workItem from="1705167700763" duration="1561000" />
       <workItem from="1705169979610" duration="997000" />
-      <workItem from="1705171727842" duration="4408000" />
+      <workItem from="1705171727842" duration="4910000" />
+      <workItem from="1705241288915" duration="5976000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -401,7 +395,14 @@
       <option name="presentableId" value="LOCAL−00028" />
       <updated>1705161647249</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL−00029" summary="Promijenio veličinu ekrana za admina, te dodao font-awesome ikone.">
+      <option name="closed" value="true" />
+      <created>1705177965993</created>
+      <option name="number" value="LOCAL−00029" />
+      <option name="presentableId" value="LOCAL−00029" />
+      <updated>1705177965993</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -419,7 +420,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dodao mogućnost pretrage po natjecanjima i po klubovima.&#10;&#10;-sada se studente može pretraživati po imenu i prezimenu, te po članstvu u klubu.&#10;-za pretraživanje natjecanja dodao mogućnost pretraživanja s obzirom na datum natjecanja koristeći date picker gui element." />
     <MESSAGE value="Dodao pretraživanje projekata&#10;&#10;-prilikom ispisivanja članova projekata se u jednoj kolumni ispisuje klub, a u drugoj kolumni članovi toga kluba koji su sudjelovali na projektu.&#10;-promijenio format ispisa datuma." />
     <MESSAGE value="Napravio logiku dodavanja novih studenata u datoteku.&#10;&#10;-kako bi prikazao sve potrebne elemente u tableview-u addNewStudent.fxml-a (predmete i ocijene), napravio sam novu klasu SubjectGrade.java&#10;&#10;&#10;-kolumnu ocijena sam postavio da ima mogućnost editiranja. Na taj način će korisnik unosit podatke o svojim ocijenama.&#10;-kod spremanja se za sada ne provjerava validnost unesenih podataka.&#10;-kod spremanja se također trenutno ne mijenja datoteka math_clubs.txt (mora se promijeniti i treba se dodati studentov id jer su ta dva entiteta međusobno ovisna)" />
     <MESSAGE value="Napravio logiku dodavanja novih klubova u datoteku.&#10;&#10;-dodavanjem kluba u datoteku mora se promijeniti i datoteka students.txt (vjerojatno ću ovo napraviti na neki drugi način kod baze podataka)&#10;&#10;-postoji nekoliko manjih bugova koje trebam ispraviti" />
@@ -444,7 +444,8 @@
     <MESSAGE value="Dodao u natjecanjima vizualni prikaz prosjeka bodova po natjecanjima i broj sudionika po svakom natjecanju (iskoristio line chart i bar chart). Ispravio bug prilikom prijavljivanja članova u natjecanje (sada se sve ispravno ažurira u bazi podataka)&#10;&#10;- dodao i vizualni prikaz u članovima - kretanje rezultata članova kluba kroz različita natjecanja&#10;- u kontrolnoj ploči dodao i vizualni prikaz distribucije članova po godini studija" />
     <MESSAGE value="Dodao logiku promijene korisničkog imena, lozinke i slike." />
     <MESSAGE value="Dodao sve što mislim da je potrebno za projekt. Nemam puno ideja što još dodati za projekt.&#10;&#10;-planiram stavit lokaciju projekta u obliku google maps-a pa zbog toga preventivno commitam." />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodao sve što mislim da je potrebno za projekt. Nemam puno ideja što još dodati za projekt.&#10;&#10;-planiram stavit lokaciju projekta u obliku google maps-a pa zbog toga preventivno commitam." />
+    <MESSAGE value="Promijenio veličinu ekrana za admina, te dodao font-awesome ikone." />
+    <option name="LAST_COMMIT_MESSAGE" value="Promijenio veličinu ekrana za admina, te dodao font-awesome ikone." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

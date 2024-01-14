@@ -38,6 +38,12 @@
                <MenuItem mnemonicParsing="false" onAction="#showAddNewProject" text="Dodaj novi projekt" />
             </items>
          </Menu>
+         <Menu mnemonicParsing="false" text="Adrese">
+            <items>
+               <MenuItem mnemonicParsing="false" onAction="#showSearchAddressScreen" text="Traži" />
+               <MenuItem mnemonicParsing="false" onAction="#showAddNewAddress" text="Dodaj novu adresu" />
+            </items>
+         </Menu>
         </menus>
     </MenuBar>
 
