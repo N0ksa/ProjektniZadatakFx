@@ -10,7 +10,7 @@ import java.util.Set;
  * Predstavlja matematički klub.
  * Implementira sučelje {@link Gradable}, što znači da se može ocjenjivati.
  */
-public class MathClub extends NamedEntity implements Gradable, Serializable {
+public final class MathClub extends NamedEntity implements Gradable, Serializable {
     private Address address;
     private Set<Student> students;
 

@@ -2,17 +2,19 @@ package hr.java.project.projectfxapp.entities;
 
 import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.Status;
+import hr.java.project.projectfxapp.utility.SessionManager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
 /**
  * Predstavlja matematičko natjecanje.
  */
-public class Competition extends NamedEntity implements Serializable {
+public final class Competition extends NamedEntity implements Serializable, Recordable<Competition> {
 
     private MathClub organizer;
     private String description;
@@ -43,6 +45,25 @@ public class Competition extends NamedEntity implements Serializable {
         this.status = status;
         this.organizer = organizer;
     }
+
+
+    public Competition(Competition other) {
+        super(other.getId(), other.getName());
+
+        this.organizer = other.organizer;
+        this.description = other.description;
+        this.address = new Address(other.address);
+        this.auditorium = new Auditorium(other.auditorium);
+        this.timeOfCompetition = other.timeOfCompetition;
+
+        this.competitionResults = new HashSet<>();
+        for (CompetitionResult result : other.competitionResults) {
+            this.competitionResults.add(result.withScore(result.score()));
+        }
+
+        this.status = other.status;
+    }
+
 
 
     public MathClub getOrganizer() {
@@ -96,6 +117,7 @@ public class Competition extends NamedEntity implements Serializable {
     public Set<CompetitionResult> getCompetitionResults() {
         return competitionResults;
     }
+
 
 
 
@@ -207,5 +229,37 @@ public class Competition extends NamedEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), description, address, auditorium, timeOfCompetition, competitionResults);
+    }
+
+
+    @Override
+    public Optional<Change> getChange(Competition newValueToCompare) {
+        if (this.equals(newValueToCompare)) {
+            return Optional.empty();
+        } else {
+            StringBuilder oldValueBuilder = new StringBuilder();
+            StringBuilder newValueBuilder = new StringBuilder();
+
+            compareAndAppend("Ime", this.getName(), newValueToCompare.getName(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Opis", this.getDescription(), newValueToCompare.getDescription(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Adresa", this.getAddress(), newValueToCompare.getAddress(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("", this.getAuditorium(), newValueToCompare.getAuditorium(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Vrijeme", this.getTimeOfCompetition(), newValueToCompare.getTimeOfCompetition(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Rezultati", this.getCompetitionResults(), newValueToCompare.getCompetitionResults(), oldValueBuilder, newValueBuilder);
+
+            return Optional.of(Change.create(
+                    SessionManager.getInstance().getCurrentUser(),
+                    oldValueBuilder.toString(),
+                    newValueBuilder.toString(),
+                    "Natjecanje/id:" + this.getId()
+            ));
+        }
+    }
+
+    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue, StringBuilder oldValueBuilder, StringBuilder newValueBuilder) {
+        if (!Objects.equals(oldValue, newValue)) {
+            oldValueBuilder.append(fieldName + ": " + oldValue + ";");
+            newValueBuilder.append(fieldName + ": " + newValue + ";");
+        }
     }
 }

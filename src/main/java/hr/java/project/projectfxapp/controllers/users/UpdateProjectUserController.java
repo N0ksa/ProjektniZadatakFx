@@ -1,11 +1,13 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.entities.Address;
+import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateProjectUserController {
 
@@ -71,9 +74,18 @@ public class UpdateProjectUserController {
 
             if(positiveConfirmation){
 
+                MathProject oldProject = new MathProject(projectToUpdate);
                 boolean updateSuccessful = changeProject(projectToUpdate);
 
                 if (updateSuccessful){
+
+                    Optional<Change> change = oldProject.getChange(projectToUpdate);
+                    if (change.isPresent()) {
+                        List<Change> changes = SerializationUtil.deserializeChanges();
+                        changes.add(change.get());
+                        SerializationUtil.serializeChanges(changes);
+                    }
+
                     ValidationProtocol.showSuccessAlert("Ažuriranje projekta je bilo uspješno",
                             "Projekt " + projectToUpdate.getName() + " uspješno se ažurirao!");
                 }

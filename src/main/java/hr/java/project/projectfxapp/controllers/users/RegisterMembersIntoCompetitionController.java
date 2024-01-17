@@ -1,10 +1,8 @@
 package hr.java.project.projectfxapp.controllers.users;
 
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.CompetitionResult;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
@@ -66,7 +64,12 @@ public class RegisterMembersIntoCompetitionController {
 
 
         if (positiveConfirmation){
+
+
             Competition currentCompetition = SessionManager.getInstance().getCurrentCompetition();
+
+            Competition oldcompetition = new Competition(currentCompetition);
+
 
             currentCompetition.getCompetitionResults().clear();
 
@@ -81,6 +84,15 @@ public class RegisterMembersIntoCompetitionController {
                     currentCompetition.getCompetitionResults());
 
             if (successfullyUpdated){
+
+                Optional<Change> competition = oldcompetition.getChange(currentCompetition);
+
+                if (competition.isPresent()) {
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    changes.add(competition.get());
+                    SerializationUtil.serializeChanges(changes);
+                }
+
                 ValidationProtocol.showSuccessAlert("Uspješno ste promijenili registrirane članove u natjecanju",
                         "Uspješno ste promijenili registrirane članove u natjecanju");
 

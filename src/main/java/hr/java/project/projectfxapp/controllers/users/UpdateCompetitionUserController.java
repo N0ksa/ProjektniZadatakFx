@@ -6,6 +6,7 @@ import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,10 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class UpdateCompetitionUserController {
 
@@ -149,9 +147,21 @@ public class UpdateCompetitionUserController {
 
             if(positiveConfirmation){
 
+
+                Competition oldcompetition = new Competition(competitionToUpdate);
                 boolean updateSuccessful = changeCompetition(competitionToUpdate);
 
+
                 if (updateSuccessful){
+
+                    Optional<Change> change = oldcompetition.getChange(competitionToUpdate);
+
+                    if (change.isPresent()){
+                        List<Change> changes = SerializationUtil.deserializeChanges();
+                        changes.add(change.get());
+                        SerializationUtil.serializeChanges(changes);
+                    }
+
                     ValidationProtocol.showSuccessAlert("Ažuriranje natjecanja je bilo uspješno",
                             "Natjecanje " + competitionToUpdate.getName() + " uspješno se ažuriralo!");
                 }

@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
@@ -83,6 +84,7 @@ public class RegisterMembersIntoProjectController {
 
     public void register(ActionEvent actionEvent) {
         MathProject currentProject = SessionManager.getInstance().getCurrentProject();
+        MathProject oldProject = new MathProject(currentProject);
 
         boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda",
                 "Jeste li sigurni da želite promijeniti članove u projektu?",
@@ -90,8 +92,10 @@ public class RegisterMembersIntoProjectController {
 
 
         if (positiveConfirmation) {
-            List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
+
+
+            List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
 
             if (Optional.ofNullable(currentProject.getCollaborators()).isEmpty()) {
                 currentProject.setCollaborators(new HashMap<>());
@@ -110,11 +114,18 @@ public class RegisterMembersIntoProjectController {
             }
         }
 
-
         boolean successfullyUpdated  = DatabaseUtil.updateProjectCollaborators(currentProject.getId(),
                     currentProject.getCollaborators());
 
             if (successfullyUpdated){
+
+                Optional<Change> change = oldProject.getChange(currentProject);
+                if (change.isPresent()) {
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    changes.add(change.get());
+                    SerializationUtil.serializeChanges(changes);
+                }
+
                 ValidationProtocol.showSuccessAlert("Uspješno ste promijenili registrirane članove u natjecanju",
                         "Uspješno ste promijenili registrirane članove u natjecanju");
 

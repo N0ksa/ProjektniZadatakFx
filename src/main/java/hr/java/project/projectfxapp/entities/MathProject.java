@@ -1,16 +1,16 @@
 package hr.java.project.projectfxapp.entities;
 
+import hr.java.project.projectfxapp.utility.SessionManager;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Predstavlja matematički projekt.
  */
 
-public class MathProject extends NamedEntity implements Serializable {
+public final class MathProject extends NamedEntity implements Serializable, Recordable<MathProject> {
 
     private MathClub organizer;
     private LocalDate startDate;
@@ -33,6 +33,17 @@ public class MathProject extends NamedEntity implements Serializable {
         this.collaborators = collaborators;
         this.organizer = organizer;
         this.startDate = startDate;
+    }
+
+
+    public MathProject(MathProject mathProjectToCopy) {
+        super(mathProjectToCopy.getId(), mathProjectToCopy.getName());
+        this.address = new Address(mathProjectToCopy.address);
+        this.description = mathProjectToCopy.description;
+        this.collaborators = new HashMap<>(mathProjectToCopy.collaborators);
+        this.organizer = mathProjectToCopy.organizer;
+        this.startDate = mathProjectToCopy.startDate;
+        this.endDate = mathProjectToCopy.endDate;
     }
 
     public Address getAddress() {
@@ -125,5 +136,41 @@ public class MathProject extends NamedEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), description, collaborators);
+    }
+
+
+    @Override
+    public Optional<Change> getChange(MathProject newValueToCompare) {
+        if (this.equals(newValueToCompare)){
+            return Optional.empty();
+        }
+        else{
+            StringBuilder oldValueBuilder = new StringBuilder();
+            StringBuilder newValueBuilder = new StringBuilder();
+            compareAndAppend("Naziv", this.getName(), newValueToCompare.getName(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Opis", this.getDescription(), newValueToCompare.getDescription(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Organizator", this.getOrganizer(), newValueToCompare.getOrganizer(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Početak", this.getStartDate(), newValueToCompare.getStartDate(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Kraj", this.getEndDate(), newValueToCompare.getEndDate(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Adresa", this.getAddress(), newValueToCompare.getAddress(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Sudionici", this.getCollaborators(), newValueToCompare.getCollaborators(), oldValueBuilder, newValueBuilder);
+
+            return Optional.of(Change.create(
+                    SessionManager.getInstance().getCurrentUser(),
+                    oldValueBuilder.toString(),
+                    newValueBuilder.toString(),
+                    "Projekt/id:" + this.getId()
+            ));
+        }
+
+
+    }
+
+
+    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue, StringBuilder oldValueBuilder, StringBuilder newValueBuilder) {
+        if (!Objects.equals(oldValue, newValue)) {
+            oldValueBuilder.append(fieldName + ": " + oldValue + ";");
+            newValueBuilder.append(fieldName + ": " + newValue + ";");
+        }
     }
 }

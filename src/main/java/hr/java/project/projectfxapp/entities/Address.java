@@ -30,6 +30,13 @@ public class Address implements Serializable {
     }
 
 
+    public Address(Address other) {
+        this.addressId = other.addressId;
+        this.street = other.street;
+        this.houseNumber = other.houseNumber;
+        this.city = other.city;
+    }
+
     /**
      * Unutarnja klasa za izgradnju objekata tipa {@link Address}.
      */

@@ -54,4 +54,8 @@ public class MenuController {
     public void showAddNewAddress(ActionEvent actionEvent) {
         JavaFxProjectApplication.switchScene(ApplicationScreen.AddNewAddress);
     }
+
+    public void showChangesApplicationScreen(ActionEvent actionEvent) {
+        JavaFxProjectApplication.switchScene(ApplicationScreen.Changes);
+    }
 }

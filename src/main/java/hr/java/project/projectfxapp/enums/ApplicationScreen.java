@@ -32,7 +32,8 @@ public enum ApplicationScreen {
     RegisterMembersIntoProject("Prijavi članove na projekt", "registerMembersIntoProject.fxml", false),
     ProjectDetailsCard("Detalji projekta", "projectDetailsCard.fxml", false),
     AddressSearch("Pretraži adrese", "addressSearch.fxml", false),
-    AddNewAddress("Dodaj adresu", "addNewAddress.fxml", false);
+    AddNewAddress("Dodaj adresu", "addNewAddress.fxml", false),
+    Changes("Promjene", "changes.fxml", false);
 
     private final String title;
     private final String pathOfFxml;

@@ -44,6 +44,11 @@
                <MenuItem mnemonicParsing="false" onAction="#showAddNewAddress" text="Dodaj novu adresu" />
             </items>
          </Menu>
+         <Menu mnemonicParsing="false" text="Promjene">
+            <items>
+               <MenuItem mnemonicParsing="false" onAction="#showChangesApplicationScreen" text="Pregled" />
+            </items>
+         </Menu>
         </menus>
     </MenuBar>
 

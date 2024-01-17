@@ -5,16 +5,14 @@ import hr.java.project.projectfxapp.entities.ClubMembership;
 import hr.java.project.projectfxapp.entities.Gradable;
 import hr.java.project.projectfxapp.entities.NamedEntity;
 import hr.java.project.projectfxapp.utility.Picture;
+import hr.java.project.projectfxapp.utility.SessionManager;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
-public class Student extends NamedEntity implements Gradable, Serializable {
+public final class Student extends NamedEntity implements Gradable, Serializable, Recordable<Student> {
     private String surname;
     private String gender;
     private String email;
@@ -24,19 +22,6 @@ public class Student extends NamedEntity implements Gradable, Serializable {
     private Picture picture;
 
 
-    /**
-     * Constructor for creating a "Student" object.
-     *
-     * @param studentId   Identifikacijski broj studenta.
-     * @param name        Ime studenta.
-     * @param surname     Prezime studenta.
-     * @param gender      Spol studenta.
-     * @param email       Adresa elektroničke pošte studenta.
-     * @param yearOfStudy Trenutna godina studija studenta.
-     * @param grades      Mapa koja sadrži ocjene studenta.
-     * @param membership  Članstvo studenta u klubu.
-     * @param picturePath Putanja do slike studenta.
-     */
     private Student(Long studentId, String name, String surname, String gender, String email,
                     Integer yearOfStudy, Map<String, Integer> grades, ClubMembership membership,
                     String picturePath) {
@@ -50,6 +35,21 @@ public class Student extends NamedEntity implements Gradable, Serializable {
         this.picture = new Picture(picturePath);
 
     }
+
+
+    public Student(Student studentToCopy) {
+        super(studentToCopy.getId(), studentToCopy.getName());
+        this.surname = studentToCopy.surname;
+        this.gender = studentToCopy.gender;
+        this.email = studentToCopy.email;
+        this.yearOfStudy = studentToCopy.yearOfStudy;
+        this.grades = new LinkedHashMap<>(studentToCopy.grades);
+        this.clubMembership = new ClubMembership(studentToCopy.clubMembership.getClubMembershipId(),
+                studentToCopy.clubMembership.getClubMembershipId(), studentToCopy.clubMembership.getJoinDate());
+
+        this.picture = new Picture(studentToCopy.picture.getPicturePath());
+    }
+
 
 
 
@@ -196,6 +196,7 @@ public class Student extends NamedEntity implements Gradable, Serializable {
         private ClubMembership clubMembership;
         private String picturePath;
 
+
         public StudentBuilder(Long studentId, String name, String surname) {
             this.studentId = studentId;
             this.name = name;
@@ -242,4 +243,38 @@ public class Student extends NamedEntity implements Gradable, Serializable {
         }
     }
 
+    @Override
+    public Optional<Change> getChange(Student newValueToCompare) {
+        if (this.equals(newValueToCompare)){
+            return Optional.empty();
+        }
+        else{
+            StringBuilder oldValueBuilder = new StringBuilder();
+            StringBuilder newValueBuilder = new StringBuilder();
+
+            compareAndAppend("Ime", this.getName(), newValueToCompare.getName(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Prezime", this.getSurname(), newValueToCompare.getSurname(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Spol", this.getGender(), newValueToCompare.getGender(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Email", this.getEmail(), newValueToCompare.getEmail(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Godina studija", this.getYearOfStudy(), newValueToCompare.getYearOfStudy(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Ocjene", this.getGrades(), newValueToCompare.getGrades(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Članstvo", this.getClubMembership(), newValueToCompare.getClubMembership(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Slika", this.getPicture(), newValueToCompare.getPicture(), oldValueBuilder, newValueBuilder);
+
+            return Optional.of(Change.create(
+                    SessionManager.getInstance().getCurrentUser(),
+                    oldValueBuilder.toString(),
+                    newValueBuilder.toString(),
+                    "Student/id:" + this.getId()
+            ));
+        }
+    }
+
+
+    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue, StringBuilder oldValueBuilder, StringBuilder newValueBuilder) {
+        if (!Objects.equals(oldValue, newValue)) {
+            oldValueBuilder.append(fieldName + ": " + oldValue + ";");
+            newValueBuilder.append(fieldName + ": " + newValue + ";");
+        }
+    }
 }

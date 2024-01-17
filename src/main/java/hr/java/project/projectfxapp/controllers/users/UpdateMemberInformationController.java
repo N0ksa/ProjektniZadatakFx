@@ -1,10 +1,12 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -17,10 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UpdateMemberInformationController {
@@ -73,25 +72,24 @@ public class UpdateMemberInformationController {
 
     public void initialize() {
         Student memberToUpdate = SessionManager.getInstance().getCurrentStudent();
+        
+        setMemberInformation(memberToUpdate);
+        
+    }
+
+    private void setMemberInformation(Student memberToUpdate) {
+        
         studentNameTextField.setText(memberToUpdate.getName());
         studentSurnameTextField.setText(memberToUpdate.getSurname());
         studentEmailTextField.setText(memberToUpdate.getEmail());
+        
         if (memberToUpdate.getGender().equals("Male")) {
             maleGenderRadioButton.setSelected(true);
         } else {
             femaleGenderRadioButton.setSelected(true);
         }
 
-        if (memberToUpdate.getYearOfStudy() == 1) {
-            prvaGodinaRadioButton.setSelected(true);
-        } else if (memberToUpdate.getYearOfStudy() == 2) {
-            prvaGodinaRadioButton.disableProperty().set(true);
-            drugaGodinaRadioButton.setSelected(true);
-        } else if (memberToUpdate.getYearOfStudy() == 3) {
-            prvaGodinaRadioButton.disableProperty().set(true);
-            drugaGodinaRadioButton.disableProperty().set(true);
-            trecaGodinaRadioButton.setSelected(true);
-        }
+        setActiveYearOfStudy(memberToUpdate);
 
         studentImageView.setImage(new Image(getClass().getResource(memberToUpdate.getPicture().getPicturePath()).toExternalForm()));
 
@@ -110,6 +108,7 @@ public class UpdateMemberInformationController {
         List<SubjectGrade> subjectGrades = memberToUpdate.getGrades().entrySet().stream()
                 .map(entry -> new SubjectGrade(entry.getKey(), String.valueOf(entry.getValue())))
                 .collect(Collectors.toList());
+
         studentGradesTableView.getItems().addAll(subjectGrades);
 
         yearOfStudySelection.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -139,6 +138,20 @@ public class UpdateMemberInformationController {
 
 
 
+    private void setActiveYearOfStudy(Student memberToUpdate) {
+        
+        if (memberToUpdate.getYearOfStudy() == 1) {
+            prvaGodinaRadioButton.setSelected(true);
+        } else if (memberToUpdate.getYearOfStudy() == 2) {
+            prvaGodinaRadioButton.disableProperty().set(true);
+            drugaGodinaRadioButton.setSelected(true);
+        } else if (memberToUpdate.getYearOfStudy() == 3) {
+            prvaGodinaRadioButton.disableProperty().set(true);
+            drugaGodinaRadioButton.disableProperty().set(true);
+            trecaGodinaRadioButton.setSelected(true);
+        }
+    }
+
 
     private Integer getYearOfStudy() {
         Integer yearOfStudy = 0;
@@ -155,7 +168,6 @@ public class UpdateMemberInformationController {
 
 
     private YearOfStudy getSelectedYears(Toggle toggle) {
-
         YearOfStudy selectedYear = YearOfStudy.FIRST_YEAR;
 
         if ( toggle == drugaGodinaRadioButton) {
@@ -208,9 +220,18 @@ public class UpdateMemberInformationController {
 
             if (positiveConfirmation) {
 
+                Student oldMember = new Student(memberToUpdate);
                 boolean updateSuccessful = updateMember(memberToUpdate);
 
                 if (updateSuccessful){
+
+                    Optional<Change> change = oldMember.getChange(memberToUpdate);
+                    if (change.isPresent()){
+                        List<Change> changes = SerializationUtil.deserializeChanges();
+                        changes.add(change.get());
+                        SerializationUtil.serializeChanges(changes);
+                    }
+
                     ValidationProtocol.showSuccessAlert("Ažuriranje člana je bilo uspješno",
                             "Član " + memberToUpdate.getName() + " " + memberToUpdate.getSurname() + " uspješno se ažurirao!");
                 }
@@ -218,8 +239,6 @@ public class UpdateMemberInformationController {
                     ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje člana nije uspjelo",
                             "Pokušajte ponovno");
                 }
-
-
 
             }
 

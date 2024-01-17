@@ -11,5 +11,7 @@ public record CompetitionResult(Student participant, BigDecimal score) implement
     public CompetitionResult withScore(BigDecimal newScore) {
         return new CompetitionResult(this.participant, newScore);
     }
+
+
 }
 
