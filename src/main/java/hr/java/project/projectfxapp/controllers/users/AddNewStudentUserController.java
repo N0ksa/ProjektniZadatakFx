@@ -1,14 +1,12 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.constants.Constants;
-import hr.java.project.projectfxapp.entities.ClubMembership;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Student;
-import hr.java.project.projectfxapp.entities.SubjectGrade;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -132,19 +130,41 @@ public class AddNewStudentUserController {
             ValidationProtocol.validateClubMember(studentNameTextField, studentSurnameTextField, genderSelection, studentEmailTextField
                     ,studentGradesTableView, yearOfStudySelection);
 
-            Student newStudent = buildNewStudent();
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda spremanja",
+                    "Jeste li sigurni da želite spremiti novog studenta?",
+                    "Kliknite Da za potvrdu");
 
+            if (positiveConfirmation){
 
-            List<Student> students = new ArrayList<>();
-            students.add(newStudent);
-            DatabaseUtil.saveStudents(students);
+                Student newStudent = buildNewStudent();
+                List<Student> students = new ArrayList<>();
+                students.add(newStudent);
+                boolean success = DatabaseUtil.saveStudents(students);
+                MathClub currentClub = SessionManager.getInstance().getCurrentClub();
+                currentClub.getStudents().add(newStudent);
 
+                if(success){
 
-            ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
-                    "Student " + newStudent.getName() + " " + newStudent.getSurname() + " uspješno se spremio!");
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
 
+                    Change change = Change.create(currentUser, "/",
+                            "Spremljen novi student: " + newStudent.getName() + " " + newStudent.getSurname(),
+                            "Student");
 
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
 
+                    ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
+                            "Student " + newStudent.getName() + " " + newStudent.getSurname()
+                                    + " uspješno se spremio!");
+                }else{
+                    ValidationProtocol.showErrorAlert("Spremanje novog studenta nije uspjelo",
+                            "Student " + newStudent.getName() + " " + newStudent.getSurname() +
+                                    " nije uspješno spremljen", "Nažalost studenta nije moguće spremiti");
+                }
+
+            }
         }
         catch (ValidationException ex){
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",

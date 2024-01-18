@@ -1,13 +1,9 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.StudentFilter;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -58,6 +54,14 @@ public class StudentsSearchController {
 
         clubComboBox.setItems(observableMathClubsList);
 
+        setStudentsTableViewProperties(mathClubsList);
+
+
+    }
+
+
+    private void setStudentsTableViewProperties(List<MathClub> mathClubsList) {
+
         studentsTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         studentNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
@@ -86,7 +90,6 @@ public class StudentsSearchController {
 
             }
         });
-
 
 
         studentClubTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
@@ -120,9 +123,6 @@ public class StudentsSearchController {
                 return new ReadOnlyStringWrapper(param.getValue().getYearOfStudy().toString());
             }
         });
-
-
-
     }
 
     public void studentSearch(){
@@ -151,6 +151,16 @@ public class StudentsSearchController {
             if (positiveConfirmation) {
                 boolean successfulDeletion = DatabaseUtil.deleteStudent(studentForDeletion);
                 if (successfulDeletion) {
+
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    Change change = Change.create(currentUser, "/",
+                            "Obrisan student: " + studentForDeletion.getName() + " " + studentForDeletion.getSurname()
+                            , "Student/id:" + studentForDeletion.getId());
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
+
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali studenta : " + studentForDeletion.getName() + " " +
                                     studentForDeletion.getSurname());

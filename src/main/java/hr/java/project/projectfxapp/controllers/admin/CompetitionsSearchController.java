@@ -1,13 +1,9 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.MathProject;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -52,8 +48,15 @@ public class CompetitionsSearchController {
     private static List<Competition> competitions;
 
     public void initialize(){
+
         competitions = DatabaseUtil.getCompetitions();
 
+        setCompetitionTableViewSettings();
+
+    }
+
+
+    private void setCompetitionTableViewSettings() {
         competitionNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
@@ -102,7 +105,6 @@ public class CompetitionsSearchController {
                         .map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika"));
             }
         });
-
     }
 
 
@@ -135,7 +137,16 @@ public class CompetitionsSearchController {
 
             if (positiveConfirmation) {
                 boolean successfulDeletion = DatabaseUtil.deleteCompetition(competitionForDeletion);
+
                 if (successfulDeletion){
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    Change change = Change.create(currentUser, "/",
+                            "Obrisano natjecanje: " + competitionForDeletion.getName(), "Natjecanje/id:"
+                                    + competitionForDeletion.getId());
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali natjecanje : " + competitionForDeletion.getName());
                 }else{

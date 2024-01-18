@@ -6,6 +6,7 @@ import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
@@ -85,54 +86,39 @@ public class AddNewCompetitionUserController {
                     dateOfCompetitionDatePicker, timeOfCompetitionTextField,
                     auditoriumBuildingNameTextField, auditoriumHallNameTextField, competitionParticipantsListView);
 
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda spremanja",
+                    "Jeste li sigurni da želite spremiti novo natjecanje?", "Kliknite Da za potvrdu");
 
-            List<Competition> competitions = new ArrayList<>();
+            if (positiveConfirmation){
 
-            Long competitionId = 0L;
-            String competitionName = competitionNameTextField.getText();
-            String competitionDescription = competitionDescriptionTextArea.getText();
+                List<Competition> competitions = new ArrayList<>();
 
-            LocalDate competitionDate = dateOfCompetitionDatePicker.getValue();
+                Competition newCompetition = constructNewCompetition();
 
-            String competitionTimeText = timeOfCompetitionTextField.getText();
+                competitions.add(newCompetition);
 
-            LocalTime competitionTime = LocalTime.parse(competitionTimeText,
-                    DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+                boolean success = DatabaseUtil.saveMathCompetitions(competitions);
 
-            LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
+                if (success){
 
-            String buildingName = auditoriumBuildingNameTextField.getText();
-            String hallName = auditoriumHallNameTextField.getText();
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    Change change = Change.create(currentUser, "/",
+                            "Spremljeno natjecanje: " + newCompetition.getName(), "Natjecanje:");
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
 
-            Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
+                    ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
+                            "Natjecanje " + newCompetition.getName() + " uspješno se spremilo!");
+                }else{
+                    ValidationProtocol.showErrorAlert("Spremanje novog natjecanja nije uspjelo",
+                            "Natjecanje " + newCompetition.getName() + " nije uspješno spremljeno",
+                            "Nažalost natjecanje nije moguće spremiti");
+                }
 
-            Set<CompetitionResult> competitionResults = setCompetitionResults(competitionParticipantsListView);
-
-            MathClub organizer = SessionManager.getInstance().getCurrentClub();
-
-            Status status = Status.PLANNED;
-
-            Address.AdressBuilder adressBuilder = new Address.AdressBuilder(cityComboBox.getValue())
-                    .setHouseNumber(houseNumberTextField.getText())
-                    .setStreet(streetNameTextField.getText())
-                    .setAddressId(0L);
-
-            Address address = adressBuilder.build();
-            Long addressId = DatabaseUtil.saveAddress(address);
-
-            adressBuilder.setAddressId(addressId);
-
-            Address competitionAddress = adressBuilder.build();
-
-            Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription,
-                    competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
-
-            competitions.add(newCompetition);
-            DatabaseUtil.saveMathCompetitions(competitions);
+            }
 
 
-            ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
-                    "Natjecanje " + newCompetition.getName() + " uspješno se spremilo!");
 
         } catch (ValidationException ex) {
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
@@ -142,8 +128,58 @@ public class AddNewCompetitionUserController {
         }
     }
 
+
+    private Competition constructNewCompetition() {
+        Long competitionId = 0L;
+        String competitionName = competitionNameTextField.getText();
+        String competitionDescription = competitionDescriptionTextArea.getText();
+
+        LocalDate competitionDate = dateOfCompetitionDatePicker.getValue();
+
+        String competitionTimeText = timeOfCompetitionTextField.getText();
+
+        LocalTime competitionTime = LocalTime.parse(competitionTimeText,
+                DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+
+        LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
+
+        String buildingName = auditoriumBuildingNameTextField.getText();
+        String hallName = auditoriumHallNameTextField.getText();
+
+        Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
+
+        Set<CompetitionResult> competitionResults = setCompetitionResults(competitionParticipantsListView);
+
+        MathClub organizer = SessionManager.getInstance().getCurrentClub();
+
+        Status status = Status.PLANNED;
+
+        Address competitionAddress = constructAddressForCompetition();
+
+        return new Competition(competitionId, organizer, competitionName, competitionDescription,
+                competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
+
+    }
+
+    private Address constructAddressForCompetition() {
+
+        Address.AdressBuilder adressBuilder = new Address.AdressBuilder(cityComboBox.getValue())
+                .setHouseNumber(houseNumberTextField.getText())
+                .setStreet(streetNameTextField.getText())
+                .setAddressId(0L);
+
+        Address address = adressBuilder.build();
+
+        Long addressId = DatabaseUtil.saveAddress(address);
+        adressBuilder.setAddressId(addressId);
+
+        return adressBuilder.build();
+    }
+
     private Set<CompetitionResult> setCompetitionResults(ListView<Student> competitionParticipantsListView) {
+
         Set<CompetitionResult> competitionResults = new HashSet<>();
+
         List<Student> competitionParticipants = competitionParticipantsListView.getSelectionModel().getSelectedItems();
         for (Student competitor : competitionParticipants){
             competitionResults.add(new CompetitionResult(competitor, new BigDecimal(0)));

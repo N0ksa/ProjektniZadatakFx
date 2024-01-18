@@ -1,13 +1,8 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -96,15 +91,38 @@ public class ClubsSearchController {
                     "Ova radnja je nepovratna.");
 
             if (positiveConfirmation) {
-                boolean successfulDeletion = DatabaseUtil.deleteMathClub(mathClubForDeletion);
-                if (successfulDeletion){
+
+                Optional<User> userForDeletion = DatabaseUtil.getUser(mathClubForDeletion.getId());
+
+                boolean successfulUserDeletion = DatabaseUtil.deleteUser(userForDeletion.get());
+
+                boolean successfulMathClubDeletion = DatabaseUtil.deleteMathClub(mathClubForDeletion);
+
+                if (successfulUserDeletion && successfulMathClubDeletion){
+                    List<User> users = FileReaderUtil.getUsers();
+
+                    users.removeIf(user -> user.getUsername().equals(userForDeletion.get().getUsername()));
+                    FileWriterUtil.saveUsers(users);
+
+                    Change change = Change.create(SessionManager.getInstance().getCurrentUser(), "/",
+                            "Obrisan matematički klub: " + mathClubForDeletion.getName(),
+                            "Korisnik/Matematički klub:id=" + mathClubForDeletion.getId());
+
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali matematički klub : " + mathClubForDeletion.getName());
-                }else{
+
+                }else
+                {
                     ValidationProtocol.showErrorAlert("Brisanje neuspješno",
                             "Matematički klub " + mathClubForDeletion.getName() + " nije obrisan",
                             "Nažalost matematički klub nije moguće obrisati");
                 }
+
+
             }
 
         }

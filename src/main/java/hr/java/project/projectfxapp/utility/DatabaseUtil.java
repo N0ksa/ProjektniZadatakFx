@@ -522,7 +522,9 @@ public class DatabaseUtil {
         return success;
     }
 
-    public static void saveMathCompetitions(List<Competition> mathCompetitions) {
+    public static boolean saveMathCompetitions(List<Competition> mathCompetitions) {
+        boolean success = true;
+
         try (Connection connection = connectToDatabase()) {
             for (Competition mathCompetition : mathCompetitions) {
 
@@ -567,11 +569,16 @@ public class DatabaseUtil {
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
             logger.error(message, ex);
+            success = false;
         }
+
+
+        return success;
     }
 
 
-    public static void saveStudents(List<Student> students) {
+    public static boolean saveStudents(List<Student> students) {
+        boolean success = true;
         try (Connection connection = connectToDatabase()) {
             for (Student student : students) {
 
@@ -607,7 +614,10 @@ public class DatabaseUtil {
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod spremanja studenata u bazu podataka";
             logger.error(message, ex);
+            success = false;
         }
+
+        return success;
     }
 
     private static Long addClubMembershipForStudent(Student student) {
@@ -1191,14 +1201,65 @@ public class DatabaseUtil {
 
     }
 
+    public static Optional<User> getUser(Long mathClubId) {
 
-    public static void saveUser(User registerUser) {
+        try (Connection connection = connectToDatabase()) {
+            String sqlQuery = String.format("SELECT * FROM USERS WHERE MATH_CLUB_ID = %d", mathClubId);
+            Statement stmt = connection.createStatement();
+            stmt.execute(sqlQuery);
+            ResultSet rs = stmt.getResultSet();
+
+            while (rs.next()) {
+                String username = rs.getString("USERNAME");
+                String password = rs.getString("PASSWORD");
+                String role = rs.getString("ROLE");
+                String picturePath = rs.getString("PICTURE_PATH");
+
+                User user = new User(username, password, UserRole.getRoleByName(role), mathClubId, new Picture(picturePath));
+                return Optional.of(user);
+            }
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
+            logger.error(message, ex);
+        }
+
+
+        return Optional.empty();
+
+    }
+
+    public static boolean deleteUser(User userForDeletion) {
+        boolean userDeletionSuccess = true;
 
         try (Connection connection = connectToDatabase()) {
 
-            String insertStudentSql = "INSERT INTO USERS(USERNAME, PASSWORD, MATH_CLUB_ID, ROLE, PICTURE_PATH) VALUES(?, ?, ?, ?, ?)";
+            String deleteProjectCollaboratorsSql = "DELETE FROM USERS WHERE USERNAME = ?;";
 
-            PreparedStatement pstmt = connection.prepareStatement(insertStudentSql, PreparedStatement.RETURN_GENERATED_KEYS);
+            try (PreparedStatement pstmtCollaborators = connection.prepareStatement(deleteProjectCollaboratorsSql)) {
+                pstmtCollaborators.setString(1, userForDeletion.getUsername());
+                pstmtCollaborators.executeUpdate();
+            }
+
+
+        } catch (SQLException | IOException ex) {
+            String message = "Dogodila se pogreška kod brisanja korisnika iz baze podataka";
+            logger.error(message, ex);
+            userDeletionSuccess = false;
+        }
+
+        return userDeletionSuccess;
+    }
+
+
+    public static boolean saveUser(User registerUser) {
+        boolean success = true;
+
+        try (Connection connection = connectToDatabase()) {
+
+            String insertUserSql = "INSERT INTO USERS(USERNAME, PASSWORD, MATH_CLUB_ID, ROLE, PICTURE_PATH) VALUES(?, ?, ?, ?, ?)";
+
+            PreparedStatement pstmt = connection.prepareStatement(insertUserSql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             pstmt.setString(1, registerUser.getUsername());
             pstmt.setString(2, registerUser.getHashedPassword());
@@ -1211,8 +1272,10 @@ public class DatabaseUtil {
         } catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod spremanja korisnika u bazu podataka";
             logger.error(message, ex);
+            success = false;
         }
 
+        return success;
     }
 
     public static boolean updateStudent(Student updatedStudent) {

@@ -1,14 +1,9 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.MathProject;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.filter.MathProjectFilter;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -123,6 +118,15 @@ public class ProjectsSearchController {
             if (positiveConfirmation) {
                 boolean successfulDeletion = DatabaseUtil.deleteProject(mathProjectForDeletion);
                 if (successfulDeletion){
+
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    Change change = Change.create(currentUser, "/",
+                            "Obrisan projekt: " + mathProjectForDeletion.getName(), "Projekt/id:"
+                                    + mathProjectForDeletion.getId());
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali projekt : " + mathProjectForDeletion.getName());
                 }else{

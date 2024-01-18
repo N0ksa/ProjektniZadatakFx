@@ -72,6 +72,7 @@ public class ClubMembersController {
 
        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
          currentClubNameTextField.setText(currentClub.getName());
+
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
 
        List<CompetitionResult> competitionResults = DatabaseUtil.getCompetitions().stream()
@@ -81,7 +82,6 @@ public class ClubMembersController {
         List<MathProject> mathProjects = DatabaseUtil.getProjects();
 
         List<Competition> competitions = DatabaseUtil.getCompetitions();
-
 
 
        FilteredList<Student> filteredMembers = getMembersFilteredList(clubMembers);

@@ -1,12 +1,10 @@
 package hr.java.project.projectfxapp.controllers.users;
 
-import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.MathProject;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.collections.FXCollections;
@@ -74,6 +72,15 @@ public class AddNewProjectUserController {
                 boolean success = DatabaseUtil.saveMathProjects(mathProjects);
 
                 if (success){
+
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    Change change = Change.create(currentUser, "/",
+                            "Spremljen novi projekt: " + newProject.getName(), "Projekt");
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
+
                     ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
                             "Projekt " + newProject.getName() + "  uspješno se spremio");
                 }

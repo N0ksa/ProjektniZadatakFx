@@ -4,10 +4,7 @@ import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.FileWriterUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -108,47 +105,67 @@ public class AddNewCompetitionController {
                     organizerComboBox);
 
 
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda unosa",
+                    "Jeste li sigurni da želite unijeti novo natjecanje?",
+                    "Ako želite unijeti natjecanje: " + competitionNameTextField.getText() + "\nPritisnite Da za potvrdu");
 
-            List<Competition> competitions = new ArrayList<>();
+            if (positiveConfirmation){
+                List<Competition> competitions = new ArrayList<>();
+                Long competitionId = 0L;
+                String competitionName = competitionNameTextField.getText();
+                String competitionDescription = competitionDescriptionTextArea.getText();
+                Address competitionAddress = competitionAddressComboBox.getValue();
+                LocalDate competitionDate = competitionDateDatePicker.getValue();
 
-            Long competitionId = 0L;
-            String competitionName = competitionNameTextField.getText();
-            String competitionDescription = competitionDescriptionTextArea.getText();
-            Address competitionAddress = competitionAddressComboBox.getValue();
+                String competitionTimeText = competitionTimeTextArea.getText();
 
-            LocalDate competitionDate = competitionDateDatePicker.getValue();
+                LocalTime competitionTime = LocalTime.parse(competitionTimeText,
+                        DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
 
-            String competitionTimeText = competitionTimeTextArea.getText();
+                LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
 
-            LocalTime competitionTime = LocalTime.parse(competitionTimeText,
-                    DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+                String buildingName = auditoriumBuildingNameTextField.getText();
+                String hallName = auditoriumHallNameTextField.getText();
 
-            LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
+                Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
 
-            String buildingName = auditoriumBuildingNameTextField.getText();
-            String hallName = auditoriumHallNameTextField.getText();
+                Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
 
-            Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
+                MathClub organizer = organizerComboBox.getValue();
 
-            Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
+                Status status = Status.FINISHED;
+                if (competitionDateTime.isAfter(LocalDateTime.now())) {
+                    status = Status.PLANNED;
+                }
 
-            MathClub organizer = organizerComboBox.getValue();
+                Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription,
+                        competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
 
-            Status status = Status.FINISHED;
-            if (competitionDateTime.isAfter(LocalDateTime.now())) {
-                status = Status.PLANNED;
+                competitions.add(newCompetition);
+
+                boolean success = DatabaseUtil.saveMathCompetitions(competitions);
+
+                if (success){
+
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    Change change = Change.create(currentUser, "/",
+                            "Dodano natjecanje: " + newCompetition.getName(), "Natjecanje");
+
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
+                    ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
+                            "Natjecanje " + newCompetition.getName()  + " uspješno se spremio!");
+                }
+                else{
+                    ValidationProtocol.showErrorAlert("Greška pri spremanju", "Greška pri spremanju natjecanja",
+                            "Došlo je do greške pri spremanju natjecanja u bazu podataka");
+                }
+
+
             }
 
-            Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription,
-                    competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
-
-            competitions.add(newCompetition);
-
-            DatabaseUtil.saveMathCompetitions(competitions);
-
-
-            ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
-                    "Natjecanje " + newCompetition.getName()  + " uspješno se spremio!");
 
         } catch (ValidationException ex) {
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",

@@ -54,23 +54,46 @@ public class AddNewMathClubController {
                 }
             }
 
-            MathClub newMathClub = createNewMathClub();
-            List<MathClub> mathClubs = new ArrayList<>();
-            mathClubs.add(newMathClub);
-            Long mathClubId = DatabaseUtil.saveMathClubs(mathClubs);
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda unosa",
+                    "Jeste li sigurni da želite registrirati novog korisnika?",
+                    "Ako želite registrirati korisnika " + newUserUsernameTextField.getText() + "\nPritisnite Da za potvrdu");
 
-            String hashedPassword = PasswordUtil.hashPassword(passwordPasswordField.getText());
+            if (positiveConfirmation){
+                MathClub newMathClub = createNewMathClub();
+                List<MathClub> mathClubs = new ArrayList<>();
+                mathClubs.add(newMathClub);
 
-            User registerUser = new User(newUserUsernameTextField.getText(), hashedPassword, UserRole.USER, mathClubId,
-                    new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
+                Long mathClubId = DatabaseUtil.saveMathClubs(mathClubs);
 
-            users.add(registerUser);
-            FileWriterUtil.saveUsers(users);
+                String hashedPassword = PasswordUtil.hashPassword(passwordPasswordField.getText());
 
-            DatabaseUtil.saveUser(registerUser);
+                User registerUser = new User(newUserUsernameTextField.getText(), hashedPassword, UserRole.USER, mathClubId,
+                        new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
 
-            ValidationProtocol.showSuccessAlert("Spremanje novog korisnika je bilo uspješno",
-                    "Klub " + newMathClub.getName()  + " uspješno se spremio!");
+                users.add(registerUser);
+                FileWriterUtil.saveUsers(users);
+
+                boolean success = DatabaseUtil.saveUser(registerUser);
+                if (success){
+
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    List<Change> changes = SerializationUtil.deserializeChanges();
+                    Change change = Change.create(currentUser, "/",
+                            "Dodan novi korisnik: " + registerUser.getUsername(), "Korisnik");
+                    changes.add(change);
+                    SerializationUtil.serializeChanges(changes);
+
+                    ValidationProtocol.showSuccessAlert("Spremanje novog korisnika je bilo uspješno",
+                            "Klub " + newMathClub.getName()  + " uspješno se spremio!");
+                }
+                else{
+                    ValidationProtocol.showErrorAlert("Greška pri spremanju", "Greška pri spremanju novog korisnika",
+                            "Došlo je do greške pri spremanju novog korisnika");
+                }
+
+            }
+
+
 
         }
         catch (ValidationException ex){

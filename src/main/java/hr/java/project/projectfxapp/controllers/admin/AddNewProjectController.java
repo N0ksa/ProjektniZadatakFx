@@ -1,14 +1,8 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.MathProject;
-import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.FileReaderUtil;
-import hr.java.project.projectfxapp.utility.FileWriterUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -92,12 +86,29 @@ public class AddNewProjectController {
                     beginningDateOfProjectDatePicker, projectAddressComboBox);
 
             MathProject newProject = constructNewProject();
-
             mathProjects.add(newProject);
-            DatabaseUtil.saveMathProjects(mathProjects);
 
-            ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
-                    "Projekt " + newProject.getName() + "  uspješno se spremio");
+            boolean success = DatabaseUtil.saveMathProjects(mathProjects);
+
+            if (success){
+
+                User currentUser = SessionManager.getInstance().getCurrentUser();
+
+                Change change = Change.create(currentUser, "/",
+                        "Dodan novi projekt: " + newProject.getName(), "Projekt");
+
+                List<Change> changes = SerializationUtil.deserializeChanges();
+                changes.add(change);
+                SerializationUtil.serializeChanges(changes);
+
+
+                ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
+                        "Projekt " + newProject.getName() + "  uspješno se spremio");
+            }else{
+                ValidationProtocol.showErrorAlert("Greška pri spremanju", "Greška pri spremanju projekta",
+                        "Došlo je do greške pri spremanju projekta u bazu podataka");
+            }
+
         }
         catch (ValidationException ex) {
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
