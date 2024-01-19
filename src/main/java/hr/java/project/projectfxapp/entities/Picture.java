@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.entities;
 
 public class Picture {
 

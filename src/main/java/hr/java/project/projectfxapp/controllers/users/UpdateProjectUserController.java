@@ -81,6 +81,7 @@ public class UpdateProjectUserController {
 
                     Optional<Change> change = oldProject.getChange(projectToUpdate);
                     if (change.isPresent()) {
+
                         List<Change> changes = SerializationUtil.deserializeChanges();
                         changes.add(change.get());
                         SerializationUtil.serializeChanges(changes);

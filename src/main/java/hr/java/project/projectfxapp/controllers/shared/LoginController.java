@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.MathClub;
+import hr.java.project.projectfxapp.entities.Picture;
 import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
@@ -13,7 +14,6 @@ import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 

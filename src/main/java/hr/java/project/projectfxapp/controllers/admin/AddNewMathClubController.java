@@ -10,12 +10,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AddNewMathClubController {
 

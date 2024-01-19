@@ -1,8 +1,6 @@
 package hr.java.project.projectfxapp.entities;
 
 import hr.java.project.projectfxapp.enums.UserRole;
-import hr.java.project.projectfxapp.utility.PasswordUtil;
-import hr.java.project.projectfxapp.utility.Picture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

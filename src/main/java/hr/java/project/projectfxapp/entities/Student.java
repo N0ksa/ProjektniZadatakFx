@@ -1,10 +1,6 @@
 package hr.java.project.projectfxapp.entities;
 
 import hr.java.project.projectfxapp.constants.Constants;
-import hr.java.project.projectfxapp.entities.ClubMembership;
-import hr.java.project.projectfxapp.entities.Gradable;
-import hr.java.project.projectfxapp.entities.NamedEntity;
-import hr.java.project.projectfxapp.utility.Picture;
 import hr.java.project.projectfxapp.utility.SessionManager;
 
 import java.io.Serializable;
