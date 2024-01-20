@@ -49,6 +49,11 @@
                <MenuItem mnemonicParsing="false" onAction="#showChangesApplicationScreen" text="Pregled" />
             </items>
          </Menu>
+         <Menu mnemonicParsing="false" text="Odjava">
+            <items>
+               <MenuItem mnemonicParsing="false" onAction="#showLoginApplicationScreen" text="Odjavi se" />
+            </items>
+         </Menu>
         </menus>
     </MenuBar>
 

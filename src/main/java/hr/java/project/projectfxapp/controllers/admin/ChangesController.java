@@ -10,6 +10,7 @@ import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -17,7 +18,9 @@ import javafx.util.Callback;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ChangesController {
 
@@ -84,5 +87,37 @@ public class ChangesController {
 
 
         changesTableView.setItems(FXCollections.observableArrayList(changes));
+    }
+
+    public void deleteChanges(ActionEvent actionEvent) {
+        boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog(
+                "Brisanje promjena", "Brisanje promjena",
+                "Jeste li sigurni da želite obrisati sve promjene?" +
+                        "\nPritisnite Da za brisanje");
+
+        if (positiveConfirmation){
+            List<Change> emptyChanges = new ArrayList<>();
+            SerializationUtil.serializeChanges(emptyChanges);
+            changesTableView.setItems(FXCollections.observableArrayList(emptyChanges));
+        }
+    }
+
+    public void deleteSelectedChange(ActionEvent actionEvent) {
+        Change selectedChange = changesTableView.getSelectionModel().getSelectedItem();
+        if (Optional.ofNullable(selectedChange).isPresent()){
+
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog(
+                    "Brisanje promjene", "Brisanje promjene", "Jeste li sigurni da želite obrisati odabranu promjenu?" +
+                            "\nPritisnite Da za brisanje");
+
+            if (positiveConfirmation){
+                List<Change> changes = SerializationUtil.deserializeChanges();
+                changes.remove(selectedChange);
+                SerializationUtil.serializeChanges(changes);
+                changesTableView.setItems(FXCollections.observableArrayList(changes));
+            }
+        }
+
+
     }
 }

@@ -34,6 +34,13 @@ public class SerializationUtil {
 
     public static List<Change> deserializeChanges() {
         List<Change> changes = new ArrayList<>();
+
+        File file = new File(Constants.CHANGES_FILE_NAME);
+
+        if (file.length() == 0) {
+            return changes;
+        }
+
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Constants.CHANGES_FILE_NAME))) {
             Object object = ois.readObject();
             if (object instanceof List<?>) {

@@ -54,7 +54,7 @@
                      <padding>
                         <Insets left="40.0" />
                      </padding></TextField>
-                  <Button layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" text="Login" textFill="#374151" />
+                  <Button fx:id="loginButton" layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" text="Login" textFill="#374151" />
                   <PasswordField fx:id="passwordPasswordField" layoutX="170.0" layoutY="273.0" prefHeight="37.0" prefWidth="181.0" promptText="Unesi lozinku">
                      <opaqueInsets>
                         <Insets />

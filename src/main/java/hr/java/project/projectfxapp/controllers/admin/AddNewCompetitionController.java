@@ -4,6 +4,8 @@ import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.DeserializeChangesThread;
+import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -110,50 +112,17 @@ public class AddNewCompetitionController {
                     "Ako želite unijeti natjecanje: " + competitionNameTextField.getText() + "\nPritisnite Da za potvrdu");
 
             if (positiveConfirmation){
+
                 List<Competition> competitions = new ArrayList<>();
-                Long competitionId = 0L;
-                String competitionName = competitionNameTextField.getText();
-                String competitionDescription = competitionDescriptionTextArea.getText();
-                Address competitionAddress = competitionAddressComboBox.getValue();
-                LocalDate competitionDate = competitionDateDatePicker.getValue();
 
-                String competitionTimeText = competitionTimeTextArea.getText();
-
-                LocalTime competitionTime = LocalTime.parse(competitionTimeText,
-                        DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
-
-                LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
-
-                String buildingName = auditoriumBuildingNameTextField.getText();
-                String hallName = auditoriumHallNameTextField.getText();
-
-                Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
-
-                Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
-
-                MathClub organizer = organizerComboBox.getValue();
-
-                Status status = Status.FINISHED;
-                if (competitionDateTime.isAfter(LocalDateTime.now())) {
-                    status = Status.PLANNED;
-                }
-
-                Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription,
-                        competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
-
+                Competition newCompetition = constructCompetition();
                 competitions.add(newCompetition);
 
                 boolean success = DatabaseUtil.saveMathCompetitions(competitions);
 
                 if (success){
 
-                    User currentUser = SessionManager.getInstance().getCurrentUser();
-                    Change change = Change.create(currentUser, "/",
-                            "Dodano natjecanje: " + newCompetition.getName(), "Natjecanje");
-
-                    List<Change> changes = SerializationUtil.deserializeChanges();
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
+                    serializeChanges(newCompetition);
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
                             "Natjecanje " + newCompetition.getName()  + " uspješno se spremio!");
@@ -174,6 +143,58 @@ public class AddNewCompetitionController {
     }
 
 
+
+    private void serializeChanges(Competition newCompetition) {
+
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        Change change = Change.create(currentUser, "/",
+                "Dodano natjecanje: " + newCompetition.getName(), "Natjecanje");
+
+
+        DeserializeChangesThread deserializeChangesThread = new DeserializeChangesThread();
+        Thread deserializeThread = new Thread(deserializeChangesThread);
+        deserializeThread.start();
+
+        List<Change> changes = deserializeChangesThread.getChanges();
+        changes.add(change);
+
+        SerializeChangesThread serializeChangesThread = new SerializeChangesThread(changes);
+        Thread serializeThread = new Thread(serializeChangesThread);
+        serializeThread.start();
+    }
+
+
+    private Competition constructCompetition() {
+        Long competitionId = 0L;
+        String competitionName = competitionNameTextField.getText();
+        String competitionDescription = competitionDescriptionTextArea.getText();
+        Address competitionAddress = competitionAddressComboBox.getValue();
+        LocalDate competitionDate = competitionDateDatePicker.getValue();
+
+        String competitionTimeText = competitionTimeTextArea.getText();
+
+        LocalTime competitionTime = LocalTime.parse(competitionTimeText,
+                DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+
+        LocalDateTime competitionDateTime = competitionDate.atTime(competitionTime);
+
+        String buildingName = auditoriumBuildingNameTextField.getText();
+        String hallName = auditoriumHallNameTextField.getText();
+
+        Auditorium competitionAuditorium = new Auditorium(buildingName, hallName);
+
+        Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
+
+        MathClub organizer = organizerComboBox.getValue();
+
+        Status status = Status.FINISHED;
+        if (competitionDateTime.isAfter(LocalDateTime.now())) {
+            status = Status.PLANNED;
+        }
+
+        return new Competition(competitionId, organizer, competitionName, competitionDescription,
+                competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
+    }
 
 
     public void reset(ActionEvent actionEvent) {

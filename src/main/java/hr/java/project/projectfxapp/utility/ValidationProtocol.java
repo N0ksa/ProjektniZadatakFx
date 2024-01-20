@@ -52,7 +52,7 @@ public class ValidationProtocol {
                                                   TextField timeOfCompetitionTextField,
                                                   TextField auditoriumBuildingNameTextField,
                                                   TextField auditoriumHallNameTextField,
-                                                  ListView<Student> competitionParticipantsListView) {
+                                                  ListView<Student> competitionParticipantsListView) throws ValidationException{
 
         List<String> errors = new ArrayList<>();
         validateTextField(competitionNameTextField, "Unesite naziv natjecanja", errors);
@@ -76,7 +76,8 @@ public class ValidationProtocol {
                                                  TextField timeOfCompetitionTextField,
                                                  TextField auditoriumBuildingNameTextField,
                                                  TextField auditoriumHallNameTextField,
-                                                 TableView<CompetitionResult> competitionResultsTableView) {
+                                                 TableView<CompetitionResult> competitionResultsTableView)
+                         throws ValidationException {
 
         List<String> errors = new ArrayList<>();
 
@@ -169,7 +170,8 @@ public class ValidationProtocol {
     public static void validateProjectForUser(TextField projectNameTextField, TextArea projectDescriptionTextArea,
                                               ListView<Student> projectMathClubsParticipantsListView,
                                               DatePicker beginningDateOfProjectDatePicker, ComboBox<City> cityComboBox,
-                                              TextField streetNameTextField, TextField houseNumberTextField) {
+                                              TextField streetNameTextField, TextField houseNumberTextField)
+            throws ValidationException{
 
         List<String> errors = new ArrayList<>();
         validateTextField(projectNameTextField, "Unesite naziv projekta", errors);
@@ -186,7 +188,8 @@ public class ValidationProtocol {
     }
 
     public static void validateUpdateProject(TextField newProjectNameTextField, TextArea projectDescriptionTextArea,
-                                             TextField streetNameTextField, TextField houseNumberTextField, ComboBox<City> cityComboBox) {
+                                             TextField streetNameTextField, TextField houseNumberTextField,
+                                             ComboBox<City> cityComboBox) throws  ValidationException{
 
         List<String> errors = new ArrayList<>();
         validateTextField(newProjectNameTextField, "Unesite naziv projekta", errors);
@@ -294,7 +297,8 @@ public class ValidationProtocol {
 
 
     public static void validateUsernameChange(User currentUser, TextField changeUserNameTextField,
-                                              PasswordField enterPasswordForUsernameChangePasswordField) {
+                                              PasswordField enterPasswordForUsernameChangePasswordField)
+            throws ValidationException {
 
         List<String> errors = new ArrayList<>();
         validateUserNameTextField(currentUser, changeUserNameTextField, errors);
@@ -350,7 +354,7 @@ public class ValidationProtocol {
 
     public static void validatePasswordChange(User currentUser, PasswordField changePasswordPasswordField,
                                               PasswordField confirmChangePasswordPasswordField,
-                                              PasswordField enterOldPasswordPasswordField) {
+                                              PasswordField enterOldPasswordPasswordField) throws ValidationException {
 
         if (enterOldPasswordPasswordField.getText().isEmpty()){
             throw new ValidationException("Unesite staru lozinku");
@@ -529,7 +533,8 @@ public class ValidationProtocol {
     }
 
 
-    public static void validateAddress(TextField streetNameTextField, TextField houseNumberTextField, ComboBox<City> cityPickerComboBox) {
+    public static void validateAddress(TextField streetNameTextField, TextField houseNumberTextField,
+                                       ComboBox<City> cityPickerComboBox) throws ValidationException {
 
             List<String> errors = new ArrayList<>();
 

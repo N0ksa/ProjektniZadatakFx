@@ -1,2 +1,7 @@
 admin:jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=:Admin
 klub1:VMTmDV/0mKZOUSBLuAzW0EHtvMYwwXfqG9ConL6F3cc=:User
+klub2:nBIqp1rzvJbPK/7PGyW8c4mmFaeWYUIbwrn9R1d4OKs=:User
+klub3:uEPhAsB5VWnbAfMUO/VqQ9xd1Hg1uQ2gBXyBApHk194=:User
+klub4:UvQCJWN/A6Zk+K9k7JVz8KnVvRPzPUgtZKogvspJLa0=:User
+klub5:LpXkLdZ0v+2wpzZ6zyuyVEQu9xQE3K73CnV2sFl46VM=:User
+klub6:YEPUsiFsTl3nD895lRN7GAzxj4ysisQk782WAQOSkhg=:User

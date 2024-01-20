@@ -1,8 +1,5 @@
 package hr.java.project.projectfxapp.exception;
 
-/**
- * Baci se u slučaju kada ne postoji navedeni grad.
- */
 public class NoSuchCityException extends RuntimeException{
     public NoSuchCityException() {
     }

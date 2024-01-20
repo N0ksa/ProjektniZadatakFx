@@ -1624,7 +1624,7 @@ public class DatabaseUtil {
             }
 
         }
-      catch (SQLException | IOException ex) {
+        catch (SQLException | IOException ex) {
             String message = "Dogodila se pogreška kod brisanja adrese iz baze podataka";
             logger.error(message, ex);
         }

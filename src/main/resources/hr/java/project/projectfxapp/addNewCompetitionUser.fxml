@@ -35,8 +35,8 @@
       <TextField fx:id="auditoriumBuildingNameTextField" layoutX="210.0" layoutY="407.0" prefHeight="34.0" prefWidth="190.0" promptText="Unesi ime zgrade" />
       <TextField fx:id="auditoriumHallNameTextField" layoutX="210.0" layoutY="453.0" prefHeight="34.0" prefWidth="190.0" promptText="Unesi ime dovrane" />
       <Button layoutX="390.0" layoutY="559.0" mnemonicParsing="false" onAction="#saveCompetition" prefHeight="34.0" prefWidth="80.0" text="Dodaj" />
-      <Label layoutX="570.0" layoutY="147.0" text="Odaberi natjecatelje:" />
-      <ListView fx:id="competitionParticipantsListView" layoutX="481.0" layoutY="165.0" prefHeight="179.0" prefWidth="286.0" />
+      <Label layoutX="571.0" layoutY="102.0" text="Odaberi natjecatelje:" />
+      <ListView fx:id="competitionParticipantsListView" layoutX="481.0" layoutY="123.0" prefHeight="221.0" prefWidth="286.0" />
       <Label layoutX="481.0" layoutY="399.0" text="Odaberi datum natjecanja: " />
       <DatePicker fx:id="dateOfCompetitionDatePicker" editable="false" layoutX="624.0" layoutY="395.0" />
       <Label layoutX="481.0" layoutY="448.0" text="Unesi vrijeme natjecanja:" />

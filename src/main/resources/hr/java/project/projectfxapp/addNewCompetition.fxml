@@ -28,20 +28,20 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="73.0" minHeight="6.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="73.0" minHeight="6.0" prefHeight="36.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
              <fx:include source="menuForAdmin.fxml" />
-            <Label text="Dodaj novo natjecanje" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label text="Dodaj novo natjecanje" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -121,8 +121,8 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Button>
-            <Label text="Odaberi natjecatelje:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <ListView fx:id="competitionParticipantsListView" onMouseClicked="#addPotentialParticipantToTableView" prefHeight="112.0" prefWidth="452.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <Label text="Odaberi natjecatelje:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <ListView fx:id="competitionParticipantsListView" onMouseClicked="#addPotentialParticipantToTableView" prefHeight="112.0" prefWidth="452.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="3">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>

@@ -2,12 +2,14 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.NavigationForUserController">
    <children>
@@ -35,13 +37,22 @@
                         <FontAwesomeIconView glyphName="ROCKET" layoutX="38.0" layoutY="454.0" size="25" />
                         <Line endX="162.0" layoutX="95.0" layoutY="192.0" startX="-88.0" style="-fx-fill: #374151;" />
                         <Line endX="165.0" layoutX="95.0" layoutY="490.0" startX="-88.0" style="-fx-fill: #374151;" />
-                        <Button layoutX="24.0" layoutY="544.0" mnemonicParsing="false" onAction="#showSettings" prefHeight="41.0" prefWidth="225.0" text="Postavke" />
-                        <FontAwesomeIconView glyphName="GEAR" layoutX="41.0" layoutY="573.0" size="25" />
+                        <Button layoutX="24.0" layoutY="512.0" mnemonicParsing="false" onAction="#showSettings" prefHeight="41.0" prefWidth="225.0" text="Postavke" />
+                        <FontAwesomeIconView glyphName="GEAR" layoutX="41.0" layoutY="541.0" size="25" />
+                        <Button layoutX="23.0" layoutY="575.0" mnemonicParsing="false" onAction="#showLogin" prefHeight="41.0" prefWidth="225.0" text="Odjava" />
+                        <FontAwesomeIconView glyphName="SIGN_OUT" layoutX="40.0" layoutY="604.0" size="25" />
                      </children>
                   </AnchorPane>
                </left>
                <top>
-                  <AnchorPane prefHeight="54.0" prefWidth="1100.0" style="-fx-background-color: #374151;" BorderPane.alignment="CENTER" />
+                  <AnchorPane prefHeight="54.0" prefWidth="1100.0" style="-fx-background-color: #374151;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="clockLabel" layoutX="14.0" layoutY="8.0" prefHeight="38.0" prefWidth="365.0" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
                </top>
                <center>
                   <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="641.0" prefWidth="832.0" style="-fx-background-color: #F4F9FF;" BorderPane.alignment="CENTER" />

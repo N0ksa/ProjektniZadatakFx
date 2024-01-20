@@ -63,17 +63,17 @@
       </children>
    </AnchorPane>
    <Label layoutX="834.0" layoutY="409.0" prefHeight="17.0" prefWidth="208.0" text="Broj sudionika na svakom natjecanju" />
-   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="31.0" layoutY="208.0" prefHeight="17.0" prefWidth="200.0" text="Label" textFill="#374151">
+   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="4.0" layoutY="216.0" prefHeight="27.0" prefWidth="257.0" text="Label" textFill="#374151">
       <font>
          <Font size="18.0" />
       </font>
    </Label>
-   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="257.0" layoutY="6.0" prefHeight="45.0" prefWidth="839.0" text="Natjecanja" textFill="WHITE">
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="254.0" prefHeight="45.0" prefWidth="839.0" text="Natjecanja" textFill="WHITE">
       <font>
          <Font size="24.0" />
       </font>
    </Label>
-   <FontAwesomeIconView fill="WHITE" glyphName="TROPHY" layoutX="580.0" layoutY="41.0" opacity="0.18" size="3em" wrappingWidth="21.142857551574707" />
+   <FontAwesomeIconView fill="WHITE" glyphName="TROPHY" layoutX="577.0" layoutY="35.0" opacity="0.18" size="3em" wrappingWidth="21.142857551574707" />
    <Separator layoutX="732.0" layoutY="376.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="21.0" />
 
 </AnchorPane>

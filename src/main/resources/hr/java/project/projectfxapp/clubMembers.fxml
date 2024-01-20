@@ -61,7 +61,7 @@
       </font>
    </Label>
    <Label alignment="CENTER" layoutX="613.0" layoutY="369.0" prefHeight="17.0" prefWidth="460.0" text="Kretanje rezultata članova kluba kroz različita natjecanja " />
-   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="30.0" layoutY="206.0" prefHeight="17.0" prefWidth="200.0" text="Label" textFill="#374151">
+   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutY="213.0" prefHeight="27.0" prefWidth="254.0" text="Label" textFill="#374151">
       <font>
          <Font size="18.0" />
       </font>

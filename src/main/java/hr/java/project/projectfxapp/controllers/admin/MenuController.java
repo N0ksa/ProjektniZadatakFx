@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -57,5 +58,16 @@ public class MenuController {
 
     public void showChangesApplicationScreen(ActionEvent actionEvent) {
         JavaFxProjectApplication.switchScene(ApplicationScreen.Changes);
+    }
+
+    public void showLoginApplicationScreen(ActionEvent actionEvent) {
+
+        boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog(
+                "Odjava", "Odjava", "Jeste li sigurni da se želite odjaviti?" +
+                        "\nPritisnite Da za odjavu");
+
+        if (positiveConfirmation){
+            JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
+        }
     }
 }

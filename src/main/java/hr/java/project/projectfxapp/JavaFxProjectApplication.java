@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp;
 
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,11 +29,26 @@ public class JavaFxProjectApplication extends Application {
         stage.setTitle("ProjektMatematika");
         stage.setScene(scene);
         stage.setResizable(false);
+        setOnCloseRequest(stage);
+
 
         Image logo = new Image(Objects.requireNonNull(getClass().getResource("/images/projekt_matematika_logo.png")).toExternalForm());
         stage.getIcons().add(logo);
 
         stage.show();
+    }
+
+    private void setOnCloseRequest(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda izlaza",
+                    "Jeste li sigurni da želite izaći iz aplikacije?",
+                    "Ako želite izaći iz aplikacije pritisnite Da");
+
+            if (positiveConfirmation){
+                stage.close();
+            }
+        });
     }
 
     public static Stage getMainStage(){

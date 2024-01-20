@@ -163,7 +163,7 @@
             <Button layoutX="90.0" layoutY="406.0" mnemonicParsing="false" onAction="#saveNewClubImage" text="Spremi novu sliku" />
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="214.0" prefHeight="27.0" prefWidth="247.0" text="Label">
+      <Label fx:id="clubNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="214.0" prefHeight="27.0" prefWidth="247.0" text="Label">
          <font>
             <Font size="18.0" />
          </font>

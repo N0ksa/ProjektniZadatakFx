@@ -1,6 +1,6 @@
 package hr.java.project.projectfxapp.exception;
 
-public class ValidationException extends RuntimeException{
+public class ValidationException extends Exception{
     public ValidationException() {
     }
 

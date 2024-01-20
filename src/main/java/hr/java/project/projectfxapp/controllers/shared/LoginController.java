@@ -2,10 +2,7 @@ package hr.java.project.projectfxapp.controllers.shared;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
-import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Picture;
-import hr.java.project.projectfxapp.entities.User;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.UserRole;
@@ -23,6 +20,8 @@ import java.util.List;
 
 public class LoginController {
 
+    @FXML
+    private Button loginButton;
     @FXML
     private BorderPane registerClubBorderPane;
     @FXML
@@ -58,13 +57,19 @@ public class LoginController {
     private Label wrongCredentialsLabel;
 
 
-    public void initialize(){
+
+
+
+    public void initialize() {
+
         cityComboBox.getItems().setAll(City.values());
+
     }
 
 
 
     public void login(ActionEvent actionEvent) throws UnsupportedAlgorithmException {
+
 
         String enteredUsername = usernameTextField.getText();
         String enteredPassword = passwordPasswordField.getText();
@@ -134,7 +139,7 @@ public class LoginController {
 
             addressBuilder.setAddressId(addressId);
 
-            MathClub newMathClub = new MathClub(0L, clubNameTextField.getText(), address,
+            MathClub newMathClub = new MathClub(0L, clubNameTextField.getText(), addressBuilder.build(),
                     new HashSet<>());
 
             List<MathClub> mathClubs = new ArrayList<>();
@@ -152,11 +157,23 @@ public class LoginController {
             users.add(registerUser);
             FileWriterUtil.saveUsers(users);
 
-            DatabaseUtil.saveUser(registerUser);
+            boolean positiveConfirmation = DatabaseUtil.saveUser(registerUser);
+
+            if(positiveConfirmation) {
+                List<Change> changes = SerializationUtil.deserializeChanges();
+                Change change = Change.create(registerUser, "/",
+                        "Korisnik " + registerUser.getUsername() + " se registrirao", "Registracija");
+                changes.add(change);
+                SerializationUtil.serializeChanges(changes);
 
 
-            ValidationProtocol.showSuccessAlert("Registracija uspješna", "Registracija korisnika " +
-                    registerUser.getUsername() + " je uspješna\nMolimo prijavite se sa svojim podacima");
+                ValidationProtocol.showSuccessAlert("Registracija uspješna", "Registracija korisnika " +
+                        registerUser.getUsername() + " je uspješna\nMolimo prijavite se sa svojim podacima");
+
+            }
+
+
+
 
 
         }catch (ValidationException ex){

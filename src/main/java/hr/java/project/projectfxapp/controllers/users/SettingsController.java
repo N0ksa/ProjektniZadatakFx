@@ -7,6 +7,7 @@ import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class SettingsController {
 
+    @FXML
+    private Label clubNameLabel;
     @FXML
     private ImageView usernameProfilePictureImageView;
     @FXML
@@ -47,6 +50,7 @@ public class SettingsController {
     public void initialize() {
         User currentUser = SessionManager.getInstance().getCurrentUser();
         setUserPicture(currentUser);
+        clubNameLabel.setText(SessionManager.getInstance().getCurrentClub().getName());;
 
     }
 
