@@ -15,7 +15,7 @@
    <children>
       <AnchorPane id="memberImageView" layoutX="432.0" layoutY="74.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="207.0" AnchorPane.bottomAnchor="262.0" AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="74.0">
          <children>
-            <ImageView fx:id="memberImage" fitHeight="142.0" fitWidth="169.0" layoutX="19.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="memberImage" fitHeight="149.0" fitWidth="183.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" />
          </children></AnchorPane>
       <Label fx:id="additionalInfoForMemberLabel" alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="61.0" prefWidth="670.0" style="-fx-background-color: #374151;" text="Dodatne informacije - " textFill="WHITE">
          <font>

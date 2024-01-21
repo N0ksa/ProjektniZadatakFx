@@ -3,7 +3,6 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -19,13 +18,9 @@
                <left>
                   <AnchorPane prefHeight="646.0" prefWidth="273.0" style="-fx-background-color: #4a92f7;" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane id="clubIconAnchorPane" layoutX="47.0" layoutY="6.0" prefHeight="124.0" prefWidth="161.0" AnchorPane.bottomAnchor="521.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="6.0">
+                        <AnchorPane id="clubIconAnchorPane" layoutX="51.0" layoutY="14.0" prefHeight="124.0" prefWidth="161.0" AnchorPane.bottomAnchor="513.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="14.0">
                            <children>
-                              <ImageView fx:id="clubLogoImageView" fitHeight="119.0" fitWidth="134.0" layoutX="21.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../images/math_club_default_logo.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="clubLogoImageView" fitHeight="132.0" fitWidth="163.0" layoutY="-6.0" pickOnBounds="true" />
                            </children></AnchorPane>
                         <Button layoutX="23.0" layoutY="227.0" mnemonicParsing="false" onAction="#showUserMainScreen" prefHeight="41.0" prefWidth="225.0" text="Kontrolna ploča" />
                         <Button layoutX="23.0" layoutY="293.0" mnemonicParsing="false" onAction="#showClubMembers" prefHeight="41.0" prefWidth="225.0" text="Članovi" />

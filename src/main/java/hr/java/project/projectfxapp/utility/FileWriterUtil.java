@@ -21,7 +21,6 @@ public class FileWriterUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(FileWriterUtil.class);
 
-
     public static void saveUsers(List<User> users) {
         File usersFile = new File(Constants.USER_FILE_NAME);
 

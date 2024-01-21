@@ -32,7 +32,6 @@ public class FileReaderUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(FileReaderUtil.class);
 
-
     public static List<User> getUsers() {
         List<User> userList = new ArrayList<>();
 

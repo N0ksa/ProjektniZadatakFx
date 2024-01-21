@@ -1,15 +1,19 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
+import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.time.Clock;
 import java.util.Optional;
 
@@ -23,10 +27,15 @@ public class NavigationForUserController {
 
 
 
+
     public void initialize(){
+
         ClockThread clockThread = new ClockThread(clockLabel);
         Thread thread = new Thread(clockThread);
         thread.start();
+
+        User currentUser = SessionManager.getInstance().getCurrentUser();
+        setClubLogoImage(currentUser.getPicture().getPicturePath());
     }
 
 
@@ -62,5 +71,11 @@ public class NavigationForUserController {
             JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
         }
 
+    }
+
+    public void setClubLogoImage(String imagePath) {
+        File newFile = new File(imagePath);
+        Image image = new Image(newFile.toURI().toString());
+        clubLogoImageView.setImage(image);
     }
 }

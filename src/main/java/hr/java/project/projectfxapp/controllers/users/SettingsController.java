@@ -1,25 +1,32 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
+import hr.java.project.projectfxapp.entities.FileCopier;
 import hr.java.project.projectfxapp.entities.User;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class SettingsController {
 
@@ -42,9 +49,11 @@ public class SettingsController {
     @FXML
     private PasswordField enterPasswordForUsernameChangePasswordField;
 
-    private static final Logger logger = LoggerFactory.getLogger(SettingsController.class);
+    private String imagePath = Constants.DEFAULT_PICTURE_PATH_USER;
 
-    private static String imagePath = Constants.DEFAULT_PICTURE_PATH_USER;
+
+
+    private static final Logger logger = LoggerFactory.getLogger(SettingsController.class);
 
 
     public void initialize() {
@@ -56,10 +65,12 @@ public class SettingsController {
 
     private void setUserPicture(User currentUser) {
         String picturePath = currentUser.getPicture().getPicturePath();
-        if (picturePath != null) {
-            Image image = new Image(getClass().getResource(picturePath).toExternalForm());
+        if (!picturePath.isEmpty()){
+            File pictureFile = new File(picturePath);
+            Image image = new Image(pictureFile.toURI().toString());
             usernameProfilePictureImageView.setImage(image);
         }
+
     }
 
     public void confirmPasswordChange(ActionEvent event) {
@@ -81,6 +92,11 @@ public class SettingsController {
                 if (updateSuccessful) {
                     ValidationProtocol.showSuccessAlert("Ažuriranje lozinke je uspjelo",
                             "Lozinka je uspješno promijenjena");
+
+
+
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
+
                 } else {
                     ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje lozinke nije uspjelo",
                             "Pokušajte ponovno");
@@ -115,6 +131,10 @@ public class SettingsController {
                 if (updateSuccessful) {
                     ValidationProtocol.showSuccessAlert("Ažuriranje korisničkog imena je uspjelo",
                             "Korisničko ime je uspješno promijenjeno u " + changeUserNameTextField.getText());
+
+
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
+
                 } else {
                     ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje korisničkog imena nije uspjelo",
                             "Pokušajte ponovno");
@@ -136,28 +156,30 @@ public class SettingsController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Odaberi sliku");
 
-        // Set the initial directory to the "images" directory in resources
-        try {
-            URL resourceUrl = getClass().getResource("/images");
-            File initialDirectory = new File(resourceUrl.toURI());
-            fileChooser.setInitialDirectory(initialDirectory);
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
 
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+        File selectedFile = fileChooser.showOpenDialog(null);
 
-            File selectedFile = fileChooser.showOpenDialog(null);
+        if (Optional.ofNullable(selectedFile).isPresent()) {
+            try {
+                String destinationDirectory = "src/main/resources/images/";
 
-            if (selectedFile != null) {
-                String imageName = selectedFile.getName();
-                String relativePath = "/images/" + imageName;
 
-                Image newImage = new Image(getClass().getResource(relativePath).toExternalForm());
-                usernameProfilePictureImageView.setImage(newImage);
-                imagePath = relativePath;
+                FileCopier<File> fileCopier = new FileUtils();
+                fileCopier.copyToDirectory(selectedFile, destinationDirectory);
+
+
+                File imageFile = new File(destinationDirectory + selectedFile.getName());
+                Image image = new Image(imageFile.toURI().toString());
+                usernameProfilePictureImageView.setImage(image);
+
+
+                imagePath = destinationDirectory + selectedFile.getName();
+
+            } catch (IOException ex) {
+                logger.error("Greška prilikom kopiranja slike", ex);
             }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            // Handle the exception as needed
         }
     }
 
@@ -199,8 +221,6 @@ public class SettingsController {
     }
 
     public void saveNewClubImage(ActionEvent actionEvent) {
-        User currentUser = SessionManager.getInstance().getCurrentUser();
-        String newImagePath = imagePath;
 
         boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog
                 ("Potvrda promjene slike", "Promjena slike",
@@ -208,6 +228,10 @@ public class SettingsController {
                                 "\nAko ste sigurni pritisnite Da");
 
         if (positiveConfirmation) {
+
+            User currentUser = SessionManager.getInstance().getCurrentUser();
+            String newImagePath = imagePath;
+            currentUser.getPicture().setPicturePath(newImagePath);
 
             boolean updateSuccessful = DatabaseUtil.updateUserProfilePicture(currentUser, newImagePath);
 
@@ -221,7 +245,8 @@ public class SettingsController {
             }
         }
 
+        JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
+
     }
 }
-
 

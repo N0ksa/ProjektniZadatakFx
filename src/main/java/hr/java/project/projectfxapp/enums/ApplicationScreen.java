@@ -34,7 +34,8 @@ public enum ApplicationScreen {
     AddressSearch("Pretraži adrese", "addressSearch.fxml", false),
     AddNewAddress("Dodaj adresu", "addNewAddress.fxml", false),
     Changes("Promjene", "changes.fxml", false),
-    Login("Prijava", "login.fxml", false);
+    Login("Prijava", "login.fxml", false),
+    NavigationForUser("Navigacija", "navigationForUser.fxml", false);
 
     private final String title;
     private final String pathOfFxml;

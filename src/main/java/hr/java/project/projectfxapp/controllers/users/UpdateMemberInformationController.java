@@ -1,14 +1,13 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Change;
+import hr.java.project.projectfxapp.entities.FileCopier;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +16,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,7 +68,9 @@ public class UpdateMemberInformationController {
     @FXML
     private ToggleGroup yearOfStudySelection;
 
-    private static String imagePath = "/images/question_mark_person_logo.png";
+    private static String imagePath = Constants.DEFAULT_PICTURE_PATH;
+
+    private static final Logger logger = LoggerFactory.getLogger(UpdateMemberInformationController.class);
 
 
 
@@ -91,7 +95,9 @@ public class UpdateMemberInformationController {
 
         setActiveYearOfStudy(memberToUpdate);
 
-        studentImageView.setImage(new Image(getClass().getResource(memberToUpdate.getPicture().getPicturePath()).toExternalForm()));
+        File imageFile = new File(memberToUpdate.getPicture().getPicturePath());
+        Image image = new Image(imageFile.toURI().toString());
+        studentImageView.setImage(image);
 
         studentGradesTableView.setEditable(true);
         subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
@@ -190,14 +196,27 @@ public class UpdateMemberInformationController {
 
         File selectedFile = fileChooser.showOpenDialog(null);
 
-        if (selectedFile != null) {
-            String imageName = selectedFile.getName();
+        if (Optional.ofNullable(selectedFile).isPresent()) {
+            try {
+                String destinationDirectory = "src/main/resources/images/";
+                String pathToLoad = "/images/";
 
-            String relativePath = "/images/" + imageName;
 
-            Image newImage = new Image(getClass().getResource(relativePath).toExternalForm());
-            studentImageView.setImage(newImage);
-            imagePath = relativePath;
+                FileCopier<File> fileCopier = new FileUtils();
+                fileCopier.copyToDirectory(selectedFile, destinationDirectory);
+
+                String relativePath = pathToLoad + selectedFile.getName();
+
+                File imageFile = new File(destinationDirectory + selectedFile.getName());
+                Image image = new Image(imageFile.toURI().toString());
+                studentImageView.setImage(image);
+
+
+                imagePath = destinationDirectory + selectedFile.getName();
+
+            } catch (IOException ex) {
+                logger.error("Greška prilikom kopiranja slike", ex);
+            }
         }
     }
 

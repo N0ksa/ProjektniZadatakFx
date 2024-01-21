@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -80,8 +81,9 @@ public class MemberCardController {
 
     private void setStudentPicture(Student currentStudent) {
         String picturePath = currentStudent.getPicture().getPicturePath();
-        if (picturePath != null) {
-            Image image = new Image(getClass().getResource(picturePath).toExternalForm());
+        if (!picturePath.isEmpty()) {
+            File file = new File(picturePath);
+            Image image = new Image(file.toURI().toString());
             memberImage.setImage(image);
         }
     }
