@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -99,6 +100,7 @@ public class LoginController {
                 User currentUser = DatabaseUtil.getCurrentUser(enteredUsername, PasswordUtil.hashPassword(enteredPassword)).get();
                 SessionManager.getInstance().setCurrentClub(DatabaseUtil.getMathClub(currentUser.getMathClubId()).get());
                 SessionManager.getInstance().setCurrentUser(currentUser);
+                SessionManager.getInstance().setLoginTime(LocalDateTime.now());
 
 
                 JavaFxProjectApplication.switchScene(ApplicationScreen.MainScreenForUser);

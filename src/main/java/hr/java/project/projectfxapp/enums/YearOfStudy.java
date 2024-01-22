@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Predstavlja različite godine studija sa popisom predmeta koji se pohađaju u svakoj godini.
- */
 public enum YearOfStudy implements Serializable {
     FIRST_YEAR(1, Arrays.asList("Elementarna matematika 1", "Linearna algebra 1",
                                     "Matematička analiza 1", "Programiranje 1",

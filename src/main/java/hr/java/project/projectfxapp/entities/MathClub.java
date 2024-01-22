@@ -6,20 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Predstavlja matematički klub.
- * Implementira sučelje {@link Gradable}, što znači da se može ocjenjivati.
- */
+
 public final class MathClub extends NamedEntity implements Gradable, Serializable {
     private Address address;
     private Set<Student> students;
 
-    /**
-     * Konstruktor za stvaranje objekta razreda "MathClub".
-     * @param name Naziv matematičkog kluba.
-     * @param address Adresa kluba.
-     * @param students Lista studenata koji su članovi kluba.
-     */
+
     public MathClub(Long clubId, String name, Address address, Set<Student> students) {
         super(clubId, name);
         this.address = address;
@@ -61,11 +53,6 @@ public final class MathClub extends NamedEntity implements Gradable, Serializabl
     }
 
 
-    /**
-     * Služi za zbrajanje svih bodova koje su članovi matematičkog kluba ostvarili na svim natjecanjima.
-     * @param studentsCompetitions Lista rezultata natjecanja u kojima su članovi kluba sudjelovali.
-     * @return BigDecimal - ukupan broj bodova matematičkog kluba ostvarenih na natjecanjima.
-     */
     private BigDecimal collectAllScoresFromCompetitions(List <CompetitionResult> studentsCompetitions){
         BigDecimal sumOfAllScores = BigDecimal.ZERO;
         for (CompetitionResult competition: studentsCompetitions){
@@ -75,10 +62,7 @@ public final class MathClub extends NamedEntity implements Gradable, Serializabl
         return sumOfAllScores;
     }
 
-    /**
-     * Služi da dobivanje broja članova.
-     * @return Integer - broj članova matematičkog kluba.
-     */
+
     public Integer getNumberOfMembers (){
         return students.size();
     }

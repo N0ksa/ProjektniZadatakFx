@@ -1,7 +1,10 @@
 package hr.java.project.projectfxapp;
 
+import hr.java.project.projectfxapp.entities.LoginStatistics;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
+import hr.java.project.projectfxapp.utility.SerializationUtil;
+import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class JavaFxProjectApplication extends Application {
@@ -49,6 +53,11 @@ public class JavaFxProjectApplication extends Application {
             if (positiveConfirmation){
                 SerializeChangesThread serializeChangesThread = SerializeChangesThread.getInstance();
                 serializeChangesThread.executeTaskManually();
+
+                SessionManager.getInstance().setLogoutTime(LocalDateTime.now());
+                LoginStatistics loginStatistics = SessionManager.getInstance().recordLoginStatistics();
+                SerializationUtil.addAndSerializeLoginStatistics(loginStatistics);
+
                 stage.close();
             }
         });

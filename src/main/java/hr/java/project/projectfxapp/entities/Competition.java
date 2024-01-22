@@ -126,11 +126,6 @@ public final class Competition extends NamedEntity implements Serializable, Reco
     }
 
 
-    /**
-     * Dohvaća rezultat natjecanja za određenog sudionika.
-     * @param participant Student za kojeg se dohvaća rezultat natjecanja.
-     * @return {@code Optional} koji sadrži rezultat natjecanja za sudionika ili prazan optional ako sudionik nije bio na natjecanju.
-     */
     public Optional <CompetitionResult> getCompetitionResultForParticipant(Student participant){
 
         return competitionResults.stream()
@@ -138,11 +133,7 @@ public final class Competition extends NamedEntity implements Serializable, Reco
                 .findFirst();
     }
 
-    /**
-     * Provjerava je li određeni student sudionik ovog natjecanja.
-     * @param participantToCheck Student za provjeru sudjelovanja.
-     * @return <code>true</code> ako je student sudionik ovog natjecanja, inače <code>false</code>.
-     */
+
     public boolean hasParticipant(Student participantToCheck){
         for (CompetitionResult competition : competitionResults){
             if (competition.participant().equals(participantToCheck)){
@@ -152,10 +143,7 @@ public final class Competition extends NamedEntity implements Serializable, Reco
         return false;
     }
 
-    /**
-     * Vraća pobjednika natjecanja.
-     * @return Student - pobjednik natjecanja.
-     */
+
     public Optional <Student> findWinner(){
 
        return competitionResults.stream()

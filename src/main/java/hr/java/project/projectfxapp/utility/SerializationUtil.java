@@ -5,6 +5,7 @@ package hr.java.project.projectfxapp.utility;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.Competition;
+import hr.java.project.projectfxapp.entities.LoginStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +56,47 @@ public class SerializationUtil {
         }
 
         return changes;
+    }
+
+
+
+
+    public static void serializeLoginStatisticsList(List<LoginStatistics> loginStatisticsList) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(Constants.STATISTICS_FILE_NAME))) {
+            oos.writeObject(loginStatisticsList);
+        } catch (IOException ex) {
+            String message = "Greška prilikom deserijalizacije!";
+            logger.error(message, ex);
+        }
+    }
+
+    public static List<LoginStatistics> deserializeLoginStatisticsList() {
+        List<LoginStatistics> loginStatisticsList = new ArrayList<>();
+
+        File file = new File(Constants.STATISTICS_FILE_NAME);
+
+        if (file.length() == 0) {
+            return loginStatisticsList;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Constants.STATISTICS_FILE_NAME))) {
+            Object object = ois.readObject();
+            if (object instanceof List<?>) {
+                 loginStatisticsList = (List<LoginStatistics>) object;
+            } else {
+                logger.error("Nije moguće deserijalizirati listu promjena. Neočekivani format objekta.");
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            String message = "Greška prilikom deserijalizacije!";
+            logger.error(message, ex);
+        }
+        return loginStatisticsList;
+    }
+
+    public static void addAndSerializeLoginStatistics(LoginStatistics newLoginStatistics) {
+        List<LoginStatistics> existingLoginStatistics = deserializeLoginStatisticsList();
+        existingLoginStatistics.add(newLoginStatistics);
+        serializeLoginStatisticsList(existingLoginStatistics);
     }
 
 

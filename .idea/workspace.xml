@@ -4,18 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Osposobio threadove - SerializeChangesThread.java,&#10;DeserializeChangesThread.java&#10;&#10;- napravio sam da budu singleton, odnosno da nakon svakog pozivanja nove initialize() metode se bez veze ne stvara novi thread.&#10;-prilikom logout usera ili admina manualno se poziva SerializeChangesThread.java kako bi se još jednom zapisalo prije izlaska (inače se promjene pišu jednom svakih 2 minute)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/threads/GetMostRecentChangeThread.java" afterDir="false" />
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao i implementirao GetMostRecentChangeThread.java thread koji dohvaća najnoviju promjenu i prikazuje ju preko tablice&#10;&#10;-popravio bug prilikom uspoređivanja jednakosti studenata">
+      <change afterPath="$PROJECT_DIR$/dat/statistics.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/LoginStatistics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/LoginStatisticsRecorder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/pogreske.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/pogreske.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/MainScreenForAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/MainScreenForAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ClubMembersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/ClubMembersController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/ClubMembership.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/ClubMembership.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/NavigationForUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/NavigationForUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Competition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Competition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/CompetitionResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/CompetitionResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Gradable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Gradable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/MathClub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/MathClub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/MathProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/MathProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/NamedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/NamedEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Picture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Picture.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/threads/ClockThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/threads/ClockThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ChangesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/ChangesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/design/design.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/design/design.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ValidationRegex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/ValidationRegex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/YearOfStudy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/YearOfStudy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SerializationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SerializationUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SessionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SessionManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +41,9 @@
       <list>
         <option value="Enum" />
         <option value="FxmlFile" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -53,26 +67,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_directory_selection&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/src/main/java/hr/java/project/projectfxapp&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/dat&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.ApplicationConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_directory_selection": "E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/Moja godina/ProjektniZadatakFx/ProjectFxApp/src/main/java/hr/java/project/projectfxapp",
+    "last_opened_file_path": "E:/Tehničko veleučilište Zagreb/Kolegiji druga godina/Treći semestar/Programiranje u jeziku Java/tvz-java-projekt-master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "com.github.copilot.settings.ApplicationConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="hr.java.project.projectfxapp.entities" />
@@ -231,6 +245,7 @@
       <workItem from="1705909058569" duration="8410000" />
       <workItem from="1705918370765" duration="4005000" />
       <workItem from="1705924918679" duration="4642000" />
+      <workItem from="1705933005406" duration="7895000" />
     </task>
     <task id="LOCAL−00001" summary="Dodao sve potrebne klase za javaFxProject od prethodnog projekta.">
       <option name="closed" value="true" />
@@ -484,7 +499,14 @@
       <option name="presentableId" value="LOCAL−00036" />
       <updated>1705917364806</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL−00037" summary="Dodao i implementirao GetMostRecentChangeThread.java thread koji dohvaća najnoviju promjenu i prikazuje ju preko tablice&#10;&#10;-popravio bug prilikom uspoređivanja jednakosti studenata">
+      <option name="closed" value="true" />
+      <created>1705933111149</created>
+      <option name="number" value="LOCAL−00037" />
+      <option name="presentableId" value="LOCAL−00037" />
+      <updated>1705933111149</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -502,7 +524,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Počeo povezivat projekt s bazom podataka&#10;&#10;-napravio novu klasu DatabaseUtil.java koja će služiti za dohvaćanje i pisanje po bazi podataka.&#10;&#10;- za sada napravio nekoliko metoda koje dohvaćaju studente, matematičke klubove i adrese iz baze podataka&#10;&#10;- nisam do kraja sastavio bazu podataka" />
     <MESSAGE value="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)" />
     <MESSAGE value="Dodao logiku spremanja novih projekata, natjecanja, studenata i klubova (djelomično, prilagodit ću još) u bazu podataka." />
     <MESSAGE value="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)" />
@@ -527,7 +548,8 @@
     <MESSAGE value="Ispravio sitne greške, dodao ostale korisnike i implementirao sat kao dretvu" />
     <MESSAGE value="Popravio slike, sada se mogu odabrati od bilo gdje." />
     <MESSAGE value="Osposobio threadove - SerializeChangesThread.java,&#10;DeserializeChangesThread.java&#10;&#10;- napravio sam da budu singleton, odnosno da nakon svakog pozivanja nove initialize() metode se bez veze ne stvara novi thread.&#10;-prilikom logout usera ili admina manualno se poziva SerializeChangesThread.java kako bi se još jednom zapisalo prije izlaska (inače se promjene pišu jednom svakih 2 minute)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Osposobio threadove - SerializeChangesThread.java,&#10;DeserializeChangesThread.java&#10;&#10;- napravio sam da budu singleton, odnosno da nakon svakog pozivanja nove initialize() metode se bez veze ne stvara novi thread.&#10;-prilikom logout usera ili admina manualno se poziva SerializeChangesThread.java kako bi se još jednom zapisalo prije izlaska (inače se promjene pišu jednom svakih 2 minute)" />
+    <MESSAGE value="Dodao i implementirao GetMostRecentChangeThread.java thread koji dohvaća najnoviju promjenu i prikazuje ju preko tablice&#10;&#10;-popravio bug prilikom uspoređivanja jednakosti studenata" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodao i implementirao GetMostRecentChangeThread.java thread koji dohvaća najnoviju promjenu i prikazuje ju preko tablice&#10;&#10;-popravio bug prilikom uspoređivanja jednakosti studenata" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -536,6 +558,15 @@
           <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MemberCardController.java</url>
           <line>128</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/SerializationUtil.java</url>
+          <line>72</line>
+          <properties class="hr.java.project.projectfxapp.utility.SerializationUtil" method="deserializeLoginStatisticsList">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -103,11 +103,7 @@ public final class Student extends NamedEntity implements Gradable, Serializable
         this.clubMembership = clubMembership;
     }
 
-    /**
-     * Izračunava prosječnu ocjenu studenta.
-     *
-     * @return BigDecimal - Prosječna ocjena studenta, ako student nema ocjena vraća se nula.
-     */
+
     public BigDecimal calculateAverageGrade() {
         int counter = 0;
         BigDecimal sumOfGrades = new BigDecimal(0);
@@ -141,12 +137,7 @@ public final class Student extends NamedEntity implements Gradable, Serializable
                 .add(numberOfCollaborationsWeight.multiply(new BigDecimal(numberOfCollaborations)));
     }
 
-    /**
-     * Zbraja sve bodove koje je student osvojio na svim natjecanjima.
-     *
-     * @param studentCompetitions Lista rezultata svih natjecanja u kojima je student sudjelovao.
-     * @return BigDecimal - ukupan broj bodova osvojenih na natjecanjima.
-     */
+
     private BigDecimal calculateTotalCompetitionScores(List<CompetitionResult> studentCompetitions) {
         BigDecimal sumOfAllScores = BigDecimal.ZERO;
         for (CompetitionResult competition : studentCompetitions) {

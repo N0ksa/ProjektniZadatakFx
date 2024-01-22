@@ -6,10 +6,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-/**
- * Predstavlja matematički projekt.
- */
-
 public final class MathProject extends NamedEntity implements Serializable, Recordable<MathProject> {
 
     private MathClub organizer;
@@ -19,12 +15,6 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
     private Address address;
     private Map<MathClub, List<Student>> collaborators;
 
-    /**
-     * Konstruktor za stvaranje nove instance matematičkog projekta.
-     * @param name Naziv matematičkog projekta.
-     * @param description Opis projekta.
-     * @param collaborators Mapa koja povezuje matematičke klubove s njihovim članovima koji sudjeluju u projektu.
-     */
     public MathProject(Long projectId, MathClub organizer, LocalDate startDate, Address address, String name, String description,
                        Map<MathClub, List<Student>> collaborators) {
         super(projectId, name);
@@ -95,11 +85,6 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
     }
 
 
-    /**
-     * Provjerava da li određeni student sudjeluje u projektu.
-     * @param studentToCheck Student koji se provjerava da li sudjeluje u projektu.
-     * @return <code>true</code> ako je student sudionik projekta, inače <code>false</code>.
-     */
     public boolean hasStudentCollaborator(Student studentToCheck){
         for (List <Student> student : collaborators.values()){
             if (student.contains(studentToCheck)){
@@ -110,11 +95,6 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
         return false;
     }
 
-    /**
-     * Provjerava da li određeni matematički klub sudjeluje u projektu.
-     * @param mathClubToCheck Matematički klub koji se provjerava da li sudjeluje u projektu.
-     * @return <code>true</code> ako je student sudionik projekta, inače <code>false</code>.
-     */
     public boolean hasMathClubCollaborator(MathClub mathClubToCheck){
         return collaborators.containsKey(mathClubToCheck);
     }

@@ -1,10 +1,5 @@
 package hr.java.project.projectfxapp.enums;
 
-import java.util.regex.Pattern;
-
-/**
- * Predstavlja regularne izraze za provjeru valjanosti.
- */
 public enum ValidationRegex {
     VALID_WEB_ADDRESS("www\\.[A-Za-z0-9]+\\.[A-Za-z]+"),
     VALID_POSTAL_CODE("[0-9]+"),

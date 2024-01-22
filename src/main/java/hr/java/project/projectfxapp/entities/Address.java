@@ -6,9 +6,6 @@ import hr.java.project.projectfxapp.enums.City;
 import java.io.Serializable;
 import java.util.Objects;
 
-/**
- * Predstavlja adresu koja se sastoji od ulice, broja, grada i poštanskog broja.
- */
 public class Address implements Serializable {
 
     private Long addressId;
@@ -16,12 +13,6 @@ public class Address implements Serializable {
     private String houseNumber;
     private City city;
 
-    /**
-     * Privatni konstruktor za stvaranje instance klase Adress.
-     * @param street  Ulica
-     * @param houseNumber Kućni broj
-     * @param city Grad
-     */
     private Address(Long  addressId, String street, String houseNumber, City city) {
         this.addressId = addressId;
         this.street = street;
@@ -37,9 +28,7 @@ public class Address implements Serializable {
         this.city = other.city;
     }
 
-    /**
-     * Unutarnja klasa za izgradnju objekata tipa {@link Address}.
-     */
+
     public static class AdressBuilder{
         private Long id;
         private String street;
@@ -47,41 +36,23 @@ public class Address implements Serializable {
 
         private City city;
 
-        /**
-         * Konstruktor koji postavlja grad.
-         * @param city Grad.
-         */
+
         public AdressBuilder(City city){
             this.city= city;
         }
 
-
-        /**
-         * Postavlja id kućne adrese.
-         * @param id Id kućne adrese.
-         * @return AdressBuilder - trenutni AdresBuilder za daljnje postavljanje atributa.
-         */
         public AdressBuilder setId(Long id) {
             this.id = id;
             return this;
         }
 
-        /**
-         * Postavlja ulicu kućne adrese.
-         * @param street Ulica.
-         * @return AdressBuilder - trenutni AdresBuilder za daljnje postavljanje atributa.
-         */
+
         public AdressBuilder setStreet(String street) {
             this.street = street;
             return this;
         }
 
 
-        /**
-         * Postavlja broj kućne adrese.
-         * @param houseNumber Kućni broj.
-         * @return AdressBuilder - trenutni AddressBuilder za daljnje postavljanje atributa.
-         */
         public AdressBuilder setHouseNumber(String houseNumber) {
             this.houseNumber = houseNumber;
             return this;
@@ -93,10 +64,6 @@ public class Address implements Serializable {
         }
 
 
-        /**
-         * Generira objekt tipa {@link Address}.
-         * @return Generiran objekt tipa {@link Address}.
-         */
         public Address build(){
             return new Address(id, street, houseNumber, city);
         }

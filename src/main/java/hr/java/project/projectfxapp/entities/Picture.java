@@ -19,7 +19,6 @@ public class Picture {
         this.picturePath = picturePath;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,7 +26,6 @@ public class Picture {
         Picture picture = (Picture) o;
         return Objects.equals(picturePath, picture.picturePath);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(picturePath);

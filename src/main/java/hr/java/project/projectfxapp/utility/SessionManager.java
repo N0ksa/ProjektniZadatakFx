@@ -2,18 +2,20 @@ package hr.java.project.projectfxapp.utility;
 
 import hr.java.project.projectfxapp.entities.*;
 
-public class SessionManager {
+import java.time.LocalDateTime;
+
+public class SessionManager implements LoginStatisticsRecorder {
     private static SessionManager instance;
-
     private User currentUser;
-
     private MathClub currentClub;
-
     private Student currentStudent;
-
     private Competition currentCompetition;
-
     private MathProject currentProject;
+
+
+    private LocalDateTime loginTime;
+    private LocalDateTime logoutTime;
+
 
 
     private SessionManager() {
@@ -66,7 +68,17 @@ public class SessionManager {
         this.currentStudent = student;
     }
 
-    public void clearSession() {
-        this.currentUser = null;
+
+    public void setLoginTime(LocalDateTime loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public void setLogoutTime(LocalDateTime logoutTime) {
+        this.logoutTime = logoutTime;
+    }
+
+    @Override
+    public LoginStatistics recordLoginStatistics() {
+        return LoginStatistics.getStatistic(currentUser, currentClub, loginTime, logoutTime);
     }
 }

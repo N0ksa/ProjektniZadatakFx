@@ -5,9 +5,6 @@ import hr.java.project.projectfxapp.exception.NoSuchCityException;
 
 import java.io.Serializable;
 
-/**
- *Predstavlja različite gradove u Hrvatskoj s njihovim odgovarajućim poštanskim brojevima.
- */
 public enum City implements Serializable {
     ZAGREB("Zagreb", "10000"),
     SPLIT("Split", "21000"),
