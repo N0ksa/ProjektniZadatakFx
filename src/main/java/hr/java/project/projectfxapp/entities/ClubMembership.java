@@ -55,7 +55,9 @@ public class ClubMembership implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClubMembership that = (ClubMembership) o;
-        return Objects.equals(clubMembershipId, that.clubMembershipId) && Objects.equals(clubId, that.clubId) && Objects.equals(joinDate, that.joinDate);
+        return Objects.equals(clubMembershipId, that.clubMembershipId) &&
+                Objects.equals(clubId, that.clubId)
+                && Objects.equals(joinDate, that.joinDate);
     }
 
     @Override

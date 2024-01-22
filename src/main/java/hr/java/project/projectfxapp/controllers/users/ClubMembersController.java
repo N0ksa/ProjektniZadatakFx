@@ -71,7 +71,7 @@ public class ClubMembersController {
    public void initialize(){
 
        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
-         currentClubNameTextField.setText(currentClub.getName());
+       currentClubNameTextField.setText(currentClub.getName());
 
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
 

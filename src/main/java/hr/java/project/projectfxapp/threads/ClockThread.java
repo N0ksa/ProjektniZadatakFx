@@ -39,8 +39,6 @@ public class ClockThread implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000);
-
                 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -49,6 +47,7 @@ public class ClockThread implements Runnable {
 
                 Platform.runLater(() -> labelToUpdate.setText(formattedTime + " " + formattedDate));
 
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());
             }

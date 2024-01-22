@@ -18,11 +18,6 @@ public class ChangesManager {
         return changes;
     }
 
-    public static void addChange(Change change) {
-        ChangesManager.changes.add(change);
-    }
-
-
     public static void clearChanges() {
        changes.clear();
     }

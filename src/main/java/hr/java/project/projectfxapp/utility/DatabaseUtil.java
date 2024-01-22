@@ -30,9 +30,8 @@ public class DatabaseUtil {
         String urlDataBase = properties.getProperty("databaseUrl");
         String username = properties.getProperty("username");
         String password = properties.getProperty("password");
-        Connection connection = DriverManager.getConnection(urlDataBase,
+        return DriverManager.getConnection(urlDataBase,
                 username, password);
-        return connection;
 
     }
 

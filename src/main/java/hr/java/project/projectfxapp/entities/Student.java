@@ -227,7 +227,7 @@ public final class Student extends NamedEntity implements Gradable, Serializable
         }
 
         public Student build() {
-            if (picturePath == null) {
+            if (picturePath.isEmpty()) {
                 picturePath = Constants.DEFAULT_PICTURE_PATH;
             }
 
