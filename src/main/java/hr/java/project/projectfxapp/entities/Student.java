@@ -39,10 +39,8 @@ public final class Student extends NamedEntity implements Gradable, Serializable
         this.gender = studentToCopy.gender;
         this.email = studentToCopy.email;
         this.yearOfStudy = studentToCopy.yearOfStudy;
-        this.grades = new LinkedHashMap<>(studentToCopy.grades);
-        this.clubMembership = new ClubMembership(studentToCopy.clubMembership.getClubMembershipId(),
-                studentToCopy.clubMembership.getClubMembershipId(), studentToCopy.clubMembership.getJoinDate());
-
+        this.grades = new HashMap<>(studentToCopy.grades);
+        this.clubMembership = studentToCopy.clubMembership;
         this.picture = new Picture(studentToCopy.picture.getPicturePath());
     }
 
@@ -164,16 +162,15 @@ public final class Student extends NamedEntity implements Gradable, Serializable
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Student student = (Student) o;
-        return Objects.equals(surname, student.surname)
-                && Objects.equals(email, student.email)
-                && Objects.equals(yearOfStudy, student.yearOfStudy)
-                && Objects.equals(grades, student.grades)
-                && Objects.equals(clubMembership, student.clubMembership);
+        return Objects.equals(surname, student.surname) && Objects.equals(gender, student.gender)
+                && Objects.equals(email, student.email) && Objects.equals(yearOfStudy, student.yearOfStudy)
+                && Objects.equals(grades, student.grades) && Objects.equals(clubMembership, student.clubMembership)
+                && Objects.equals(picture, student.picture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), surname, email, yearOfStudy, grades, clubMembership);
+        return Objects.hash(super.hashCode(), surname, gender, email, yearOfStudy, grades, clubMembership, picture);
     }
 
     @Override
@@ -248,14 +245,21 @@ public final class Student extends NamedEntity implements Gradable, Serializable
             StringBuilder oldValueBuilder = new StringBuilder();
             StringBuilder newValueBuilder = new StringBuilder();
 
-            compareAndAppend("Ime", this.getName(), newValueToCompare.getName(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Prezime", this.getSurname(), newValueToCompare.getSurname(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Spol", this.getGender(), newValueToCompare.getGender(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Email", this.getEmail(), newValueToCompare.getEmail(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Godina studija", this.getYearOfStudy(), newValueToCompare.getYearOfStudy(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Ime", this.getName(), newValueToCompare.getName(), oldValueBuilder,
+                    newValueBuilder);
+            compareAndAppend("Prezime", this.getSurname(), newValueToCompare.getSurname(), oldValueBuilder,
+                    newValueBuilder);
+            compareAndAppend("Spol", this.getGender(), newValueToCompare.getGender(), oldValueBuilder,
+                    newValueBuilder);
+            compareAndAppend("Email", this.getEmail(), newValueToCompare.getEmail(), oldValueBuilder,
+                    newValueBuilder);
+            compareAndAppend("Godina studija", this.getYearOfStudy(), newValueToCompare.getYearOfStudy(),
+                    oldValueBuilder, newValueBuilder);
             compareAndAppend("Ocjene", this.getGrades(), newValueToCompare.getGrades(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Članstvo", this.getClubMembership(), newValueToCompare.getClubMembership(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Slika", this.getPicture(), newValueToCompare.getPicture(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Članstvo", this.getClubMembership(), newValueToCompare.getClubMembership(),
+                    oldValueBuilder, newValueBuilder);
+            compareAndAppend("Slika", this.getPicture().getPicturePath(),
+                    newValueToCompare.getPicture().getPicturePath(), oldValueBuilder, newValueBuilder);
 
             return Optional.of(Change.create(
                     SessionManager.getInstance().getCurrentUser(),

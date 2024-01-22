@@ -74,11 +74,10 @@ public class AddNewMathClubController {
                 if (success){
 
                     User currentUser = SessionManager.getInstance().getCurrentUser();
-                    List<Change> changes = SerializationUtil.deserializeChanges();
                     Change change = Change.create(currentUser, "/",
                             "Dodan novi korisnik: " + registerUser.getUsername(), "Korisnik");
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
+                    ChangesManager.getChanges().add(change);
+
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog korisnika je bilo uspješno",
                             "Klub " + newMathClub.getName()  + " uspješno se spremio!");

@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Recordable;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.threads.DeserializeChangesThread;
 import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -46,12 +47,14 @@ public class ChangesController {
     private TableColumn<Change, String> userRoleTableColumn;
 
     public void initialize() {
-        List<Change> changes = SerializationUtil.deserializeChanges();
-        setChangesTableView(changes);
+        setChangesTableView();
+        DeserializeChangesThread deserializeChangesThread = DeserializeChangesThread.getInstance();
+        deserializeChangesThread.setChangesTableView(changesTableView);
+        deserializeChangesThread.startThread();
 
     }
 
-    private void setChangesTableView(List<Change> changes) {
+    private void setChangesTableView() {
         newValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().newValue());
@@ -86,7 +89,7 @@ public class ChangesController {
         });
 
 
-        changesTableView.setItems(FXCollections.observableArrayList(changes));
+
     }
 
     public void deleteChanges(ActionEvent actionEvent) {

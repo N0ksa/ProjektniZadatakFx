@@ -97,9 +97,7 @@ public class AddNewProjectController {
                 Change change = Change.create(currentUser, "/",
                         "Dodan novi projekt: " + newProject.getName(), "Projekt");
 
-                List<Change> changes = SerializationUtil.deserializeChanges();
-                changes.add(change);
-                SerializationUtil.serializeChanges(changes);
+                ChangesManager.getChanges().add(change);
 
 
                 ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",

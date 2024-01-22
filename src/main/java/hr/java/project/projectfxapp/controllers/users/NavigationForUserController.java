@@ -5,6 +5,7 @@ import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
+import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
@@ -29,10 +30,9 @@ public class NavigationForUserController {
 
 
     public void initialize(){
-
-        ClockThread clockThread = new ClockThread(clockLabel);
-        Thread thread = new Thread(clockThread);
-        thread.start();
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
+        clockThread.startThread();
 
         User currentUser = SessionManager.getInstance().getCurrentUser();
         setClubLogoImage(currentUser.getPicture().getPicturePath());
@@ -69,6 +69,8 @@ public class NavigationForUserController {
 
         if (positiveConfirmation){
             JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
+            SerializeChangesThread serializeChangesThread = SerializeChangesThread.getInstance();
+            serializeChangesThread.executeTaskManually();
         }
 
     }

@@ -5,10 +5,7 @@ import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -157,9 +154,7 @@ public class UpdateCompetitionUserController {
                     Optional<Change> change = oldcompetition.getChange(competitionToUpdate);
 
                     if (change.isPresent()){
-                        List<Change> changes = SerializationUtil.deserializeChanges();
-                        changes.add(change.get());
-                        SerializationUtil.serializeChanges(changes);
+                        ChangesManager.getChanges().add(change.get());
                     }
 
                     ValidationProtocol.showSuccessAlert("Ažuriranje natjecanja je bilo uspješno",

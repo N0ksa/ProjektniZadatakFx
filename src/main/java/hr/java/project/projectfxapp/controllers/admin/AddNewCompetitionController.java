@@ -121,8 +121,12 @@ public class AddNewCompetitionController {
                 boolean success = DatabaseUtil.saveMathCompetitions(competitions);
 
                 if (success){
+                    User currentUser = SessionManager.getInstance().getCurrentUser();
+                    Change change = Change.create(currentUser, "/",
+                            "Dodano natjecanje: " + newCompetition.getName(), "Natjecanje");
 
-                    serializeChanges(newCompetition);
+                    ChangesManager.getChanges().add(change);
+
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
                             "Natjecanje " + newCompetition.getName()  + " uspješno se spremio!");
@@ -144,24 +148,6 @@ public class AddNewCompetitionController {
 
 
 
-    private void serializeChanges(Competition newCompetition) {
-
-        User currentUser = SessionManager.getInstance().getCurrentUser();
-        Change change = Change.create(currentUser, "/",
-                "Dodano natjecanje: " + newCompetition.getName(), "Natjecanje");
-
-
-        DeserializeChangesThread deserializeChangesThread = new DeserializeChangesThread();
-        Thread deserializeThread = new Thread(deserializeChangesThread);
-        deserializeThread.start();
-
-        List<Change> changes = deserializeChangesThread.getChanges();
-        changes.add(change);
-
-        SerializeChangesThread serializeChangesThread = new SerializeChangesThread(changes);
-        Thread serializeThread = new Thread(serializeChangesThread);
-        serializeThread.start();
-    }
 
 
     private Competition constructCompetition() {

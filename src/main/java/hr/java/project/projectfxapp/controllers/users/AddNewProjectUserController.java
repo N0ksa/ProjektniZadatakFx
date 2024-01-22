@@ -3,10 +3,7 @@ package hr.java.project.projectfxapp.controllers.users;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,11 +71,11 @@ public class AddNewProjectUserController {
                 if (success){
 
                     User currentUser = SessionManager.getInstance().getCurrentUser();
-                    List<Change> changes = SerializationUtil.deserializeChanges();
+
                     Change change = Change.create(currentUser, "/",
                             "Spremljen novi projekt: " + newProject.getName(), "Projekt");
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
+
+                    ChangesManager.getChanges().add(change);
 
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",

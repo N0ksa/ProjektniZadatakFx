@@ -8,6 +8,7 @@ import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,6 +71,9 @@ public class LoginController {
 
     public void login(ActionEvent actionEvent) throws UnsupportedAlgorithmException {
 
+
+        ChangesManager.getChanges();
+        SerializeChangesThread serializeChangesThread = SerializeChangesThread.getInstance();
 
         String enteredUsername = usernameTextField.getText();
         String enteredPassword = passwordPasswordField.getText();

@@ -1,10 +1,7 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.entities.*;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.utility.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -121,9 +118,7 @@ public class RegisterMembersIntoProjectController {
 
                 Optional<Change> change = oldProject.getChange(currentProject);
                 if (change.isPresent()) {
-                    List<Change> changes = SerializationUtil.deserializeChanges();
-                    changes.add(change.get());
-                    SerializationUtil.serializeChanges(changes);
+                    ChangesManager.getChanges().add(change.get());
                 }
 
                 ValidationProtocol.showSuccessAlert("Uspješno ste promijenili registrirane članove u natjecanju",

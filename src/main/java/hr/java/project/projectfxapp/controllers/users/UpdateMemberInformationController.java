@@ -140,6 +140,8 @@ public class UpdateMemberInformationController {
                 }
             }
         });
+
+        imagePath = memberToUpdate.getPicture().getPicturePath();
     }
 
 
@@ -205,8 +207,6 @@ public class UpdateMemberInformationController {
                 FileCopier<File> fileCopier = new FileUtils();
                 fileCopier.copyToDirectory(selectedFile, destinationDirectory);
 
-                String relativePath = pathToLoad + selectedFile.getName();
-
                 File imageFile = new File(destinationDirectory + selectedFile.getName());
                 Image image = new Image(imageFile.toURI().toString());
                 studentImageView.setImage(image);
@@ -245,10 +245,9 @@ public class UpdateMemberInformationController {
                 if (updateSuccessful){
 
                     Optional<Change> change = oldMember.getChange(memberToUpdate);
+
                     if (change.isPresent()){
-                        List<Change> changes = SerializationUtil.deserializeChanges();
-                        changes.add(change.get());
-                        SerializationUtil.serializeChanges(changes);
+                        ChangesManager.getChanges().add(change.get());
                     }
 
                     ValidationProtocol.showSuccessAlert("Ažuriranje člana je bilo uspješno",
@@ -288,6 +287,7 @@ public class UpdateMemberInformationController {
         }
 
         memberToUpdate.setGrades(studentGrades);
+
 
         memberToUpdate.getPicture().setPicturePath(imagePath);
 

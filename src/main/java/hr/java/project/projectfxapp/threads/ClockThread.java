@@ -1,6 +1,5 @@
 package hr.java.project.projectfxapp.threads;
 
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import org.slf4j.Logger;
@@ -12,18 +11,32 @@ import java.util.Date;
 public class ClockThread implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(ClockThread.class);
-    private final Label labelToUpdate;
-
     private static ClockThread instance;
+    private Label labelToUpdate;
+    private Thread thread;
 
-    public ClockThread(Label labelToUpdate) {
+    private ClockThread() {}
+    public static synchronized ClockThread getInstance() {
+        if (instance == null) {
+            instance = new ClockThread();
+        }
+        return instance;
+    }
+
+    public void setLabelToUpdate(Label labelToUpdate) {
         this.labelToUpdate = labelToUpdate;
     }
 
+    public void startThread() {
+        if (thread == null || !thread.isAlive()) {
+            thread = new Thread(this);
+            thread.setDaemon(true);
+            thread.start();
+        }
+    }
 
     @Override
     public void run() {
-
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -35,7 +48,6 @@ public class ClockThread implements Runnable {
                 String formattedDate = dateFormat.format(new Date());
 
                 Platform.runLater(() -> labelToUpdate.setText(formattedTime + " " + formattedDate));
-
 
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());

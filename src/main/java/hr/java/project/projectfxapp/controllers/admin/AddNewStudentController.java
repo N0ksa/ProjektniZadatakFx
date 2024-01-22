@@ -153,9 +153,7 @@ public class AddNewStudentController {
                             "Dodan student: " + newStudent.getName() + " " + newStudent.getSurname(),
                             "Student");
 
-                    List<Change> changes = SerializationUtil.deserializeChanges();
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
+                    ChangesManager.getChanges().add(change);
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
                             "Student " + newStudent.getName() + " " + newStudent.getSurname() +

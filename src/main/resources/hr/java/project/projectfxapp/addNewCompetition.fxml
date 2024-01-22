@@ -155,10 +155,10 @@
             </ComboBox>
          </children>
       </GridPane>
-      <AnchorPane layoutX="6.0" layoutY="570.0" prefHeight="112.0" prefWidth="845.0">
+      <AnchorPane layoutX="6.0" layoutY="592.0" prefHeight="90.0" prefWidth="845.0">
          <children>
-            <FontAwesomeIconView glyphName="PLUS" layoutX="394.0" layoutY="81.0" opacity="0.19" size="3EM" text="" />
-            <FontAwesomeIconView glyphName="TROPHY" layoutX="423.0" layoutY="77.0" opacity="0.19" size="5EM" text="" />
+            <FontAwesomeIconView glyphName="PLUS" layoutX="394.0" layoutY="70.0" opacity="0.19" size="3EM" text="" />
+            <FontAwesomeIconView glyphName="TROPHY" layoutX="423.0" layoutY="66.0" opacity="0.19" size="5EM" text="" />
          </children>
       </AnchorPane>
    </children>
