@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.filter.MathProjectFilter;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -10,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 
 import static hr.java.project.projectfxapp.utility.FileReaderUtil.*;
 public class ProjectsSearchController {
+    @FXML
+    private Label clockLabel;
     @FXML
     private TableView<MathProject> projectsTableView;
     @FXML
@@ -41,6 +45,9 @@ public class ProjectsSearchController {
 
 
     public void initialize(){
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
         projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {

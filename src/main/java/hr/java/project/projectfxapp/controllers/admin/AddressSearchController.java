@@ -5,6 +5,7 @@ import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.filter.AddressFilter;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -14,16 +15,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.util.List;
 import java.util.Optional;
 
 public class AddressSearchController {
+    @FXML
+    private Label clockLabel;
     @FXML
     private TableView<Address> addressTableView;
 
@@ -47,6 +47,10 @@ public class AddressSearchController {
 
 
     public void initialize(){
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
+
         List<Address> addressList = DatabaseUtil.getAddresses();
         setAddressTableView(addressList);
 

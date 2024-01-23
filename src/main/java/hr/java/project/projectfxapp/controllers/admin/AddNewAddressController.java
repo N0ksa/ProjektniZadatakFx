@@ -3,15 +3,18 @@ package hr.java.project.projectfxapp.controllers.admin;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class AddNewAddressController {
-
+    @FXML
+    private Label clockLabel;
     @FXML
     private ComboBox<City> cityPickerComboBox;
 
@@ -24,6 +27,10 @@ public class AddNewAddressController {
 
 
     public void initialize() {
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
+
         cityPickerComboBox.getItems().setAll(City.values());
     }
     public void saveAddress(ActionEvent event) {

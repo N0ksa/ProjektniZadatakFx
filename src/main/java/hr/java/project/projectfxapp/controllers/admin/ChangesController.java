@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.Recordable;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.DeserializeChangesThread;
 import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
@@ -25,7 +26,8 @@ import java.util.Optional;
 
 public class ChangesController {
 
-
+    @FXML
+    private Label clockLabel;
     @FXML
     private TableColumn<Change,String> typeOfValueTableColumn;
     @FXML
@@ -47,6 +49,9 @@ public class ChangesController {
     private TableColumn<Change, String> userRoleTableColumn;
 
     public void initialize() {
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
+
         setChangesTableView();
         DeserializeChangesThread deserializeChangesThread = DeserializeChangesThread.getInstance();
         deserializeChangesThread.setChangesTableView(changesTableView);

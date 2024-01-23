@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.DeserializeChangesThread;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.*;
@@ -31,6 +32,8 @@ import java.util.Set;
 
 public class AddNewCompetitionController {
 
+    @FXML
+    private Label clockLabel;
     @FXML
     private ComboBox<MathClub> organizerComboBox;
     @FXML
@@ -60,6 +63,10 @@ public class AddNewCompetitionController {
 
 
     public void initialize(){
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
+
         List<Student> potentialParticipantsList = DatabaseUtil.getStudents();
         ObservableList<Student> potentialParticipantsObservableList = FXCollections.observableList(potentialParticipantsList);
         List<Address> addressesList = DatabaseUtil.getAddresses();

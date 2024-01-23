@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -9,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,6 +22,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ClubsSearchController {
+    @FXML
+    private Label clockLabel;
     @FXML
     private TextField clubNameTextField;
     @FXML
@@ -36,6 +40,9 @@ public class ClubsSearchController {
 
 
     public void initialize(){
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
         clubNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathClub, String> param) {

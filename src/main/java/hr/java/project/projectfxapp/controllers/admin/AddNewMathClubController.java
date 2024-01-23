@@ -5,6 +5,7 @@ import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,8 @@ import javafx.scene.control.*;
 import java.util.*;
 
 public class AddNewMathClubController {
-
+    @FXML
+    private Label clockLabel;
     @FXML
     private TextField newUserUsernameTextField;
     @FXML
@@ -30,6 +32,9 @@ public class AddNewMathClubController {
 
 
     public void initialize(){
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
         List<Address> availableAddresses = DatabaseUtil.getAddresses();
         ObservableList<Address> availableAddressesObservableList = FXCollections.observableList(availableAddresses);

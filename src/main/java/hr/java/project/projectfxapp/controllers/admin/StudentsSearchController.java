@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.StudentFilter;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 
 public class StudentsSearchController {
 
+    @FXML
+    private Label clockLabel;
     @FXML
     private  TextField studentSurnameTextField;
     @FXML
@@ -55,6 +58,9 @@ public class StudentsSearchController {
         clubComboBox.setItems(observableMathClubsList);
 
         setStudentsTableViewProperties(mathClubsList);
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
 
     }

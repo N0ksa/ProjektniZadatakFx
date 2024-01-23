@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp;
 
 import hr.java.project.projectfxapp.entities.LoginStatistics;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
+import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.SerializationUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
@@ -55,8 +56,11 @@ public class JavaFxProjectApplication extends Application {
                 serializeChangesThread.executeTaskManually();
 
                 SessionManager.getInstance().setLogoutTime(LocalDateTime.now());
-                LoginStatistics loginStatistics = SessionManager.getInstance().recordLoginStatistics();
-                SerializationUtil.addAndSerializeLoginStatistics(loginStatistics);
+
+                if (SessionManager.getInstance().getCurrentUser().getRole() == UserRole.USER){
+                    LoginStatistics loginStatistics = SessionManager.getInstance().recordLoginStatistics();
+                    SerializationUtil.addAndSerializeLoginStatistics(loginStatistics);
+                }
 
                 stage.close();
             }

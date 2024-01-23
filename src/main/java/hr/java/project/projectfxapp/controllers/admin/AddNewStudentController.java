@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 
 public class AddNewStudentController {
 
+    @FXML
+    private Label clockLabel;
     @FXML
     private RadioButton femaleGenderRadioButton;
     @FXML
@@ -49,6 +52,9 @@ public class AddNewStudentController {
     private TextField studentNameTextField;
 
     public void initialize() {
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
         studentGradesTableView.setEditable(true);
         subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));

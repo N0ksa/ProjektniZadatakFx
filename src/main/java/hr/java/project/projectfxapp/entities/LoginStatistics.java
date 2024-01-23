@@ -1,7 +1,11 @@
 package hr.java.project.projectfxapp.entities;
 
+import javafx.scene.chart.XYChart;
+
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 public record LoginStatistics(String username, String associatedMathClub
@@ -23,4 +27,6 @@ public record LoginStatistics(String username, String associatedMathClub
         long seconds = java.time.Duration.between(loginTime, logoutTime).getSeconds();
         return Math.toIntExact(seconds);
     }
+
+
 }

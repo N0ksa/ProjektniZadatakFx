@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -39,7 +43,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="516.0" prefHeight="179.0" prefWidth="835.0">
+      <AnchorPane layoutY="595.0" prefHeight="100.0" prefWidth="835.0">
          <children>
             <TableView id="changeTableView" fx:id="mostRecentChangeTableView" prefHeight="114.0" prefWidth="604.0" stylesheets="@../../../../design/design.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columns>
@@ -52,7 +56,7 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="485.0" prefHeight="20.0" prefWidth="835.0" text="Najnovije promjene:">
+      <Label alignment="CENTER" layoutY="575.0" prefHeight="20.0" prefWidth="835.0" text="Najnovija promijena:">
          <font>
             <Font size="14.0" />
          </font></Label>
@@ -128,5 +132,30 @@
             </ScrollPane>
          </children>
       </AnchorPane>
+      <AnchorPane layoutX="21.0" layoutY="303.0" prefHeight="262.0" prefWidth="490.0">
+         <children>
+            <LineChart fx:id="numberOfSignInOverTimeLineChart" layoutX="-38.0" layoutY="-69.0" prefHeight="331.0" prefWidth="490.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children>
+      </AnchorPane>
+      <Label layoutX="181.0" layoutY="295.0" text="Kretanje broja prijava u aplikaciju kroz vrijeme" />
+      <AnchorPane layoutX="534.0" layoutY="291.0" prefHeight="262.0" prefWidth="273.0">
+         <children>
+            <TableView fx:id="timeLeaderboardTableView" prefHeight="262.0" prefWidth="273.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="userTableColumn" prefWidth="99.0" text="Korisnik" />
+                <TableColumn fx:id="overallTimeTableColumn" prefWidth="173.0" text="Ukupno vrijeme korištenja " />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Separator layoutX="520.0" layoutY="292.0" orientation="VERTICAL" prefHeight="262.0" prefWidth="11.0" />
+      <Separator layoutX="32.0" layoutY="564.0" prefHeight="0.0" prefWidth="783.0" />
    </children>
 </AnchorPane>

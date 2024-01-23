@@ -2,6 +2,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -20,6 +21,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddNewProjectController {
+
+
+    @FXML
+    private Label clockLabel;
     @FXML
     private ComboBox<Address> projectAddressComboBox;
     @FXML
@@ -38,6 +43,9 @@ public class AddNewProjectController {
 
 
     public void initialize() {
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
         List<MathClub> mathClubsList = DatabaseUtil.getMathClubs();
 

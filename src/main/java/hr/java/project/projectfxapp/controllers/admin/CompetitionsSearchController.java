@@ -3,6 +3,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -10,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.time.LocalDate;
@@ -25,7 +23,8 @@ import java.util.stream.Collectors;
 
 public class CompetitionsSearchController {
 
-
+    @FXML
+    private Label clockLabel;
     @FXML
     private TextField competitionNameTextField;
     @FXML
@@ -48,6 +47,9 @@ public class CompetitionsSearchController {
     private static List<Competition> competitions;
 
     public void initialize(){
+
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
 
         competitions = DatabaseUtil.getCompetitions();
 

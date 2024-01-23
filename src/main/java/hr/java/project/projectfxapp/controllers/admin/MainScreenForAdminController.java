@@ -2,27 +2,39 @@ package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.LoginStatistics;
+import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.GetMostRecentChangeThread;
 import hr.java.project.projectfxapp.utility.SerializationUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainScreenForAdminController {
 
 
+    @FXML
+    private LineChart<String, Integer> numberOfSignInOverTimeLineChart;
+    @FXML
+    private TableView<Map.Entry<String, Duration>> timeLeaderboardTableView;
+    @FXML
+    private TableColumn<Map.Entry<String, Duration>, String> userTableColumn;
+    @FXML
+    private TableColumn<Map.Entry<String, Duration>, String> overallTimeTableColumn;
     @FXML
     private Label clockLabel;
 
@@ -73,10 +85,74 @@ public class MainScreenForAdminController {
         }
 
         List<LoginStatistics> loginStatisticsList = SerializationUtil.deserializeLoginStatisticsList();
+
         setLoginStatisticsCards(loginStatisticsList);
+        setNumberOfSignInOverTimeLineChart(loginStatisticsList);
+
+
+        Map<String, Duration> totalDurationForEachUser = loginStatisticsList.stream()
+                .collect(Collectors.groupingBy(LoginStatistics::username, Collectors.summingInt(LoginStatistics::loginDuration)))
+                .entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> Duration.ofSeconds(entry.getValue())));
+
+        setTimeLeaderboardTableView(totalDurationForEachUser);
 
 
     }
+
+    private void setTimeLeaderboardTableView(Map<String, Duration> totalDurationMap) {
+        userTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getKey()));
+
+        overallTimeTableColumn.setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(formatDuration(cellData.getValue().getValue())));
+
+        List<Map.Entry<String, Duration>> sortedTotalDurationMap = totalDurationMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+
+        timeLeaderboardTableView.setItems(FXCollections.observableArrayList(sortedTotalDurationMap));
+    }
+
+
+
+
+    private String formatDuration(Duration duration) {
+        long days = duration.toDays();
+        long hours = duration.toHoursPart();
+        long minutes = duration.toMinutesPart();
+        long seconds = duration.toSecondsPart();
+
+        return String.format("%d dana - %02d:%02d:%02d", days, hours, minutes, seconds);
+    }
+
+    private void setNumberOfSignInOverTimeLineChart(List<LoginStatistics> loginStatisticsList) {
+        Map<LocalDate, Long> signInCountsByDate = loginStatisticsList.stream()
+                .collect(Collectors.groupingBy(login -> login.loginTime().toLocalDate(), Collectors.counting()));
+
+        Map<LocalDate, Long> sortedSignInCountsByDate = new TreeMap<>(signInCountsByDate);
+
+       numberOfSignInOverTimeLineChart.getData().clear();
+
+       numberOfSignInOverTimeLineChart.getYAxis().setLabel("Broj prijava");
+       numberOfSignInOverTimeLineChart.getXAxis().setLabel("Datum prijave");
+
+          XYChart.Series<String, Integer> series = new XYChart.Series<>();
+          series.setName("Broj prijava");
+
+          for (Map.Entry<LocalDate, Long> entry : sortedSignInCountsByDate.entrySet()) {
+                LocalDate date = entry.getKey();
+                Long signInCount = entry.getValue();
+
+                series.getData().add(new XYChart.Data<>(date.format(DateTimeFormatter.ofPattern
+                        (ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())), signInCount.intValue()));
+          }
+
+          numberOfSignInOverTimeLineChart.getData().add(series);
+    }
+
+
+
+
 
     private void setLoginStatisticsCards(List<LoginStatistics> loginStatisticsList) {
         setTodaySignInNumber(loginStatisticsList);
@@ -87,17 +163,15 @@ public class MainScreenForAdminController {
     }
 
     private void setDateOfMostSignIn(List<LoginStatistics> loginStatisticsList) {
+
         Map<LocalDate, Long> signInCountsByDate = loginStatisticsList.stream()
                 .collect(Collectors.groupingBy(login -> login.loginTime().toLocalDate(), Collectors.counting()));
 
         Optional<Map.Entry<LocalDate, Long>> maxEntry = signInCountsByDate.entrySet().stream()
                 .max(Map.Entry.comparingByValue());
 
-        LocalDate dateOfMostSignIn = maxEntry.map(Map.Entry::getKey).orElse(null);
+        maxEntry.map(Map.Entry::getKey).ifPresent(dateOfMostSignIn -> this.dateOfMostSignIn.setText(dateOfMostSignIn.toString()));
 
-        if (dateOfMostSignIn != null) {
-            this.dateOfMostSignIn.setText(dateOfMostSignIn.toString());
-        }
     }
 
 
