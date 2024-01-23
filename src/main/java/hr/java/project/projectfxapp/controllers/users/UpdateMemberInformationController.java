@@ -1,14 +1,18 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.FileCopier;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -101,7 +105,6 @@ public class UpdateMemberInformationController {
 
         studentGradesTableView.setEditable(true);
         subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
-
         subjectGradeTableColumn.setCellValueFactory(param -> param.getValue().gradeProperty());
         subjectGradeTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         subjectGradeTableColumn.setOnEditCommit(event -> {
@@ -111,11 +114,14 @@ public class UpdateMemberInformationController {
             subjectGrade.setGrade(newGrade);
         });
 
-        List<SubjectGrade> subjectGrades = memberToUpdate.getGrades().entrySet().stream()
-                .map(entry -> new SubjectGrade(entry.getKey(), String.valueOf(entry.getValue())))
-                .collect(Collectors.toList());
+        ObservableList<SubjectGrade> subjectGrades = FXCollections.observableList(
+                memberToUpdate.getGrades().entrySet()
+                        .stream()
+                        .map(entry -> new SubjectGrade(entry.getKey(), String.valueOf(entry.getValue())))
+                        .collect(Collectors.toList())
+        );
 
-        studentGradesTableView.getItems().addAll(subjectGrades);
+        studentGradesTableView.setItems(subjectGrades);
 
         yearOfStudySelection.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             Integer selectedYear = getYearOfStudy();
@@ -250,6 +256,7 @@ public class UpdateMemberInformationController {
                         ChangesManager.getChanges().add(change.get());
                     }
 
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);
                     ValidationProtocol.showSuccessAlert("Ažuriranje člana je bilo uspješno",
                             "Član " + memberToUpdate.getName() + " " + memberToUpdate.getSurname() + " uspješno se ažurirao!");
                 }

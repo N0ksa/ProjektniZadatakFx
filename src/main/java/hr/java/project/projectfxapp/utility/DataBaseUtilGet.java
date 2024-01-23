@@ -679,9 +679,6 @@ public class DataBaseUtilGet {
 
             LocalDateTime dateAndTimeOfCompetition = dateOfCompetition.atTime(timeOfCompetition.toLocalTime());
 
-            Status status = Status.getStatusFromString(rs.getString("STATUS"));
-
-
             String auditoriumBuildingName = rs.getString("AUDITORIUM_BUILDING");
             String auditoriumHallName = rs.getString("AUDITORIUM_HALL");
             Auditorium auditorium = new Auditorium(auditoriumBuildingName, auditoriumHallName);
@@ -696,7 +693,7 @@ public class DataBaseUtilGet {
             competitionAddress.ifPresent(address -> {
 
                 Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription
-                        , address, auditorium, dateAndTimeOfCompetition, status, competitionResults);
+                        , address, auditorium, dateAndTimeOfCompetition, competitionResults);
 
                 competitions.add(newCompetition);
             });

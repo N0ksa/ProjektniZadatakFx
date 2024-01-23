@@ -186,7 +186,7 @@ public class AddNewCompetitionController {
         }
 
         return new Competition(competitionId, organizer, competitionName, competitionDescription,
-                competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
+                competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);
     }
 
 

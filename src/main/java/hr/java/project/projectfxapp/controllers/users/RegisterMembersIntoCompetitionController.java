@@ -1,6 +1,8 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -88,6 +90,7 @@ public class RegisterMembersIntoCompetitionController {
                     ChangesManager.getChanges().add(change.get());;
                 }
 
+                JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
                 ValidationProtocol.showSuccessAlert("Uspješno ste promijenili registrirane članove u natjecanju",
                         "Uspješno ste promijenili registrirane članove u natjecanju");
 

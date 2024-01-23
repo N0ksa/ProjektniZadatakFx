@@ -1,6 +1,8 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
@@ -106,6 +108,7 @@ public class AddNewCompetitionUserController {
 
                     ChangesManager.getChanges().add(change);
 
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
                     ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",
                             "Natjecanje " + newCompetition.getName() + " uspješno se spremilo!");
                 }else{
@@ -155,7 +158,7 @@ public class AddNewCompetitionUserController {
         Address competitionAddress = constructAddressForCompetition();
 
         return new Competition(competitionId, organizer, competitionName, competitionDescription,
-                competitionAddress, competitionAuditorium, competitionDateTime, status, competitionResults);
+                competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);
 
     }
 

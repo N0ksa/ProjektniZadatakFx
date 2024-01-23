@@ -1,6 +1,8 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
@@ -10,10 +12,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.BigDecimalStringConverter;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -68,13 +76,14 @@ public class UpdateCompetitionUserController {
        Competition currentCompetition =  SessionManager.getInstance().getCurrentCompetition();
        setCurrentCompetitionInformation(currentCompetition);
 
-       if (dateOfCompetitionDatePicker.getValue().isBefore(LocalDate.now())
-                || dateOfCompetitionDatePicker.getValue().isEqual(LocalDate.now())) {
+       LocalDateTime competitionDateTime = currentCompetition.getTimeOfCompetition();
+       LocalDateTime now = LocalDateTime.now();
 
-    	   enterResultsLabel.setVisible(true);
-    	   competitionResultsTableView.setVisible(true);
+         if (competitionDateTime.isBefore(now) || competitionDateTime.isEqual(now)) {
+     	   enterResultsLabel.setVisible(true);
+     	   competitionResultsTableView.setVisible(true);
+         }
 
-       }
 
         dateOfCompetitionDatePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -87,6 +96,7 @@ public class UpdateCompetitionUserController {
                 }
             }
         });
+
 
         competitionResultsTableView.editableProperty().set(true);
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
@@ -144,10 +154,8 @@ public class UpdateCompetitionUserController {
 
             if(positiveConfirmation){
 
-
                 Competition oldcompetition = new Competition(competitionToUpdate);
                 boolean updateSuccessful = changeCompetition(competitionToUpdate);
-
 
                 if (updateSuccessful){
 
@@ -157,8 +165,11 @@ public class UpdateCompetitionUserController {
                         ChangesManager.getChanges().add(change.get());
                     }
 
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
+
                     ValidationProtocol.showSuccessAlert("Ažuriranje natjecanja je bilo uspješno",
                             "Natjecanje " + competitionToUpdate.getName() + " uspješno se ažuriralo!");
+
                 }
                 else{
                     ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje natjecanja nije uspjelo",
@@ -168,17 +179,13 @@ public class UpdateCompetitionUserController {
             }
 
 
-
-
         }catch (ValidationException ex){
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 
 
-
-
-    }
+   }
 
     private boolean changeCompetition(Competition competitionToUpdate) {
         competitionToUpdate.setName(competitionNameTextField.getText());
@@ -205,12 +212,6 @@ public class UpdateCompetitionUserController {
 
         Set<CompetitionResult> competitionResults = new HashSet<>(competitionResultsTableView.getItems());
         competitionToUpdate.setCompetitionResults(competitionResults);
-
-        if (competitionDateTime.isAfter(LocalDateTime.now())) {
-            competitionToUpdate.setStatus(Status.PLANNED);
-        } else {
-            competitionToUpdate.setStatus(Status.FINISHED);
-        }
 
 
         return DatabaseUtil.updateCompetition(competitionToUpdate);

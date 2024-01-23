@@ -527,9 +527,9 @@ public class DatabaseUtil {
             for (Competition mathCompetition : mathCompetitions) {
 
                 String insertCompetitionProjectSql = "INSERT INTO COMPETITION(NAME, DESCRIPTION, ADDRESS_ID, " +
-                        "TIME_OF_COMPETITION, AUDITORIUM_BUILDING, AUDITORIUM_HALL, DATE_OF_COMPETITION, STATUS, " +
+                        "TIME_OF_COMPETITION, AUDITORIUM_BUILDING, AUDITORIUM_HALL, DATE_OF_COMPETITION, " +
                         "ORGANIZER_ID) " +
-                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement pstmt = connection.prepareStatement(insertCompetitionProjectSql, PreparedStatement.RETURN_GENERATED_KEYS);
                 pstmt.setString(1, mathCompetition.getName());
@@ -542,8 +542,7 @@ public class DatabaseUtil {
                 pstmt.setString(5, mathCompetition.getAuditorium().building());
                 pstmt.setString(6, mathCompetition.getAuditorium().hall());
                 pstmt.setDate(7, Date.valueOf(mathCompetition.getTimeOfCompetition().toLocalDate()));
-                pstmt.setString(8, mathCompetition.getStatus().getStatusDescription());
-                pstmt.setLong(9, mathCompetition.getOrganizer().getId());
+                pstmt.setLong(8, mathCompetition.getOrganizer().getId());
                 pstmt.executeUpdate();
 
 
@@ -1111,9 +1110,6 @@ public class DatabaseUtil {
 
             LocalDateTime dateAndTimeOfCompetition = dateOfCompetition.atTime(timeOfCompetition.toLocalTime());
 
-            Status status = Status.getStatusFromString(rs.getString("STATUS"));
-
-
             String auditoriumBuildingName = rs.getString("AUDITORIUM_BUILDING");
             String auditoriumHallName = rs.getString("AUDITORIUM_HALL");
             Auditorium auditorium = new Auditorium(auditoriumBuildingName, auditoriumHallName);
@@ -1128,7 +1124,7 @@ public class DatabaseUtil {
             competitionAddress.ifPresent(address -> {
 
                 Competition newCompetition = new Competition(competitionId, organizer, competitionName, competitionDescription
-                        , address, auditorium, dateAndTimeOfCompetition, status, competitionResults);
+                        , address, auditorium, dateAndTimeOfCompetition, competitionResults);
 
                 competitions.add(newCompetition);
             });
@@ -1331,7 +1327,7 @@ public class DatabaseUtil {
     public static boolean updateCompetition(Competition competitionToUpdate) {
         try (Connection connection = connectToDatabase()) {
             String updateQuery = "UPDATE COMPETITION SET NAME = ?, DESCRIPTION = ?, TIME_OF_COMPETITION = ?" +
-                    ",AUDITORIUM_BUILDING = ?, AUDITORIUM_HALL = ?, DATE_OF_COMPETITION = ?, STATUS = ?, ORGANIZER_ID = ?" +
+                    ",AUDITORIUM_BUILDING = ?, AUDITORIUM_HALL = ?, DATE_OF_COMPETITION = ?, ORGANIZER_ID = ?" +
                     " WHERE COMPETITION_ID = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -1341,9 +1337,8 @@ public class DatabaseUtil {
                 preparedStatement.setString(4, competitionToUpdate.getAuditorium().building());
                 preparedStatement.setString(5, competitionToUpdate.getAuditorium().hall());
                 preparedStatement.setDate(6, Date.valueOf(competitionToUpdate.getTimeOfCompetition().toLocalDate()));
-                preparedStatement.setString(7, competitionToUpdate.getStatus().getStatusDescription());
-                preparedStatement.setLong(8, competitionToUpdate.getOrganizer().getId());
-                preparedStatement.setLong(9, competitionToUpdate.getId());
+                preparedStatement.setLong(7, competitionToUpdate.getOrganizer().getId());
+                preparedStatement.setLong(8, competitionToUpdate.getId());
 
 
                 preparedStatement.executeUpdate();

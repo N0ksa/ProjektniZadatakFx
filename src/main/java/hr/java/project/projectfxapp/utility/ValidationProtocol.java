@@ -102,26 +102,21 @@ public class ValidationProtocol {
 
         List<CompetitionResult> competitionResultsList = competitionResultsTableView.getItems();
 
-        if(competitionResultsList.isEmpty()){
-            errors.add("Mora biti unešen rezultat za barem jednog natjecatelja");
-        }
-        else{
-            for(CompetitionResult competitionResult : competitionResultsList){
-                if (competitionResult.score().compareTo(BigDecimal.ZERO) < 0){
-                    String  negativeScoreErrorMessage = "Za studenta " +
-                            competitionResult.participant() +
-                            " unijeli ste negativan broj bodova.";
+        for(CompetitionResult competitionResult : competitionResultsList){
+            if (competitionResult.score().compareTo(BigDecimal.ZERO) < 0){
+                String  negativeScoreErrorMessage = "Za studenta " +
+                        competitionResult.participant() +
+                        " unijeli ste negativan broj bodova.";
 
-                    errors.add(negativeScoreErrorMessage);
-                }
+                errors.add(negativeScoreErrorMessage);
+            }
 
-                if (competitionResult.score().compareTo(BigDecimal.valueOf(100)) > 0){
-                    String overOneHundredScoreMessage = "Za studenta " +
-                            competitionResult.participant() +
-                            " unijeli ste više od 100 bodova.";
+            if (competitionResult.score().compareTo(BigDecimal.valueOf(100)) > 0){
+                String overOneHundredScoreMessage = "Za studenta " +
+                        competitionResult.participant() +
+                        " unijeli ste više od 100 bodova.";
 
-                    errors.add(overOneHundredScoreMessage);
-                }
+                errors.add(overOneHundredScoreMessage);
             }
         }
 

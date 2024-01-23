@@ -1,6 +1,8 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
@@ -77,7 +79,7 @@ public class AddNewProjectUserController {
 
                     ChangesManager.getChanges().add(change);
 
-
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);
                     ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
                             "Projekt " + newProject.getName() + "  uspješno se spremio");
                 }

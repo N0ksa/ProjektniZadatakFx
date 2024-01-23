@@ -5,9 +5,11 @@ import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.CompetitionResult;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
+import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +23,7 @@ import javafx.util.Callback;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -138,7 +141,6 @@ public class CompetitionsUserController {
                         ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("dd.MM.yyyy.")).contains(lowerCaseFilter)
                         ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("HH:mm")).contains(lowerCaseFilter)
                         ||competition.findWinner().isPresent() && competition.findWinner().get().getName().toLowerCase().contains(lowerCaseFilter)
-                        ||competition.getStatus().getStatusDescription().toLowerCase().contains(lowerCaseFilter)
                         ||competition.getOrganizer().getName().toLowerCase().contains(lowerCaseFilter);
             });
         });
@@ -182,8 +184,11 @@ public class CompetitionsUserController {
         competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 String winnerString;
-                if (param.getValue().getStatus().getStatusDescription().equals("Planirano")) {
-                    winnerString = "Nema pobjednika";
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime competitionTime = param.getValue().getTimeOfCompetition();
+
+                if (competitionTime.isAfter(now)){
+                    winnerString = "Natjecanje nije počelo";
                 } else {
                     Optional<Student> winner = param.getValue().findWinner();
                     winnerString = winner.map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika");
@@ -201,7 +206,21 @@ public class CompetitionsUserController {
 
         competitionStatusTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().getStatus().getStatusDescription());
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime competitionTime = param.getValue().getTimeOfCompetition();
+                String status = "";
+
+                if (competitionTime.isBefore(now)){
+                     status = Status.FINISHED.getStatusDescription();
+                }
+                else if (competitionTime.isAfter(now)){
+                     status = Status.PLANNED.getStatusDescription();
+                }
+                else{
+                     status = Status.ONGOING.getStatusDescription();
+                }
+
+                return new ReadOnlyStringWrapper(status);
             }
         });
 
@@ -238,8 +257,15 @@ public class CompetitionsUserController {
             SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
 
             if (Optional.ofNullable(selectedCompetition).isPresent()) {
-                if (selectedCompetition.getStatus().getStatusDescription().equals("Planirano")) {
+                LocalDateTime competitionTime = selectedCompetition.getTimeOfCompetition();
+                LocalDateTime now = LocalDateTime.now();
+
+                if (competitionTime.isAfter(now)) {
                     JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoCompetition);
+                }
+                else{
+                    ValidationProtocol.showErrorAlert("Greška prilikom registracije", "Natjecanje je završilo",
+                            "Natjecanje je završilo, nije moguće dodati članove");
                 }
             }
         }
@@ -252,9 +278,8 @@ public class CompetitionsUserController {
             Competition selectedCompetition = competitionTableView.getSelectionModel().getSelectedItem();
             SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
 
-            if (selectedCompetition != null || selectedCompetition.getStatus().getStatusDescription().equals("Planirano")) {
-                JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateCompetitionUser);
-            }
+            JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateCompetitionUser);
+
         }
 
     }

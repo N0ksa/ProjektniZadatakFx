@@ -1,7 +1,9 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
@@ -150,6 +152,8 @@ public class AddNewStudentUserController {
 
                     ChangesManager.getChanges().add(change);
 
+
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);
                     ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
                             "Student " + newStudent.getName() + " " + newStudent.getSurname()
                                     + " uspješno se spremio!");

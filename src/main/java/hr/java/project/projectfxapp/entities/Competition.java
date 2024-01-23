@@ -23,7 +23,6 @@ public final class Competition extends NamedEntity implements Serializable, Reco
     private LocalDateTime timeOfCompetition;
     private Set <CompetitionResult> competitionResults;
 
-    private Status status;
 
     /**
      * Konstruktor za stvaranje nove instance matematičkog natjecanja.
@@ -34,7 +33,7 @@ public final class Competition extends NamedEntity implements Serializable, Reco
      * @param competitionResults Rezultati natjecatelja.
      */
     public Competition(Long competitionId, MathClub organizer, String name, String description, Address address,
-                       Auditorium auditorium, LocalDateTime timeOfCompetition, Status status,
+                       Auditorium auditorium, LocalDateTime timeOfCompetition,
                        Set<CompetitionResult> competitionResults) {
         super(competitionId, name);
         this.description = description;
@@ -42,7 +41,6 @@ public final class Competition extends NamedEntity implements Serializable, Reco
         this.auditorium = auditorium;
         this.timeOfCompetition = timeOfCompetition;
         this.competitionResults = competitionResults;
-        this.status = status;
         this.organizer = organizer;
     }
 
@@ -60,8 +58,6 @@ public final class Competition extends NamedEntity implements Serializable, Reco
         for (CompetitionResult result : other.competitionResults) {
             this.competitionResults.add(result.withScore(result.score()));
         }
-
-        this.status = other.status;
     }
 
 
@@ -72,14 +68,6 @@ public final class Competition extends NamedEntity implements Serializable, Reco
 
     public void setOrganizer(MathClub organizer) {
         this.organizer = organizer;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public String getDescription() {

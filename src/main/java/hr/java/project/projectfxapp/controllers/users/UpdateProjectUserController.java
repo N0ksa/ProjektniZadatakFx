@@ -1,9 +1,11 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathProject;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
@@ -82,6 +84,7 @@ public class UpdateProjectUserController {
                         ChangesManager.getChanges().add(change.get());;
                     }
 
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);
                     ValidationProtocol.showSuccessAlert("Ažuriranje projekta je bilo uspješno",
                             "Projekt " + projectToUpdate.getName() + " uspješno se ažurirao!");
                 }
