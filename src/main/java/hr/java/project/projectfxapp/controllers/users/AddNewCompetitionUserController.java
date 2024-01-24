@@ -69,9 +69,13 @@ public class AddNewCompetitionUserController {
                 super.updateItem(date, empty);
 
                 LocalDate currentDate = LocalDate.now();
-                setDisable(date.isBefore(currentDate) && !date.isEqual(currentDate));;
+                LocalDate maxSelectableDate = currentDate.plusDays(4);
+
+                setDisable(date.isBefore(maxSelectableDate));
+                setStyle("-fx-background-color: #ffc0cb;");
             }
         });
+
 
 
     }

@@ -7,8 +7,10 @@ import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
+import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,6 +26,8 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -224,18 +228,46 @@ public class ProjectsUserController {
     }
 
     public void joinProject(ActionEvent actionEvent) {
-        if (Optional.ofNullable(projectsTableView.getSelectionModel().getSelectedItem()).isPresent()){
-            SessionManager.getInstance().setCurrentProject(projectsTableView.getSelectionModel().getSelectedItem());
-            JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoProject);
+        MathProject currentProject = projectsTableView.getSelectionModel().getSelectedItem();
+        if (Optional.ofNullable(currentProject).isPresent()){
+
+            LocalDate projectEndDate = currentProject.getEndDate();
+
+            if (Optional.ofNullable(projectEndDate).isPresent()){
+                if (projectEndDate.isBefore(LocalDate.now())){
+                    ValidationProtocol.showErrorAlert("Pogreška prilikom prijave na projekt",
+                            "Projekt je završio i nije moguće se prijaviti na njega",
+                            "Projekt je završio " + projectEndDate.format(DateTimeFormatter
+                                    .ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
+
+                }
+                else {
+                    SessionManager.getInstance().setCurrentProject(currentProject);
+                    JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoProject);
+                }
+
+            }else{
+                SessionManager.getInstance().setCurrentProject(currentProject);
+                JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoProject);
+            }
+
         }
     }
 
     public void updateProject(ActionEvent actionEvent) {
-        if (Optional.ofNullable(projectsTableView.getSelectionModel().getSelectedItem()).isPresent()){
-            SessionManager.getInstance().setCurrentProject(projectsTableView.getSelectionModel().getSelectedItem());
-            JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateProjectUser);
+        MathProject currentProject = projectsTableView.getSelectionModel().getSelectedItem();
+        if (Optional.ofNullable(currentProject).isPresent()) {
+            MathClub currentClub = SessionManager.getInstance().getCurrentClub();
+
+            if (currentProject.getOrganizer().getId().equals(currentClub.getId())) {
+                SessionManager.getInstance().setCurrentProject(currentProject);
+                JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateProjectUser);
+            } else {
+                ValidationProtocol.showErrorAlert("Pogreška prilikom ažuriranja projekta",
+                        "Nije moguće ažurirati projekt",
+                        "Niste organizator projekta " + currentProject.getName());
+            }
+
         }
-
-
     }
 }

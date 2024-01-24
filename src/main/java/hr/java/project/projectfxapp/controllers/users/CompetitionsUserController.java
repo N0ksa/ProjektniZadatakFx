@@ -4,6 +4,7 @@ import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.CompetitionResult;
 import hr.java.project.projectfxapp.entities.Student;
+import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
@@ -27,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CompetitionsUserController {
 
@@ -74,8 +76,11 @@ public class CompetitionsUserController {
         FilteredList<Competition> filteredCompetitions = getCompetitionsFilteredList(competitionList);
         initializeCompetitionsTableView(filteredCompetitions);
 
-        initializeBarChart(competitionList);
-        initializeLineChart(competitionList);
+
+        List<Competition> competitionsBeforeNow = competitionList.stream()
+                .filter(competition -> competition.getTimeOfCompetition().isBefore(LocalDateTime.now())).toList();
+        initializeBarChart(competitionsBeforeNow);
+        initializeLineChart(competitionsBeforeNow);
 
     }
 
@@ -260,12 +265,21 @@ public class CompetitionsUserController {
                 LocalDateTime competitionTime = selectedCompetition.getTimeOfCompetition();
                 LocalDateTime now = LocalDateTime.now();
 
-                if (competitionTime.isAfter(now)) {
+                if (now.plusDays(3).isBefore(competitionTime)) {
+                    SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
                     JavaFxProjectApplication.showPopup(ApplicationScreen.RegisterMembersIntoCompetition);
-                }
-                else{
-                    ValidationProtocol.showErrorAlert("Greška prilikom registracije", "Natjecanje je završilo",
-                            "Natjecanje je završilo, nije moguće dodati članove");
+
+                } else {
+                    if(competitionTime.isBefore(now)){
+                        ValidationProtocol.showErrorAlert("Pogreška",
+                                "Pogreška prilikom registracije članova u natjecanju",
+                                "Natjecanje je već završilo");
+                    }
+                    else{
+                        ValidationProtocol.showErrorAlert("Pogreška",
+                                "Pogreška prilikom registracije članova u natjecanju",
+                                "Natjecanje počinje za manje od 3 dana\nRegistracije i odjave nisu moguće");
+                    }
                 }
             }
         }
@@ -277,10 +291,19 @@ public class CompetitionsUserController {
         if(competitionTableView.getSelectionModel().getSelectedItem() != null) {
             Competition selectedCompetition = competitionTableView.getSelectionModel().getSelectedItem();
             SessionManager.getInstance().setCurrentCompetition(selectedCompetition);
+            User currentUser = SessionManager.getInstance().getCurrentUser();
 
-            JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateCompetitionUser);
+            if(currentUser.getMathClubId().equals(selectedCompetition.getOrganizer().getId())){
+                JavaFxProjectApplication.showPopup(ApplicationScreen.UpdateCompetitionUser);
+            }
+            else{
+                ValidationProtocol.showErrorAlert("Pogreška",
+                        "Pogreška prilikom ažuriranja natjecanja",
+                        "Samo organizator natjecanja može ažurirati natjecanje");
+            }
 
         }
 
     }
+
 }

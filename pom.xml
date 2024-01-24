@@ -42,8 +42,6 @@
       <version>22-ea+16</version>
     </dependency>
 
-
-
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -69,6 +67,7 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+
 
   </dependencies>
 

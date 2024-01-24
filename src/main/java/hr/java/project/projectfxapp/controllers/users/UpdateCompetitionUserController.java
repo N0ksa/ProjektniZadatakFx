@@ -89,8 +89,9 @@ public class UpdateCompetitionUserController {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
+                LocalDate minSelectableDate = LocalDate.now().plusDays(4);
 
-                if (date.isBefore(LocalDate.now())) {
+                if (date.isBefore(minSelectableDate)) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffc0cb;");
                 }

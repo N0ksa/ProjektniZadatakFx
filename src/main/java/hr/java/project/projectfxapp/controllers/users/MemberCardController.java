@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
@@ -66,6 +67,9 @@ public class MemberCardController {
         additionalInfoForMemberLabel.setText(fullMessage);
         
         List<Competition> competitions = DatabaseUtil.getCompetitions();
+        LocalDateTime now = LocalDateTime.now();
+        competitions.removeIf(competition -> competition.getTimeOfCompetition().isAfter(now));
+
         List<MathProject> projects = DatabaseUtil.getProjects();
 
         

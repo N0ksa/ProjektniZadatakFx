@@ -91,7 +91,8 @@ public class MainScreenForAdminController {
 
 
         Map<String, Duration> totalDurationForEachUser = loginStatisticsList.stream()
-                .collect(Collectors.groupingBy(LoginStatistics::username, Collectors.summingInt(LoginStatistics::loginDuration)))
+                .collect(Collectors.groupingBy(LoginStatistics::username,
+                        Collectors.summingInt(LoginStatistics::loginDuration)))
                 .entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> Duration.ofSeconds(entry.getValue())));
 
@@ -170,7 +171,9 @@ public class MainScreenForAdminController {
         Optional<Map.Entry<LocalDate, Long>> maxEntry = signInCountsByDate.entrySet().stream()
                 .max(Map.Entry.comparingByValue());
 
-        maxEntry.map(Map.Entry::getKey).ifPresent(dateOfMostSignIn -> this.dateOfMostSignIn.setText(dateOfMostSignIn.toString()));
+        maxEntry.map(Map.Entry::getKey).ifPresent(dateOfMostSignIn ->
+                this.dateOfMostSignIn.setText(dateOfMostSignIn.format(DateTimeFormatter.ofPattern
+                        (ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()))));
 
     }
 
@@ -246,7 +249,9 @@ public class MainScreenForAdminController {
                     }
                 }
             };
+
             return cell;
+
         });
     }
 }

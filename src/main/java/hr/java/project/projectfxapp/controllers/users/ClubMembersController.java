@@ -22,6 +22,7 @@ import javafx.util.Callback;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -75,13 +76,16 @@ public class ClubMembersController {
 
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
 
-       List<CompetitionResult> competitionResults = DatabaseUtil.getCompetitions().stream()
+       List<Competition> competitionsList = DatabaseUtil.getCompetitions();
+       LocalDateTime now = LocalDateTime.now();
+       competitionsList.removeIf(competition -> competition.getTimeOfCompetition().isAfter(now));
+
+
+       List<CompetitionResult> competitionResults = competitionsList.stream()
                .flatMap(competition -> competition.getCompetitionResults().stream())
                .toList();
 
         List<MathProject> mathProjects = DatabaseUtil.getProjects();
-
-        List<Competition> competitions = DatabaseUtil.getCompetitions();
 
 
        FilteredList<Student> filteredMembers = getMembersFilteredList(clubMembers);
@@ -89,7 +93,7 @@ public class ClubMembersController {
        initializeMemberTableView(filteredMembers);
 
        initializeLeaderBoardTableView(FXCollections.observableList(clubMembers), competitionResults, mathProjects);
-       setClubMemberScoreOverDifferentCompetitionsLineChart(clubMembers, competitions);
+       setClubMemberScoreOverDifferentCompetitionsLineChart(clubMembers, competitionsList);
 
 
    }
