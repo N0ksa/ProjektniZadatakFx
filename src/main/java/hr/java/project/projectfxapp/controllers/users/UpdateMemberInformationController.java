@@ -72,7 +72,7 @@ public class UpdateMemberInformationController {
     @FXML
     private ToggleGroup yearOfStudySelection;
 
-    private static String imagePath = Constants.DEFAULT_PICTURE_PATH;
+    private static String imagePath = Constants.DEFAULT_PICTURE_MEMBER_ICON;
 
     private static final Logger logger = LoggerFactory.getLogger(UpdateMemberInformationController.class);
 

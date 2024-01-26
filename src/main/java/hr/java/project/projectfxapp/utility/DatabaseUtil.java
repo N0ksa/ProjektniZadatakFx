@@ -1071,6 +1071,8 @@ public class DatabaseUtil {
 
             Date endDate = rs.getDate("END_DATE");
 
+            String projectWebPageAddress = rs.getString("WEB_ADDRESS");
+
             LocalDate endDateOfProject = null;
             if (Optional.ofNullable(endDate).isPresent()) {
                 endDateOfProject = endDate.toLocalDate();
@@ -1087,7 +1089,9 @@ public class DatabaseUtil {
             MathProject newMathProject = new MathProject(projectId, organizer, startDate, projectAddress,
                     projectName, projectDescription, projectCollaborators);
 
+            newMathProject.setProjectWebPageAddress(projectWebPageAddress);
             newMathProject.setEndDate(endDateOfProject);
+
             mathProjects.add(newMathProject);
 
 
@@ -1323,7 +1327,6 @@ public class DatabaseUtil {
         }
     }
 
-
     public static boolean updateCompetition(Competition competitionToUpdate) {
         try (Connection connection = connectToDatabase()) {
             String updateQuery = "UPDATE COMPETITION SET NAME = ?, DESCRIPTION = ?, TIME_OF_COMPETITION = ?" +
@@ -1481,14 +1484,16 @@ public class DatabaseUtil {
 
     public static boolean updateProject(MathProject projectToUpdate) {
         try (Connection connection = connectToDatabase()) {
-            String updateQuery = "UPDATE MATH_PROJECT  SET NAME = ?, DESCRIPTION = ?, END_DATE = ? WHERE PROJECT_ID = ?";
+            String updateQuery = "UPDATE MATH_PROJECT  SET NAME = ?, DESCRIPTION = ?, END_DATE = ?, WEB_ADDRESS = ?" +
+                    "WHERE PROJECT_ID = ?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                 preparedStatement.setString(1, projectToUpdate.getName());
                 preparedStatement.setString(2, projectToUpdate.getDescription());
                 preparedStatement.setDate(3, projectToUpdate.getEndDate() != null ?
                         Date.valueOf(projectToUpdate.getEndDate()) : null);
-                preparedStatement.setLong(4, projectToUpdate.getId());
+                preparedStatement.setString(4, projectToUpdate.getProjectWebPageAddress());
+                preparedStatement.setLong(5, projectToUpdate.getId());
 
                 preparedStatement.executeUpdate();
             }

@@ -70,7 +70,7 @@ public class AddNewMathClubController {
                 String hashedPassword = PasswordUtil.hashPassword(passwordPasswordField.getText());
 
                 User registerUser = new User(newUserUsernameTextField.getText(), hashedPassword, UserRole.USER, mathClubId,
-                        new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
+                        new Picture(Constants.DEFAULT_PICTURE_MATH_CLUB));
 
                 users.add(registerUser);
                 FileWriterUtil.saveUsers(users);

@@ -1,12 +1,9 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.*;
-import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.threads.ClockThread;
-import hr.java.project.projectfxapp.threads.DeserializeChangesThread;
-import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -19,12 +16,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -85,18 +80,25 @@ public class AddNewCompetitionController {
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
 
         competitionScoreTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().score()));
-        competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new CustomBigDecimalStringConverter()));
 
 
         competitionScoreTableColumn.setOnEditCommit(event -> {
+            try {
+                CompetitionResult result = event.getRowValue();
 
-            CompetitionResult result = event.getRowValue();
+                BigDecimal newScore = event.getNewValue();
+                CompetitionResult updatedResult = result.withScore(newScore);
 
-            BigDecimal newScore = event.getNewValue();
-            CompetitionResult updatedResult = result.withScore(newScore);
+                int index = competitionResultsTableView.getItems().indexOf(result);
+                competitionResultsTableView.getItems().set(index, updatedResult);
 
-            int index = competitionResultsTableView.getItems().indexOf(result);
-            competitionResultsTableView.getItems().set(index, updatedResult);
+            } catch (NumberFormatException e) {
+                ValidationProtocol.showErrorAlert("Error", "Invalid Score",
+                        "Please enter a valid number for the score.");
+                // Restore the original value or take other appropriate action
+                competitionResultsTableView.refresh();
+            }
         });
 
         removeParticipantButton.setDisable(true);
@@ -104,6 +106,9 @@ public class AddNewCompetitionController {
         competitionDescriptionTextArea.setWrapText(true);
     }
 
+    private boolean isValidNumber(BigDecimal value) {
+        return value != null;
+    }
 
 
     public void saveCompetition(ActionEvent actionEvent) {
@@ -180,10 +185,6 @@ public class AddNewCompetitionController {
 
         MathClub organizer = organizerComboBox.getValue();
 
-        Status status = Status.FINISHED;
-        if (competitionDateTime.isAfter(LocalDateTime.now())) {
-            status = Status.PLANNED;
-        }
 
         return new Competition(competitionId, organizer, competitionName, competitionDescription,
                 competitionAddress, competitionAuditorium, competitionDateTime, competitionResults);

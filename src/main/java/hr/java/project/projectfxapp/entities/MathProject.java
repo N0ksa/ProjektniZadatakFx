@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp.entities;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.utility.SessionManager;
 
 import java.io.Serializable;
@@ -15,6 +16,8 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
     private Address address;
     private Map<MathClub, List<Student>> collaborators;
 
+    private String projectWebPageAddress;
+
     public MathProject(Long projectId, MathClub organizer, LocalDate startDate, Address address, String name, String description,
                        Map<MathClub, List<Student>> collaborators) {
         super(projectId, name);
@@ -23,6 +26,8 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
         this.collaborators = collaborators;
         this.organizer = organizer;
         this.startDate = startDate;
+        this.projectWebPageAddress = Constants.DEFAULT_PROJECT_WEB_PAGE;
+
     }
 
 
@@ -34,6 +39,15 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
         this.organizer = mathProjectToCopy.organizer;
         this.startDate = mathProjectToCopy.startDate;
         this.endDate = mathProjectToCopy.endDate;
+        this.projectWebPageAddress = mathProjectToCopy.projectWebPageAddress;
+    }
+
+    public String getProjectWebPageAddress() {
+        return projectWebPageAddress;
+    }
+
+    public void setProjectWebPageAddress(String projectWebPageAddress) {
+        this.projectWebPageAddress = projectWebPageAddress;
     }
 
     public Address getAddress() {

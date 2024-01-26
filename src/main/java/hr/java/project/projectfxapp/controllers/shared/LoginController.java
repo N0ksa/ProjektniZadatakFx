@@ -157,7 +157,7 @@ public class LoginController {
             String hashedPassword = PasswordUtil.hashPassword(enteredPassword);
 
             User registerUser = new User(enteredUsername, hashedPassword, UserRole.USER, mathClubId,
-                    new Picture(Constants.DEFAULT_PICTURE_PATH_USER));
+                    new Picture(Constants.DEFAULT_PICTURE_MATH_CLUB));
 
 
             users.add(registerUser);

@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp;
 
 import hr.java.project.projectfxapp.entities.LoginStatistics;
+import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 public class JavaFxProjectApplication extends Application {
 
@@ -57,11 +59,14 @@ public class JavaFxProjectApplication extends Application {
                 serializeChangesThread.executeTaskManually();
 
                 SessionManager.getInstance().setLogoutTime(LocalDateTime.now());
-
-                if (SessionManager.getInstance().getCurrentUser().getRole() == UserRole.USER){
-                    LoginStatistics loginStatistics = SessionManager.getInstance().recordLoginStatistics();
-                    SerializationUtil.addAndSerializeLoginStatistics(loginStatistics);
+                User currentUser = SessionManager.getInstance().getCurrentUser();
+                if (Optional.ofNullable(currentUser).isPresent()){
+                    if (currentUser.getRole() == UserRole.USER){
+                        LoginStatistics loginStatistics = SessionManager.getInstance().recordLoginStatistics();
+                        SerializationUtil.addAndSerializeLoginStatistics(loginStatistics);
+                    }
                 }
+
 
                 stage.close();
             }

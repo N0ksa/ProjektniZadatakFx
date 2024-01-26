@@ -1,10 +1,9 @@
 package hr.java.project.projectfxapp.controllers.users;
 
-import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.entities.MathProject;
-import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.SessionManager;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -21,7 +20,7 @@ public class ProjectDetailsCardController {
     @FXML
     private Label projectStartDateLabel;
     @FXML
-    private WebView locationOfProjectWebView;
+    private WebView projectWebPageWebView;
     @FXML
     private TextArea projectDescriptionTextArea;
 
@@ -34,15 +33,22 @@ public class ProjectDetailsCardController {
 
 
 
-    public void initialize(){
+    public void initialize() {
         MathProject currentProject = SessionManager.getInstance().getCurrentProject();
 
         setProjectInformation(currentProject);
 
-        WebEngine webEngine = locationOfProjectWebView.getEngine();
-        String openStreetMapURL = generateOpenStreetMapURL(currentProject.getAddress());
-        webEngine.load(openStreetMapURL);
+        WebEngine webEngine = projectWebPageWebView.getEngine();
 
+
+        webEngine.getLoadWorker().exceptionProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                System.out.println("error");
+                webEngine.load(getClass().getResource("/html/errorPage.html").toExternalForm());
+            }
+        });
+
+        webEngine.load(currentProject.getProjectWebPageAddress());
     }
 
     private void setProjectInformation(MathProject currentProject) {
@@ -72,20 +78,7 @@ public class ProjectDetailsCardController {
 
 
 
-    private String generateOpenStreetMapURL(Address address) {
-        if (address != null) {
-            City city = address.getCity();
 
-            return String.format(
-                    "https://www.openstreetmap.org/export/embed.html?mlat=%s&mlon=%s#map=15/%s/%s",
-                    city.getName().replaceAll(" ", "_"),
-                    city.getPostalCode(),
-                    city.getName().replaceAll(" ", "_"),
-                    city.getPostalCode());
-        } else {
-            return "https://www.openstreetmap.org/export/embed.html?bbox=0,0,0,0&layer=mapnik";
-        }
-    }
 
 
 }

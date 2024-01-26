@@ -10,16 +10,12 @@ import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +45,7 @@ public class SettingsController {
     @FXML
     private PasswordField enterPasswordForUsernameChangePasswordField;
 
-    private String imagePath = Constants.DEFAULT_PICTURE_PATH_USER;
+    private String imagePath = Constants.DEFAULT_PICTURE_MATH_CLUB;
 
 
 
@@ -178,6 +174,9 @@ public class SettingsController {
                 imagePath = destinationDirectory + selectedFile.getName();
 
             } catch (IOException ex) {
+                ValidationProtocol.showErrorAlert("Greška pri postavljanju slike",
+                        "Greška pri kopiranju slike u direktorij",
+                        "Pokušajte ponovno");
                 logger.error("Greška prilikom kopiranja slike", ex);
             }
         }
@@ -236,16 +235,18 @@ public class SettingsController {
             boolean updateSuccessful = DatabaseUtil.updateUserProfilePicture(currentUser, newImagePath);
 
             if (updateSuccessful){
+
+                JavaFxProjectApplication.switchScene(ApplicationScreen.Settings);
                 ValidationProtocol.showSuccessAlert("Ažuriranje slike je uspjelo",
                         "Slika je uspješno promijenjena");
+
+
             }
             else{
                 ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje slike nije uspjelo",
                         "Pokušajte ponovno");
             }
         }
-
-        JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
 
     }
 }

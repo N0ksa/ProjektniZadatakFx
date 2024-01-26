@@ -103,7 +103,7 @@ public class UpdateCompetitionUserController {
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
 
         competitionScoreTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().score()));
-        competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new CustomBigDecimalStringConverter()));
 
         competitionScoreTableColumn.setOnEditCommit(event -> {
             CompetitionResult result = event.getRowValue();

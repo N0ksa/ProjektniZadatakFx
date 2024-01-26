@@ -23,6 +23,8 @@ import java.util.Optional;
 public class UpdateProjectUserController {
 
     @FXML
+    private TextField projectWebAddress;
+    @FXML
     private ComboBox<City> cityComboBox;
 
     @FXML
@@ -57,6 +59,7 @@ public class UpdateProjectUserController {
         cityComboBox.setItems(FXCollections.observableList(List.of(City.values())));
         cityComboBox.setValue(currentProject.getAddress().getCity());
         endDateOfProjectDatePicker.setValue(currentProject.getEndDate());
+        projectWebAddress.setText(currentProject.getProjectWebPageAddress());
     }
 
 
@@ -119,6 +122,7 @@ public class UpdateProjectUserController {
                 .setHouseNumber(houseNumberTextField.getText());
 
         projectToUpdate.setAddress(addressBuilder.build());
+        projectToUpdate.setProjectWebPageAddress(projectWebAddress.getText());
 
        return DatabaseUtil.updateProject(projectToUpdate);
 
