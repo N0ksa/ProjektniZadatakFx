@@ -35,7 +35,9 @@ public enum ApplicationScreen {
     AddNewAddress("Dodaj adresu", "addNewAddress.fxml", false),
     Changes("Promjene", "changes.fxml", false),
     Login("Prijava", "login.fxml", false),
-    NavigationForUser("Navigacija", "navigationForUser.fxml", false);
+    NavigationForUser("Navigacija", "navigationForUser.fxml", false),
+    GenerateHtmlForPrintingCompetition("Generiraj HTML", "generateHtmlForPrintingCompetition.fxml", false),
+    GenerateHtmlForPrintingUserStatistics("Generiraj HTML", "generateHtmlForPrintingUserStatistics.fxml", false);
 
     private final String title;
     private final String pathOfFxml;

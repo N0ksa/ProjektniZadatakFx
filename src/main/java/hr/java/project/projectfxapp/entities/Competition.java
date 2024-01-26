@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Predstavlja matematičko natjecanje.
  */
-public final class Competition extends NamedEntity implements Serializable, Recordable<Competition> {
+public final class Competition extends NamedEntity implements Printable, Recordable<Competition> {
 
     private MathClub organizer;
     private String description;

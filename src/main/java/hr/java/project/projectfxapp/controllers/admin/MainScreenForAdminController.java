@@ -1,20 +1,20 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.LoginStatistics;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.GetMostRecentChangeThread;
 import hr.java.project.projectfxapp.utility.SerializationUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.time.Duration;
@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainScreenForAdminController {
+
 
 
     @FXML
@@ -253,5 +254,9 @@ public class MainScreenForAdminController {
             return cell;
 
         });
+    }
+
+    public void generateHtmlForPrinting(ActionEvent actionEvent) {
+        JavaFxProjectApplication.showPopup(ApplicationScreen.GenerateHtmlForPrintingUserStatistics);
     }
 }

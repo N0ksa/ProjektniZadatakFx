@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 public class CompetitionsUserController {
 
+
     @FXML
     private Label currentClubNameTextField;
     @FXML
@@ -305,5 +306,6 @@ public class CompetitionsUserController {
         }
 
     }
+
 
 }
