@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
@@ -125,6 +126,7 @@ public class AddNewProjectUserController {
 
         List<Student> selectedStudents = projectMathClubsParticipantsListView.getSelectionModel().getSelectedItems();
         projectParticipants.put(projectOrganizer, selectedStudents);
+
 
         return new MathProject(projectId, projectOrganizer,
                 beginningDateOfProject, projectAddress, projectName, projectDescription, projectParticipants);

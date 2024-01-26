@@ -21,7 +21,7 @@
       <TextField fx:id="projectNameTextField" layoutX="386.0" layoutY="109.0" prefHeight="27.0" prefWidth="290.0" promptText="Unesi ime projekta" />
       <Label layoutX="302.0" layoutY="113.0" text="Ime projekta:" />
       <Label layoutX="300.0" layoutY="340.0" prefHeight="8.0" prefWidth="74.0" text="Opis projekta:" />
-      <TextArea fx:id="projectDescriptionTextArea" layoutX="386.0" layoutY="312.0" prefHeight="72.0" prefWidth="290.0" promptText="Kratki opis..." />
+      <TextArea fx:id="projectDescriptionTextArea" layoutX="386.0" layoutY="312.0" prefHeight="72.0" prefWidth="290.0" promptText="Kratki opis..." wrapText="true" />
       <ListView fx:id="projectMathClubsParticipantsListView" layoutX="386.0" layoutY="431.0" prefHeight="144.0" prefWidth="290.0" />
       <Button layoutX="373.0" layoutY="585.0" mnemonicParsing="false" onAction="#saveProject" text="Dodaj novi projekt" />
       <Label layoutX="238.0" layoutY="503.0" text="Odaberi članove sudionike:" />

@@ -12,5 +12,6 @@ public class Constants {
 
     public static final String STATISTICS_FILE_NAME = "dat/statistics.dat";
 
-    public static final String DEFAULT_PROJECT_WEB_PAGE = "https://projecteuler.net/";
+    public static final String DEFAULT_PROJECT_WEB_PAGE = "/html/defaultPage.html";
+    public static final String DEFAULT_ERROR_WEB_PAGE = "/html/errorPage.html";
 }

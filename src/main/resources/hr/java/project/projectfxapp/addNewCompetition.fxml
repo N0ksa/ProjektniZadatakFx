@@ -78,27 +78,27 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="competitionNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="competitionNameTextField" promptText="Upiši ime natjecanja" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextArea fx:id="competitionDescriptionTextArea" prefHeight="89.0" prefWidth="184.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextArea fx:id="competitionDescriptionTextArea" prefHeight="89.0" prefWidth="184.0" promptText="Opiši natjecanje..." wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
             </TextArea>
-            <ComboBox fx:id="competitionAddressComboBox" prefHeight="25.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <ComboBox fx:id="competitionAddressComboBox" prefHeight="25.0" prefWidth="244.0" promptText="Odaberi adresu" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
             </ComboBox>
-            <TextField fx:id="auditoriumBuildingNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <TextField fx:id="auditoriumBuildingNameTextField" promptText="Unesi ime zgrade" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="auditoriumHallNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <TextField fx:id="auditoriumHallNameTextField" promptText="Unesi ime dvorane" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
@@ -108,7 +108,7 @@
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
             </DatePicker>
-            <TextField fx:id="competitionTimeTextArea" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <TextField fx:id="competitionTimeTextArea" promptText="Upiši vrijeme (HH:mm)" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>
@@ -150,7 +150,7 @@
                   <Insets right="5.0" />
                </padding>
             </Label>
-            <ComboBox fx:id="organizerComboBox" prefHeight="25.0" prefWidth="256.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ComboBox fx:id="organizerComboBox" prefHeight="25.0" prefWidth="256.0" promptText="Odaberi organizatora" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
                </GridPane.margin>

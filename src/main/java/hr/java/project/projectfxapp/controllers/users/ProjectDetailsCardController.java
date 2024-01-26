@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.utility.SessionManager;
@@ -12,6 +13,7 @@ import javafx.scene.web.WebView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ProjectDetailsCardController {
@@ -43,8 +45,13 @@ public class ProjectDetailsCardController {
 
         webEngine.getLoadWorker().exceptionProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                System.out.println("error");
-                webEngine.load(getClass().getResource("/html/errorPage.html").toExternalForm());
+                String projectWebPageAddress = currentProject.getProjectWebPageAddress();
+                if (projectWebPageAddress.equals(Constants.DEFAULT_PROJECT_WEB_PAGE)){
+                    webEngine.load(getClass().getResource(projectWebPageAddress).toExternalForm());
+                }else{
+                    webEngine.load(getClass().getResource(Constants.DEFAULT_ERROR_WEB_PAGE).toExternalForm());
+                }
+
             }
         });
 

@@ -123,15 +123,20 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         MathProject that = (MathProject) o;
-        return Objects.equals(description, that.description)
-                && Objects.equals(collaborators, that.collaborators);
+        return Objects.equals(organizer, that.organizer)
+                && Objects.equals(startDate, that.startDate)
+                && Objects.equals(endDate, that.endDate)
+                && Objects.equals(description, that.description)
+                && Objects.equals(address, that.address)
+                && Objects.equals(collaborators, that.collaborators)
+                && Objects.equals(projectWebPageAddress, that.projectWebPageAddress);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), description, collaborators);
+        return Objects.hash(super.hashCode(), organizer, startDate, endDate,
+                description, address, collaborators, projectWebPageAddress);
     }
-
 
     @Override
     public Optional<Change> getChange(MathProject newValueToCompare) {
@@ -148,6 +153,7 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
             compareAndAppend("Kraj", this.getEndDate(), newValueToCompare.getEndDate(), oldValueBuilder, newValueBuilder);
             compareAndAppend("Adresa", this.getAddress(), newValueToCompare.getAddress(), oldValueBuilder, newValueBuilder);
             compareAndAppend("Sudionici", this.getCollaborators(), newValueToCompare.getCollaborators(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Web stranica", this.getProjectWebPageAddress(), newValueToCompare.getProjectWebPageAddress(), oldValueBuilder, newValueBuilder);
 
             return Optional.of(Change.create(
                     SessionManager.getInstance().getCurrentUser(),

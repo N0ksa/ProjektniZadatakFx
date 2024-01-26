@@ -19,21 +19,21 @@
 
 <AnchorPane prefHeight="695.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.AddNewProjectController">
     <children>
-        <GridPane layoutY="3.0" prefHeight="586.0" prefWidth="858.0">
+        <GridPane layoutY="3.0" prefHeight="608.0" prefWidth="858.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="485.0" minWidth="10.0" prefWidth="412.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="453.0" minWidth="10.0" prefWidth="446.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="42.0" minHeight="4.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="56.0" minHeight="4.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="131.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="44.0" minHeight="4.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="65.0" minHeight="4.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="131.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="156.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="202.0" minHeight="9.0" prefHeight="92.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="202.0" minHeight="9.0" prefHeight="84.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="146.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="95.0" minHeight="24.0" prefHeight="32.0" />
             </rowConstraints>
             <children>
@@ -46,14 +46,14 @@
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="projectNameTextField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <TextField fx:id="projectNameTextField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="299.0" promptText="Unesi ime projekta" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="10.0" right="30.0" />
                     </GridPane.margin>
                 </TextField>
                 <Label text="Ime projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                 <Label layoutX="10.0" layoutY="246.0" text="Opis projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                <TextArea fx:id="projectDescriptionTextArea" maxWidth="-Infinity" prefHeight="56.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <TextArea fx:id="projectDescriptionTextArea" maxWidth="-Infinity" prefHeight="56.0" prefWidth="300.0" promptText="Opiši projekt..." wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="10.0" right="30.0" top="5.0" />
                     </GridPane.margin>
@@ -80,19 +80,19 @@
                </GridPane.margin>
             </Label>
             <Label text="Organizator:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-            <ComboBox fx:id="projectOrganizerComboBox" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <ComboBox fx:id="projectOrganizerComboBox" prefHeight="25.0" prefWidth="300.0" promptText="Odaberi organizatora" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="10.0" right="30.0" />
                </GridPane.margin>
             </ComboBox>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Datum početka projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-            <DatePicker fx:id="beginningDateOfProjectDatePicker" editable="false" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <DatePicker fx:id="beginningDateOfProjectDatePicker" editable="false" prefHeight="25.0" prefWidth="300.0" promptText="Odaberi datum početka projekta" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" right="30.0" />
                </GridPane.margin>
             </DatePicker>
             <Label text="Adresa projekta:" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-            <ComboBox fx:id="projectAddressComboBox" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <ComboBox fx:id="projectAddressComboBox" prefHeight="25.0" prefWidth="300.0" promptText="Odaberi adresu projekta" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="10.0" right="30.0" />
                </GridPane.margin>

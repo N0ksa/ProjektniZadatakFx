@@ -13,51 +13,51 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <AnchorPane layoutY="295.0" prefHeight="367.0" prefWidth="624.0">
+      <AnchorPane layoutY="240.0" prefHeight="437.0" prefWidth="635.0">
          <children>
-            <WebView fx:id="projectWebPageWebView" prefHeight="382.0" prefWidth="635.0" />
+            <WebView fx:id="projectWebPageWebView" layoutY="-20.0" prefHeight="399.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-      <Label layoutX="269.0" layoutY="271.0" text="Web stranica projekta" />
-      <AnchorPane layoutX="23.0" layoutY="69.0" prefHeight="185.0" prefWidth="582.0">
+      <AnchorPane layoutX="27.0" layoutY="56.0" prefHeight="163.0" prefWidth="582.0">
          <children>
-            <Label layoutX="108.0" layoutY="34.0" text="Opis projekta:">
+            <Label layoutX="111.0" layoutY="18.0" text="Opis projekta:">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <TextArea fx:id="projectDescriptionTextArea" editable="false" layoutX="211.0" layoutY="11.0" prefHeight="87.0" prefWidth="352.0" />
-            <Label layoutX="89.0" layoutY="107.0" text="Datum početka:">
+            <TextArea fx:id="projectDescriptionTextArea" editable="false" layoutX="211.0" layoutY="2.0" mouseTransparent="true" prefHeight="76.0" prefWidth="367.0" wrapText="true" />
+            <Label layoutX="95.0" layoutY="79.0" text="Datum početka:">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <Label fx:id="projectStartDateLabel" layoutX="212.0" layoutY="107.0" prefHeight="20.0" prefWidth="338.0" text="Label">
+            <Label fx:id="projectStartDateLabel" layoutX="218.0" layoutY="79.0" prefHeight="20.0" prefWidth="338.0" text="Label">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <Label layoutX="38.0" layoutY="133.0" prefHeight="20.0" prefWidth="156.0" text="Duljina trajanja projekta:">
+            <Label layoutX="44.0" layoutY="105.0" prefHeight="20.0" prefWidth="156.0" text="Duljina trajanja projekta:">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <Label fx:id="projectDurationLabel" layoutX="212.0" layoutY="133.0" prefHeight="20.0" prefWidth="338.0" text="Label">
+            <Label fx:id="projectDurationLabel" layoutX="218.0" layoutY="105.0" prefHeight="20.0" prefWidth="338.0" text="Label">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <Label layoutX="83.0" layoutY="161.0" text="Datum završetka: ">
+            <Label layoutX="89.0" layoutY="133.0" text="Datum završetka: ">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <Label fx:id="projectEndDateLabel" layoutX="212.0" layoutY="161.0" prefHeight="20.0" prefWidth="338.0" text="Label">
+            <Label fx:id="projectEndDateLabel" layoutX="218.0" layoutY="133.0" prefHeight="20.0" prefWidth="338.0" text="Label">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
+      <Label layoutX="277.0" layoutY="219.0" text="Web stranica projekta" />
    </children>
 </AnchorPane>
