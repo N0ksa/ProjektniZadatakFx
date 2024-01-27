@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class UpdateProjectUserController {
-
     @FXML
     private TextField projectWebAddress;
     @FXML
@@ -45,11 +44,9 @@ public class UpdateProjectUserController {
     private TextField streetNameTextField;
 
 
-
     public void initialize(){
         MathProject currentProject = SessionManager.getInstance().getCurrentProject();
         setCurrentProjectInformation(currentProject);
-
 
     }
 
@@ -94,7 +91,8 @@ public class UpdateProjectUserController {
                             "Projekt " + projectToUpdate.getName() + " uspješno se ažurirao!");
                 }
                 else{
-                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje projekta nije uspjelo",
+                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju",
+                            "Ažuriranje projekta nije uspjelo",
                             "Pokušajte ponovno");
                 }
 
@@ -102,7 +100,8 @@ public class UpdateProjectUserController {
 
 
         }catch (ValidationException ex){
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 

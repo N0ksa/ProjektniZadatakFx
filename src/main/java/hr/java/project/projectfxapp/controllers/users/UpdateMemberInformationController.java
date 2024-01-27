@@ -211,8 +211,6 @@ public class UpdateMemberInformationController {
         if (Optional.ofNullable(selectedFile).isPresent()) {
             try {
                 String destinationDirectory = "src/main/resources/images/";
-                String pathToLoad = "/images/";
-
 
                 FileCopier<File> fileCopier = new FileUtility();
                 fileCopier.copyToDirectory(selectedFile, destinationDirectory);
@@ -262,17 +260,20 @@ public class UpdateMemberInformationController {
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);
                     ValidationProtocol.showSuccessAlert("Ažuriranje člana je bilo uspješno",
-                            "Član " + memberToUpdate.getName() + " " + memberToUpdate.getSurname() + " uspješno se ažurirao!");
+                            "Član " + memberToUpdate.getName() + " " + memberToUpdate.getSurname() +
+                                    " uspješno se ažurirao!");
                 }
                 else{
-                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje člana nije uspjelo",
+                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju",
+                            "Ažuriranje člana nije uspjelo",
                             "Pokušajte ponovno");
                 }
 
             }
 
         } catch (ValidationException ex){
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 

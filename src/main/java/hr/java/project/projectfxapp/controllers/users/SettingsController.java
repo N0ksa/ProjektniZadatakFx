@@ -94,17 +94,18 @@ public class SettingsController {
                             "Lozinka je uspješno promijenjena");
 
 
-
                     JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
 
                 } else {
-                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje lozinke nije uspjelo",
+                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju",
+                            "Ažuriranje lozinke nije uspjelo",
                             "Pokušajte ponovno");
                 }
             }
 
         }catch (ValidationException ex) {
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
     }
@@ -165,10 +166,8 @@ public class SettingsController {
             try {
                 String destinationDirectory = "src/main/resources/images/";
 
-
                 FileCopier<File> fileCopier = new FileUtility();
                 fileCopier.copyToDirectory(selectedFile, destinationDirectory);
-
 
                 File imageFile = new File(destinationDirectory + selectedFile.getName());
                 Image image = new Image(imageFile.toURI().toString());
@@ -187,18 +186,13 @@ public class SettingsController {
     }
 
 
-
-
-
     private boolean updateUsername (User currentUser){
 
         boolean updateSuccess =  DatabaseUtil.updateUsername(currentUser, changeUserNameTextField.getText());
         if (updateSuccess){
             List<User> users = DatabaseUtil.getUsers();
             FileWriterUtil.saveUsers(users);
-            return updateSuccess;
         }
-
         return updateSuccess;
     }
 
@@ -216,7 +210,6 @@ public class SettingsController {
             }
 
         } catch (UnsupportedAlgorithmException ex) {
-            updateSuccessful = false;
             logger.error("Nepodržani algoritam za hashiranje lozinke", ex);
         }
 
@@ -247,7 +240,8 @@ public class SettingsController {
 
             }
             else{
-                ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje slike nije uspjelo",
+                ValidationProtocol.showErrorAlert("Greška pri ažuriranju",
+                        "Ažuriranje slike nije uspjelo",
                         "Pokušajte ponovno");
             }
         }

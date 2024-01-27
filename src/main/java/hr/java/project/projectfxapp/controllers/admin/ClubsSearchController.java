@@ -1,6 +1,8 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
@@ -42,27 +44,28 @@ public class ClubsSearchController {
 
 
 
-
-
     public void initialize(){
 
         ClockThread clockThread = ClockThread.getInstance();
         clockThread.setLabelToUpdate(clockLabel);
 
-        clubNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>, ObservableValue<String>>() {
+        clubNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathClub, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
 
-        clubAddressTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>, ObservableValue<String>>() {
+        clubAddressTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathClub, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getAddress().toString());
             }
         });
 
-        clubMembersTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub, String>, ObservableValue<String>>() {
+        clubMembersTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathClub, String>,
+                ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathClub, String> param) {
                 MathClub mathClub = param.getValue();
@@ -124,6 +127,8 @@ public class ClubsSearchController {
                     changes.add(change);
                     SerializationUtil.serializeChanges(changes);
 
+
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.Clubs);
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali matematički klub : " + mathClubForDeletion.getName());
 

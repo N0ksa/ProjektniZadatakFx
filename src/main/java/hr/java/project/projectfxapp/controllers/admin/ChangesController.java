@@ -55,31 +55,36 @@ public class ChangesController {
     }
 
     private void setChangesTableView() {
-        newValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>, ObservableValue<String>>() {
+        newValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().newValue());
             }
         });
 
-        oldValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>, ObservableValue<String>>() {
+        oldValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().oldValue());
             }
         });
 
-        typeOfValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>, ObservableValue<String>>() {
+        typeOfValueTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().dataType());
             }
         });
 
-        userRoleTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>, ObservableValue<String>>() {
+        userRoleTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().userRole());
             }
         });
 
-        dateOfChangeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change, String>, ObservableValue<String>>() {
+        dateOfChangeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change, String>,
+                ObservableValue<String>>() {
 
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().timestamp().
@@ -110,7 +115,8 @@ public class ChangesController {
         if (Optional.ofNullable(selectedChange).isPresent()){
 
             boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog(
-                    "Brisanje promjene", "Brisanje promjene", "Jeste li sigurni da želite obrisati odabranu promjenu?" +
+                    "Brisanje promjene", "Brisanje promjene",
+                    "Jeste li sigurni da želite obrisati odabranu promjenu?" +
                             "\nPritisnite Da za brisanje");
 
             if (positiveConfirmation){

@@ -85,13 +85,15 @@ public class CompetitionDetailsCardController {
 
 
     private void initializeTableView(Competition currentCompetition) {
-        participantTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompetitionResult, String>, ObservableValue<String>>() {
+        participantTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompetitionResult, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<CompetitionResult, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().participant().toString());
             }
         });
 
-        scoreTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompetitionResult, String>, ObservableValue<String>>() {
+        scoreTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CompetitionResult, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<CompetitionResult, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().score().toString());
             }

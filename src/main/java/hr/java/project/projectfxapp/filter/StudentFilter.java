@@ -6,13 +6,10 @@ public class StudentFilter {
     private String name;
     private String surname;
 
-    private MathClub studentMathClub;
 
-
-    public StudentFilter(String name, String surname, MathClub studentMathClub) {
+    public StudentFilter(String name, String surname) {
         this.name = name;
         this.surname = surname;
-        this.studentMathClub = studentMathClub;
     }
 
     public String getName() {
@@ -31,12 +28,5 @@ public class StudentFilter {
         this.surname = surname;
     }
 
-    public MathClub getStudentMathClub() {
-        return studentMathClub;
-    }
-
-    public void setStudentMathClub(MathClub studentMathClub) {
-        this.studentMathClub = studentMathClub;
-    }
 
 }

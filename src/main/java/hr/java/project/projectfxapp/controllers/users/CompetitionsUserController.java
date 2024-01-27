@@ -73,9 +73,9 @@ public class CompetitionsUserController {
         FilteredList<Competition> filteredCompetitions = getCompetitionsFilteredList(competitionList);
         initializeCompetitionsTableView(filteredCompetitions);
 
-
         List<Competition> competitionsBeforeNow = competitionList.stream()
                 .filter(competition -> competition.getTimeOfCompetition().isBefore(LocalDateTime.now())).toList();
+
         initializeBarChart(competitionsBeforeNow);
         initializeLineChart(competitionsBeforeNow);
 
@@ -119,8 +119,6 @@ public class CompetitionsUserController {
             }
         }
 
-
-
     }
 
 
@@ -140,9 +138,12 @@ public class CompetitionsUserController {
                 return competition.getName().toLowerCase().contains(lowerCaseFilter)
                         || competition.getDescription().toLowerCase().contains(lowerCaseFilter)
                         || competition.getAddress().toString().contains(lowerCaseFilter)
-                        ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("dd.MM.yyyy.")).contains(lowerCaseFilter)
-                        ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("HH:mm")).contains(lowerCaseFilter)
-                        ||competition.findWinner().isPresent() && competition.findWinner().get().getName().toLowerCase().contains(lowerCaseFilter)
+                        ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("dd.MM.yyyy."))
+                        .contains(lowerCaseFilter)
+                        ||competition.getTimeOfCompetition().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        .contains(lowerCaseFilter)
+                        ||competition.findWinner().isPresent() && competition.findWinner().get().getName().toLowerCase()
+                        .contains(lowerCaseFilter)
                         ||competition.getOrganizer().getName().toLowerCase().contains(lowerCaseFilter);
             });
         });
@@ -151,39 +152,45 @@ public class CompetitionsUserController {
 
 
     private void initializeCompetitionsTableView(ObservableList<Competition> competitions) {
-        competitionNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
-        competitionDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getDescription());
             }
         });
 
-        competitionAddressTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionAddressTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getAddress().toString());
             }
         });
 
-        competitionDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
                 return new ReadOnlyStringWrapper(param.getValue().getTimeOfCompetition().format(formatter));
             }
         });
 
-        competitionTimeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionTimeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
                 return new ReadOnlyStringWrapper(param.getValue().getTimeOfCompetition().format(formatter));
             }
         });
 
-        competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 String winnerString;
                 LocalDateTime now = LocalDateTime.now();
@@ -193,20 +200,23 @@ public class CompetitionsUserController {
                     winnerString = "Natjecanje nije počelo";
                 } else {
                     Optional<Student> winner = param.getValue().findWinner();
-                    winnerString = winner.map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika");
+                    winnerString = winner.map(student -> student.getName() + " " + student.getSurname())
+                            .orElse("Nema pobjednika");
                 }
 
                 return new ReadOnlyStringWrapper(winnerString);
             }
         });
 
-        competitionOrganizerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionOrganizerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getOrganizer().getName());
             }
         });
 
-        competitionStatusTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>, ObservableValue<String>>() {
+        competitionStatusTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 LocalDateTime now = LocalDateTime.now();
                 LocalDateTime competitionTime = param.getValue().getTimeOfCompetition();

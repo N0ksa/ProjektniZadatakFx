@@ -27,8 +27,6 @@ public class NavigationForUserController {
     private ImageView clubLogoImageView;
 
 
-
-
     public void initialize(){
         ClockThread clockThread = ClockThread.getInstance();
         clockThread.setLabelToUpdate(clockLabel);
@@ -64,7 +62,9 @@ public class NavigationForUserController {
     public void showLogin(ActionEvent actionEvent) {
 
         boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog(
-                "Odjava", "Odjava", "Jeste li sigurni da se želite odjaviti?" +
+                "Odjava",
+                "Odjava",
+                "Jeste li sigurni da se želite odjaviti?" +
                         "\nPritisnite Da za odjavu");
 
         if (positiveConfirmation){

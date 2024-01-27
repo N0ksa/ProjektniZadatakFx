@@ -28,7 +28,6 @@ import java.util.Set;
 
 public class AddNewCompetitionUserController {
 
-
     @FXML
     private TextField  timeOfCompetitionTextField;
     @FXML
@@ -74,8 +73,12 @@ public class AddNewCompetitionUserController {
                 LocalDate currentDate = LocalDate.now();
                 LocalDate maxSelectableDate = currentDate.plusDays(4);
 
-                setDisable(date.isBefore(maxSelectableDate));
-                setStyle("-fx-background-color: #ffc0cb;");
+                if (date.isBefore(maxSelectableDate)){
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+
+                }
+
             }
         });
 
@@ -89,11 +92,13 @@ public class AddNewCompetitionUserController {
         try {
 
             ValidationProtocol.validateCompetitionForUser(competitionNameTextField, competitionDescriptionTextArea,
-                    dateOfCompetitionDatePicker, timeOfCompetitionTextField,
-                    auditoriumBuildingNameTextField, auditoriumHallNameTextField, competitionParticipantsListView);
+                    dateOfCompetitionDatePicker, timeOfCompetitionTextField, auditoriumBuildingNameTextField,
+                    auditoriumHallNameTextField, competitionParticipantsListView);
 
-            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda spremanja",
-                    "Jeste li sigurni da želite spremiti novo natjecanje?", "Kliknite Da za potvrdu");
+            boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog(
+                    "Potvrda spremanja",
+                    "Jeste li sigurni da želite spremiti novo natjecanje?",
+                    "Kliknite Da za potvrdu");
 
             if (positiveConfirmation){
 
@@ -112,7 +117,6 @@ public class AddNewCompetitionUserController {
                     Change change = Change.create(currentUser, "/",
                             "Spremljeno natjecanje: " + newCompetition.getName(), "Natjecanje:");
 
-
                     ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
@@ -125,8 +129,6 @@ public class AddNewCompetitionUserController {
                 }
 
             }
-
-
 
         } catch (ValidationException ex) {
             ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
@@ -159,8 +161,6 @@ public class AddNewCompetitionUserController {
         Set<CompetitionResult> competitionResults = setCompetitionResults(competitionParticipantsListView);
 
         MathClub organizer = SessionManager.getInstance().getCurrentClub();
-
-        Status status = Status.PLANNED;
 
         Address competitionAddress = constructAddressForCompetition();
 

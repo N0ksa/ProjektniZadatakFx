@@ -40,15 +40,14 @@ public class AddNewProjectUserController {
     @FXML
     private TextField projectNameTextField;
 
-
     public void initialize() {
         MathClub currentClub = SessionManager.getInstance().getCurrentClub();
         List<Student> clubMembers = currentClub.getStudents().stream().toList();
+
         projectMathClubsParticipantsListView.setItems(FXCollections.observableList(clubMembers));
         projectMathClubsParticipantsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         cityComboBox.getItems().setAll(City.values());
-
 
     }
 
@@ -58,8 +57,8 @@ public class AddNewProjectUserController {
         try{
 
             ValidationProtocol.validateProjectForUser(projectNameTextField, projectDescriptionTextArea,
-                    projectMathClubsParticipantsListView, beginningDateOfProjectDatePicker, cityComboBox, streetNameTextField,
-                    houseNumberTextField);
+                    projectMathClubsParticipantsListView, beginningDateOfProjectDatePicker, cityComboBox,
+                    streetNameTextField, houseNumberTextField);
 
             boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda spremanja",
                     "Jeste li sigurni da želite spremiti novi projekt?",

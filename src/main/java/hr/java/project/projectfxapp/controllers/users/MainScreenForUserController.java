@@ -84,7 +84,9 @@ public class MainScreenForUserController {
         PieChart.Data secondYearMembersData = new PieChart.Data("2. godina", numberOfSecondYearMembers);
         PieChart.Data thirdYearMembersData = new PieChart.Data("3. godina", numberOfThirdYearMembers);
 
-        yearNumberDifferencePieChart.setData(FXCollections.observableArrayList(firstYearMembersData, secondYearMembersData,
+        yearNumberDifferencePieChart.setData(FXCollections.observableArrayList(
+                firstYearMembersData,
+                secondYearMembersData,
                 thirdYearMembersData));
 
         yearNumberDifferencePieChart.getData().forEach(data -> data.setName(data.getName() +

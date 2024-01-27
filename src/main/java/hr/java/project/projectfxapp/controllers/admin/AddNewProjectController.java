@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 public class AddNewProjectController {
 
-
     @FXML
     private Label clockLabel;
     @FXML
@@ -108,13 +107,15 @@ public class AddNewProjectController {
                 ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
                         "Projekt " + newProject.getName() + "  uspješno se spremio");
             }else{
-                ValidationProtocol.showErrorAlert("Greška pri spremanju", "Greška pri spremanju projekta",
+                ValidationProtocol.showErrorAlert("Greška pri spremanju",
+                        "Greška pri spremanju projekta",
                         "Došlo je do greške pri spremanju projekta u bazu podataka");
             }
 
         }
         catch (ValidationException ex) {
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 

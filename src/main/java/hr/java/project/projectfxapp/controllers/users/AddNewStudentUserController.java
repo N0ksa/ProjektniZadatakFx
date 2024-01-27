@@ -1,6 +1,7 @@
 package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.Gender;
@@ -8,6 +9,7 @@ import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.files.FileUtility;
 import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -18,13 +20,13 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AddNewStudentUserController {
 
@@ -67,11 +69,13 @@ public class AddNewStudentUserController {
     @FXML
     private RadioButton trecaGodinaRadioButton;
 
-    private static String imagePath = "/images/question_mark_person_logo.png";
+    private static String imagePath = Constants.DEFAULT_PICTURE_MEMBER_ICON;
+    private static final Logger logger = LoggerFactory.getLogger(AddNewStudentUserController.class);
 
 
     public void initialize(){
 
+        imagePath = Constants.DEFAULT_PICTURE_MEMBER_ICON;
 
         studentGradesTableView.setEditable(true);
         subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
@@ -98,8 +102,9 @@ public class AddNewStudentUserController {
             }
         });
 
-        studentImageView.setImage(new Image(getClass().getResource("/images/question_mark_person_logo.png").toExternalForm()));
-
+        File imageFile = new File(imagePath);
+        Image image = new Image(imageFile.toURI().toString());
+        studentImageView.setImage(image);
 
     }
 
@@ -113,14 +118,22 @@ public class AddNewStudentUserController {
 
         File selectedFile = fileChooser.showOpenDialog(null);
 
-        if (selectedFile != null) {
-            String imageName = selectedFile.getName();
+        if (Optional.ofNullable(selectedFile).isPresent()) {
+            try {
+                String destinationDirectory = "src/main/resources/images/";
 
-            String relativePath = "/images/" + imageName;
+                FileCopier<File> fileCopier = new FileUtility();
+                fileCopier.copyToDirectory(selectedFile, destinationDirectory);
 
-            Image newImage = new Image(getClass().getResource(relativePath).toExternalForm());
-            studentImageView.setImage(newImage);
-            imagePath = relativePath;
+                File imageFile = new File(destinationDirectory + selectedFile.getName());
+                Image image = new Image(imageFile.toURI().toString());
+                studentImageView.setImage(image);
+
+                imagePath = destinationDirectory + selectedFile.getName();
+
+            } catch (IOException ex) {
+                logger.error("Greška prilikom kopiranja slike", ex);
+            }
         }
     }
 
@@ -128,8 +141,8 @@ public class AddNewStudentUserController {
     public void saveMember(ActionEvent event) {
         try{
 
-            ValidationProtocol.validateClubMember(studentNameTextField, studentSurnameTextField, genderSelection, studentEmailTextField
-                    ,studentGradesTableView, yearOfStudySelection);
+            ValidationProtocol.validateClubMember(studentNameTextField, studentSurnameTextField, genderSelection,
+                    studentEmailTextField,studentGradesTableView, yearOfStudySelection);
 
             boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda spremanja",
                     "Jeste li sigurni da želite spremiti novog studenta?",
@@ -140,11 +153,14 @@ public class AddNewStudentUserController {
                 Student newStudent = buildNewStudent();
                 List<Student> students = new ArrayList<>();
                 students.add(newStudent);
+
                 boolean success = DatabaseUtil.saveStudents(students);
-                MathClub currentClub = SessionManager.getInstance().getCurrentClub();
-                currentClub.getStudents().add(newStudent);
 
                 if(success){
+                    MathClub currentClub = SessionManager.getInstance().getCurrentClub();
+
+                    Optional<MathClub> updatedMathClub = DatabaseUtil.getMathClub(currentClub.getId());
+                    SessionManager.getInstance().setCurrentClub(updatedMathClub.get());
 
                     User currentUser = SessionManager.getInstance().getCurrentUser();
 
@@ -154,11 +170,11 @@ public class AddNewStudentUserController {
 
                     ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
-
                     JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);
                     ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
                             "Student " + newStudent.getName() + " " + newStudent.getSurname()
                                     + " uspješno se spremio!");
+
                 }else{
                     ValidationProtocol.showErrorAlert("Spremanje novog studenta nije uspjelo",
                             "Student " + newStudent.getName() + " " + newStudent.getSurname() +
@@ -168,7 +184,8 @@ public class AddNewStudentUserController {
             }
         }
         catch (ValidationException ex){
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 

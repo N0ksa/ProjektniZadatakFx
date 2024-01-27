@@ -137,7 +137,6 @@ public class AddNewStudentController {
     public void saveStudent(ActionEvent actionEvent) {
 
         try {
-
             ValidationProtocol.validateStudent(studentNameTextField, studentSurnameTextField, genderSelection,
                     studentEmailTextField, mathClubComboBox, joinDateDatePicker, studentGradesTableView,
                     yearOfStudySelection);
@@ -168,14 +167,16 @@ public class AddNewStudentController {
                                     " uspješno se spremio!");
 
                 } else {
-                    ValidationProtocol.showErrorAlert("Greška pri spremanju", "Greška pri spremanju studenta",
+                    ValidationProtocol.showErrorAlert("Greška pri spremanju",
+                            "Greška pri spremanju studenta",
                             "Došlo je do greške pri spremanju studenta u bazu podataka");
                 }
 
             }
         }
         catch (ValidationException ex){
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
 

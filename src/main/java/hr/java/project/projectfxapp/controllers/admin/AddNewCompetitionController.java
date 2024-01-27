@@ -68,9 +68,9 @@ public class AddNewCompetitionController {
         ObservableList<Student> potentialParticipantsObservableList = FXCollections.observableList(potentialParticipantsList);
         List<Address> addressesList = DatabaseUtil.getAddresses();
         ObservableList<Address> addressObservableList = FXCollections.observableList(addressesList);
-
         List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
         ObservableList<MathClub> mathClubsObservableList = FXCollections.observableList(mathClubs);
+
         organizerComboBox.setItems(mathClubsObservableList);
 
         competitionParticipantsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -96,22 +96,17 @@ public class AddNewCompetitionController {
                 competitionResultsTableView.getItems().set(index, updatedResult);
 
             } catch (NumberFormatException e) {
-                ValidationProtocol.showErrorAlert("Error", "Invalid Score",
-                        "Please enter a valid number for the score.");
-                // Restore the original value or take other appropriate action
+                ValidationProtocol.showErrorAlert("Greška pri unosu",
+                        "Provjerite ispravnost unesenih podataka",
+                        "Uneseni podatak nije broj");
+
                 competitionResultsTableView.refresh();
             }
         });
 
         removeParticipantButton.setDisable(true);
 
-        competitionDescriptionTextArea.setWrapText(true);
     }
-
-    private boolean isValidNumber(BigDecimal value) {
-        return value != null;
-    }
-
 
     public void saveCompetition(ActionEvent actionEvent) {
         try {
@@ -123,7 +118,8 @@ public class AddNewCompetitionController {
 
             boolean positiveConfirmation = ValidationProtocol.showConfirmationDialog("Potvrda unosa",
                     "Jeste li sigurni da želite unijeti novo natjecanje?",
-                    "Ako želite unijeti natjecanje: " + competitionNameTextField.getText() + "\nPritisnite Da za potvrdu");
+                    "Ako želite unijeti natjecanje: " + competitionNameTextField.getText() +
+                            "\nPritisnite Da za potvrdu");
 
             if (positiveConfirmation){
 
@@ -146,7 +142,8 @@ public class AddNewCompetitionController {
                             "Natjecanje " + newCompetition.getName()  + " uspješno se spremio!");
                 }
                 else{
-                    ValidationProtocol.showErrorAlert("Greška pri spremanju", "Greška pri spremanju natjecanja",
+                    ValidationProtocol.showErrorAlert("Greška pri spremanju",
+                            "Greška pri spremanju natjecanja",
                             "Došlo je do greške pri spremanju natjecanja u bazu podataka");
                 }
 
@@ -155,11 +152,11 @@ public class AddNewCompetitionController {
 
 
         } catch (ValidationException ex) {
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
     }
-
 
 
 

@@ -131,7 +131,8 @@ public class RegisterMembersIntoProjectController {
 
             }
             else{
-                ValidationProtocol.showErrorAlert("Pogreška", "Pogreška prilikom promjene registriranih članova u natjecanju",
+                ValidationProtocol.showErrorAlert("Pogreška",
+                        "Pogreška prilikom promjene registriranih članova u natjecanju",
                         "Pogreška prilikom promjene registriranih članova u natjecanju");
             }
 

@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 public class ProjectsUserController {
 
-
     @FXML
     private LineChart<String, Integer> comparisonOfProjectOrganizationsBetweenClubsLineChart;
     @FXML
@@ -76,7 +75,6 @@ public class ProjectsUserController {
 
     public void setComparisonOfProjectOrganizationsBetweenClubsLineChart(List<MathProject> mathProjectsList) {
 
-        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
         comparisonOfProjectOrganizationsBetweenClubsLineChart.getData().clear();
 
         comparisonOfProjectOrganizationsBetweenClubsLineChart.getYAxis().setLabel("Broj projekata");
@@ -119,19 +117,22 @@ public class ProjectsUserController {
 
 
     private void initializeProjectsTableView(ObservableList<MathProject> mathProjectsList) {
-        projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
+        projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
-        projectOrganizerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
+        projectOrganizerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getOrganizer().getName());
             }
         });
 
-        projectClubColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>, ObservableValue<String>>() {
+        projectClubColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>,
+                ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 Map<MathClub, List<Student>> collaborators = param.getValue().getCollaborators();
@@ -150,7 +151,8 @@ public class ProjectsUserController {
 
 
 
-        projectMembersColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>, ObservableValue<String>>() {
+        projectMembersColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 Map<MathClub, List<Student>> collaborators = param.getValue().getCollaborators();
 

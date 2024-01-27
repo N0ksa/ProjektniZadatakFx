@@ -1,12 +1,15 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.StudentFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.files.SerializationUtil;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -31,8 +34,6 @@ public class StudentsSearchController {
     @FXML
     private TextField studentNameTextField;
     @FXML
-    private ComboBox <MathClub> clubComboBox;
-    @FXML
     private TableView<Student> studentsTableView;
     @FXML
     private TableColumn<Student,String> studentNameTableColumn;
@@ -56,7 +57,6 @@ public class StudentsSearchController {
         List<MathClub> mathClubsList = DatabaseUtil.getMathClubs();
         ObservableList<MathClub> observableMathClubsList = FXCollections.observableList(mathClubsList);
 
-        clubComboBox.setItems(observableMathClubsList);
 
         setStudentsTableViewProperties(mathClubsList);
 
@@ -71,19 +71,22 @@ public class StudentsSearchController {
 
         studentsTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        studentNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
-        studentSurnameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentSurnameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getSurname());
             }
         });
 
-        studentJoinDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentJoinDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 LocalDate joinDate = param.getValue().getClubMembership().getJoinDate();
 
@@ -99,7 +102,8 @@ public class StudentsSearchController {
         });
 
 
-        studentClubTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentClubTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 Optional<MathClub> clubOfStudent = mathClubsList.stream()
                         .filter(mathClub -> mathClub.hasMember(param.getValue()))
@@ -110,22 +114,24 @@ public class StudentsSearchController {
         });
 
 
-        studentAverageGradeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentAverageGradeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
-
 
                 return new ReadOnlyStringWrapper(String.format("%.1f", param.getValue().calculateAverageGrade()));
             }
         });
 
 
-        studentEmailTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentEmailTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getEmail());
             }
         });
 
-        studentYearOfStudyTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        studentYearOfStudyTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getYearOfStudy().toString());
             }
@@ -136,9 +142,8 @@ public class StudentsSearchController {
 
         String studentName = studentNameTextField.getText();
         String studentSurname = studentSurnameTextField.getText();
-        MathClub mathclub = clubComboBox.getValue();
 
-        StudentFilter studentFilter = new StudentFilter(studentName, studentSurname, mathclub);
+        StudentFilter studentFilter = new StudentFilter(studentName, studentSurname);
         List<Student> filteredStudents = DatabaseUtil.getStudentsByFilter(studentFilter);
 
         ObservableList<Student> observableStudentList = FXCollections.observableList(filteredStudents);
@@ -160,14 +165,13 @@ public class StudentsSearchController {
                 if (successfulDeletion) {
 
                     User currentUser = SessionManager.getInstance().getCurrentUser();
-                    List<Change> changes = SerializationUtil.deserializeChanges();
+
                     Change change = Change.create(currentUser, "/",
                             "Obrisan student: " + studentForDeletion.getName() + " " + studentForDeletion.getSurname()
                             , "Student/id:" + studentForDeletion.getId());
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
 
-
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.Students);
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali studenta : " + studentForDeletion.getName() + " " +
                                     studentForDeletion.getSurname());
@@ -185,6 +189,5 @@ public class StudentsSearchController {
     public void reset(ActionEvent actionEvent) {
         studentNameTextField.setText("");
         studentsTableView.getItems().clear();
-        clubComboBox.getSelectionModel().clearSelection();
     }
 }

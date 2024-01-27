@@ -15,7 +15,6 @@ public class GenerateHtmlForPrintingUserStatisticsController {
     @FXML
     private WebView pageForPrintingWebView;
 
-
     public void initialize() {
         List<LoginStatistics> statisticsToPrint = SerializationUtil.deserializeLoginStatisticsList();
         HtmlGenerator<List<LoginStatistics>> htmlGenerator = new HtmlGenerator<>();

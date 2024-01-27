@@ -1,11 +1,15 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.filter.MathProjectFilter;
+import hr.java.project.projectfxapp.threads.ChangesManagerThread;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.files.SerializationUtil;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -49,19 +53,22 @@ public class ProjectsSearchController {
         ClockThread clockThread = ClockThread.getInstance();
         clockThread.setLabelToUpdate(clockLabel);
 
-        projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
+        projectNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
-        projectDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>, ObservableValue<String>>() {
+        projectDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getDescription());
             }
         });
 
-        projectClubColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>, ObservableValue<String>>() {
+        projectClubColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>,
+                ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 Map<MathClub, List<Student>> collaborators = param.getValue().getCollaborators();
@@ -80,7 +87,8 @@ public class ProjectsSearchController {
 
 
 
-        projectMembersColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>, ObservableValue<String>>() {
+        projectMembersColumnTable.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MathProject, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<MathProject, String> param) {
                 Map<MathClub, List<Student>> collaborators = param.getValue().getCollaborators();
 
@@ -127,13 +135,14 @@ public class ProjectsSearchController {
                 if (successfulDeletion){
 
                     User currentUser = SessionManager.getInstance().getCurrentUser();
-                    List<Change> changes = SerializationUtil.deserializeChanges();
+
                     Change change = Change.create(currentUser, "/",
                             "Obrisan projekt: " + mathProjectForDeletion.getName(), "Projekt/id:"
                                     + mathProjectForDeletion.getId());
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
 
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
+
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.Projects);
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali projekt : " + mathProjectForDeletion.getName());
                 }else{

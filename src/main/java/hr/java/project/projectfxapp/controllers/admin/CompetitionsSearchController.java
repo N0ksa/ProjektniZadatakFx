@@ -1,12 +1,15 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.files.SerializationUtil;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -46,14 +49,14 @@ public class CompetitionsSearchController {
     @FXML
     private TableColumn<Competition, String>competitionWinnerTableColumn;
 
-    private static List<Competition> competitions;
+
 
     public void initialize(){
 
         ClockThread clockThread = ClockThread.getInstance();
         clockThread.setLabelToUpdate(clockLabel);
 
-        competitions = DatabaseUtil.getCompetitions();
+        List<Competition> competitions = DatabaseUtil.getCompetitions();
 
         setCompetitionTableViewSettings();
 
@@ -61,34 +64,39 @@ public class CompetitionsSearchController {
 
 
     private void setCompetitionTableViewSettings() {
-        competitionNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
+        competitionNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
 
-        competitionDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
+        competitionDescriptionTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getDescription());
             }
         });
 
-        competitionAddressTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
+        competitionAddressTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getAddress().toString());
             }
         });
 
 
-        competitionDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
+        competitionDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getTimeOfCompetition()
                         .format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
             }
         });
 
-        competitionTimeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
+        competitionTimeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 Competition competition = param.getValue();
                 LocalDateTime dateTime = competition.getTimeOfCompetition();
@@ -103,7 +111,8 @@ public class CompetitionsSearchController {
         });
 
 
-        competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>, ObservableValue<String>>() {
+        competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().findWinner()
                         .map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika"));
@@ -144,13 +153,14 @@ public class CompetitionsSearchController {
 
                 if (successfulDeletion){
                     User currentUser = SessionManager.getInstance().getCurrentUser();
-                    List<Change> changes = SerializationUtil.deserializeChanges();
+
                     Change change = Change.create(currentUser, "/",
                             "Obrisano natjecanje: " + competitionForDeletion.getName(), "Natjecanje/id:"
                                     + competitionForDeletion.getId());
-                    changes.add(change);
-                    SerializationUtil.serializeChanges(changes);
 
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
+
+                    competitionTableView.setItems(FXCollections.observableList(DatabaseUtil.getCompetitions()));
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali natjecanje : " + competitionForDeletion.getName());
                 }else{

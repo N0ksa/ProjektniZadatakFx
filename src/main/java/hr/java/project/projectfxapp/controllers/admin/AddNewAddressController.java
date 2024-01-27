@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
@@ -23,7 +24,6 @@ public class AddNewAddressController {
 
     @FXML
     private TextField streetNameTextField;
-
 
 
     public void initialize() {
@@ -52,12 +52,14 @@ public class AddNewAddressController {
 
             if (positiveConfirmation) {
                 DatabaseUtil.saveAddress(address);
-                ValidationProtocol.showSuccessAlert("Uspješan unos", "Uspješno ste unijeli novu adresu");
+                ValidationProtocol.showSuccessAlert("Uspješan unos",
+                        "Uspješno ste unijeli novu adresu");
             }
 
 
         } catch (ValidationException ex) {
-            ValidationProtocol.showErrorAlert("Greška prilikom registracije", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška prilikom registracije",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
         }
     }

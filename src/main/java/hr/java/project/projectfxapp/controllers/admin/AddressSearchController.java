@@ -1,6 +1,8 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Address;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.filter.AddressFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
@@ -80,6 +82,9 @@ public class AddressSearchController {
             if (positiveConfirmation) {
                 boolean successfulDeletion = DatabaseUtil.deleteAddress(addressForDeletion);
                 if (successfulDeletion){
+
+                    JavaFxProjectApplication.switchScene(ApplicationScreen.AddressSearch);
+
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali adresu : " + addressForDeletion);
                 }else{

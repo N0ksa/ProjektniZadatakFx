@@ -16,7 +16,6 @@ import java.util.Optional;
 
 public class ProjectDetailsCardController {
 
-
     @FXML
     private Label projectStartDateLabel;
     @FXML
@@ -31,8 +30,6 @@ public class ProjectDetailsCardController {
     private Label projectEndDateLabel;
 
 
-
-
     public void initialize() {
         MathProject currentProject = SessionManager.getInstance().getCurrentProject();
 
@@ -44,6 +41,7 @@ public class ProjectDetailsCardController {
         webEngine.getLoadWorker().exceptionProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 String projectWebPageAddress = currentProject.getProjectWebPageAddress();
+
                 if (projectWebPageAddress.equals(Constants.DEFAULT_PROJECT_WEB_PAGE)){
                     webEngine.load(getClass().getResource(projectWebPageAddress).toExternalForm());
                 }else{
@@ -64,7 +62,8 @@ public class ProjectDetailsCardController {
         LocalDate startDate = currentProject.getStartDate();
         LocalDate today = LocalDate.now();
 
-        projectStartDateLabel.setText(startDate.format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
+        projectStartDateLabel.setText(startDate.format(DateTimeFormatter.ofPattern(ValidationRegex
+                .VALID_LOCAL_DATE_REGEX.getRegex())));
 
         if(startDate.isAfter(today)){
             projectDurationLabel.setText("Projekt još nije počeo");
@@ -75,15 +74,11 @@ public class ProjectDetailsCardController {
 
         LocalDate endDate = currentProject.getEndDate();
         if (Optional.ofNullable(endDate).isPresent()){
-            projectEndDateLabel.setText(endDate.format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex())));
+            projectEndDateLabel.setText(endDate.format(DateTimeFormatter.ofPattern(ValidationRegex
+                    .VALID_LOCAL_DATE_REGEX.getRegex())));
         }else{
             projectEndDateLabel.setText("Projekt još nije završio");
         }
     }
-
-
-
-
-
 
 }
