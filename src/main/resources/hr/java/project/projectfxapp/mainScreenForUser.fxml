@@ -15,7 +15,7 @@
     <fx:include source="navigationForUser.fxml" />
    <Label fx:id="welcomeMessageLabel" alignment="CENTER" layoutY="208.0" prefHeight="36.0" prefWidth="271.0" text="Ime kluba">
       <font>
-         <Font size="18.0" />
+         <Font size="14.0" />
       </font></Label>
    <AnchorPane layoutX="288.0" layoutY="61.0" prefHeight="199.0" prefWidth="783.0" AnchorPane.bottomAnchor="440.0" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="61.0">
       <children>
