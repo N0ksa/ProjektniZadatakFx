@@ -329,7 +329,7 @@ public class DatabaseUtil {
                 String houseNumber = rs.getString("HOUSE_NUMBER");
                 City city = City.getCityFromStringName(rs.getString("CITY"));
 
-                Address.AdressBuilder addressBuilder = new Address.AdressBuilder(city)
+                Address.AddressBuilder addressBuilder = new Address.AddressBuilder(city)
                         .setHouseNumber(houseNumber)
                         .setId(addressId)
                         .setStreet(streetName);
@@ -1598,7 +1598,7 @@ public class DatabaseUtil {
 
 
             City city = City.getCityFromStringName(cityName);
-            Address.AdressBuilder addressBuilder = new Address.AdressBuilder(city).setAddressId(addressId)
+            Address.AddressBuilder addressBuilder = new Address.AddressBuilder(city).setAddressId(addressId)
                     .setStreet(street).setHouseNumber(houseNumber);
 
             Address filteredAddress = addressBuilder.build();

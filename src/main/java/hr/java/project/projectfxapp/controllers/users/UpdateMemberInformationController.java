@@ -9,6 +9,7 @@ import hr.java.project.projectfxapp.entities.SubjectGrade;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.files.FileUtility;
@@ -34,6 +35,8 @@ import java.util.stream.Collectors;
 
 public class UpdateMemberInformationController {
 
+    @FXML
+    private Label clockLabel;
     @FXML
     private RadioButton drugaGodinaRadioButton;
 
@@ -83,6 +86,9 @@ public class UpdateMemberInformationController {
 
 
     public void initialize() {
+        ClockThread clockThread = ClockThread.getInstance();
+        clockThread.setLabelToUpdate(clockLabel);
+
         Student memberToUpdate = SessionManager.getInstance().getCurrentStudent();
         
         setMemberInformation(memberToUpdate);

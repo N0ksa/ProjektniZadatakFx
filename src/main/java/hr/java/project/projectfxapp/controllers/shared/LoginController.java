@@ -13,18 +13,14 @@ import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.files.FileReaderUtil;
 import hr.java.project.projectfxapp.utility.files.FileWriterUtil;
-import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -166,7 +162,7 @@ public class LoginController {
     }
 
     private MathClub constructNewMathClub() {
-        Address address = new Address.AdressBuilder(cityComboBox.getValue())
+        Address address = new Address.AddressBuilder(cityComboBox.getValue())
                 .setHouseNumber(houseNumberTextField.getText())
                 .setStreet(streetNameTextField.getText())
                 .setAddressId(0L)
@@ -175,7 +171,7 @@ public class LoginController {
         Long addressId = DatabaseUtil.saveAddress(address);
 
         return new MathClub(0L, clubNameTextField.getText(),
-                new Address.AdressBuilder(cityComboBox.getValue())
+                new Address.AddressBuilder(cityComboBox.getValue())
                         .setHouseNumber(houseNumberTextField.getText())
                         .setStreet(streetNameTextField.getText())
                         .setAddressId(addressId)

@@ -112,11 +112,24 @@ public class JavaFxProjectApplication extends Application {
             popupStage.setTitle(screen.getTitle());
             popupStage.setScene(popupScene);
             popupStage.setResizable(screen.isResizable());
+
+            popupStage.initOwner(mainStage);
+
+            double mainStageX = mainStage.getX() + mainStage.getWidth() / 2;
+            double mainStageY = mainStage.getY() + mainStage.getHeight() / 2;
+
+            popupStage.setOnShown(event -> {
+                popupStage.setX(mainStageX - popupStage.getWidth() / 2);
+                popupStage.setY(mainStageY - popupStage.getHeight() / 2);
+            });
+
             popupStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
 }

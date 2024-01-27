@@ -11,7 +11,8 @@ public class SerializeChangesThread extends ChangesManagerThread implements Runn
     private static SerializeChangesThread instance;
     private Thread thread;
 
-    private SerializeChangesThread() {}
+    private SerializeChangesThread() {
+    }
 
     public static synchronized SerializeChangesThread setAndStartThread() {
         if (instance == null || !instance.isThreadAlive()) {

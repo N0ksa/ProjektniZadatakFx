@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,20 +12,20 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="451.0" prefWidth="628.0" styleClass="memberCard" stylesheets="@../../../../design/design.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.MemberCardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" styleClass="memberCard" stylesheets="@../../../../design/design.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.MemberCardController">
    <children>
-      <AnchorPane id="memberImageView" layoutX="432.0" layoutY="74.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="172.0" prefWidth="207.0" AnchorPane.bottomAnchor="262.0" AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="74.0">
+      <AnchorPane id="memberImageView" layoutX="542.0" layoutY="92.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="201.0" prefWidth="226.0" AnchorPane.bottomAnchor="407.0" AnchorPane.leftAnchor="542.0" AnchorPane.rightAnchor="332.0" AnchorPane.topAnchor="92.0">
          <children>
-            <ImageView fx:id="memberImage" fitHeight="149.0" fitWidth="183.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" />
+            <ImageView fx:id="memberImage" fitHeight="179.0" fitWidth="192.0" layoutX="17.0" layoutY="11.0" pickOnBounds="true" />
          </children></AnchorPane>
-      <Label fx:id="additionalInfoForMemberLabel" alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="61.0" prefWidth="670.0" style="-fx-background-color: #374151;" text="Dodatne informacije - " textFill="WHITE">
+      <Label fx:id="additionalInfoForMemberLabel" alignment="CENTER" layoutX="-2.0" layoutY="-2.0" prefHeight="61.0" prefWidth="832.0" style="-fx-background-color: #374151;" text="Dodatne informacije - " textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <AnchorPane id="memberInformation" layoutX="25.0" layoutY="77.0">
+      <AnchorPane id="memberInformation" layoutX="25.0" layoutY="77.0" prefHeight="231.0" prefWidth="473.0">
          <children>
-            <GridPane prefHeight="166.0" prefWidth="308.0">
+            <GridPane prefHeight="170.0" prefWidth="473.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="257.0" minWidth="10.0" prefWidth="257.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="100.0" />
@@ -103,15 +104,24 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <Label layoutX="523.0" layoutY="255.0" text="Slika" />
-      <AnchorPane id="memberGradesAnchorPane" layoutX="108.0" layoutY="282.0" prefHeight="200.0" prefWidth="436.0">
+      <Label layoutX="636.0" layoutY="300.0" text="Portret" />
+      <AnchorPane id="memberGradesAnchorPane" layoutX="119.0" layoutY="335.0" prefHeight="324.0" prefWidth="545.0">
          <children>
             <TableView fx:id="memberGradesTableView" layoutX="16.0" layoutY="14.0" prefHeight="200.0" prefWidth="436.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="memberSubjectNameTableColumn" prefWidth="197.0" text="Predmet" />
-                <TableColumn fx:id="memberSubjectGradeTableColumn" maxWidth="207.0" minWidth="-1.0" prefWidth="207.0" text="Ocijena" />
+                <TableColumn fx:id="memberSubjectNameTableColumn" prefWidth="360.0" text="Predmet" />
+                <TableColumn fx:id="memberSubjectGradeTableColumn" maxWidth="347.0" minWidth="-1.0" prefWidth="184.0" text="Ocijena" />
               </columns>
             </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="829.0" prefHeight="700.0" prefWidth="273.0" style="-fx-background-color: #4a92f7;">
+         <children>
+            <ImageView fitHeight="179.0" fitWidth="256.0" layoutX="13.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../images/projekt_matematika_logo.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

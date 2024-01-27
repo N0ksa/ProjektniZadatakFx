@@ -29,7 +29,7 @@ public class Address implements Serializable {
     }
 
 
-    public static class AdressBuilder{
+    public static class AddressBuilder {
         private Long id;
         private String street;
         private String houseNumber;
@@ -37,28 +37,28 @@ public class Address implements Serializable {
         private City city;
 
 
-        public AdressBuilder(City city){
+        public AddressBuilder(City city){
             this.city= city;
         }
 
-        public AdressBuilder setId(Long id) {
+        public AddressBuilder setId(Long id) {
             this.id = id;
             return this;
         }
 
 
-        public AdressBuilder setStreet(String street) {
+        public AddressBuilder setStreet(String street) {
             this.street = street;
             return this;
         }
 
 
-        public AdressBuilder setHouseNumber(String houseNumber) {
+        public AddressBuilder setHouseNumber(String houseNumber) {
             this.houseNumber = houseNumber;
             return this;
         }
 
-        public AdressBuilder setAddressId(Long addressId) {
+        public AddressBuilder setAddressId(Long addressId) {
             this.id = addressId;
             return this;
         }
@@ -108,7 +108,10 @@ public class Address implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(addressId, address.addressId) && Objects.equals(street, address.street) && Objects.equals(houseNumber, address.houseNumber) && city == address.city;
+        return Objects.equals(addressId, address.addressId) &&
+                Objects.equals(street, address.street) &&
+                Objects.equals(houseNumber, address.houseNumber)
+                && city == address.city;
     }
 
     @Override

@@ -187,7 +187,7 @@ public class UpdateCompetitionUserController {
         competitionToUpdate.setName(competitionNameTextField.getText());
         competitionToUpdate.setDescription(competitionDescriptionTextArea.getText());
 
-        Address.AdressBuilder addressBuilder = new Address.AdressBuilder(cityComboBox.getValue())
+        Address.AddressBuilder addressBuilder = new Address.AddressBuilder(cityComboBox.getValue())
                 .setAddressId(competitionToUpdate.getAddress().getAddressId())
                 .setStreet(streetNameTextField.getText())
                 .setHouseNumber(houseNumberTextField.getText());

@@ -110,18 +110,18 @@ public class AddNewProjectUserController {
         MathClub projectOrganizer = SessionManager.getInstance().getCurrentClub();
         LocalDate beginningDateOfProject = beginningDateOfProjectDatePicker.getValue();
 
-        Address.AdressBuilder adressBuilder = new Address.AdressBuilder(cityComboBox.getSelectionModel().getSelectedItem());
-        adressBuilder.setAddressId(0L)
+        Address.AddressBuilder addressBuilder = new Address.AddressBuilder(cityComboBox.getSelectionModel().getSelectedItem());
+        addressBuilder.setAddressId(0L)
                 .setStreet(streetNameTextField.getText())
                 .setHouseNumber(houseNumberTextField.getText());
 
 
-        Address address = adressBuilder.build();
+        Address address = addressBuilder.build();
 
         Long addressId = DatabaseUtil.saveAddress(address);
 
-        adressBuilder.setAddressId(addressId);
-        Address projectAddress = adressBuilder.build();
+        addressBuilder.setAddressId(addressId);
+        Address projectAddress = addressBuilder.build();
 
         Map<MathClub, List<Student>> projectParticipants = new HashMap<>();
 

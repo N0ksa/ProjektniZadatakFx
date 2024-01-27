@@ -17,7 +17,8 @@ public class GetMostRecentChangeThread extends ChangesManagerThread implements R
     private TableView<Change> tableViewToUpdate;
     private Thread thread;
 
-    private GetMostRecentChangeThread() {};
+    private GetMostRecentChangeThread() {
+    }
 
     public static synchronized GetMostRecentChangeThread getInstance() {
         if (instance == null) {
@@ -45,7 +46,7 @@ public class GetMostRecentChangeThread extends ChangesManagerThread implements R
     public void executeTaskManually() {
         Platform.runLater(() -> {
             List<Change> changes = super.readChangesFromFile();
-            if (!changes.isEmpty()){
+            if (!changes.isEmpty()) {
                 Change mostRecentChange = changes.get(changes.size() - 1);
                 tableViewToUpdate.setItems(FXCollections.observableList(List.of(mostRecentChange)));
             }
@@ -60,7 +61,7 @@ public class GetMostRecentChangeThread extends ChangesManagerThread implements R
 
                 Platform.runLater(() -> {
                     List<Change> changes = super.readChangesFromFile();
-                    if (!changes.isEmpty()){
+                    if (!changes.isEmpty()) {
                         Change mostRecentChange = changes.get(changes.size() - 1);
                         tableViewToUpdate.setItems(FXCollections.observableList(List.of(mostRecentChange)));
                     }

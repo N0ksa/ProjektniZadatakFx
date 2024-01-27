@@ -4,7 +4,6 @@ import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.City;
-import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
@@ -171,17 +170,17 @@ public class AddNewCompetitionUserController {
 
     private Address constructAddressForCompetition() {
 
-        Address.AdressBuilder adressBuilder = new Address.AdressBuilder(cityComboBox.getValue())
+        Address.AddressBuilder addressBuilder = new Address.AddressBuilder(cityComboBox.getValue())
                 .setHouseNumber(houseNumberTextField.getText())
                 .setStreet(streetNameTextField.getText())
                 .setAddressId(0L);
 
-        Address address = adressBuilder.build();
+        Address address = addressBuilder.build();
 
         Long addressId = DatabaseUtil.saveAddress(address);
-        adressBuilder.setAddressId(addressId);
+        addressBuilder.setAddressId(addressId);
 
-        return adressBuilder.build();
+        return addressBuilder.build();
     }
 
     private Set<CompetitionResult> setCompetitionResults(ListView<Student> competitionParticipantsListView) {

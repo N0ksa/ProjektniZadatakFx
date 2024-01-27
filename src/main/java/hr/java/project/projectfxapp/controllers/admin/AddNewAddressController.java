@@ -1,6 +1,5 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
@@ -37,7 +36,7 @@ public class AddNewAddressController {
         try {
             ValidationProtocol.validateAddress(streetNameTextField, houseNumberTextField, cityPickerComboBox);
 
-            Address.AdressBuilder addressBuilder = new Address.AdressBuilder(cityPickerComboBox.getValue())
+            Address.AddressBuilder addressBuilder = new Address.AddressBuilder(cityPickerComboBox.getValue())
                     .setAddressId(0L)
                     .setStreet(streetNameTextField.getText())
                     .setHouseNumber(houseNumberTextField.getText());

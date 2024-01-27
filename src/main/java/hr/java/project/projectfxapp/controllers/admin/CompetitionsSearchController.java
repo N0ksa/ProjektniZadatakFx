@@ -56,8 +56,6 @@ public class CompetitionsSearchController {
         ClockThread clockThread = ClockThread.getInstance();
         clockThread.setLabelToUpdate(clockLabel);
 
-        List<Competition> competitions = DatabaseUtil.getCompetitions();
-
         setCompetitionTableViewSettings();
 
     }

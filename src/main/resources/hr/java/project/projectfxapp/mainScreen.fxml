@@ -19,7 +19,7 @@
    <children>
       <AnchorPane prefHeight="100.0" prefWidth="604.0" />
       <fx:include source="menuForAdmin.fxml" />
-      <Label alignment="CENTER" layoutY="46.0" prefHeight="35.0" prefWidth="835.0" text="Aplikacija za  upravljanje matematičkim klubovima">
+      <Label alignment="CENTER" layoutY="30.0" prefHeight="51.0" prefWidth="835.0" style="-fx-background-color: #374151;" text="Aplikacija za  upravljanje matematičkim klubovima" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
@@ -31,13 +31,13 @@
                   <Image url="@../../../../images/projekt_matematika_logo.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="-1.0" layoutY="504.0" prefHeight="35.0" prefWidth="256.0" text="Autor: ©Leon Šarko" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="-1.0" layoutY="504.0" prefHeight="35.0" prefWidth="256.0" text="Autor: ©Leon Šarko" textFill="#374151">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="549.0" prefHeight="17.0" prefWidth="256.0" text="Projektni zadatak za: Programiranje u Javi" textFill="WHITE" />
-            <Label fx:id="clockLabel" alignment="CENTER" layoutX="8.0" layoutY="47.0" prefHeight="17.0" prefWidth="249.0" textFill="WHITE">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="549.0" prefHeight="17.0" prefWidth="256.0" text="Projektni zadatak za: Programiranje u Javi" textFill="#374151" />
+            <Label fx:id="clockLabel" alignment="CENTER" layoutX="8.0" layoutY="47.0" prefHeight="17.0" prefWidth="249.0" textFill="#374151">
                <font>
                   <Font size="18.0" />
                </font>
