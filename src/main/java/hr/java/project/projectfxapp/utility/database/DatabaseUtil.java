@@ -1,9 +1,8 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.database;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.Gender;
-import hr.java.project.projectfxapp.enums.Status;
 import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.filter.*;
 import org.slf4j.Logger;

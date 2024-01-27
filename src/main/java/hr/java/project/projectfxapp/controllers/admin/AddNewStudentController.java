@@ -6,6 +6,9 @@ import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +19,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AddNewStudentController {
 

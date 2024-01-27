@@ -1,7 +1,7 @@
 package hr.java.project.projectfxapp.threads;
 
 import hr.java.project.projectfxapp.entities.Change;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
+import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

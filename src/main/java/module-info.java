@@ -5,9 +5,7 @@ module hr.java.project.projectfxapp {
     requires java.sql;
     requires javafx.web;
 
-
     opens hr.java.project.projectfxapp to javafx.fxml;
-    exports hr.java.project.projectfxapp;
     exports hr.java.project.projectfxapp.enums;
     opens hr.java.project.projectfxapp.controllers.admin to javafx.fxml;
     exports hr.java.project.projectfxapp.controllers.admin;
@@ -15,4 +13,5 @@ module hr.java.project.projectfxapp {
     opens hr.java.project.projectfxapp.controllers.users to javafx.fxml;
     opens hr.java.project.projectfxapp.controllers.shared to javafx.fxml;
     exports hr.java.project.projectfxapp.controllers.shared;
+    exports hr.java.project.projectfxapp;
 }

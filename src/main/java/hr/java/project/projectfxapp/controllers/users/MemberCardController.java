@@ -4,9 +4,8 @@ import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
-import javafx.beans.property.SimpleStringProperty;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,7 +19,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class MemberCardController {

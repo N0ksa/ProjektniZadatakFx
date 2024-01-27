@@ -31,10 +31,35 @@ public class HtmlGenerator<T> {
         }
 
 
-        return null;
-
+        return generateContactTheAdministratorHtml();
 
     }
+
+    private String generateContactTheAdministratorHtml() {
+        StringBuilder htmlContent = new StringBuilder("<html><head><title>Error Page</title>");
+
+        htmlContent.append("<style>")
+                .append("body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; " +
+                        "text-align: center; margin: 0; padding: 0; }")
+                .append("header { background-color: #428bca; color: #fff; padding: 20px; }")
+                .append("h1 { margin-bottom: 10px; }")
+                .append("p { margin-top: 10px; font-size: 18px; }")
+                .append("footer { background-color: #333; color: #fff; padding: 10px; margin-top: 20px; }")
+                .append("</style>");
+
+        htmlContent.append("</head><body>");
+
+        htmlContent.append("<header>")
+                .append("<h1>Nešto je pošlo po krivu</h1>")
+                .append("</header>")
+                .append("<p>Kontaktirajte administratora.</p>")
+                .append("<footer> <p>&copy; 2023-2024. Sva prava pridržana.</p>");
+
+        htmlContent.append("</body></html>");
+
+        return htmlContent.toString();
+    }
+
 
     private String generateLoginStatisticsHtml(List<LoginStatistics> item) {
         StringBuilder htmlContent = new StringBuilder("<html><head><title>Statistika prijava</title>");
@@ -59,15 +84,12 @@ public class HtmlGenerator<T> {
 
         htmlContent.append("<h2>Tablica prijava</h2>");
 
-        // Continue building the HTML content for login statistics here
-        // You can use a similar structure with <table>, <tr>, <th>, <td> tags
-
-        // Example:
         htmlContent.append("<table>")
                 .append("<tr>")
                 .append("<th>Korisnik</th>")
                 .append("<th>Vrijeme prijave</th>")
                 .append("<th>Vrijeme odjave</th>")
+                .append("<th>Trajanje prijave</th>")
                 .append("</tr>");
 
         for (LoginStatistics statistics : item) {
@@ -77,6 +99,7 @@ public class HtmlGenerator<T> {
                             ofPattern(ValidationRegex.VALID_LOCAL_DATE_TIME_REGEX.getRegex()))).append("</td>")
                     .append("<td>").append(statistics.logoutTime().format(DateTimeFormatter.
                             ofPattern(ValidationRegex.VALID_LOCAL_DATE_TIME_REGEX.getRegex()))).append("</td>")
+                    .append("<td>").append(calculateDuration(statistics.loginDuration())).append("</td>")
                     .append("</tr>");
         }
 
@@ -85,6 +108,14 @@ public class HtmlGenerator<T> {
         htmlContent.append("</body></html>");
 
         return htmlContent.toString();
+    }
+
+    private String calculateDuration(Integer integer) {
+        int hours = integer / 3600;
+        int minutes = (integer % 3600) / 60;
+        int seconds = integer % 60;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
 

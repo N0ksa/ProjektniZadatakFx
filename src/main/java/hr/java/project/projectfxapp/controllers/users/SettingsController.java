@@ -8,6 +8,10 @@ import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.files.FileUtility;
+import hr.java.project.projectfxapp.utility.files.FileWriterUtil;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -162,7 +166,7 @@ public class SettingsController {
                 String destinationDirectory = "src/main/resources/images/";
 
 
-                FileCopier<File> fileCopier = new FileUtils();
+                FileCopier<File> fileCopier = new FileUtility();
                 fileCopier.copyToDirectory(selectedFile, destinationDirectory);
 
 

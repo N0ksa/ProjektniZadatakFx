@@ -10,6 +10,10 @@ import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.*;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.files.FileUtility;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -210,7 +214,7 @@ public class UpdateMemberInformationController {
                 String pathToLoad = "/images/";
 
 
-                FileCopier<File> fileCopier = new FileUtils();
+                FileCopier<File> fileCopier = new FileUtility();
                 fileCopier.copyToDirectory(selectedFile, destinationDirectory);
 
                 File imageFile = new File(destinationDirectory + selectedFile.getName());

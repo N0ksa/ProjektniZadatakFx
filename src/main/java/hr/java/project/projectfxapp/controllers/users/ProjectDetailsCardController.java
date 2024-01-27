@@ -3,8 +3,7 @@ package hr.java.project.projectfxapp.controllers.users;
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
-import hr.java.project.projectfxapp.utility.SessionManager;
-import javafx.concurrent.Worker;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -13,7 +12,6 @@ import javafx.scene.web.WebView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.Optional;
 
 public class ProjectDetailsCardController {

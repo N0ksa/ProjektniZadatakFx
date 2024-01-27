@@ -5,10 +5,6 @@ import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-
-import java.io.IOException;
 
 public class MenuController {
 

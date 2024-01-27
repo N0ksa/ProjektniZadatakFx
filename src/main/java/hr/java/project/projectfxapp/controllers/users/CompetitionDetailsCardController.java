@@ -4,7 +4,7 @@ import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.CompetitionResult;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
-import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

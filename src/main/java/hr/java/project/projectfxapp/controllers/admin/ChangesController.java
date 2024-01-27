@@ -1,13 +1,10 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.Change;
-import hr.java.project.projectfxapp.entities.MathClub;
-import hr.java.project.projectfxapp.entities.Recordable;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.DeserializeChangesThread;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -15,10 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 import javafx.util.Callback;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;

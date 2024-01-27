@@ -7,7 +7,7 @@ import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.GetMostRecentChangeThread;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
+import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

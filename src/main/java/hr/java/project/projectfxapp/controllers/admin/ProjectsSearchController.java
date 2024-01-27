@@ -1,10 +1,12 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.*;
-import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.filter.MathProjectFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.*;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.files.SerializationUtil;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,8 +24,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
-import static hr.java.project.projectfxapp.utility.FileReaderUtil.*;
 public class ProjectsSearchController {
     @FXML
     private Label clockLabel;

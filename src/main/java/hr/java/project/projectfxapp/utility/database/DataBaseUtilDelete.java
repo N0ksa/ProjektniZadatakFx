@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.database;
 
 import hr.java.project.projectfxapp.entities.*;
 import org.slf4j.Logger;

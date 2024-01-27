@@ -1,10 +1,9 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.files;
 
 
 
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.Change;
-import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.LoginStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

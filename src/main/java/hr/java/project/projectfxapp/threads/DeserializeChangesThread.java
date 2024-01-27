@@ -1,7 +1,6 @@
 package hr.java.project.projectfxapp.threads;
 
 import hr.java.project.projectfxapp.entities.Change;
-import hr.java.project.projectfxapp.utility.ChangesManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;

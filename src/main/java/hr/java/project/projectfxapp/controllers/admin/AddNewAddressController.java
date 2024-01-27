@@ -4,7 +4,7 @@ import hr.java.project.projectfxapp.entities.Address;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.threads.ClockThread;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

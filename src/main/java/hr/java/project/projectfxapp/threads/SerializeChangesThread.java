@@ -1,8 +1,7 @@
 package hr.java.project.projectfxapp.threads;
 
 import hr.java.project.projectfxapp.entities.Change;
-import hr.java.project.projectfxapp.threads.ChangesManagerThread;
-import hr.java.project.projectfxapp.utility.ChangesManager;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import javafx.application.Platform;
 
 import java.util.List;

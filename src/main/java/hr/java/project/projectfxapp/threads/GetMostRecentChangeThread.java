@@ -1,16 +1,12 @@
 package hr.java.project.projectfxapp.threads;
 
 import hr.java.project.projectfxapp.entities.Change;
-import hr.java.project.projectfxapp.utility.ChangesManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class GetMostRecentChangeThread extends ChangesManagerThread implements Runnable {

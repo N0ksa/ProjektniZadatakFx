@@ -1,21 +1,14 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.files;
 
 import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
-import hr.java.project.projectfxapp.enums.ValidationRegex;
-import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class FileWriterUtil {
 

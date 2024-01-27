@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.manager;
 
 import hr.java.project.projectfxapp.entities.*;
 

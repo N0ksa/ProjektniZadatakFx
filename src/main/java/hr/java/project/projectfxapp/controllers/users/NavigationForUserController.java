@@ -4,11 +4,10 @@ import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.LoginStatistics;
 import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
-import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
-import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.files.SerializationUtil;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,10 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 public class NavigationForUserController {
 

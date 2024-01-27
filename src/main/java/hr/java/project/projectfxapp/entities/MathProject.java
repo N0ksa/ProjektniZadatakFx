@@ -1,7 +1,7 @@
 package hr.java.project.projectfxapp.entities;
 
 import hr.java.project.projectfxapp.constants.Constants;
-import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 
 import java.io.Serializable;
 import java.time.LocalDate;

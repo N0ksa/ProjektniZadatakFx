@@ -1,4 +1,4 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.files;
 
 import hr.java.project.projectfxapp.entities.FileCopier;
 import org.slf4j.Logger;
@@ -10,9 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-public class FileUtils implements FileCopier<File> {
+public class FileUtility implements FileCopier<File> {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileUtility.class);
     @Override
     public void copyToDirectory(File sourceFile, String destinationDirectory) throws IOException {
 

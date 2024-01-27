@@ -1,7 +1,7 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.LoginStatistics;
-import hr.java.project.projectfxapp.utility.SerializationUtil;
+import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.html.HtmlGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,20 +1,16 @@
 package hr.java.project.projectfxapp.entities;
 
-import hr.java.project.projectfxapp.enums.Gender;
-import hr.java.project.projectfxapp.enums.Status;
-import hr.java.project.projectfxapp.utility.SessionManager;
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
 /**
  * Predstavlja matematičko natjecanje.
  */
-public final class Competition extends NamedEntity implements Printable, Recordable<Competition> {
+public final class Competition extends NamedEntity implements Recordable<Competition> {
 
     private MathClub organizer;
     private String description;

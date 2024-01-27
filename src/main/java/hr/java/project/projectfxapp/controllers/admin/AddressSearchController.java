@@ -1,12 +1,10 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
 import hr.java.project.projectfxapp.entities.Address;
-import hr.java.project.projectfxapp.entities.MathClub;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.filter.AddressFilter;
-import hr.java.project.projectfxapp.filter.MathClubFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
-import hr.java.project.projectfxapp.utility.DatabaseUtil;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
@@ -14,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
