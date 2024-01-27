@@ -161,7 +161,7 @@ public class AddNewStudentController {
                             "Dodan student: " + newStudent.getName() + " " + newStudent.getSurname(),
                             "Student");
 
-                    ChangesManager.getChanges().add(change);
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog studenta je bilo uspješno",
                             "Student " + newStudent.getName() + " " + newStudent.getSurname() +

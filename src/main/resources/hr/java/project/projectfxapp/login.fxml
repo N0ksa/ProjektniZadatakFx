@@ -54,7 +54,7 @@
                      <padding>
                         <Insets left="40.0" />
                      </padding></TextField>
-                  <Button fx:id="loginButton" layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" text="Login" textFill="#374151" />
+                  <Button layoutX="212.0" layoutY="355.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="72.0" text="Login" textFill="#374151" />
                   <PasswordField fx:id="passwordPasswordField" layoutX="170.0" layoutY="273.0" prefHeight="37.0" prefWidth="181.0" promptText="Unesi lozinku">
                      <opaqueInsets>
                         <Insets />
@@ -152,7 +152,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="cityComboBox" layoutX="181.0" layoutY="323.0" prefHeight="33.0" prefWidth="242.0" />
+                  <ComboBox fx:id="cityComboBox" layoutX="181.0" layoutY="323.0" prefHeight="33.0" prefWidth="242.0" promptText="Odaberi grad" />
                   <Label layoutX="99.0" layoutY="378.0" text="Unesi ulicu: " textFill="#374151">
                      <font>
                         <Font name="System Bold" size="14.0" />

@@ -22,7 +22,6 @@ public class PasswordUtil {
             return new String(Base64.getEncoder()
                     .encode(digest));
         } catch (NoSuchAlgorithmException e) {
-
             logger.error("Sustav ne podržava SHA-256");
             throw new UnsupportedAlgorithmException("Sustav ne podržava SHA-256");
 

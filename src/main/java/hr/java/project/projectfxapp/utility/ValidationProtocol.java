@@ -507,6 +507,15 @@ public class ValidationProtocol {
 
     }
 
+    public static void showSuccessLoginAlert(String header, String content){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Prijava uspješna");
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+
+    }
+
 
 
     public static boolean showConfirmationDialog(String dialogTitle, String title, String content) {

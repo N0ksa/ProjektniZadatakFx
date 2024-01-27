@@ -158,7 +158,7 @@ public class UpdateCompetitionUserController {
                     Optional<Change> change = oldcompetition.getChange(competitionToUpdate);
 
                     if (change.isPresent()){
-                        ChangesManager.getChanges().add(change.get());
+                        ChangesManager.setNewChangesIfChangesNotPresent().add(change.get());
                     }
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);

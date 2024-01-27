@@ -79,9 +79,10 @@ public class AddNewProjectUserController {
                     Change change = Change.create(currentUser, "/",
                             "Spremljen novi projekt: " + newProject.getName(), "Projekt");
 
-                    ChangesManager.getChanges().add(change);
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);
+
                     ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",
                             "Projekt " + newProject.getName() + "  uspješno se spremio");
                 }

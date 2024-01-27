@@ -139,7 +139,7 @@ public class AddNewCompetitionController {
                     Change change = Change.create(currentUser, "/",
                             "Dodano natjecanje: " + newCompetition.getName(), "Natjecanje");
 
-                    ChangesManager.getChanges().add(change);
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",

@@ -86,7 +86,7 @@ public class AddNewMathClubController {
                     User currentUser = SessionManager.getInstance().getCurrentUser();
                     Change change = Change.create(currentUser, "/",
                             "Dodan novi korisnik: " + registerUser.getUsername(), "Korisnik");
-                    ChangesManager.getChanges().add(change);
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
 
                     ValidationProtocol.showSuccessAlert("Spremanje novog korisnika je bilo uspješno",

@@ -69,7 +69,7 @@ public class NavigationForUserController {
 
         if (positiveConfirmation){
             JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
-            SerializeChangesThread serializeChangesThread = SerializeChangesThread.getInstance();
+            SerializeChangesThread serializeChangesThread = SerializeChangesThread.setAndStartThread();
             serializeChangesThread.executeTaskManually();
 
             SessionManager.getInstance().setLogoutTime(LocalDateTime.now());

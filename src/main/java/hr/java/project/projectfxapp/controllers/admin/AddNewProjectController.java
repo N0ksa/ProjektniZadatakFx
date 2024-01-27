@@ -102,7 +102,7 @@ public class AddNewProjectController {
                 Change change = Change.create(currentUser, "/",
                         "Dodan novi projekt: " + newProject.getName(), "Projekt");
 
-                ChangesManager.getChanges().add(change);
+                ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
 
                 ValidationProtocol.showSuccessAlert("Spremanje novog projekta je bilo uspješno",

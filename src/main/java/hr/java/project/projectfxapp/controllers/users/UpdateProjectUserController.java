@@ -86,7 +86,7 @@ public class UpdateProjectUserController {
                     Optional<Change> change = oldProject.getChange(projectToUpdate);
 
                     if (change.isPresent()) {
-                        ChangesManager.getChanges().add(change.get());;
+                        ChangesManager.setNewChangesIfChangesNotPresent().add(change.get());;
                     }
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);

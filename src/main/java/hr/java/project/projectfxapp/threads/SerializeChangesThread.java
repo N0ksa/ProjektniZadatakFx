@@ -13,7 +13,7 @@ public class SerializeChangesThread extends ChangesManagerThread implements Runn
 
     private SerializeChangesThread() {}
 
-    public static synchronized SerializeChangesThread getInstance() {
+    public static synchronized SerializeChangesThread setAndStartThread() {
         if (instance == null || !instance.isThreadAlive()) {
             instance = new SerializeChangesThread();
             instance.startThread();
@@ -33,7 +33,7 @@ public class SerializeChangesThread extends ChangesManagerThread implements Runn
             try {
                 Platform.runLater(() -> {
                     List<Change> changes = super.readChangesFromFile();
-                    changes.addAll(ChangesManager.getChanges());
+                    changes.addAll(ChangesManager.setNewChangesIfChangesNotPresent());
                     super.writeChangesToFile(changes);
                     ChangesManager.clearChanges();
                 });
@@ -45,10 +45,11 @@ public class SerializeChangesThread extends ChangesManagerThread implements Runn
             }
         }
     }
+
     public void executeTaskManually() {
         Platform.runLater(() -> {
             List<Change> changes = super.readChangesFromFile();
-            changes.addAll(ChangesManager.getChanges());
+            changes.addAll(ChangesManager.setNewChangesIfChangesNotPresent());
             super.writeChangesToFile(changes);
             ChangesManager.clearChanges();
         });

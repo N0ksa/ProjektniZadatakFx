@@ -113,7 +113,7 @@ public class AddNewCompetitionUserController {
                             "Spremljeno natjecanje: " + newCompetition.getName(), "Natjecanje:");
 
 
-                    ChangesManager.getChanges().add(change);
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
                     ValidationProtocol.showSuccessAlert("Spremanje novog natjecanja je bilo uspješno",

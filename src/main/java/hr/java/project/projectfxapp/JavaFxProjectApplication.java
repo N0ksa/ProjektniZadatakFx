@@ -54,7 +54,7 @@ public class JavaFxProjectApplication extends Application {
                     "Ako želite izaći iz aplikacije pritisnite Da");
 
             if (positiveConfirmation){
-                SerializeChangesThread serializeChangesThread = SerializeChangesThread.getInstance();
+                SerializeChangesThread serializeChangesThread = SerializeChangesThread.setAndStartThread();
                 serializeChangesThread.executeTaskManually();
 
                 SessionManager.getInstance().setLogoutTime(LocalDateTime.now());

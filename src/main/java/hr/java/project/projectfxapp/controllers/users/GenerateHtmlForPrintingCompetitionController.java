@@ -15,16 +15,12 @@ public class GenerateHtmlForPrintingCompetitionController {
     
     public void initialize() {
 
-        // Assuming you have a Competition instance, replace it with your actual instance
         Competition competitionToPrint = SessionManager.getInstance().getCurrentCompetition();
 
-        // Initialize the HtmlGenerator with the appropriate type (e.g., Competition)
         HtmlGenerator<Competition> htmlGenerator = new HtmlGenerator<>();
 
-        // Generate HTML content for the Competition
         String competitionHtml = htmlGenerator.generateHtml(competitionToPrint);
 
-        // Load HTML content into the WebView
         pageForPrintingWebView.getEngine().loadContent(competitionHtml);
     }
 

@@ -152,7 +152,7 @@ public class AddNewStudentUserController {
                             "Spremljen novi student: " + newStudent.getName() + " " + newStudent.getSurname(),
                             "Student");
 
-                    ChangesManager.getChanges().add(change);
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);

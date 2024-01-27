@@ -257,7 +257,7 @@ public class UpdateMemberInformationController {
                     Optional<Change> change = oldMember.getChange(memberToUpdate);
 
                     if (change.isPresent()){
-                        ChangesManager.getChanges().add(change.get());
+                        ChangesManager.setNewChangesIfChangesNotPresent().add(change.get());
                     }
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);

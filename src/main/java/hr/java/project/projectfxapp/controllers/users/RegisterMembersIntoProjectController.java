@@ -122,7 +122,7 @@ public class RegisterMembersIntoProjectController {
 
                 Optional<Change> change = oldProject.getChange(currentProject);
                 if (change.isPresent()) {
-                    ChangesManager.getChanges().add(change.get());
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change.get());
                 }
 
                 JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);

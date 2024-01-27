@@ -88,7 +88,7 @@ public class RegisterMembersIntoCompetitionController {
                 Optional<Change> change = oldcompetition.getChange(currentCompetition);
 
                 if (change.isPresent()) {
-                    ChangesManager.getChanges().add(change.get());;
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change.get());;
                 }
 
                 JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);

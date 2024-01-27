@@ -11,7 +11,7 @@ public class ChangesManager {
     public ChangesManager() {
     }
 
-    public static List<Change> getChanges() {
+    public static List<Change> setNewChangesIfChangesNotPresent() {
         if (changes == null) {
             changes = new ArrayList<>();
         }
