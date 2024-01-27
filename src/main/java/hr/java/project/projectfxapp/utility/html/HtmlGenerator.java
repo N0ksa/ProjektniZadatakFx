@@ -1,13 +1,16 @@
 package hr.java.project.projectfxapp.utility.html;
 
-import hr.java.project.projectfxapp.entities.Competition;
-import hr.java.project.projectfxapp.entities.CompetitionResult;
-import hr.java.project.projectfxapp.entities.LoginStatistics;
+import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class HtmlGenerator<T> {
 
@@ -28,6 +31,9 @@ public class HtmlGenerator<T> {
             if (firstItem instanceof LoginStatistics) {
                 return generateLoginStatisticsHtml((List<LoginStatistics>) item);
             }
+        }
+        else if (item instanceof Student student) {
+            return generateStudentHtml(student);
         }
 
 
@@ -58,6 +64,153 @@ public class HtmlGenerator<T> {
         htmlContent.append("</body></html>");
 
         return htmlContent.toString();
+    }
+
+    public String generateStudentHtml(Student student) {
+        List<Competition> competitions = DatabaseUtil.getCompetitions();
+        LocalDate now = LocalDate.now();
+        competitions.removeIf(competition -> competition.getTimeOfCompetition().toLocalDate().isAfter(now));
+        List<MathProject> projects = DatabaseUtil.getProjects();
+
+
+        StringBuilder htmlContent = new StringBuilder("<html><head><title>Student Details</title>");
+
+        htmlContent.append("<style>")
+                .append("body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; " +
+                        "text-align: center; margin: 0; padding: 0; }")
+                .append("header { background-color: #428bca; color: #fff; padding: 20px; }")
+                .append("h1 { margin-bottom: 10px; }")
+                .append("p { margin-top: 10px; font-size: 18px; }")
+                .append("table { border-collapse: collapse; width: 100%; }")
+                .append("th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }")
+                .append("th { background-color: #428bca; color: #fff; }")
+                .append("footer { background-color: #333; color: #fff; padding: 10px; margin-top: 20px; }")
+                .append("</style>");
+
+        htmlContent.append("</head><body>");
+
+        htmlContent.append("<header>")
+                .append("<h1>Statistika člana</h1>")
+                .append("</header>")
+                .append("<p><strong>Ime:</strong> ").append(student.getName()).append("</p>")
+                .append("<p><strong>Prezime:</strong> ").append(student.getSurname()).append("</p>")
+                .append("<p><strong>Spol:</strong> ").append(student.getGender()).append("</p>")
+                .append("<p><strong>Email:</strong> ").append(student.getEmail()).append("</p>")
+                .append("<p><strong>Godina studija:</strong> ").append(student.getYearOfStudy()).append("</p>")
+                .append("<p><strong>Prosječna ocjena:</strong> ").append(student.calculateAverageGrade()).append("</p>")
+                .append("<p><strong>Članstvo:</strong> ").append(student.getClubMembership()).append("</p>");
+
+        htmlContent.append("<h2>Ocjene</h2>");
+
+        htmlContent.append("<table>")
+                .append("<tr>")
+                .append("<th>Predmet</th>")
+                .append("<th>Ocjena</th>")
+                .append("</tr>");
+
+        for (Map.Entry<String, Integer> entry : student.getGrades().entrySet()) {
+            htmlContent.append("<tr>")
+                    .append("<td>").append(entry.getKey()).append("</td>")
+                    .append("<td>").append(entry.getValue()).append("</td>")
+                    .append("</tr>");
+        }
+
+        htmlContent.append("</table>");
+
+        htmlContent.append("<h2>Dodatne statistike</h2>")
+                .append("<p><strong>Broj pobjeda na natjecanjima:</strong> ")
+                .append(getCompetitionWinNumber(competitions, student)).append("</p>")
+                .append("<p><strong>Broj sudjelovanja u projektima:</strong> ")
+                .append(getNumberOfParticipationInProject(projects, student)).append("</p>")
+                .append("<p><strong>Najniža ostvarena ocjena na natjecanjima:</strong> ");
+
+        getLowestScore(competitions, student).ifPresentOrElse(
+                htmlContent::append,
+                () -> htmlContent.append("Član nije sudjelovao na natjecanju")
+        );
+
+        htmlContent.append("</p>")
+                .append("<p><strong>Najviša ostvarena ocjena na natjecanjima:</strong> ");
+
+        getHighestScore(competitions, student).ifPresentOrElse(
+                htmlContent::append,
+                () -> htmlContent.append("Član nije sudjelovao na natjecanju")
+        );
+
+        htmlContent.append("</p>");
+
+        htmlContent.append("<footer>")
+                .append("<p>&copy; 2023-2024. Sva prava pridržana.</p>")
+                .append("<p>Projekt Matematika</p>")
+                .append("</footer>")
+                .append("</body></html>");
+
+        return htmlContent.toString();
+    }
+
+    private Integer getCompetitionWinNumber(List<Competition> competitions, Student currentStudent) {
+        Integer numberOfWins = 0;
+        for (Competition competition : competitions){
+            Optional<Student> winner = competition.findWinner();
+            if (winner.isPresent() && winner.get().equals(currentStudent)){
+                numberOfWins++;
+            }
+        }
+        return numberOfWins;
+    }
+
+
+    private Integer getNumberOfParticipationInProject(List<MathProject> projects, Student currentStudent) {
+        Integer numberOfParticipations = 0;
+        for (MathProject project: projects){
+            if (project.hasStudentCollaborator(currentStudent)){
+                numberOfParticipations++;
+            }
+        }
+        return numberOfParticipations;
+    }
+
+
+    private Optional <BigDecimal> getLowestScore(List<Competition> competitions, Student currentStudent) {
+        BigDecimal lowestScore = null;
+        boolean hasParticipated = false;
+        for (Competition competition: competitions){
+            if (competition.hasParticipant(currentStudent)){
+                hasParticipated = true;
+                BigDecimal competitionScore = competition.getCompetitionResultForParticipant(currentStudent).get().score();
+
+                if(lowestScore == null || competitionScore.compareTo(lowestScore) < 0){
+                    lowestScore = competitionScore;
+                }
+            }
+        }
+        if (hasParticipated){
+           return Optional.ofNullable(lowestScore);
+        }
+        else{
+            return Optional.empty();
+        }
+    }
+
+    private  Optional<BigDecimal> getHighestScore(List<Competition> competitions, Student currentStudent) {
+        BigDecimal highestScore = null;
+        boolean hasParticipated = false;
+        for (Competition competition: competitions){
+            if (competition.hasParticipant(currentStudent)){
+                hasParticipated = true;
+                BigDecimal competitionScore = competition.getCompetitionResultForParticipant(currentStudent).get().score();
+
+                if(highestScore == null || competitionScore.compareTo(highestScore) > 0){
+                    highestScore = competitionScore;
+                }
+            }
+        }
+        if (hasParticipated){
+            return Optional.ofNullable(highestScore);
+        }
+        else{
+            return Optional.empty();
+        }
     }
 
 

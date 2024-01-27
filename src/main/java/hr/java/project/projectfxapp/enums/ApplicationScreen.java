@@ -37,7 +37,8 @@ public enum ApplicationScreen {
     Login("Prijava", "login.fxml", false),
     NavigationForUser("Navigacija", "navigationForUser.fxml", false),
     GenerateHtmlForPrintingCompetition("Generiraj HTML", "generateHtmlForPrintingCompetition.fxml", false),
-    GenerateHtmlForPrintingUserStatistics("Generiraj HTML", "generateHtmlForPrintingUserStatistics.fxml", false);
+    GenerateHtmlForPrintingUserStatistics("Generiraj HTML", "generateHtmlForPrintingUserStatistics.fxml", false),
+    GenerateHtmlForPrintingClubMember("Generiraj HTML", "generateHtmlForPrintingClubMember.fxml", false);
 
     private final String title;
     private final String pathOfFxml;

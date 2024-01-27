@@ -19,9 +19,12 @@ public class ValidationProtocol {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public static void validateCompetition(TextField competitionNameTextField, TextArea competitionDescriptionTextArea,
-                                           ComboBox<Address> competitionAddressComboBox, DatePicker competitionDateDatePicker,
-                                           TextField competitionTimeTextField, TextField competitionBuildingNameTextField,
+    public static void validateCompetition(TextField competitionNameTextField,
+                                           TextArea competitionDescriptionTextArea,
+                                           ComboBox<Address> competitionAddressComboBox,
+                                           DatePicker competitionDateDatePicker,
+                                           TextField competitionTimeTextField,
+                                           TextField competitionBuildingNameTextField,
                                            TextField competitionHallNameTextField,
                                            TableView<CompetitionResult> competitionResultsTableView,
                                            ComboBox<MathClub> organizer) throws ValidationException {
@@ -52,7 +55,8 @@ public class ValidationProtocol {
                                                   TextField timeOfCompetitionTextField,
                                                   TextField auditoriumBuildingNameTextField,
                                                   TextField auditoriumHallNameTextField,
-                                                  ListView<Student> competitionParticipantsListView) throws ValidationException{
+                                                  ListView<Student> competitionParticipantsListView)
+            throws ValidationException{
 
         List<String> errors = new ArrayList<>();
         validateTextField(competitionNameTextField, "Unesite naziv natjecanja", errors);
@@ -61,7 +65,8 @@ public class ValidationProtocol {
         validateTimeTextField(timeOfCompetitionTextField, errors);
         validateTextField(auditoriumBuildingNameTextField, "Unesite naziv zgrade", errors);
         validateTextField(auditoriumHallNameTextField, "Unesite naziv dvorane", errors);
-        validateList(competitionParticipantsListView.getItems(), "Odaberite barem jednog sudionika natjecanja", errors);
+        validateList(competitionParticipantsListView.getItems(),
+                "Odaberite barem jednog sudionika natjecanja", errors);
 
         if (!errors.isEmpty()) {
             throw new ValidationException(String.join(LINE_SEPARATOR, errors));
@@ -305,19 +310,22 @@ public class ValidationProtocol {
 
     }
 
-    private static void validatePasswordFieldForUsernameChange(User currentUser, PasswordField enterPasswordForUsernameChangePasswordField,
+    private static void validatePasswordFieldForUsernameChange(User currentUser,
+                                                               PasswordField enterPasswordForUsernameChangePasswordField,
                                                                List<String> errors) {
 
         if (enterPasswordForUsernameChangePasswordField.getText().isEmpty()){
             errors.add("Lozinka ne smije biti prazna");
         }
-        else if (!PasswordUtil.isPasswordCorrect(enterPasswordForUsernameChangePasswordField.getText(), currentUser.getHashedPassword())){
+        else if (!PasswordUtil.isPasswordCorrect(enterPasswordForUsernameChangePasswordField.getText(),
+                currentUser.getHashedPassword())){
             errors.add("Unijeli ste krivu lozinku. Molim pokušajte ponovno.");
         }
 
     }
 
-    private static void validateUserNameTextField(User currentUser, TextField changeUserNameTextField, List<String> errors) {
+    private static void validateUserNameTextField(User currentUser, TextField changeUserNameTextField,
+                                                  List<String> errors) {
 
         if (changeUserNameTextField.getText().isEmpty()){
             errors.add("Korisničko ime ne smije biti prazno");
@@ -354,7 +362,8 @@ public class ValidationProtocol {
         if (enterOldPasswordPasswordField.getText().isEmpty()){
             throw new ValidationException("Unesite staru lozinku");
         }
-        else if (!PasswordUtil.isPasswordCorrect(enterOldPasswordPasswordField.getText(), currentUser.getHashedPassword())){
+        else if (!PasswordUtil.isPasswordCorrect(enterOldPasswordPasswordField.getText(),
+                currentUser.getHashedPassword())){
             throw new ValidationException("Unijeli ste krivu lozinku. Molim pokušajte ponovno.");
         }
 
@@ -421,10 +430,12 @@ public class ValidationProtocol {
         }
 
         try{
-            LocalTime time = LocalTime.parse(timeText, DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
+            LocalTime.parse(timeText,
+                    DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex()));
 
         }catch (DateTimeParseException ex){
-            errors.add("Molim unesite vrijeme u ispravnom formatu - " + ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex());
+            errors.add("Molim unesite vrijeme u ispravnom formatu - " +
+                    ValidationRegex.VALID_LOCAL_TIME_REGEX.getRegex());
         }
 
     }

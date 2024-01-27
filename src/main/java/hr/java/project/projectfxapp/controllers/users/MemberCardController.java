@@ -1,11 +1,14 @@
 package hr.java.project.projectfxapp.controllers.users;
 
+import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.Competition;
 import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.SubjectGrade;
+import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MemberCardController {
+
 
     @FXML
     private Label daysAsMemberLabel;
@@ -73,7 +77,7 @@ public class MemberCardController {
         
         setCompetitionWinNumberLabel(competitions, currentStudent);
         setHighestAndLowestScoreAndNumberOfParticipationLabel(competitions, currentStudent);
-        setNumberOfParticipationsInProjectsLabel(projects, currentStudent);
+        setNumberOfParticipationInProjectsLabel(projects, currentStudent);
         setMemberGradesTableView(currentStudent);
         setDaysAsMemberLabel(currentStudent);
         setStudentPicture(currentStudent);
@@ -110,7 +114,7 @@ public class MemberCardController {
     }
 
 
-    private void setNumberOfParticipationsInProjectsLabel(List<MathProject> projects, Student currentStudent) {
+    private void setNumberOfParticipationInProjectsLabel(List<MathProject> projects, Student currentStudent) {
         Integer numberOfParticipations = 0;
         for (MathProject project: projects){
             if (project.hasStudentCollaborator(currentStudent)){
@@ -168,5 +172,9 @@ public class MemberCardController {
         }
 
         competitionWinNumberLabel.setText(numberOfWins.toString());
+    }
+
+    public void generateHtmlForPrinting(ActionEvent actionEvent) {
+        JavaFxProjectApplication.showPopup(ApplicationScreen.GenerateHtmlForPrintingClubMember);
     }
 }

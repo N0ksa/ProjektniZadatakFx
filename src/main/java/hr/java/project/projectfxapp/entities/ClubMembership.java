@@ -1,7 +1,10 @@
 package hr.java.project.projectfxapp.entities;
 
+import hr.java.project.projectfxapp.enums.ValidationRegex;
+
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -63,5 +66,13 @@ public class ClubMembership implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(clubMembershipId, clubId, joinDate);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Datum pridruživanja: " + joinDate.format(DateTimeFormatter
+                .ofPattern(ValidationRegex.VALID_LOCAL_DATE_REGEX.getRegex()))
+                + ", identifikacijski broj članstva: " + clubMembershipId;
     }
 }
