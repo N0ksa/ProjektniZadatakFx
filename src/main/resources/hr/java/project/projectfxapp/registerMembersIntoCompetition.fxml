@@ -11,33 +11,33 @@
 
 <AnchorPane prefHeight="695.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.RegisterMembersIntoCompetitionController">
    <children>
-      <Label alignment="CENTER" layoutY="39.0" prefHeight="17.0" prefWidth="860.0" text="Registiraj ili odjavi članove za natjecanje">
+      <Label alignment="CENTER" layoutX="-4.0" prefHeight="51.0" prefWidth="843.0" style="-fx-background-color: #374151;" text="Registiraj ili odjavi članove za natjecanje" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="43.0" layoutY="150.0" prefHeight="163.0" prefWidth="309.0">
+      <AnchorPane layoutX="43.0" layoutY="104.0" prefHeight="209.0" prefWidth="309.0">
          <children>
-            <ListView fx:id="availableClubMembersListView" onMouseClicked="#registerClubMemberToCompetition" prefHeight="163.0" prefWidth="309.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ListView fx:id="availableClubMembersListView" layoutY="-44.0" onMouseClicked="#registerClubMemberToCompetition" prefHeight="209.0" prefWidth="309.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-      <Label layoutX="138.0" layoutY="124.0" text="Slobodni članovi kluba" />
-      <AnchorPane layoutX="503.0" layoutY="150.0" prefHeight="163.0" prefWidth="309.0">
+      <Label layoutX="138.0" layoutY="81.0" text="Slobodni članovi kluba" />
+      <AnchorPane layoutX="503.0" layoutY="104.0" prefHeight="209.0" prefWidth="309.0">
          <children>
             <ListView fx:id="registratedClubMembersListView" prefHeight="182.0" prefWidth="309.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-      <Label layoutX="594.0" layoutY="124.0" text="Registirani članovi kluba" />
-      <AnchorPane layoutX="172.0" layoutY="365.0" prefHeight="200.0" prefWidth="499.0">
+      <Label layoutX="594.0" layoutY="81.0" text="Registirani članovi kluba" />
+      <AnchorPane layoutX="172.0" layoutY="365.0" prefHeight="261.0" prefWidth="499.0">
          <children>
             <ListView fx:id="allRegistratedCompetitionParticipantsListView" layoutX="150.0" layoutY="14.0" prefHeight="214.0" prefWidth="499.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
       <Label layoutX="339.0" layoutY="340.0" text="Svi registirani članovi za natjecanje" />
-      <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="400.0" layoutY="257.0" opacity="0.18" size="6EM" />
-      <Button layoutX="358.0" layoutY="571.0" mnemonicParsing="false" onAction="#register" prefHeight="38.0" prefWidth="128.0" text="Registriraj članove" />
+      <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="387.0" layoutY="270.0" opacity="0.18" size="6EM" />
+      <Button layoutX="358.0" layoutY="631.0" mnemonicParsing="false" onAction="#register" prefHeight="38.0" prefWidth="128.0" text="Registriraj članove" />
       <Button layoutX="589.0" layoutY="323.0" mnemonicParsing="false" onAction="#removeClubMemberFromCompetition" prefHeight="25.0" prefWidth="88.0" text="Ukloni člana" />
-      <FontAwesomeIconView glyphName="USER_PLUS" layoutX="410.0" layoutY="181.0" opacity="0.2" size="3EM" />
+      <FontAwesomeIconView glyphName="USER_PLUS" layoutX="383.0" layoutY="183.0" opacity="0.2" size="7EM" />
       <AnchorPane layoutX="839.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="265.0" style="-fx-background-color: #4a92f7;">
          <children>
             <ImageView fitHeight="179.0" fitWidth="256.0" layoutX="13.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">

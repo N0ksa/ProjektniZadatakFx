@@ -17,7 +17,7 @@
    <children>
       <Label layoutX="126.0" layoutY="110.0" text="Ime natjecanja:" />
       <TextField fx:id="competitionNameTextField" layoutX="213.0" layoutY="101.0" prefHeight="34.0" prefWidth="190.0" promptText="Upiši ime natjecanja" />
-      <Label layoutX="322.0" layoutY="31.0" text="Dodaj novo natjecanje">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="51.0" prefWidth="836.0" style="-fx-background-color: #374151;" text="Dodaj novo natjecanje" textFill="WHITE">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -30,8 +30,8 @@
       <TextField fx:id="streetNameTextField" layoutX="210.0" layoutY="307.0" prefHeight="34.0" prefWidth="190.0" promptText="Unesi ulicu" />
       <Label layoutX="116.0" layoutY="365.0" text="Unesi kućni broj:" />
       <TextField fx:id="houseNumberTextField" layoutX="210.0" layoutY="356.0" prefHeight="34.0" prefWidth="190.0" promptText="Unesi kućni broj" />
-      <FontAwesomeIconView glyphName="PLUS" layoutX="612.0" layoutY="566.0" opacity="0.18" size="5EM" wrappingWidth="28.0" />
-      <FontAwesomeIconView glyphName="TROPHY" layoutX="656.0" layoutY="582.0" opacity="0.18" size="10EM" />
+      <FontAwesomeIconView glyphName="PLUS" layoutX="525.0" layoutY="623.0" opacity="0.18" size="7EM" wrappingWidth="28.0" />
+      <FontAwesomeIconView glyphName="TROPHY" layoutX="592.0" layoutY="626.0" opacity="0.18" size="12EM" />
       <Label layoutX="135.0" layoutY="418.0" text="Ime zgrade:" />
       <Label layoutX="132.0" layoutY="462.0" text="Ime dvorane" />
       <TextField fx:id="auditoriumBuildingNameTextField" layoutX="210.0" layoutY="407.0" prefHeight="34.0" prefWidth="190.0" promptText="Unesi ime zgrade" />

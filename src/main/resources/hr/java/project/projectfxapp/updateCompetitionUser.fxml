@@ -35,7 +35,7 @@
       <Label layoutX="470.0" layoutY="209.0" text="Unesi vrijeme natjecanja:" />
       <TextField fx:id="timeOfCompetitionTextField" layoutX="622.0" layoutY="201.0" prefHeight="34.0" prefWidth="176.0" promptText="Unesi vrijeme (HH:mm)" />
       <FontAwesomeIconView glyphName="WRENCH" layoutX="539.0" layoutY="456.0" opacity="0.18" size="15EM" wrappingWidth="23.0" />
-      <Label alignment="CENTER" layoutY="36.0" prefHeight="35.0" prefWidth="862.0" text="Ažuriraj natjecanje">
+      <Label alignment="CENTER" layoutX="-5.0" prefHeight="51.0" prefWidth="846.0" style="-fx-background-color: #374151;" text="Ažuriraj natjecanje" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>

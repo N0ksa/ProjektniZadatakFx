@@ -11,21 +11,33 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.users.RegisterMembersIntoProjectController">
    <children>
-      <Label alignment="CENTER" layoutY="33.0" prefHeight="17.0" prefWidth="860.0" text="Registiraj ili odjavi članove za projekt">
+      <Label alignment="CENTER" layoutX="-7.0" prefHeight="51.0" prefWidth="842.0" style="-fx-background-color: #374151;" text="Registiraj ili odjavi članove za projekt" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <ListView fx:id="availableClubMembersListView" layoutX="70.0" layoutY="127.0" onMouseClicked="#registerClubMemberToProject" prefHeight="182.0" prefWidth="309.0" />
-      <Label layoutX="158.0" layoutY="103.0" text="Slobodni članovi kluba" />
-      <ListView fx:id="registratedClubMembersListView" layoutX="486.0" layoutY="127.0" prefHeight="182.0" prefWidth="309.0" />
-      <Label layoutX="577.0" layoutY="103.0" text="Registirani članovi kluba" />
-      <ListView fx:id="allRegistratedProjectParticipantsListView" layoutX="160.0" layoutY="357.0" prefHeight="214.0" prefWidth="499.0" />
-      <Label layoutX="326.0" layoutY="340.0" text="Svi registirani članovi za projekt" />
-      <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="399.0" layoutY="244.0" opacity="0.18" size="6EM" wrappingWidth="61.71428680419922" />
-      <Button layoutX="346.0" layoutY="578.0" mnemonicParsing="false" onAction="#register" prefHeight="38.0" prefWidth="128.0" text="Registriraj članove" />
+      <AnchorPane layoutX="70.0" layoutY="113.0">
+         <children>
+            <ListView fx:id="availableClubMembersListView" onMouseClicked="#registerClubMemberToProject" prefHeight="196.0" prefWidth="309.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="160.0" layoutY="86.0" text="Slobodni članovi kluba" />
+      <AnchorPane layoutX="486.0" layoutY="113.0">
+         <children>
+            <ListView fx:id="registratedClubMembersListView" prefHeight="196.0" prefWidth="309.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="577.0" layoutY="86.0" text="Registirani članovi kluba" />
+      <AnchorPane layoutX="160.0" layoutY="357.0" prefHeight="280.0" prefWidth="499.0">
+         <children>
+            <ListView fx:id="allRegistratedProjectParticipantsListView" prefHeight="280.0" prefWidth="499.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="326.0" layoutY="340.0" text="Svi registirani članovi projekta" />
+      <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="400.0" layoutY="262.0" opacity="0.18" size="5EM" wrappingWidth="61.71428680419922" />
+      <Button layoutX="346.0" layoutY="643.0" mnemonicParsing="false" onAction="#register" prefHeight="38.0" prefWidth="128.0" text="Registriraj članove" />
       <Button layoutX="597.0" layoutY="315.0" mnemonicParsing="false" onAction="#removeClubMemberFromProject" prefHeight="25.0" prefWidth="88.0" text="Ukloni člana" />
-      <FontAwesomeIconView glyphName="USER_PLUS" layoutX="409.0" layoutY="167.0" opacity="0.2" size="3EM" />
+      <FontAwesomeIconView glyphName="USER_PLUS" layoutX="390.0" layoutY="200.0" opacity="0.2" size="6EM" />
       <AnchorPane layoutX="835.0" prefHeight="695.0" prefWidth="265.0" style="-fx-background-color: #4a92f7;">
          <children>
             <ImageView fitHeight="179.0" fitWidth="256.0" layoutX="13.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">

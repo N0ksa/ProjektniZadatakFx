@@ -19,31 +19,31 @@
 
 <AnchorPane prefHeight="695.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.AddNewProjectController">
     <children>
-        <GridPane layoutY="3.0" prefHeight="608.0" prefWidth="858.0">
+        <GridPane layoutY="3.0" prefHeight="608.0" prefWidth="841.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="485.0" minWidth="10.0" prefWidth="412.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="453.0" minWidth="10.0" prefWidth="446.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="44.0" minHeight="4.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="65.0" minHeight="4.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="131.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="156.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="202.0" minHeight="9.0" prefHeight="84.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="82.0" minHeight="4.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="76.0" minHeight="0.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="131.0" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="156.0" minHeight="0.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="202.0" minHeight="9.0" prefHeight="76.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="306.0" minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="146.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="244.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="95.0" minHeight="24.0" prefHeight="32.0" />
             </rowConstraints>
             <children>
                 <fx:include source="menuForAdmin.fxml" />
-                <Label text="Dodaj novi projekt" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                <Label alignment="CENTER" prefHeight="51.0" prefWidth="844.0" style="-fx-background-color: #374151;" text="Dodaj novi projekt" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets right="5.0" />
                     </GridPane.margin>
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font size="24.0" />
                     </font>
                 </Label>
                 <TextField fx:id="projectNameTextField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="299.0" promptText="Unesi ime projekta" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -101,8 +101,8 @@
         </GridPane>
       <AnchorPane layoutX="139.0" layoutY="610.0" prefHeight="53.0" prefWidth="581.0">
          <children>
-            <FontAwesomeIconView glyphName="PLUS" layoutX="285.0" layoutY="53.0" opacity="0.18" size="3EM" />
-            <FontAwesomeIconView glyphName="ROCKET" layoutX="313.0" layoutY="62.0" opacity="0.18" size="5EM" tabSize="0" />
+            <FontAwesomeIconView glyphName="PLUS" layoutX="421.0" layoutY="70.0" opacity="0.18" size="5EM" />
+            <FontAwesomeIconView glyphName="ROCKET" layoutX="469.0" layoutY="68.0" opacity="0.18" size="7EM" tabSize="0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="835.0" prefHeight="695.0" prefWidth="265.0" style="-fx-background-color: #4a92f7;">

@@ -30,7 +30,7 @@
       </RadioButton>
       <RadioButton fx:id="trecaGodinaRadioButton" layoutX="472.0" layoutY="291.0" mnemonicParsing="false" text="Treća godina" toggleGroup="$yearOfStudySelection" />
       <RadioButton fx:id="drugaGodinaRadioButton" layoutX="360.0" layoutY="291.0" mnemonicParsing="false" text="Druga godina" toggleGroup="$yearOfStudySelection" />
-      <AnchorPane layoutX="129.0" layoutY="325.0" prefHeight="244.0" prefWidth="536.0">
+      <AnchorPane layoutX="129.0" layoutY="325.0" prefHeight="297.0" prefWidth="536.0">
          <children>
             <TableView fx:id="studentGradesTableView" layoutX="7.0" layoutY="7.0" prefHeight="244.0" prefWidth="622.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columns>
@@ -40,14 +40,14 @@
             </TableView>
          </children>
       </AnchorPane>
-      <Button layoutX="339.0" layoutY="590.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveMember" prefHeight="35.0" prefWidth="98.0" text="Ažuriraj" />
-      <AnchorPane layoutX="648.0" layoutY="81.0" prefHeight="200.0" prefWidth="200.0">
+      <Button layoutX="339.0" layoutY="626.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveMember" prefHeight="35.0" prefWidth="98.0" text="Ažuriraj" />
+      <AnchorPane layoutX="635.0" layoutY="81.0" prefHeight="200.0" prefWidth="200.0">
          <children>
             <ImageView fx:id="studentImageView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <Button layoutX="704.0" layoutY="296.0" mnemonicParsing="false" onAction="#changeImage" text="Promijeni sliku" />
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="38.0" prefHeight="35.0" prefWidth="848.0" text="Ažuriraj člana">
+      <Button layoutX="689.0" layoutY="296.0" mnemonicParsing="false" onAction="#changeImage" text="Promijeni sliku" />
+      <Label alignment="CENTER" layoutX="-5.0" prefHeight="51.0" prefWidth="852.0" style="-fx-background-color: #374151;" text="Ažuriraj člana" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>

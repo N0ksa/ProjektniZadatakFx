@@ -46,13 +46,13 @@
       </AnchorPane>
       <AnchorPane layoutY="595.0" prefHeight="100.0" prefWidth="835.0">
          <children>
-            <TableView id="changeTableView" fx:id="mostRecentChangeTableView" prefHeight="114.0" prefWidth="604.0" stylesheets="@../../../../design/design.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView id="changeTableView" fx:id="mostRecentChangeTableView" prefHeight="100.0" prefWidth="835.0" stylesheets="@../../../../design/design.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columns>
                   <TableColumn fx:id="typeOfValueTableColumn" minWidth="0.0" prefWidth="125.0" text="Tip podatka" />
                   <TableColumn fx:id="userRoleTableColumn" minWidth="0.0" prefWidth="117.0" text="Korisnička uloga" />
                   <TableColumn fx:id="dateOfChangeTableColumn" minWidth="0.0" prefWidth="112.0" text="Datum" />
-                  <TableColumn fx:id="oldValueTableColumn" prefWidth="208.0" text="Stara vrijednost" />
-                  <TableColumn fx:id="newValueTableColumn" minWidth="0.0" prefWidth="272.0" text="Nova vrijednost" />
+                  <TableColumn fx:id="oldValueTableColumn" minWidth="0.0" prefWidth="227.0" text="Stara vrijednost" />
+                  <TableColumn fx:id="newValueTableColumn" minWidth="0.0" prefWidth="253.0" text="Nova vrijednost" />
                </columns>
             </TableView>
          </children>

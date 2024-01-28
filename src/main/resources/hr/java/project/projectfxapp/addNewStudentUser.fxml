@@ -44,7 +44,7 @@
          <ImageView fx:id="studentImageView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       </children></AnchorPane>
    <Button layoutX="693.0" layoutY="303.0" mnemonicParsing="false" onAction="#addImage" text="Dodaj sliku" />
-   <Label layoutX="330.0" layoutY="28.0" text="Dodaj novog člana">
+   <Label alignment="CENTER" prefHeight="51.0" prefWidth="836.0" style="-fx-background-color: #374151;" text="Dodaj novog člana" textFill="WHITE">
       <font>
          <Font size="24.0" />
       </font>

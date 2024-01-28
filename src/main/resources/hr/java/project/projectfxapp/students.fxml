@@ -23,9 +23,9 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="454.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="231.0" minHeight="0.0" prefHeight="63.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="28.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="231.0" minHeight="0.0" prefHeight="51.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="385.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="436.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="481.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
@@ -44,9 +44,9 @@
                   <TableColumn fx:id="studentYearOfStudyTableColumn" prefWidth="92.0" text="Godina studija" />
                </columns>
             </TableView>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="181.0" text="Traži studenta" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label alignment="CENTER" prefHeight="51.0" prefWidth="884.0" style="-fx-background-color: #374151;" text="Traži studenta" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <Label text="Ime studenta:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">

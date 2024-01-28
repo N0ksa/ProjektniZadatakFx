@@ -16,24 +16,24 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.java.project.projectfxapp.controllers.admin.AddNewAddressController">
    <children>
-      <GridPane prefHeight="475.0" prefWidth="860.0">
+      <GridPane prefHeight="475.0" prefWidth="836.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.0" minWidth="10.0" prefWidth="428.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="564.0" minWidth="10.0" prefWidth="432.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="98.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="166.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="176.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
              <fx:include source="menuForAdmin.fxml" />
-            <Label text="Dodaj novu adresu" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="836.0" style="-fx-background-color: #374151;" text="Dodaj novu adresu" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
             <Label text="Ime ulice:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
@@ -69,10 +69,10 @@
             <Button mnemonicParsing="false" onAction="#saveAddress" text="Dodaj adresu" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <AnchorPane layoutX="346.0" layoutY="500.0" prefHeight="70.0" prefWidth="168.0">
+      <AnchorPane layoutX="286.0" layoutY="509.0" prefHeight="127.0" prefWidth="265.0">
          <children>
-            <FontAwesomeIconView glyphName="HOME" layoutX="63.0" layoutY="56.0" opacity="0.19" size="5EM" tabSize="5" />
-            <FontAwesomeIconView glyphName="PLUS" layoutX="34.0" layoutY="50.0" opacity="0.19" size="3EM" tabSize="3" />
+            <FontAwesomeIconView glyphName="HOME" layoutX="84.0" layoutY="106.0" opacity="0.19" size="10EM" tabSize="5" />
+            <FontAwesomeIconView glyphName="PLUS" layoutX="26.0" layoutY="94.0" opacity="0.19" size="5EM" tabSize="3" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="835.0" prefHeight="695.0" prefWidth="265.0" style="-fx-background-color: #4a92f7;">

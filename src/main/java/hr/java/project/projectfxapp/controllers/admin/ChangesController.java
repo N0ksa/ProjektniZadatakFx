@@ -87,8 +87,7 @@ public class ChangesController {
                 ObservableValue<String>>() {
 
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Change, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().timestamp().
-                        format(DateTimeFormatter.ofPattern(ValidationRegex.VALID_LOCAL_DATE_TIME_REGEX.getRegex())));
+                return new ReadOnlyStringWrapper(param.getValue().timestamp());
             }
 
         });
