@@ -16,9 +16,6 @@ import java.util.*;
  * Pomoćna klasa koja služi za učitavanje podataka iz datoteka.
  */
 public class FileReaderUtil {
-
-
-
     private static final Logger logger = LoggerFactory.getLogger(FileReaderUtil.class);
 
     public static List<User> getUsers() {

@@ -14,4 +14,8 @@ public class Constants {
 
     public static final String DEFAULT_PROJECT_WEB_PAGE = "/html/defaultPage.html";
     public static final String DEFAULT_ERROR_WEB_PAGE = "/html/errorPage.html";
+
+    public static final String PROJECT_LOGO = "/images/projekt_matematika_logo.png";
+
+    public static final String CSS_FILE = "/design/design.css";
 }

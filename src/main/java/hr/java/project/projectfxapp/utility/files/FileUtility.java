@@ -12,7 +12,6 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUtility implements FileCopier<File> {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUtility.class);
     @Override
     public void copyToDirectory(File sourceFile, String destinationDirectory) throws IOException {
 

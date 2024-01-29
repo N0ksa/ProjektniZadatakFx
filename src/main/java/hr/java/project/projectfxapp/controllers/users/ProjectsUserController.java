@@ -6,7 +6,6 @@ import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
-import hr.java.project.projectfxapp.threads.RefreshProjectsScreenThread;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -37,8 +36,6 @@ public class ProjectsUserController {
     @FXML
     private BarChart<String, Integer> projectSizeComparisonChart;
     @FXML
-    private Label currentClubNameTextField;
-    @FXML
     private TextField filterProjects;
 
     @FXML
@@ -63,16 +60,12 @@ public class ProjectsUserController {
 
     public void initialize(){
 
-        currentClubNameTextField.setText(SessionManager.getInstance().getCurrentClub().getName());
         List<MathProject> mathProjectsList = DatabaseUtil.getProjects();
         FilteredList<MathProject> filteredMathProjects = getMathProjectsFilteredList(mathProjectsList);
 
         initializeProjectsTableView(filteredMathProjects);
         setProjectSizeComparisonChart(mathProjectsList);
         setComparisonOfProjectOrganizationsBetweenClubsLineChart(mathProjectsList);
-
-        RefreshProjectsScreenThread.startThreadIfThreadNotPresent(comparisonOfProjectOrganizationsBetweenClubsLineChart,
-                projectSizeComparisonChart, projectsTableView);
 
     }
 

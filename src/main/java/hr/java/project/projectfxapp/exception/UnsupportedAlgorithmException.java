@@ -3,7 +3,6 @@ package hr.java.project.projectfxapp.exception;
 public class UnsupportedAlgorithmException extends Exception {
     public UnsupportedAlgorithmException() {
     }
-
     public UnsupportedAlgorithmException(String message) {
         super(message);
     }

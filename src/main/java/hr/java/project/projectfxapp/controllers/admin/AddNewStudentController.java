@@ -10,6 +10,7 @@ import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,7 +62,7 @@ public class AddNewStudentController {
         studentGradesTableView.setEditable(true);
         subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
 
-        subjectGradeTableColumn.setCellValueFactory(param -> param.getValue().gradeProperty());
+        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGrade()));
         subjectGradeTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         subjectGradeTableColumn.setOnEditCommit(event -> {
 

@@ -18,21 +18,18 @@ public class HtmlGenerator<T> {
         if (item instanceof Competition competition) {
             LocalDateTime now = LocalDateTime.now().minusDays(1);
             LocalDateTime competitionTime = competition.getTimeOfCompetition();
-            if(now.isAfter(competitionTime)){
+            if (now.isAfter(competitionTime)) {
                 return generateFinishedCompetitionHtml(competition);
-            }
-            else{
+            } else {
                 return generateUpcomingCompetitionHtml(competition);
             }
-            
-        }
-        else if (item instanceof List<?> && !((List<?>) item).isEmpty()) {
+
+        } else if (item instanceof List<?> && !((List<?>) item).isEmpty()) {
             Object firstItem = ((List<?>) item).get(0);
             if (firstItem instanceof LoginStatistics) {
                 return generateLoginStatisticsHtml((List<LoginStatistics>) item);
             }
-        }
-        else if (item instanceof Student student) {
+        } else if (item instanceof Student student) {
             return generateStudentHtml(student);
         }
 
@@ -42,28 +39,24 @@ public class HtmlGenerator<T> {
     }
 
     private String generateContactTheAdministratorHtml() {
-        StringBuilder htmlContent = new StringBuilder("<html><head><title>Error Page</title>");
 
-        htmlContent.append("<style>")
-                .append("body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; " +
-                        "text-align: center; margin: 0; padding: 0; }")
-                .append("header { background-color: #428bca; color: #fff; padding: 20px; }")
-                .append("h1 { margin-bottom: 10px; }")
-                .append("p { margin-top: 10px; font-size: 18px; }")
-                .append("footer { background-color: #333; color: #fff; padding: 10px; margin-top: 20px; }")
-                .append("</style>");
+        String htmlContent = "<html><head><title>Error Page</title>" + "<style>" +
+                "body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; " +
+                "text-align: center; margin: 0; padding: 0; }" +
+                "header { background-color: #428bca; color: #fff; padding: 20px; }" +
+                "h1 { margin-bottom: 10px; }" +
+                "p { margin-top: 10px; font-size: 18px; }" +
+                "footer { background-color: #333; color: #fff; padding: 10px; margin-top: 20px; }" +
+                "</style>" +
+                "</head><body>" +
+                "<header>" +
+                "<h1>Nešto je pošlo po krivu</h1>" +
+                "</header>" +
+                "<p>Kontaktirajte administratora.</p>" +
+                "<footer> <p>&copy; 2023-2024. Sva prava pridržana.</p>" +
+                "</body></html>";
 
-        htmlContent.append("</head><body>");
-
-        htmlContent.append("<header>")
-                .append("<h1>Nešto je pošlo po krivu</h1>")
-                .append("</header>")
-                .append("<p>Kontaktirajte administratora.</p>")
-                .append("<footer> <p>&copy; 2023-2024. Sva prava pridržana.</p>");
-
-        htmlContent.append("</body></html>");
-
-        return htmlContent.toString();
+        return htmlContent;
     }
 
     public String generateStudentHtml(Student student) {
@@ -150,9 +143,9 @@ public class HtmlGenerator<T> {
 
     private Integer getCompetitionWinNumber(List<Competition> competitions, Student currentStudent) {
         Integer numberOfWins = 0;
-        for (Competition competition : competitions){
+        for (Competition competition : competitions) {
             Optional<Student> winner = competition.findWinner();
-            if (winner.isPresent() && winner.get().equals(currentStudent)){
+            if (winner.isPresent() && winner.get().equals(currentStudent)) {
                 numberOfWins++;
             }
         }
@@ -162,8 +155,8 @@ public class HtmlGenerator<T> {
 
     private Integer getNumberOfParticipationInProject(List<MathProject> projects, Student currentStudent) {
         Integer numberOfParticipations = 0;
-        for (MathProject project: projects){
-            if (project.hasStudentCollaborator(currentStudent)){
+        for (MathProject project : projects) {
+            if (project.hasStudentCollaborator(currentStudent)) {
                 numberOfParticipations++;
             }
         }
@@ -171,44 +164,42 @@ public class HtmlGenerator<T> {
     }
 
 
-    private Optional <BigDecimal> getLowestScore(List<Competition> competitions, Student currentStudent) {
+    private Optional<BigDecimal> getLowestScore(List<Competition> competitions, Student currentStudent) {
         BigDecimal lowestScore = null;
         boolean hasParticipated = false;
-        for (Competition competition: competitions){
-            if (competition.hasParticipant(currentStudent)){
+        for (Competition competition : competitions) {
+            if (competition.hasParticipant(currentStudent)) {
                 hasParticipated = true;
                 BigDecimal competitionScore = competition.getCompetitionResultForParticipant(currentStudent).get().score();
 
-                if(lowestScore == null || competitionScore.compareTo(lowestScore) < 0){
+                if (lowestScore == null || competitionScore.compareTo(lowestScore) < 0) {
                     lowestScore = competitionScore;
                 }
             }
         }
-        if (hasParticipated){
-           return Optional.ofNullable(lowestScore);
-        }
-        else{
+        if (hasParticipated) {
+            return Optional.ofNullable(lowestScore);
+        } else {
             return Optional.empty();
         }
     }
 
-    private  Optional<BigDecimal> getHighestScore(List<Competition> competitions, Student currentStudent) {
+    private Optional<BigDecimal> getHighestScore(List<Competition> competitions, Student currentStudent) {
         BigDecimal highestScore = null;
         boolean hasParticipated = false;
-        for (Competition competition: competitions){
-            if (competition.hasParticipant(currentStudent)){
+        for (Competition competition : competitions) {
+            if (competition.hasParticipant(currentStudent)) {
                 hasParticipated = true;
                 BigDecimal competitionScore = competition.getCompetitionResultForParticipant(currentStudent).get().score();
 
-                if(highestScore == null || competitionScore.compareTo(highestScore) > 0){
+                if (highestScore == null || competitionScore.compareTo(highestScore) > 0) {
                     highestScore = competitionScore;
                 }
             }
         }
-        if (hasParticipated){
+        if (hasParticipated) {
             return Optional.ofNullable(highestScore);
-        }
-        else{
+        } else {
             return Optional.empty();
         }
     }
@@ -318,7 +309,7 @@ public class HtmlGenerator<T> {
                     .append("<td>").append(result.participant().getName())
                     .append(" ")
                     .append(result.participant().getSurname()).append("</td>")
-                    .append("<td>").append("").append("</td>")
+                    .append("<td>").append("</td>")
                     .append("</tr>");
         }
 

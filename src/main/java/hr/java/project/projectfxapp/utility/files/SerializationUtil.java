@@ -16,9 +16,7 @@ import java.util.List;
  * Pomoćna klasa koja služi za serijalizaciju i deserijalizaciju objekata.
  */
 public class SerializationUtil {
-
     private static final Logger logger = LoggerFactory.getLogger(SerializationUtil.class);
-
 
     public static void serializeChanges(List<Change> changes){
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(Constants.CHANGES_FILE_NAME))){
@@ -30,7 +28,6 @@ public class SerializationUtil {
         }
 
     }
-
 
     public static List<Change> deserializeChanges() {
         List<Change> changes = new ArrayList<>();
@@ -56,8 +53,6 @@ public class SerializationUtil {
 
         return changes;
     }
-
-
 
 
     public static void serializeLoginStatisticsList(List<LoginStatistics> loginStatisticsList) {
@@ -97,7 +92,6 @@ public class SerializationUtil {
         existingLoginStatistics.add(newLoginStatistics);
         serializeLoginStatisticsList(existingLoginStatistics);
     }
-
 
 
 }

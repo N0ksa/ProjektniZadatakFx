@@ -31,8 +31,6 @@ import java.util.stream.Collectors;
 public class ClubMembersController {
 
     @FXML
-    private Label currentClubNameTextField;
-    @FXML
     private LineChart<String, BigDecimal> clubMemberScoreOverDifferentCompetitionsLineChart;
     @FXML
     private TableColumn<Student, String> NameAndSurnameTableColumn;
@@ -70,7 +68,7 @@ public class ClubMembersController {
 
    public void initialize(){
        MathClub currentClub = SessionManager.getInstance().getCurrentClub();
-       currentClubNameTextField.setText(currentClub.getName());
+
 
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
        List<Competition> finishedCompetitions = DatabaseUtil.getCompetitions();

@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.LoginStatistics;
 import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
@@ -33,14 +34,15 @@ public class JavaFxProjectApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource("login.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(getClass().getResource("/design/design.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(Constants.CSS_FILE).toExternalForm());
         stage.setTitle("ProjektMatematika");
         stage.setScene(scene);
         stage.setResizable(false);
         setOnCloseRequest(stage);
 
 
-        Image logo = new Image(Objects.requireNonNull(getClass().getResource("/images/projekt_matematika_logo.png")).toExternalForm());
+        Image logo = new Image(Objects.requireNonNull(getClass()
+                .getResource(Constants.PROJECT_LOGO)).toExternalForm());
         stage.getIcons().add(logo);
 
         stage.show();
@@ -72,9 +74,6 @@ public class JavaFxProjectApplication extends Application {
         });
     }
 
-    public static Stage getMainStage(){
-        return mainStage;
-    }
     public static void main(String[] args) {
         launch();
     }
@@ -86,7 +85,7 @@ public class JavaFxProjectApplication extends Application {
 
             Scene scene = new Scene(fxmlLoader.load());
 
-            scene.getStylesheets().add(JavaFxProjectApplication.class.getResource("/design/design.css").toExternalForm());
+            scene.getStylesheets().add(JavaFxProjectApplication.class.getResource(Constants.CSS_FILE).toExternalForm());
             mainStage.setTitle(screen.getTitle());
             mainStage.setScene(scene);
             mainStage.setResizable(screen.isResizable());
@@ -105,7 +104,7 @@ public class JavaFxProjectApplication extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(JavaFxProjectApplication.class.getResource(screen.getPathOfFxml()));
             Scene popupScene = new Scene(fxmlLoader.load());
-            popupScene.getStylesheets().add(JavaFxProjectApplication.class.getResource("/design/design.css").toExternalForm());
+            popupScene.getStylesheets().add(JavaFxProjectApplication.class.getResource(Constants.CSS_FILE).toExternalForm());
 
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -113,15 +112,7 @@ public class JavaFxProjectApplication extends Application {
             popupStage.setScene(popupScene);
             popupStage.setResizable(screen.isResizable());
 
-            popupStage.initOwner(mainStage);
-
-            double mainStageX = mainStage.getX() + mainStage.getWidth() / 2;
-            double mainStageY = mainStage.getY() + mainStage.getHeight() / 2;
-
-            popupStage.setOnShown(event -> {
-                popupStage.setX(mainStageX - popupStage.getWidth() / 2);
-                popupStage.setY(mainStageY - popupStage.getHeight() / 2);
-            });
+            setPopupAtCenter(popupStage);
 
             popupStage.showAndWait();
 
@@ -130,6 +121,17 @@ public class JavaFxProjectApplication extends Application {
         }
     }
 
+    private static void setPopupAtCenter(Stage popupStage) {
+        popupStage.initOwner(mainStage);
+
+        double mainStageX = mainStage.getX() + mainStage.getWidth() / 2;
+        double mainStageY = mainStage.getY() + mainStage.getHeight() / 2;
+
+        popupStage.setOnShown(event -> {
+            popupStage.setX(mainStageX - popupStage.getWidth() / 2);
+            popupStage.setY(mainStageY - popupStage.getHeight() / 2);
+        });
+    }
 
 
 }

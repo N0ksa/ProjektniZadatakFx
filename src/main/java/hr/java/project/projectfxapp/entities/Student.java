@@ -147,22 +147,6 @@ public final class Student extends NamedEntity implements Gradable, Serializable
         return sumOfAllScores;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Student student = (Student) o;
-        return Objects.equals(surname, student.surname) && Objects.equals(gender, student.gender)
-                && Objects.equals(email, student.email) && Objects.equals(yearOfStudy, student.yearOfStudy)
-                && Objects.equals(grades, student.grades) && Objects.equals(clubMembership, student.clubMembership)
-                && Objects.equals(picture, student.picture);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), surname, gender, email, yearOfStudy, grades, clubMembership, picture);
-    }
 
     @Override
     public String toString() {
@@ -236,21 +220,38 @@ public final class Student extends NamedEntity implements Gradable, Serializable
             StringBuilder oldValueBuilder = new StringBuilder();
             StringBuilder newValueBuilder = new StringBuilder();
 
-            compareAndAppend("Ime", this.getName(), newValueToCompare.getName(), oldValueBuilder,
+            compareAndAppend("Ime", this.getName(), newValueToCompare.getName(),
+                    oldValueBuilder,
                     newValueBuilder);
-            compareAndAppend("Prezime", this.getSurname(), newValueToCompare.getSurname(), oldValueBuilder,
+
+            compareAndAppend("Prezime", this.getSurname(), newValueToCompare.getSurname(),
+                    oldValueBuilder,
                     newValueBuilder);
-            compareAndAppend("Spol", this.getGender(), newValueToCompare.getGender(), oldValueBuilder,
+
+            compareAndAppend("Spol", this.getGender(), newValueToCompare.getGender(),
+                    oldValueBuilder,
                     newValueBuilder);
-            compareAndAppend("Email", this.getEmail(), newValueToCompare.getEmail(), oldValueBuilder,
+
+            compareAndAppend("Email", this.getEmail(), newValueToCompare.getEmail(),
+                    oldValueBuilder,
                     newValueBuilder);
+
             compareAndAppend("Godina studija", this.getYearOfStudy(), newValueToCompare.getYearOfStudy(),
-                    oldValueBuilder, newValueBuilder);
-            compareAndAppend("Ocjene", this.getGrades(), newValueToCompare.getGrades(), oldValueBuilder, newValueBuilder);
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Ocjene", this.getGrades(), newValueToCompare.getGrades(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
             compareAndAppend("Članstvo", this.getClubMembership(), newValueToCompare.getClubMembership(),
-                    oldValueBuilder, newValueBuilder);
+                    oldValueBuilder,
+                    newValueBuilder);
+
             compareAndAppend("Slika", this.getPicture().getPicturePath(),
-                    newValueToCompare.getPicture().getPicturePath(), oldValueBuilder, newValueBuilder);
+                    newValueToCompare.getPicture().getPicturePath(),
+                    oldValueBuilder,
+                    newValueBuilder);
 
             return Optional.of(Change.create(
                     SessionManager.getInstance().getCurrentUser(),
@@ -262,10 +263,31 @@ public final class Student extends NamedEntity implements Gradable, Serializable
     }
 
 
-    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue, StringBuilder oldValueBuilder, StringBuilder newValueBuilder) {
+    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue,
+                                      StringBuilder oldValueBuilder,
+                                      StringBuilder newValueBuilder) {
+
         if (!Objects.equals(oldValue, newValue)) {
             oldValueBuilder.append(fieldName + ": " + oldValue + ";");
             newValueBuilder.append(fieldName + ": " + newValue + ";");
         }
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Student student = (Student) o;
+        return Objects.equals(surname, student.surname) && Objects.equals(gender, student.gender)
+                && Objects.equals(email, student.email) && Objects.equals(yearOfStudy, student.yearOfStudy)
+                && Objects.equals(grades, student.grades) && Objects.equals(clubMembership, student.clubMembership)
+                && Objects.equals(picture, student.picture);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), surname, gender, email, yearOfStudy, grades, clubMembership, picture);
     }
 }

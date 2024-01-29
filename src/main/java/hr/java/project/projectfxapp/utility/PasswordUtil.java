@@ -28,7 +28,6 @@ public class PasswordUtil {
         }
     }
 
-
     public static boolean isPasswordCorrect(String enteredPassword, String hashedPassword){
         try {
             return hashPassword(enteredPassword).equals(hashedPassword);

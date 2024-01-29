@@ -5,7 +5,6 @@ import javafx.util.converter.BigDecimalStringConverter;
 import java.math.BigDecimal;
 
 public class CustomBigDecimalStringConverter extends BigDecimalStringConverter {
-
     @Override
     public BigDecimal fromString(String value) {
         if (isValidInput(value)) {

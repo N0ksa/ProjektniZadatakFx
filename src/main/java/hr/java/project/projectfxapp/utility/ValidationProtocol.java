@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class ValidationProtocol {
-
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public static void validateCompetition(TextField competitionNameTextField,

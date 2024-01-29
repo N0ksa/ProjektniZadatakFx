@@ -1,5 +1,7 @@
 package hr.java.project.projectfxapp.entities;
 
-public interface LoginStatisticsRecorder {
+import hr.java.project.projectfxapp.utility.manager.SessionManager;
+
+public sealed interface LoginStatisticsRecorder permits SessionManager {
     LoginStatistics recordLoginStatistics();
 }

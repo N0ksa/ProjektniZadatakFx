@@ -6,11 +6,9 @@ import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.Status;
-import hr.java.project.projectfxapp.threads.RefreshCompetitionsScreenThread;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,14 +25,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class CompetitionsUserController {
 
-    @FXML
-    private Label currentClubNameTextField;
     @FXML
     private BarChart<String, Integer> numberOfParticipantsInCompetitionBarChart;
     @FXML
@@ -72,7 +66,6 @@ public class CompetitionsUserController {
 
     public void initialize() {
 
-        currentClubNameTextField.setText(SessionManager.getInstance().getCurrentClub().getName());
         List<Competition> competitionList = DatabaseUtil.getCompetitions();
 
         FilteredList<Competition> filteredCompetitions = getCompetitionsFilteredList(competitionList);
@@ -84,11 +77,6 @@ public class CompetitionsUserController {
         initializeCompetitionsTableView(filteredCompetitions);
         initializeBarChart(competitionsBeforeNow);
         initializeLineChart(competitionsBeforeNow);
-
-
-        RefreshCompetitionsScreenThread.startThreadIfThreadNotPresent(numberOfParticipantsInCompetitionBarChart,
-                averageCompetitionScoreLineChart, competitionTableView);
-
 
     }
 

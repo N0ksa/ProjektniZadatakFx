@@ -2,8 +2,7 @@ package hr.java.project.projectfxapp.entities;
 
 import java.util.Objects;
 
-public class Picture {
-
+public final class Picture {
     private String picturePath;
 
     public Picture(String picturePath) {

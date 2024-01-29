@@ -8,6 +8,7 @@ import hr.java.project.projectfxapp.entities.SubjectGrade;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -104,8 +105,8 @@ public class MemberCardController {
     }
 
     private void setMemberGradesTableView(Student currentStudent) {
-        memberSubjectNameTableColumn.setCellValueFactory(cellData -> cellData.getValue().subjectProperty());
-        memberSubjectGradeTableColumn.setCellValueFactory(cellData -> cellData.getValue().gradeProperty());
+        memberSubjectNameTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSubject()));
+        memberSubjectGradeTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getGrade()));
 
         currentStudent.getGrades().forEach((subject, grade) -> {
             SubjectGrade subjectGrade = new SubjectGrade(subject, String.valueOf(grade));

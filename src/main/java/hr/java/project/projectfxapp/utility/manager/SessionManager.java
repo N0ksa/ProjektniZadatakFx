@@ -4,7 +4,7 @@ import hr.java.project.projectfxapp.entities.*;
 
 import java.time.LocalDateTime;
 
-public class SessionManager implements LoginStatisticsRecorder {
+public non-sealed class SessionManager implements LoginStatisticsRecorder {
     private static SessionManager instance;
     private User currentUser;
     private MathClub currentClub;

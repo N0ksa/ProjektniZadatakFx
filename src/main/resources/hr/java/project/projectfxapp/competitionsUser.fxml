@@ -63,11 +63,6 @@
       </children>
    </AnchorPane>
    <Label layoutX="834.0" layoutY="409.0" prefHeight="17.0" prefWidth="208.0" text="Broj sudionika na svakom natjecanju" />
-   <Label fx:id="currentClubNameTextField" alignment="CENTER" layoutX="4.0" layoutY="216.0" prefHeight="27.0" prefWidth="257.0" text="Label" textFill="#374151">
-      <font>
-         <Font size="18.0" />
-      </font>
-   </Label>
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="254.0" prefHeight="45.0" prefWidth="839.0" text="Natjecanja" textFill="WHITE">
       <font>
          <Font size="24.0" />

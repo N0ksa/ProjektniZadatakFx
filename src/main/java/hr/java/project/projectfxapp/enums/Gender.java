@@ -21,9 +21,7 @@ public enum Gender {
                 return g;
             }
         }
-
         throw new NoSuchGenderException("Ne postoji takav spol");
 
     }
-
 }

@@ -144,16 +144,41 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
             return Optional.empty();
         }
         else{
+
             StringBuilder oldValueBuilder = new StringBuilder();
             StringBuilder newValueBuilder = new StringBuilder();
-            compareAndAppend("Naziv", this.getName(), newValueToCompare.getName(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Opis", this.getDescription(), newValueToCompare.getDescription(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Organizator", this.getOrganizer(), newValueToCompare.getOrganizer(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Početak", this.getStartDate(), newValueToCompare.getStartDate(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Kraj", this.getEndDate(), newValueToCompare.getEndDate(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Adresa", this.getAddress(), newValueToCompare.getAddress(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Sudionici", this.getCollaborators(), newValueToCompare.getCollaborators(), oldValueBuilder, newValueBuilder);
-            compareAndAppend("Web stranica", this.getProjectWebPageAddress(), newValueToCompare.getProjectWebPageAddress(), oldValueBuilder, newValueBuilder);
+            compareAndAppend("Naziv", this.getName(), newValueToCompare.getName(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Opis", this.getDescription(), newValueToCompare.getDescription(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Organizator", this.getOrganizer(), newValueToCompare.getOrganizer(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Početak", this.getStartDate(), newValueToCompare.getStartDate(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Kraj", this.getEndDate(), newValueToCompare.getEndDate(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Adresa", this.getAddress(), newValueToCompare.getAddress(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Sudionici", this.getCollaborators(), newValueToCompare.getCollaborators(),
+                    oldValueBuilder,
+                    newValueBuilder);
+
+            compareAndAppend("Web stranica", this.getProjectWebPageAddress(),
+                    newValueToCompare.getProjectWebPageAddress(),
+                    oldValueBuilder,
+                    newValueBuilder);
 
             return Optional.of(Change.create(
                     SessionManager.getInstance().getCurrentUser(),
@@ -167,7 +192,10 @@ public final class MathProject extends NamedEntity implements Serializable, Reco
     }
 
 
-    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue, StringBuilder oldValueBuilder, StringBuilder newValueBuilder) {
+    private <T> void compareAndAppend(String fieldName, T oldValue, T newValue,
+                                      StringBuilder oldValueBuilder,
+                                      StringBuilder newValueBuilder) {
+
         if (!Objects.equals(oldValue, newValue)) {
             oldValueBuilder.append(fieldName + ": " + oldValue + ";");
             newValueBuilder.append(fieldName + ": " + newValue + ";");

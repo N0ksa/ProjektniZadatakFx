@@ -5,8 +5,6 @@ import hr.java.project.projectfxapp.entities.LoginStatistics;
 import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.threads.ClockThread;
-import hr.java.project.projectfxapp.threads.RefreshCompetitionsScreenThread;
-import hr.java.project.projectfxapp.threads.RefreshProjectsScreenThread;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
@@ -23,6 +21,8 @@ import java.time.LocalDateTime;
 public class NavigationForUserController {
 
     @FXML
+    private Label clubNameLabel;
+    @FXML
     private Label clockLabel;
 
     @FXML
@@ -30,6 +30,9 @@ public class NavigationForUserController {
 
 
     public void initialize(){
+
+        clubNameLabel.setText(SessionManager.getInstance().getCurrentClub().getName());
+
         ClockThread clockThread = ClockThread.getInstance();
         clockThread.setLabelToUpdate(clockLabel);
         clockThread.startThread();
@@ -40,44 +43,23 @@ public class NavigationForUserController {
 
 
     public void showUserMainScreen(ActionEvent actionEvent) {
-
-        RefreshProjectsScreenThread.stopThread();
-        RefreshCompetitionsScreenThread.stopThread();
-
         JavaFxProjectApplication.switchScene(ApplicationScreen.MainScreenForUser);
-
     }
 
     public void showClubMembers(ActionEvent actionEvent) {
-
-        RefreshProjectsScreenThread.stopThread();
-        RefreshCompetitionsScreenThread.stopThread();
-
         JavaFxProjectApplication.switchScene(ApplicationScreen.ClubMembers);
     }
 
     public void showCompetitions(ActionEvent actionEvent) {
-
-        RefreshProjectsScreenThread.stopThread();
-        RefreshCompetitionsScreenThread.stopThread();
-
         JavaFxProjectApplication.switchScene(ApplicationScreen.CompetitionsUser);
     }
 
     public void showProjects(ActionEvent actionEvent) {
-
-        RefreshProjectsScreenThread.stopThread();
-        RefreshCompetitionsScreenThread.stopThread();
-
         JavaFxProjectApplication.switchScene(ApplicationScreen.ProjectsUser);
     }
 
 
     public void showSettings(ActionEvent actionEvent) {
-
-        RefreshProjectsScreenThread.stopThread();
-        RefreshCompetitionsScreenThread.stopThread();
-
         JavaFxProjectApplication.switchScene(ApplicationScreen.Settings);
     }
 
@@ -90,8 +72,6 @@ public class NavigationForUserController {
                         "\nPritisnite Da za odjavu");
 
         if (positiveConfirmation){
-            RefreshProjectsScreenThread.stopThread();
-            RefreshCompetitionsScreenThread.stopThread();
 
             JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
             SerializeChangesThread serializeChangesThread = SerializeChangesThread.setAndStartThread();

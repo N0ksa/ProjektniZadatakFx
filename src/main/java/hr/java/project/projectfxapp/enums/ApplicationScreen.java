@@ -1,7 +1,6 @@
 package hr.java.project.projectfxapp.enums;
 
 public enum ApplicationScreen {
-
     MainScreen("Glavni ekran", "mainScreen.fxml", false),
     AddNewCompetition("Dodaj natjecanje", "addNewCompetition.fxml", false),
     AddNewMathClub("Dodaj klub", "addNewMathClub.fxml", false),

@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class FileWriterUtil {
-
     private static final Logger logger = LoggerFactory.getLogger(FileWriterUtil.class);
 
     public static void saveUsers(List<User> users) {
@@ -25,7 +24,6 @@ public class FileWriterUtil {
         } catch (IOException ex) {
             String message ="Dogodila se pogreška kod pisanja datoteke - + " + Constants.USER_FILE_NAME;
             logger.error(message, ex);
-            System.out.println(message);
         }
     }
 

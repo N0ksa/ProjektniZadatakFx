@@ -22,7 +22,17 @@ public enum City implements Serializable {
     POREC("Poreč", "52440"),
     SLATINA("Slatina", "33520"),
     KRIZEVCI("Križevci", "48260"),
-    KOPRIVNICA("Koprivnica", "48000");
+    KOPRIVNICA("Koprivnica", "48000"),
+    RAB ("Rab", "51280"),
+    OMIŠ ("Omiš", "21310"),
+    PAZIN ("Pazin", "52000"),
+    ŠIBENIK ("Šibenik", "22000"),
+    POŽEGA ("Požega", "34000"),
+    KAŠTELA ("Kaštela", "21210"),
+    ČAKOVEC ("Čakovec", "40000"),
+    NOVA_GRADIŠKA ("Nova Gradiška", "35400"),
+    DALMATINSKA_ZAGORA ("Dalmatinska Zagora", "21230"),
+    PAG ("Pag", "23250");
 
 
     private String name;

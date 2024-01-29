@@ -19,8 +19,6 @@ public class MainScreenForUserController {
     private PieChart yearNumberDifferencePieChart;
     @FXML
     private PieChart genderNumberDifferencePieChart;
-    @FXML
-    private Label welcomeMessageLabel;
 
     @FXML
     private Label numberOfCompetitionsLabel;
@@ -45,7 +43,6 @@ public class MainScreenForUserController {
         List<MathProject> mathProjectsList = DatabaseUtil.getProjects();
         List<MathClub> mathClubList = DatabaseUtil.getMathClubs();
 
-        welcomeMessageLabel.setText("Dobrodošli, " + currentClub.getName() + "!");
 
         setMathClubStatistics(currentClub, competitionList, mathProjectsList, mathClubList);
 

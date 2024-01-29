@@ -31,8 +31,6 @@ import java.util.Optional;
 public class SettingsController {
 
     @FXML
-    private Label clubNameLabel;
-    @FXML
     private ImageView usernameProfilePictureImageView;
     @FXML
     private PasswordField changePasswordPasswordField;
@@ -59,7 +57,6 @@ public class SettingsController {
     public void initialize() {
         User currentUser = SessionManager.getInstance().getCurrentUser();
         setUserPicture(currentUser);
-        clubNameLabel.setText(SessionManager.getInstance().getCurrentClub().getName());;
 
     }
 
