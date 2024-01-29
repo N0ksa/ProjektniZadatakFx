@@ -6,6 +6,7 @@ import hr.java.project.projectfxapp.entities.MathProject;
 import hr.java.project.projectfxapp.entities.Student;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
+import hr.java.project.projectfxapp.threads.RefreshProjectsScreenThread;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import hr.java.project.projectfxapp.utility.ValidationProtocol;
@@ -70,6 +71,8 @@ public class ProjectsUserController {
         setProjectSizeComparisonChart(mathProjectsList);
         setComparisonOfProjectOrganizationsBetweenClubsLineChart(mathProjectsList);
 
+        RefreshProjectsScreenThread.startThreadIfThreadNotPresent(comparisonOfProjectOrganizationsBetweenClubsLineChart,
+                projectSizeComparisonChart, projectsTableView);
 
     }
 

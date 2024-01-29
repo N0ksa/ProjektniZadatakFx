@@ -28,9 +28,11 @@ public class DeserializeChangesThread extends ChangesManagerThread implements Ru
     public void run() {
 
         while(true){
+
+            List<Change> changes  = super.readChangesFromFile();
+
             try{
                 Platform.runLater(() -> {
-                    List<Change> changes = super.readChangesFromFile();
                     changesTableView.setItems(FXCollections.observableArrayList(changes));
                 });
 
@@ -55,10 +57,9 @@ public class DeserializeChangesThread extends ChangesManagerThread implements Ru
             thread.start();
         }
         else{
-            Platform.runLater(() -> {
-                List<Change> changes = super.readChangesFromFile();
-                changesTableView.setItems(FXCollections.observableArrayList(changes));
-            });
+            List<Change> changes = super.readChangesFromFile();
+
+            Platform.runLater(() -> changesTableView.setItems(FXCollections.observableArrayList(changes)));
         }
     }
 

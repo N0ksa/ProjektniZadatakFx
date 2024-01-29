@@ -23,7 +23,7 @@ public class DatabaseUtil {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseUtil.class);
     private static final String DATABASE_FILE = "conf/database.properties";
 
-    private static Connection connectToDatabase() throws SQLException, IOException {
+    private static synchronized Connection connectToDatabase() throws SQLException, IOException {
         Properties properties = new Properties();
         properties.load(new FileReader(DATABASE_FILE));
         String urlDataBase = properties.getProperty("databaseUrl");

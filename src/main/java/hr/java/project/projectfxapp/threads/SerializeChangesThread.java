@@ -31,6 +31,8 @@ public class SerializeChangesThread extends ChangesManagerThread implements Runn
     @Override
     public void run() {
         while (true) {
+
+
             try {
                 Platform.runLater(() -> {
                     List<Change> changes = super.readChangesFromFile();

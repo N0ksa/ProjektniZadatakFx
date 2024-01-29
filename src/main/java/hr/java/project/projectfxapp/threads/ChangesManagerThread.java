@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class ChangesManagerThread {
+public abstract class ChangesManagerThread {
 
     private static final Logger logger = LoggerFactory.getLogger(ChangesManagerThread.class);
 

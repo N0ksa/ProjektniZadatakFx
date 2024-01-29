@@ -57,10 +57,11 @@ public class GetMostRecentChangeThread extends ChangesManagerThread implements R
     @Override
     public void run() {
         while (true) {
-            try {
 
+            List <Change> changes = super.readChangesFromFile();
+
+            try {
                 Platform.runLater(() -> {
-                    List<Change> changes = super.readChangesFromFile();
                     if (!changes.isEmpty()) {
                         Change mostRecentChange = changes.get(changes.size() - 1);
                         tableViewToUpdate.setItems(FXCollections.observableList(List.of(mostRecentChange)));
