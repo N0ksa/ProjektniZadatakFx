@@ -62,6 +62,7 @@ public class AddressSearchController {
         City city  = cityPickerComboBox.getValue();
         String streetName = streetNameTextField.getText();
         String houseNumber = houseNumberTextField.getText();
+
         AddressFilter addressFilter = new AddressFilter(streetName, houseNumber, city);
 
         List<Address> filteredAddresses = DatabaseUtil.getAddressesByFilter(addressFilter);
@@ -108,19 +109,22 @@ public class AddressSearchController {
 
 
     private void setAddressTableView(List<Address> addresses) {
-        cityTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Address, String>, ObservableValue<String>>() {
+        cityTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Address, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Address, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getCity().toString());
             }
         });
 
-        streetTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Address, String>, ObservableValue<String>>() {
+        streetTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Address, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Address, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getStreet());
             }
         });
 
-        houseNumberTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Address, String>, ObservableValue<String>>() {
+        houseNumberTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Address, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Address, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getHouseNumber());
             }

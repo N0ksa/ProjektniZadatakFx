@@ -21,8 +21,8 @@ public enum YearOfStudy{
             "Metode matematičke fizike"));
 
 
-    private Integer year;
-    private List<String> availableSubjects;
+    private final Integer year;
+    private final List<String> availableSubjects;
 
 
      YearOfStudy(Integer year, List <String> availableSubjects){
@@ -44,13 +44,6 @@ public enum YearOfStudy{
                 .map(YearOfStudy::getAvailableSubjects)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
-    }
-
-    public static YearOfStudy getYearOfStudy(Integer year) {
-        return Arrays.stream(YearOfStudy.values())
-                .filter(yearOfStudy -> yearOfStudy.getYear().equals(year))
-                .findFirst()
-                .orElse(null);
     }
 
 

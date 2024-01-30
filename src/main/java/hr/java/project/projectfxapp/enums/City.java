@@ -34,8 +34,8 @@ public enum City {
     ZAGREB("Zagreb", "10000");
 
 
-    private String name;
-    private String postalCode;
+    private final String name;
+    private final String postalCode;
     City(String name, String postalCode){
         this.name = name;
         this.postalCode = postalCode;

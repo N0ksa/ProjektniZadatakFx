@@ -43,7 +43,6 @@ public class ClubsSearchController {
     private TableColumn<MathClub, String> clubMembersTableColumn;
 
 
-
     public void initialize(){
 
         ClockThread clockThread = ClockThread.getInstance();

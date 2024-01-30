@@ -95,7 +95,9 @@ public class JavaFxProjectApplication extends Application {
 
         } catch (IOException e) {
             logger.error("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(), e);
-            throw new RuntimeException(e);
+            ValidationProtocol.showErrorAlert("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(),
+                    "Pogreška",
+                    "Pogreška prilikom dohvaćanja scene, molimo kontaktirajte administratora");
         }
     }
 
@@ -117,7 +119,10 @@ public class JavaFxProjectApplication extends Application {
             popupStage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(), e);
+            ValidationProtocol.showErrorAlert("Pogreška prilikom dohvaćanja scene: " + screen.getTitle(),
+                    "Pogreška",
+                    "Pogreška prilikom dohvaćanja scene, molimo kontaktirajte administratora");
         }
     }
 

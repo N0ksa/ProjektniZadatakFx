@@ -26,8 +26,6 @@ import java.util.stream.Collectors;
 
 public class MainScreenForAdminController {
 
-
-
     @FXML
     private LineChart<String, Integer> numberOfSignInOverTimeLineChart;
     @FXML

@@ -27,9 +27,6 @@ public class ChangesController {
     private TableView<Change> changesTableView;
 
     @FXML
-    private Button clearChanges;
-
-    @FXML
     private TableColumn<Change, String> dateOfChangeTableColumn;
 
     @FXML

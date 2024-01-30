@@ -225,7 +225,7 @@ public class AddNewStudentController {
     }
 
     private Integer getYearOfStudy() {
-        Integer yearOfStudy = 0;
+        int yearOfStudy = 0;
 
         if (prvaGodinaRadioButton.isSelected()){
             yearOfStudy = 1;

@@ -67,8 +67,10 @@ public class AddNewCompetitionController {
 
         List<Student> potentialParticipantsList = DatabaseUtil.getStudents();
         ObservableList<Student> potentialParticipantsObservableList = FXCollections.observableList(potentialParticipantsList);
+
         List<Address> addressesList = DatabaseUtil.getAddresses();
         ObservableList<Address> addressObservableList = FXCollections.observableList(addressesList);
+
         List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
         ObservableList<MathClub> mathClubsObservableList = FXCollections.observableList(mathClubs);
 
@@ -83,9 +85,9 @@ public class AddNewCompetitionController {
         competitionParticipantTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().participant()));
 
         competitionScoreTableColumn.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().score()));
+
+
         competitionScoreTableColumn.setCellFactory(TextFieldTableCell.forTableColumn(new CustomBigDecimalStringConverter()));
-
-
         competitionScoreTableColumn.setOnEditCommit(event -> {
             try {
                 CompetitionResult result = event.getRowValue();
