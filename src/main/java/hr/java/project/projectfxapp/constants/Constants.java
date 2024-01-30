@@ -18,4 +18,6 @@ public class Constants {
     public static final String PROJECT_LOGO = "/images/projekt_matematika_logo.png";
 
     public static final String CSS_FILE = "/design/design.css";
+
+    public static final String DATABASE_PATH = "conf/database.properties";
 }

@@ -6,16 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Refaktoriranje">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/JavaFxProjectApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewCompetitionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewCompetitionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddressSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddressSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ChangesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ChangesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ClubsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ClubsSearchController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/MainScreenForAdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/MainScreenForAdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/shared/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/City.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/YearOfStudy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/enums/YearOfStudy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/statistics.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/statistics.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,14 +246,8 @@
       <workItem from="1706550862549" duration="3377000" />
       <workItem from="1706601456196" duration="7004000" />
       <workItem from="1706619791480" duration="4860000" />
-      <workItem from="1706631705588" duration="3193000" />
-    </task>
-    <task id="LOCAL−00011" summary="Napravio većinu validacije, još je ostalo par sitnica koje ću napraviti poslije povezivanja s bazom podataka.&#10;&#10;-kod validacije unosa natjecanja moram ispraviti način osvježavanja kolumne ocjena - vjerojatno nova klasa koja će prikazivati ocjenu kao string&#10;-možda promijenim logiku unosa novog matematičkog kluba i uklonim odabir studenata.">
-      <option name="closed" value="true" />
-      <created>1703169626075</created>
-      <option name="number" value="LOCAL−00011" />
-      <option name="presentableId" value="LOCAL−00011" />
-      <updated>1703169626075</updated>
+      <workItem from="1706631705588" duration="4859000" />
+      <workItem from="1706640813083" duration="4199000" />
     </task>
     <task id="LOCAL−00012" summary="Počeo povezivat projekt s bazom podataka&#10;&#10;-napravio novu klasu DatabaseUtil.java koja će služiti za dohvaćanje i pisanje po bazi podataka.&#10;&#10;- za sada napravio nekoliko metoda koje dohvaćaju studente, matematičke klubove i adrese iz baze podataka&#10;&#10;- nisam do kraja sastavio bazu podataka">
       <option name="closed" value="true" />
@@ -597,7 +585,14 @@
       <option name="presentableId" value="LOCAL−00059" />
       <updated>1706625459208</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL−00060" summary="Refaktoriranje">
+      <option name="closed" value="true" />
+      <created>1706634922347</created>
+      <option name="number" value="LOCAL−00060" />
+      <option name="presentableId" value="LOCAL−00060" />
+      <updated>1706634922348</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
