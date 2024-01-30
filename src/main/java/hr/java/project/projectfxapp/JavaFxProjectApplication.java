@@ -8,7 +8,7 @@ import hr.java.project.projectfxapp.enums.UserRole;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

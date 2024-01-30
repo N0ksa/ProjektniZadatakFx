@@ -19212,7 +19212,7 @@ java.io.InvalidObjectException: Cannot cast java.time.LocalDateTime to java.lang
 	at javafx.graphics@21-ea/javafx.stage.Stage.showAndWait(Stage.java:469)
 	at javafx.controls@21-ea/javafx.scene.control.HeavyweightDialog.showAndWait(HeavyweightDialog.java:162)
 	at javafx.controls@21-ea/javafx.scene.control.Dialog.showAndWait(Dialog.java:346)
-	at hr.java.project.projectfxapp/hr.java.project.projectfxapp.utility.ValidationProtocol.showSuccessLoginAlert(ValidationProtocol.java:526)
+	at hr.java.project.projectfxapp/hr.java.project.projectfxapp.validation.ValidationProtocol.showSuccessLoginAlert(ValidationProtocol.java:526)
 	at hr.java.project.projectfxapp/hr.java.project.projectfxapp.controllers.shared.LoginController.handleSuccessfulLogin(LoginController.java:115)
 	at hr.java.project.projectfxapp/hr.java.project.projectfxapp.controllers.shared.LoginController.handleLogin(LoginController.java:111)
 	at hr.java.project.projectfxapp/hr.java.project.projectfxapp.controllers.shared.LoginController.isUserCredentialsValid(LoginController.java:95)

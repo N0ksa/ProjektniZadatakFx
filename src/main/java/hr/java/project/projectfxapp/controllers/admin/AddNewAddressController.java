@@ -5,7 +5,7 @@ import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;

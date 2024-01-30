@@ -7,7 +7,7 @@ import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.filter.AddressFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

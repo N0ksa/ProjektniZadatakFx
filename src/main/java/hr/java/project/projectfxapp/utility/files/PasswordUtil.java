@@ -1,13 +1,11 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.utility.files;
 
-import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 
 public class PasswordUtil {

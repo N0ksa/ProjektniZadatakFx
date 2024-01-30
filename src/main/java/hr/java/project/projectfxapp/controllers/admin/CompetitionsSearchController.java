@@ -1,16 +1,13 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
-import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.entities.*;
-import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.filter.CompetitionFilter;
 import hr.java.project.projectfxapp.threads.ClockThread;
-import hr.java.project.projectfxapp.utility.*;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
-import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

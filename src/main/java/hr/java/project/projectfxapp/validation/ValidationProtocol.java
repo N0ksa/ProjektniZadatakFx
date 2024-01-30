@@ -1,10 +1,11 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.validation;
 
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.City;
 import hr.java.project.projectfxapp.enums.ValidationRegex;
 import hr.java.project.projectfxapp.exception.ValidationException;
 import hr.java.project.projectfxapp.utility.files.FileReaderUtil;
+import hr.java.project.projectfxapp.utility.files.PasswordUtil;
 import javafx.scene.control.*;
 
 import java.math.BigDecimal;

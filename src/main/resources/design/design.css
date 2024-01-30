@@ -15,7 +15,6 @@
     -fx-scale-y: 1.1;
 }
 
-
 .clubStatisticsCards {
     -fx-background-color: #4a92f7;
     -fx-background-radius: 10;
@@ -123,4 +122,8 @@
     -fx-effect: dropshadow(gaussian, #000000, 5, 0.5, 1, 1);
 
     }
+
+.settingsForm:hover {
+    -fx-effect: dropshadow(gaussian, #000000, 5, 0.7, 1, 1);
+}
 

@@ -3,7 +3,7 @@ package hr.java.project.projectfxapp.controllers.admin;
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.event.ActionEvent;
 
 public class MenuController {

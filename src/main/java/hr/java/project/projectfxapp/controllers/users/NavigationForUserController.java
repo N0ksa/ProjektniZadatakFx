@@ -8,7 +8,7 @@ import hr.java.project.projectfxapp.threads.ClockThread;
 import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.files.SerializationUtil;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
-import hr.java.project.projectfxapp.utility.ValidationProtocol;
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

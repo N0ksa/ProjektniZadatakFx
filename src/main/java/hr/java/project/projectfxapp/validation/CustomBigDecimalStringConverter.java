@@ -1,5 +1,6 @@
-package hr.java.project.projectfxapp.utility;
+package hr.java.project.projectfxapp.validation;
 
+import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
