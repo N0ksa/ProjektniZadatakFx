@@ -65,6 +65,7 @@ public class MemberCardController {
 
     public void initialize() {
         Student currentStudent = SessionManager.getInstance().getCurrentStudent();
+
         String message = additionalInfoForMemberLabel.getText();
         String fullMessage = message + " " + currentStudent.getName() + " " + currentStudent.getSurname();
         additionalInfoForMemberLabel.setText(fullMessage);
@@ -116,13 +117,13 @@ public class MemberCardController {
 
 
     private void setNumberOfParticipationInProjectsLabel(List<MathProject> projects, Student currentStudent) {
-        Integer numberOfParticipations = 0;
+        int numberOfParticipations = 0;
         for (MathProject project: projects){
             if (project.hasStudentCollaborator(currentStudent)){
                 numberOfParticipations++;
             }
         }
-        projectParticipationLabel.setText(numberOfParticipations.toString());
+        projectParticipationLabel.setText(Integer.toString(numberOfParticipations));
     }
 
 
@@ -131,7 +132,7 @@ public class MemberCardController {
         BigDecimal highestScore = null;
         BigDecimal lowestScore = null;
         boolean hasParticipated = false;
-        Integer numberOfParticipations = 0;
+        int numberOfParticipations = 0;
 
         for (Competition competition: competitions){
             if (competition.hasParticipant(currentStudent)){
@@ -157,14 +158,14 @@ public class MemberCardController {
                 lowestScoreInCompetitionLabel.setText("Član nije sudjelovao na natjecanjima.");
             }
 
-            competitionParticipationLabel.setText(numberOfParticipations.toString());
+            competitionParticipationLabel.setText(Integer.toString(numberOfParticipations));
             
         }
     }
 
 
     private void setCompetitionWinNumberLabel(List<Competition> competitions, Student currentStudent) {
-        Integer numberOfWins = 0;
+        int numberOfWins = 0;
         for (Competition competition : competitions){
             Optional<Student> winner = competition.findWinner();
             if (winner.isPresent() && winner.get().equals(currentStudent)){
@@ -172,7 +173,7 @@ public class MemberCardController {
             }
         }
 
-        competitionWinNumberLabel.setText(numberOfWins.toString());
+        competitionWinNumberLabel.setText(Integer.toString(numberOfWins));
     }
 
     public void generateHtmlForPrinting(ActionEvent actionEvent) {

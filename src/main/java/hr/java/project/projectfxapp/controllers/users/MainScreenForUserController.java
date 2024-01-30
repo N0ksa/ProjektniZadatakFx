@@ -44,7 +44,7 @@ public class MainScreenForUserController {
         List<MathClub> mathClubList = DatabaseUtil.getMathClubs();
 
 
-        setMathClubStatistics(currentClub, competitionList, mathProjectsList, mathClubList);
+        setMathClubStatistics(currentClub, competitionList, mathProjectsList);
 
 
         setOverallScoreComparisonBarChart(currentClub,mathClubList, competitionList, mathProjectsList);
@@ -55,7 +55,8 @@ public class MainScreenForUserController {
     }
 
     private void setMathClubStatistics(MathClub currentClub, List<Competition> competitionList,
-                                       List<MathProject> mathProjectsList, List<MathClub> mathClubList) {
+                                       List<MathProject> mathProjectsList) {
+
         setNumberOfCompetitionsLabel(currentClub, competitionList);
         setNumberOfMembersLabel(currentClub);
         setNumberOfProjectsLabel(currentClub,mathProjectsList);
@@ -130,13 +131,13 @@ public class MainScreenForUserController {
                     .filter(result -> result.participant().getClubMembership().getClubId().equals(club.getId()))
                     .toList();
 
-            Integer numberOfColaborations = mathProjectsList.stream()
+            Integer numberOfCollaborations = mathProjectsList.stream()
                     .filter(project -> project.hasMathClubCollaborator(club))
                     .toList()
                     .size();
 
 
-            BigDecimal clubScore = club.calculateScore(competitionResultList, numberOfColaborations);
+            BigDecimal clubScore = club.calculateScore(competitionResultList, numberOfCollaborations);
 
             XYChart.Data<String, BigDecimal> data = new XYChart.Data<>(club.getName(), clubScore);
 

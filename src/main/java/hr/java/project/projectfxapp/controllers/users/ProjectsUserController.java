@@ -71,7 +71,8 @@ public class ProjectsUserController {
 
     public void setComparisonOfProjectOrganizationsBetweenClubsLineChart(List<MathProject> mathProjectsList) {
 
-        comparisonOfProjectOrganizationsBetweenClubsLineChart.getData().clear();
+        comparisonOfProjectOrganizationsBetweenClubsLineChart.setTitle
+                ("Usporedba broja organizacija projekata");
 
         comparisonOfProjectOrganizationsBetweenClubsLineChart.getYAxis().setLabel("Broj projekata");
 
@@ -92,8 +93,10 @@ public class ProjectsUserController {
 
 
         private void setProjectSizeComparisonChart(List<MathProject> mathProjectsList) {
-        projectSizeComparisonChart.getData().clear();
-        projectSizeComparisonChart.getYAxis().setTickLabelGap(1);
+
+
+
+        projectSizeComparisonChart.setTitle("Usporedba veličine projekata");
         projectSizeComparisonChart.getYAxis().setLabel("Broj sudionika");
 
         for (MathProject project : mathProjectsList) {

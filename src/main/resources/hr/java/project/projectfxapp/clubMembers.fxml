@@ -37,7 +37,7 @@
       <children>
          <TableView fx:id="leaderBoardTableView" prefHeight="263.0" prefWidth="265.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <columns>
-             <TableColumn fx:id="NameAndSurnameTableColumn" prefWidth="139.0" sortable="false" text="Ime i prezime" />
+             <TableColumn fx:id="nameAndSurnameTableColumn" prefWidth="139.0" sortable="false" text="Ime i prezime" />
                <TableColumn fx:id="overallScoreTableColumn" prefWidth="125.0" sortType="DESCENDING" text="Bodovi" />
            </columns>
          </TableView>
@@ -60,7 +60,6 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <Label alignment="CENTER" layoutX="613.0" layoutY="369.0" prefHeight="17.0" prefWidth="460.0" text="Kretanje rezultata članova kluba kroz različita natjecanja " />
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="254.0" layoutY="2.0" prefHeight="44.0" prefWidth="846.0" text="Članovi kluba" textFill="WHITE">
       <font>
          <Font size="24.0" />

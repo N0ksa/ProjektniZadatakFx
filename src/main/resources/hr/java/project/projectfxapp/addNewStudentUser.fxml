@@ -30,7 +30,7 @@
    <RadioButton fx:id="drugaGodinaRadioButton" layoutX="350.0" layoutY="281.0" mnemonicParsing="false" text="Druga godina" toggleGroup="$yearOfStudySelection" />
    <AnchorPane layoutX="119.0" layoutY="315.0" prefHeight="244.0" prefWidth="536.0">
       <children>
-         <TableView fx:id="studentGradesTableView" layoutX="7.0" layoutY="7.0" prefHeight="244.0" prefWidth="622.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <TableView fx:id="studentGradesTableView" editable="true" layoutX="7.0" layoutY="7.0" prefHeight="244.0" prefWidth="622.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <columns>
              <TableColumn fx:id="subjectNameTableColumn" prefWidth="119.0" text="Predmet" />
              <TableColumn fx:id="subjectGradeTableColumn" prefWidth="347.0" text="Ocijena" />

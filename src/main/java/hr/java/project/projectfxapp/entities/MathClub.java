@@ -39,9 +39,9 @@ public final class MathClub extends NamedEntity implements Gradable, Serializabl
     public BigDecimal calculateScore(List<CompetitionResult> competitionsResults, Integer numberOfCollaborations){
         BigDecimal overallClubScore = BigDecimal.ZERO;
 
-        BigDecimal numberOfStudentsWeight = new BigDecimal(0.2);
-        BigDecimal numberOfCollaborationsWeight = new BigDecimal(0.5);
-        BigDecimal competitionResultsWeight = new BigDecimal(0.3);
+        BigDecimal numberOfStudentsWeight = new BigDecimal("0.2");
+        BigDecimal numberOfCollaborationsWeight = new BigDecimal("0.5");
+        BigDecimal competitionResultsWeight = new BigDecimal("0.3");
 
        Integer numberOfStudents = getNumberOfMembers();
 

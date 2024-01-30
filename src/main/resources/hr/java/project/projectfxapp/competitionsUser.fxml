@@ -37,7 +37,7 @@
    <Button layoutX="391.0" layoutY="339.0" mnemonicParsing="false" onAction="#addNewCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Dodaj natjecanje" />
    <Button layoutX="813.0" layoutY="339.0" mnemonicParsing="false" onAction="#addMembersToCompetitionUser" prefHeight="37.0" prefWidth="161.0" text="Registriraj/ukloni članove " />
    <Button layoutX="564.0" layoutY="339.0" mnemonicParsing="false" onAction="#updateCompetitionUser" prefHeight="37.0" prefWidth="142.0" text="Ažuriraj natjecanje" />
-   <AnchorPane layoutX="305.0" layoutY="435.0" prefHeight="224.0" prefWidth="400.0">
+   <AnchorPane layoutX="305.0" layoutY="403.0" prefHeight="256.0" prefWidth="400.0">
       <children>
          <LineChart fx:id="averageCompetitionScoreLineChart" layoutX="-92.0" layoutY="-142.0" prefHeight="258.0" prefWidth="408.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <xAxis>
@@ -49,8 +49,7 @@
          </LineChart>
       </children>
    </AnchorPane>
-   <Label layoutX="391.0" layoutY="409.0" text="Prosjek bodova po svakom natjecanju" />
-   <AnchorPane layoutX="760.0" layoutY="435.0" prefHeight="224.0" prefWidth="282.0">
+   <AnchorPane layoutX="760.0" layoutY="403.0" prefHeight="256.0" prefWidth="282.0">
       <children>
          <BarChart fx:id="numberOfParticipantsInCompetitionBarChart" layoutY="-29.0" prefHeight="224.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
            <xAxis>
@@ -62,7 +61,6 @@
          </BarChart>
       </children>
    </AnchorPane>
-   <Label layoutX="834.0" layoutY="409.0" prefHeight="17.0" prefWidth="208.0" text="Broj sudionika na svakom natjecanju" />
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="254.0" prefHeight="45.0" prefWidth="839.0" text="Natjecanja" textFill="WHITE">
       <font>
          <Font size="24.0" />

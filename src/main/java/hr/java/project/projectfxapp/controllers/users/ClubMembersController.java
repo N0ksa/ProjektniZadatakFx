@@ -33,7 +33,7 @@ public class ClubMembersController {
     @FXML
     private LineChart<String, BigDecimal> clubMemberScoreOverDifferentCompetitionsLineChart;
     @FXML
-    private TableColumn<Student, String> NameAndSurnameTableColumn;
+    private TableColumn<Student, String> nameAndSurnameTableColumn;
 
     @FXML
     private TextField filterMembers;
@@ -71,12 +71,14 @@ public class ClubMembersController {
 
 
        List<Student> clubMembers = currentClub.getStudents().stream().toList();
+
        List<Competition> finishedCompetitions = DatabaseUtil.getCompetitions();
+       LocalDateTime now = LocalDateTime.now();
+       finishedCompetitions.removeIf(competition -> competition.getTimeOfCompetition().isAfter(now));
+
        List<MathProject> mathProjects = DatabaseUtil.getProjects();
 
 
-       LocalDateTime now = LocalDateTime.now();
-       finishedCompetitions.removeIf(competition -> competition.getTimeOfCompetition().isAfter(now));
 
        List<CompetitionResult> competitionResults = finishedCompetitions.stream()
                .flatMap(competition -> competition.getCompetitionResults().stream())
@@ -88,6 +90,7 @@ public class ClubMembersController {
        initializeMemberTableView(filteredMembers);
 
        initializeLeaderBoardTableView(FXCollections.observableList(clubMembers), competitionResults, mathProjects);
+
        setClubMemberScoreOverDifferentCompetitionsLineChart(clubMembers, finishedCompetitions);
 
 
@@ -96,7 +99,8 @@ public class ClubMembersController {
     private void setClubMemberScoreOverDifferentCompetitionsLineChart(List<Student> clubMembers,
                                                                       List<Competition> competitionsList) {
 
-        clubMemberScoreOverDifferentCompetitionsLineChart.getData().clear();
+        clubMemberScoreOverDifferentCompetitionsLineChart.setTitle(
+                "Kretanje rezultata članova kluba kroz različita natjecanja");
 
         for (Student clubMember : clubMembers) {
             XYChart.Series<String, BigDecimal> series = new XYChart.Series<>();
@@ -143,7 +147,7 @@ public class ClubMembersController {
                                                 List<CompetitionResult> competitionResults,
                                                 List<MathProject> mathProjects) {
 
-        NameAndSurnameTableColumn.setCellValueFactory(param ->
+        nameAndSurnameTableColumn.setCellValueFactory(param ->
                 new ReadOnlyStringWrapper(param.getValue().getName() + " " + param.getValue().getSurname()));
 
         overallScoreTableColumn.setCellValueFactory(param -> {
@@ -165,13 +169,6 @@ public class ClubMembersController {
             BigDecimal score1 = overallScoreTableColumn.getCellObservableValue(s1).getValue();
             BigDecimal score2 = overallScoreTableColumn.getCellObservableValue(s2).getValue();
 
-            if (score1 == null && score2 == null) {
-                return 0;
-            } else if (score1 == null) {
-                return 1;
-            } else if (score2 == null) {
-                return -1;
-            }
             return score2.compareTo(score1);
         });
 
@@ -183,19 +180,22 @@ public class ClubMembersController {
 
 
         private void initializeMemberTableView(ObservableList<Student> clubMembers) {
-        memberNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        memberNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getName());
             }
         });
 
-        memberSurnameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        memberSurnameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getSurname());
             }
         });
 
-        memberJoinDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        memberJoinDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 LocalDate joinDate = param.getValue().getClubMembership().getJoinDate();
 
@@ -210,20 +210,23 @@ public class ClubMembersController {
             }
         });
 
-        memberAverageGradeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        memberAverageGradeTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(String.format("%.1f", param.getValue().calculateAverageGrade()));
             }
         });
 
 
-        memberEmailTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        memberEmailTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getEmail());
             }
         });
 
-        memberYearOfStudyTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>, ObservableValue<String>>() {
+        memberYearOfStudyTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Student,String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Student, String> param) {
                 return new ReadOnlyStringWrapper(param.getValue().getYearOfStudy().toString());
             }

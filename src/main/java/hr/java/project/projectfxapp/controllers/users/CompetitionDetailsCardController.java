@@ -52,17 +52,22 @@ public class CompetitionDetailsCardController {
 
     private void setGenderScoreDifferenceLineChart(Competition currentCompetition) {
 
-        genderScoreDifferenceLineChart.getYAxis().setLabel("Prosječni rezultat");
+        genderScoreDifferenceLineChart.setTitle("Razlika u broju bodova između spolova");
+
 
         XYChart.Series<String, BigDecimal> series = new XYChart.Series<>();
         series.getData().add(new XYChart.Data<>("Muški", currentCompetition.getAverageMaleScoreForCompetition()));
         series.getData().add(new XYChart.Data<>("Ženski", currentCompetition.getAverageFemaleScoreForCompetition()));
+        series.setName("Prosječni rezultat");
 
         genderScoreDifferenceLineChart.getData().add(series);
 
     }
 
     private void setGenderDistributionPieChart(Competition currentCompetition) {
+
+        genderDistributionPieChart.setTitle("Distribucija po spolu");
+
         List<CompetitionResult> competitionResults = currentCompetition.getCompetitionResults().stream().toList();
         int numberOfMaleParticipants = 0;
         int numberOfFemaleParticipants = 0;
@@ -104,7 +109,6 @@ public class CompetitionDetailsCardController {
         competitionResultsTableView.setItems(FXCollections.observableArrayList(competitionResults));
 
     }
-
 
     public void generateHtmlForPrinting(ActionEvent actionEvent) {
         JavaFxProjectApplication.showPopup(ApplicationScreen.GenerateHtmlForPrintingCompetition);

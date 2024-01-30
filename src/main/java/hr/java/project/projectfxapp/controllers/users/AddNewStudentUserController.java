@@ -78,7 +78,6 @@ public class AddNewStudentUserController {
 
         imagePath = Constants.DEFAULT_PICTURE_MEMBER_ICON;
 
-        studentGradesTableView.setEditable(true);
         subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
 
         subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGrade()));
@@ -103,10 +102,10 @@ public class AddNewStudentUserController {
             }
         });
 
+
         File imageFile = new File(imagePath);
         Image image = new Image(imageFile.toURI().toString());
         studentImageView.setImage(image);
-
     }
 
 
@@ -137,7 +136,6 @@ public class AddNewStudentUserController {
             }
         }
     }
-
 
     public void saveMember(ActionEvent event) {
         try{
@@ -236,7 +234,7 @@ public class AddNewStudentUserController {
 
 
     private Integer getYearOfStudy() {
-        Integer yearOfStudy = 0;
+        int yearOfStudy = 0;
 
         if (prvaGodinaRadioButton.isSelected()){
             yearOfStudy = 1;

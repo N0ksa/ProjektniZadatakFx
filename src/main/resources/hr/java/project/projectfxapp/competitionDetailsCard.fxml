@@ -31,12 +31,12 @@
             </TableView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="48.0" layoutY="396.0" prefHeight="249.0" prefWidth="322.0">
+      <AnchorPane layoutX="48.0" layoutY="371.0" prefHeight="274.0" prefWidth="322.0">
          <children>
             <PieChart fx:id="genderDistributionPieChart" layoutX="-14.0" prefHeight="263.0" prefWidth="338.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="437.0" layoutY="392.0" prefHeight="249.0" prefWidth="322.0">
+      <AnchorPane layoutX="437.0" layoutY="367.0" prefHeight="274.0" prefWidth="322.0">
          <children>
             <LineChart fx:id="genderScoreDifferenceLineChart" layoutY="14.0" prefHeight="271.0" prefWidth="338.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <xAxis>
@@ -48,8 +48,6 @@
             </LineChart>
          </children>
       </AnchorPane>
-      <Label layoutX="498.0" layoutY="369.0" text="Razlika u broj bodova između spolova" />
-      <Label layoutX="139.0" layoutY="369.0" text="Distribucija po spolu" />
       <Separator layoutX="386.0" layoutY="342.0" orientation="VERTICAL" prefHeight="317.0" prefWidth="9.0" />
       <Button layoutX="726.0" layoutY="62.0" mnemonicParsing="false" onAction="#generateHtmlForPrinting" prefHeight="34.0" prefWidth="109.0" text="Generiraj izvješće" />
       <AnchorPane layoutX="835.0" prefHeight="698.0" prefWidth="265.0" style="-fx-background-color: #4a92f7;">
