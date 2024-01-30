@@ -5,7 +5,7 @@ import hr.java.project.projectfxapp.exception.NoSuchCityException;
 
 import java.io.Serializable;
 
-public enum City implements Serializable {
+public enum City {
     ZAGREB("Zagreb", "10000"),
     SPLIT("Split", "21000"),
     RIJEKA("Rijeka", "51000"),

@@ -3,7 +3,6 @@ package hr.java.project.projectfxapp.enums;
 import hr.java.project.projectfxapp.exception.NoSuchGenderException;
 
 public enum Gender {
-
     Male("Male"),
     Female("Female");
     private final String gender;

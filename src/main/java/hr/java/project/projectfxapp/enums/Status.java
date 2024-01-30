@@ -1,7 +1,6 @@
 package hr.java.project.projectfxapp.enums;
 
 public enum Status {
-
     FINISHED("Završeno"),
     ONGOING("U tijeku"),
     PLANNED("Planirano");

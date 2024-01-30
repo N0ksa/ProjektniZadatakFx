@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public final class MathProject extends NamedEntity implements Serializable, Recordable<MathProject> {
+public final class MathProject extends NamedEntity implements Recordable<MathProject> {
 
     private MathClub organizer;
     private LocalDate startDate;

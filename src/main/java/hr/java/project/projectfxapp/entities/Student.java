@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
-public final class Student extends NamedEntity implements Gradable, Serializable, Recordable<Student> {
+public final class Student extends NamedEntity implements Gradable, Recordable<Student> {
     private String surname;
     private String gender;
     private String email;

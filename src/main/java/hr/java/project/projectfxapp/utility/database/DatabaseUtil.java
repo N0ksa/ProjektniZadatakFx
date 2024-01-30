@@ -34,7 +34,6 @@ public class DatabaseUtil {
 
     }
 
-
     public static List<Address> getAddresses() {
         List<Address> addresses = new ArrayList<>();
 
@@ -50,7 +49,6 @@ public class DatabaseUtil {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
         }
-
         return addresses;
 
     }
@@ -76,10 +74,9 @@ public class DatabaseUtil {
             logger.error(message, ex);
         }
 
-
         return mathClubs;
-
     }
+
 
     public static Optional<MathClub> getMathClub(Long mathClubId) {
         List<Address> addresses = getAddresses();
@@ -113,23 +110,18 @@ public class DatabaseUtil {
             String message = "Dogodila se pogreška kod povezivanja na bazu podataka";
             logger.error(message, ex);
         }
-        ;
 
         return Optional.ofNullable(mathClub);
-
 
     }
 
 
     public static Set<Student> getStudentsForMathClub(Long mathClubId, List<Student> students) {
-
         return students.stream().
                 filter(student -> student.getClubMembership().getClubId()
                         .equals(mathClubId))
                 .collect(Collectors.toSet());
-
     }
-
 
     public static List<Student> getStudents() {
 
@@ -154,7 +146,6 @@ public class DatabaseUtil {
     }
 
     private static Optional<Student> getStudent(Long studentId) {
-
         Student student = null;
 
         try (Connection connection = connectToDatabase()) {

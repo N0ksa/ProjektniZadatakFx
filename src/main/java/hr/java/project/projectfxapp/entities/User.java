@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
-public final class User implements Serializable {
-
-    private static final Logger logger = LoggerFactory.getLogger(User.class);
-
+public final class User{
     private String username;
     private String hashedPassword;
     private UserRole role;

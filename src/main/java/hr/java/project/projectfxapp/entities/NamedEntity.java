@@ -3,7 +3,7 @@ package hr.java.project.projectfxapp.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class NamedEntity implements Serializable {
+public abstract class NamedEntity {
 
     private Long id;
     private String name;

@@ -22,7 +22,6 @@ public class ClockThread implements Runnable {
         }
         return instance;
     }
-
     public void setLabelToUpdate(Label labelToUpdate) {
         this.labelToUpdate = labelToUpdate;
     }

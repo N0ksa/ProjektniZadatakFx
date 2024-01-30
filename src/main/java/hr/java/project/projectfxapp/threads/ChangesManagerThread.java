@@ -13,7 +13,6 @@ public abstract class ChangesManagerThread {
 
     private static boolean changesDirectoryInUse = false;
 
-
     public synchronized void writeChangesToFile(List<Change> changes){
 
             while(changesDirectoryInUse){

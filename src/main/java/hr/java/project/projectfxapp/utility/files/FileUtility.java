@@ -21,7 +21,6 @@ public class FileUtility implements FileCopier<File> {
         Path sourcePath = sourceFile.toPath();
         Path destinationPathObject = Path.of(destinationPath);
 
-
         Files.copy(sourcePath, destinationPathObject, StandardCopyOption.REPLACE_EXISTING);
 
     }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum YearOfStudy implements Serializable {
+public enum YearOfStudy{
     FIRST_YEAR(1, Arrays.asList("Elementarna matematika 1", "Linearna algebra 1",
                                     "Matematička analiza 1", "Programiranje 1",
                                     "Elementarna matematika 2", "Linearna algebra 2",

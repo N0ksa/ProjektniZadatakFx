@@ -16,8 +16,6 @@ public non-sealed class SessionManager implements LoginStatisticsRecorder {
     private LocalDateTime loginTime;
     private LocalDateTime logoutTime;
 
-
-
     private SessionManager() {
     }
 

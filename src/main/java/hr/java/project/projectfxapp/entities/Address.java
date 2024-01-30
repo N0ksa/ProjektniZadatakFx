@@ -6,7 +6,7 @@ import hr.java.project.projectfxapp.enums.City;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Address implements Serializable {
+public class Address {
 
     private Long addressId;
     private String street;

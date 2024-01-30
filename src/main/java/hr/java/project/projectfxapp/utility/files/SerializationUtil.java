@@ -12,9 +12,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Pomoćna klasa koja služi za serijalizaciju i deserijalizaciju objekata.
- */
+
 public class SerializationUtil {
     private static final Logger logger = LoggerFactory.getLogger(SerializationUtil.class);
 
