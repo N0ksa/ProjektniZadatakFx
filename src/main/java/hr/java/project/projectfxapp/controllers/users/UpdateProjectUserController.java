@@ -14,11 +14,9 @@ import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +55,21 @@ public class UpdateProjectUserController {
         houseNumberTextField.setText(currentProject.getAddress().getHouseNumber());
         cityComboBox.setItems(FXCollections.observableList(List.of(City.values())));
         cityComboBox.setValue(currentProject.getAddress().getCity());
-        endDateOfProjectDatePicker.setValue(currentProject.getEndDate());
         projectWebAddress.setText(currentProject.getProjectWebPageAddress());
+
+        endDateOfProjectDatePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                if (date.isBefore(currentProject.getStartDate()) || date.isEqual(currentProject.getStartDate())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
+            }
+        });
+
+        endDateOfProjectDatePicker.setValue(currentProject.getEndDate());
     }
 
 

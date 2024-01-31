@@ -60,9 +60,9 @@ public class AddNewStudentController {
         clockThread.setLabelToUpdate(clockLabel);
 
         studentGradesTableView.setEditable(true);
-        subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
+        subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getKey()));
 
-        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGrade()));
+        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue()));
         subjectGradeTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         subjectGradeTableColumn.setOnEditCommit(event -> {
 
@@ -72,7 +72,7 @@ public class AddNewStudentController {
 
             SubjectGrade subjectGrade = event.getTableView().getItems().get(index);
 
-            subjectGrade.setGrade(newGrade);
+            subjectGrade.setValue(newGrade);
         });
 
 
@@ -205,7 +205,7 @@ public class AddNewStudentController {
 
         Map<String, Integer> studentGrades = new LinkedHashMap<>();
         for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
-            studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
+            studentGrades.put(subjectAndGrade.getKey(), Integer.parseInt(subjectAndGrade.getValue()));
         }
         studentBuilder.grades(studentGrades);
 

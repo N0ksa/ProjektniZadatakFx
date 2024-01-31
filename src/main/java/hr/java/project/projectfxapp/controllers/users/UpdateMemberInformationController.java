@@ -115,14 +115,14 @@ public class UpdateMemberInformationController {
         studentImageView.setImage(image);
 
         studentGradesTableView.setEditable(true);
-        subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
-        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGrade()));
+        subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getKey()));
+        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue()));
         subjectGradeTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         subjectGradeTableColumn.setOnEditCommit(event -> {
             String newGrade = event.getNewValue();
             int index = event.getTablePosition().getRow();
             SubjectGrade subjectGrade = event.getTableView().getItems().get(index);
-            subjectGrade.setGrade(newGrade);
+            subjectGrade.setValue(newGrade);
         });
 
         ObservableList<SubjectGrade> subjectGrades = FXCollections.observableList(
@@ -148,7 +148,7 @@ public class UpdateMemberInformationController {
 
                     List<SubjectGrade> additionalSubjects = newYearOfStudy.getCombinedSubjectsUpToYear()
                             .stream()
-                            .filter(subject -> subjectGrades.stream().noneMatch(grade -> grade.getSubject().equals(subject)))
+                            .filter(subject -> subjectGrades.stream().noneMatch(grade -> grade.getKey().equals(subject)))
                             .map(subject -> new SubjectGrade(subject, "Unesi ocijenu"))
                             .collect(Collectors.toList());
 
@@ -302,7 +302,7 @@ public class UpdateMemberInformationController {
 
         Map<String, Integer> studentGrades = new LinkedHashMap<>();
         for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
-            studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
+            studentGrades.put(subjectAndGrade.getKey(), Integer.parseInt(subjectAndGrade.getValue()));
         }
 
         memberToUpdate.setGrades(studentGrades);

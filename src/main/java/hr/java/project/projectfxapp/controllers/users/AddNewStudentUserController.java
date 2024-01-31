@@ -78,9 +78,9 @@ public class AddNewStudentUserController {
 
         imagePath = Constants.DEFAULT_PICTURE_MEMBER_ICON;
 
-        subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getSubject()));
+        subjectNameTableColumn.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getKey()));
 
-        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getGrade()));
+        subjectGradeTableColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue()));
         subjectGradeTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         subjectGradeTableColumn.setOnEditCommit(event -> {
 
@@ -90,7 +90,7 @@ public class AddNewStudentUserController {
 
             SubjectGrade subjectGrade = event.getTableView().getItems().get(index);
 
-            subjectGrade.setGrade(newGrade);
+            subjectGrade.setValue(newGrade);
         });
 
 
@@ -120,7 +120,7 @@ public class AddNewStudentUserController {
 
         if (Optional.ofNullable(selectedFile).isPresent()) {
             try {
-                String destinationDirectory = "src/main/resources/images/";
+                String destinationDirectory = Constants.DIRECTORY_FOR_IMAGES;
 
                 FileCopier<File> fileCopier = new FileUtility();
                 fileCopier.copyToDirectory(selectedFile, destinationDirectory);
@@ -213,7 +213,7 @@ public class AddNewStudentUserController {
 
         Map<String, Integer> studentGrades = new LinkedHashMap<>();
         for (SubjectGrade subjectAndGrade : studentGradesTableView.getItems()){
-            studentGrades.put(subjectAndGrade.getSubject(), Integer.parseInt(subjectAndGrade.getGrade()));
+            studentGrades.put(subjectAndGrade.getKey(), Integer.parseInt(subjectAndGrade.getValue()));
         }
         studentBuilder.grades(studentGrades);
 

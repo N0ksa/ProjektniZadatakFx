@@ -20,4 +20,6 @@ public class Constants {
     public static final String CSS_FILE = "/design/design.css";
 
     public static final String DATABASE_PATH = "conf/database.properties";
+
+    public static final String DIRECTORY_FOR_IMAGES = "src/main/resources/images/";
 }

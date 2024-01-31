@@ -15,7 +15,7 @@ import java.util.Optional;
 public class HtmlGenerator<T> {
     public String generateHtml(T item) {
         if (item instanceof Competition competition) {
-            LocalDateTime now = LocalDateTime.now().minusDays(1);
+            LocalDateTime now = LocalDateTime.now();
             LocalDateTime competitionTime = competition.getTimeOfCompetition();
             if (now.isAfter(competitionTime)) {
                 return generateFinishedCompetitionHtml(competition);

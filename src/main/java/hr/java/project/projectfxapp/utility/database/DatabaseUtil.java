@@ -535,7 +535,7 @@ public class DatabaseUtil {
             for (MathProject mathProject : mathProjects) {
 
                 String insertMathProjectSql = "INSERT INTO MATH_PROJECT(NAME, DESCRIPTION, START_DATE, ORGANIZER_ID, " +
-                        "ADDRESS_ID, END_DATE) VALUES(?, ?, ?, ?, ?, ?)";
+                        "ADDRESS_ID, END_DATE, WEB_ADDRESS) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement pstmt = connection.prepareStatement(insertMathProjectSql, PreparedStatement.RETURN_GENERATED_KEYS);
                 pstmt.setString(1, mathProject.getName());
@@ -544,6 +544,7 @@ public class DatabaseUtil {
                 pstmt.setLong(4, mathProject.getOrganizer().getId());
                 pstmt.setLong(5, mathProject.getAddress().getAddressId());
                 pstmt.setDate(6, mathProject.getEndDate() != null ? Date.valueOf(mathProject.getEndDate()) : null);
+                pstmt.setString(7, mathProject.getProjectWebPageAddress());
                 pstmt.executeUpdate();
 
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();

@@ -246,19 +246,19 @@ public class ValidationProtocol {
     private static void validateStudentGradesList(TableView<SubjectGrade> studentGradesTableView, List<String> error) {
         for (SubjectGrade subjectGrade : studentGradesTableView.getItems()){
             try{
-               Integer parsedGrade = Integer.parseInt(subjectGrade.getGrade());
+               Integer parsedGrade = Integer.parseInt(subjectGrade.getValue());
 
-               if (!subjectGrade.getGrade().equals(String.valueOf(parsedGrade))){
-                   error.add("Molim unesite cijeli broj za predmet " + subjectGrade.getSubject());
+               if (!subjectGrade.getValue().equals(String.valueOf(parsedGrade))){
+                   error.add("Molim unesite cijeli broj za predmet " + subjectGrade.getKey());
 
                }else if (parsedGrade.compareTo(1) < 0 || parsedGrade.compareTo(5) > 0){
-                   error.add("Molim unesite ocijenu u rasponu od 1-5 za predmet " + subjectGrade.getSubject());
+                   error.add("Molim unesite ocijenu u rasponu od 1-5 za predmet " + subjectGrade.getKey());
                }
 
 
 
             }catch (NumberFormatException ex){
-                error.add("Molim unesite ispravnu ocijenu za predmet " + subjectGrade.getSubject());
+                error.add("Molim unesite ispravnu ocijenu za predmet " + subjectGrade.getKey());
             }
         }
     }

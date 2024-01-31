@@ -106,8 +106,8 @@ public class MemberCardController {
     }
 
     private void setMemberGradesTableView(Student currentStudent) {
-        memberSubjectNameTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSubject()));
-        memberSubjectGradeTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getGrade()));
+        memberSubjectNameTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getKey()));
+        memberSubjectGradeTableColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue()));
 
         currentStudent.getGrades().forEach((subject, grade) -> {
             SubjectGrade subjectGrade = new SubjectGrade(subject, String.valueOf(grade));

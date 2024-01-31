@@ -4,12 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Refaktoriranje">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze">
+      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/KeyValuePair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dat/changes.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/changes.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/statistics.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/statistics.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/AddNewStudentUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/AddNewStudentUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MemberCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MemberCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateProjectUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateProjectUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/SubjectGrade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/SubjectGrade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/mainScreenForUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/html/HtmlGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/html/HtmlGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/validation/ValidationProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/validation/ValidationProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,14 +257,10 @@
       <workItem from="1706601456196" duration="7004000" />
       <workItem from="1706619791480" duration="4860000" />
       <workItem from="1706631705588" duration="4859000" />
-      <workItem from="1706640813083" duration="4199000" />
-    </task>
-    <task id="LOCAL−00012" summary="Počeo povezivat projekt s bazom podataka&#10;&#10;-napravio novu klasu DatabaseUtil.java koja će služiti za dohvaćanje i pisanje po bazi podataka.&#10;&#10;- za sada napravio nekoliko metoda koje dohvaćaju studente, matematičke klubove i adrese iz baze podataka&#10;&#10;- nisam do kraja sastavio bazu podataka">
-      <option name="closed" value="true" />
-      <created>1703192624347</created>
-      <option name="number" value="LOCAL−00012" />
-      <option name="presentableId" value="LOCAL−00012" />
-      <updated>1703192624347</updated>
+      <workItem from="1706640813083" duration="4636000" />
+      <workItem from="1706646713794" duration="170000" />
+      <workItem from="1706647662031" duration="82000" />
+      <workItem from="1706714588617" duration="3899000" />
     </task>
     <task id="LOCAL−00013" summary="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)">
       <option name="closed" value="true" />
@@ -592,7 +598,14 @@
       <option name="presentableId" value="LOCAL−00060" />
       <updated>1706634922348</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL−00061" summary="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze">
+      <option name="closed" value="true" />
+      <created>1706645083437</created>
+      <option name="number" value="LOCAL−00061" />
+      <option name="presentableId" value="LOCAL−00061" />
+      <updated>1706645083438</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -610,7 +623,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Promijenio veličinu ekrana za admina, te dodao font-awesome ikone." />
     <MESSAGE value="Dodao za admina mogućnost pretraživanja, dodavanja i brisanja adresa" />
     <MESSAGE value="Dodao logiku bilježenja promjena prilikom ažuriranja studenta, projekta ili natjecanja." />
     <MESSAGE value="Dodao bilježenje promjena i kod admina" />
@@ -635,7 +647,8 @@
     <MESSAGE value="Dodao osvježavanje podataka za natjecanja i projekte tako da se inicijalizira thread koji onda, ako ima promjena u bazi podataka, osvježava ekran." />
     <MESSAGE value="Refaktorirao ostatak koda i uklonio threadove za osvježavanje natjecanja i projekata" />
     <MESSAGE value="Refaktoriranje" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refaktoriranje" />
+    <MESSAGE value="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
