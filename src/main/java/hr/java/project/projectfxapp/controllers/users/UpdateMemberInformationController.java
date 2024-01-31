@@ -138,21 +138,28 @@ public class UpdateMemberInformationController {
             Integer selectedYear = getYearOfStudy();
 
             if (newValue != null) {
+
+                ObservableList<SubjectGrade> clubMemberGrades = FXCollections.observableList(
+                        memberToUpdate.getGrades().entrySet()
+                                .stream()
+                                .map(entry -> new SubjectGrade(entry.getKey(), String.valueOf(entry.getValue())))
+                                .collect(Collectors.toList()));
+
                 YearOfStudy newYearOfStudy = getSelectedYears(newValue);
 
                 studentGradesTableView.getItems().clear();
 
                 if (selectedYear.equals(memberToUpdate.getYearOfStudy())) {
-                    studentGradesTableView.getItems().addAll(subjectGrades);
+                    studentGradesTableView.setItems(clubMemberGrades);
                 } else if (selectedYear > memberToUpdate.getYearOfStudy()) {
 
                     List<SubjectGrade> additionalSubjects = newYearOfStudy.getCombinedSubjectsUpToYear()
                             .stream()
-                            .filter(subject -> subjectGrades.stream().noneMatch(grade -> grade.getKey().equals(subject)))
+                            .filter(subject -> clubMemberGrades.stream().noneMatch(grade -> grade.getKey().equals(subject)))
                             .map(subject -> new SubjectGrade(subject, "Unesi ocijenu"))
                             .collect(Collectors.toList());
 
-                    studentGradesTableView.getItems().addAll(subjectGrades);
+                    studentGradesTableView.setItems(clubMemberGrades);
                     studentGradesTableView.getItems().addAll(additionalSubjects);
                 }
             }

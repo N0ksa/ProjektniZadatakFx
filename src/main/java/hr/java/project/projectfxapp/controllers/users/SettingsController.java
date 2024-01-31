@@ -2,15 +2,18 @@ package hr.java.project.projectfxapp.controllers.users;
 
 import hr.java.project.projectfxapp.JavaFxProjectApplication;
 import hr.java.project.projectfxapp.constants.Constants;
+import hr.java.project.projectfxapp.entities.Change;
 import hr.java.project.projectfxapp.entities.FileCopier;
 import hr.java.project.projectfxapp.entities.User;
 import hr.java.project.projectfxapp.enums.ApplicationScreen;
 import hr.java.project.projectfxapp.exception.UnsupportedAlgorithmException;
 import hr.java.project.projectfxapp.exception.ValidationException;
+import hr.java.project.projectfxapp.threads.SerializeChangesThread;
 import hr.java.project.projectfxapp.utility.database.DatabaseUtil;
 import hr.java.project.projectfxapp.utility.files.FileUtility;
 import hr.java.project.projectfxapp.utility.files.FileWriterUtil;
 import hr.java.project.projectfxapp.utility.files.PasswordUtil;
+import hr.java.project.projectfxapp.utility.manager.ChangesManager;
 import hr.java.project.projectfxapp.utility.manager.SessionManager;
 import hr.java.project.projectfxapp.validation.ValidationProtocol;
 import javafx.event.ActionEvent;
@@ -84,12 +87,19 @@ public class SettingsController {
 
             if (positiveConfirmation) {
 
+
                 boolean updateSuccessful = updatePassword(currentUser);
 
                 if (updateSuccessful) {
+
+                    Change change = Change.create(currentUser,
+                            "/", "Lozinka je promijenjena",
+                            "Lozinka");
+
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
+
                     ValidationProtocol.showSuccessAlert("Ažuriranje lozinke je uspjelo",
                             "Lozinka je uspješno promijenjena");
-
 
                     JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
 
@@ -124,17 +134,25 @@ public class SettingsController {
 
             if (positiveConfirmation) {
 
+
+                String oldUsername = currentUser.getUsername();
                 boolean updateSuccessful = updateUsername(currentUser);
 
                 if (updateSuccessful) {
+
+                    Change change = Change.create(currentUser,
+                            oldUsername, currentUser.getUsername(),
+                            "Korisničko ime");
+
+                    ChangesManager.setNewChangesIfChangesNotPresent().add(change);
+
                     ValidationProtocol.showSuccessAlert("Ažuriranje korisničkog imena je uspjelo",
                             "Korisničko ime je uspješno promijenjeno u " + changeUserNameTextField.getText());
 
 
-                    JavaFxProjectApplication.switchScene(ApplicationScreen.Login);
-
                 } else {
-                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju", "Ažuriranje korisničkog imena nije uspjelo",
+                    ValidationProtocol.showErrorAlert("Greška pri ažuriranju",
+                            "Ažuriranje korisničkog imena nije uspjelo",
                             "Pokušajte ponovno");
                 }
 
@@ -142,7 +160,8 @@ public class SettingsController {
 
 
         } catch (ValidationException ex) {
-            ValidationProtocol.showErrorAlert("Greška pri unosu", "Provjerite ispravnost unesenih podataka",
+            ValidationProtocol.showErrorAlert("Greška pri unosu",
+                    "Provjerite ispravnost unesenih podataka",
                     ex.getMessage());
 
         }
@@ -189,6 +208,7 @@ public class SettingsController {
         if (updateSuccess){
             List<User> users = DatabaseUtil.getUsers();
             FileWriterUtil.saveUsers(users);
+            currentUser.setUsername(changeUserNameTextField.getText());
         }
         return updateSuccess;
     }
@@ -224,11 +244,19 @@ public class SettingsController {
 
             User currentUser = SessionManager.getInstance().getCurrentUser();
             String newImagePath = imagePath;
+            String oldImagePath = currentUser.getPicture().getPicturePath();
             currentUser.getPicture().setPicturePath(newImagePath);
 
             boolean updateSuccessful = DatabaseUtil.updateUserProfilePicture(currentUser, newImagePath);
 
             if (updateSuccessful){
+
+
+                Change change = Change.create(currentUser,
+                        oldImagePath, currentUser.getPicture().getPicturePath(),
+                        "Slika");
+
+                ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
                 JavaFxProjectApplication.switchScene(ApplicationScreen.Settings);
                 ValidationProtocol.showSuccessAlert("Ažuriranje slike je uspjelo",

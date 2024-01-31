@@ -52,7 +52,7 @@ public class DatabaseUtil {
         return addresses;
     }
 
-    public static List<Address> getAddresses(Connection connection) {
+    private static List<Address> getAddresses(Connection connection) {
         List<Address> addresses = new ArrayList<>();
 
         try  {
@@ -93,7 +93,7 @@ public class DatabaseUtil {
         return mathClubs;
     }
 
-    public static Optional<MathClub> getMathClub(Long mathClubId, Connection connection) {
+    private static Optional<MathClub> getMathClub(Long mathClubId, Connection connection) {
         List<Address> addresses = getAddresses(connection);
         List<Student> students = getStudents(connection);
 
@@ -169,7 +169,7 @@ public class DatabaseUtil {
     }
 
 
-    public static Set<Student> getStudentsForMathClub(Long mathClubId, List<Student> students) {
+    private static Set<Student> getStudentsForMathClub(Long mathClubId, List<Student> students) {
         return students.stream().
                 filter(student -> student.getClubMembership().getClubId()
                         .equals(mathClubId))
@@ -197,7 +197,7 @@ public class DatabaseUtil {
 
     }
 
-    public static List<Student> getStudents(Connection connection) {
+    private static List<Student> getStudents(Connection connection) {
 
         List<Student> students = new ArrayList<>();
 

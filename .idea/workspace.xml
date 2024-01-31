@@ -4,22 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze">
-      <change afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/KeyValuePair.java" afterDir="false" />
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao generičku klasu sa dva parametara i ispravio određene bugove">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/changes.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/changes.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/statistics.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/statistics.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/AddNewStudentUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/AddNewStudentUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MemberCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/MemberCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/SettingsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateProjectUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateProjectUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/SubjectGrade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/SubjectGrade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/html/HtmlGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/html/HtmlGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/validation/ValidationProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/validation/ValidationProtocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/memberCard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,14 +252,7 @@
       <workItem from="1706640813083" duration="4636000" />
       <workItem from="1706646713794" duration="170000" />
       <workItem from="1706647662031" duration="82000" />
-      <workItem from="1706714588617" duration="3899000" />
-    </task>
-    <task id="LOCAL−00013" summary="Od sada se svi podaci dohvaćaju iz baze podataka umjesto iz datoteka&#10;&#10;-potrebno je sada prilikom dodavanja dodati u bazu podataka i prilikom uklanjanja, ukloniti iz baze podataka (do sada se sva dodavanja još uvijek zapisuju u datoteku)">
-      <option name="closed" value="true" />
-      <created>1703270403414</created>
-      <option name="number" value="LOCAL−00013" />
-      <option name="presentableId" value="LOCAL−00013" />
-      <updated>1703270403415</updated>
+      <workItem from="1706714588617" duration="7806000" />
     </task>
     <task id="LOCAL−00014" summary="Dodao logiku spremanja novih projekata, natjecanja, studenata i klubova (djelomično, prilagodit ću još) u bazu podataka.">
       <option name="closed" value="true" />
@@ -605,7 +590,14 @@
       <option name="presentableId" value="LOCAL−00061" />
       <updated>1706645083438</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL−00062" summary="Dodao generičku klasu sa dva parametara i ispravio određene bugove">
+      <option name="closed" value="true" />
+      <created>1706718694746</created>
+      <option name="number" value="LOCAL−00062" />
+      <option name="presentableId" value="LOCAL−00062" />
+      <updated>1706718694747</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -623,7 +615,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dodao za admina mogućnost pretraživanja, dodavanja i brisanja adresa" />
     <MESSAGE value="Dodao logiku bilježenja promjena prilikom ažuriranja studenta, projekta ili natjecanja." />
     <MESSAGE value="Dodao bilježenje promjena i kod admina" />
     <MESSAGE value="Dodao pocetak threadov-a, ali ih još nisam implementirao" />
@@ -648,9 +639,19 @@
     <MESSAGE value="Refaktorirao ostatak koda i uklonio threadove za osvježavanje natjecanja i projekata" />
     <MESSAGE value="Refaktoriranje" />
     <MESSAGE value="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze" />
+    <MESSAGE value="Dodao generičku klasu sa dva parametara i ispravio određene bugove" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodao generičku klasu sa dva parametara i ispravio određene bugove" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="hr.java.project.projectfxapp.entities.CompetitionResult" memberName="participant" />
