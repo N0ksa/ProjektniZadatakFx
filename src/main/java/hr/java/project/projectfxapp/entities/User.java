@@ -1,13 +1,6 @@
 package hr.java.project.projectfxapp.entities;
 
 import hr.java.project.projectfxapp.enums.UserRole;
-import hr.java.project.projectfxapp.utility.manager.SessionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.Optional;
 
 public final class User {
     private String username;

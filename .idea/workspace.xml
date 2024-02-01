@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao generičku klasu sa dva parametara i ispravio određene bugove">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao mogućnost praćenja promjena kod User-a.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/changes.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/changes.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/statistics.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/statistics.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/SettingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/SettingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/users/UpdateMemberInformationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" afterDir="false" />
     </list>
@@ -23,9 +22,9 @@
       <list>
         <option value="Enum" />
         <option value="Record" />
-        <option value="Interface" />
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -252,14 +251,10 @@
       <workItem from="1706640813083" duration="4636000" />
       <workItem from="1706646713794" duration="170000" />
       <workItem from="1706647662031" duration="82000" />
-      <workItem from="1706714588617" duration="7806000" />
-    </task>
-    <task id="LOCAL−00014" summary="Dodao logiku spremanja novih projekata, natjecanja, studenata i klubova (djelomično, prilagodit ću još) u bazu podataka.">
-      <option name="closed" value="true" />
-      <created>1703281036780</created>
-      <option name="number" value="LOCAL−00014" />
-      <option name="presentableId" value="LOCAL−00014" />
-      <updated>1703281036780</updated>
+      <workItem from="1706714588617" duration="8654000" />
+      <workItem from="1706799665397" duration="2594000" />
+      <workItem from="1706808470388" duration="71000" />
+      <workItem from="1706809369402" duration="676000" />
     </task>
     <task id="LOCAL−00015" summary="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)">
       <option name="closed" value="true" />
@@ -597,7 +592,14 @@
       <option name="presentableId" value="LOCAL−00062" />
       <updated>1706718694747</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL−00063" summary="Dodao mogućnost praćenja promjena kod User-a.">
+      <option name="closed" value="true" />
+      <created>1706724224437</created>
+      <option name="number" value="LOCAL−00063" />
+      <option name="presentableId" value="LOCAL−00063" />
+      <updated>1706724224437</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -615,7 +617,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dodao logiku bilježenja promjena prilikom ažuriranja studenta, projekta ili natjecanja." />
     <MESSAGE value="Dodao bilježenje promjena i kod admina" />
     <MESSAGE value="Dodao pocetak threadov-a, ali ih još nisam implementirao" />
     <MESSAGE value="Ispravio sitne greške, dodao ostale korisnike i implementirao sat kao dretvu" />
@@ -640,7 +641,8 @@
     <MESSAGE value="Refaktoriranje" />
     <MESSAGE value="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze" />
     <MESSAGE value="Dodao generičku klasu sa dva parametara i ispravio određene bugove" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodao generičku klasu sa dva parametara i ispravio određene bugove" />
+    <MESSAGE value="Dodao mogućnost praćenja promjena kod User-a." />
+    <option name="LAST_COMMIT_MESSAGE" value="Dodao mogućnost praćenja promjena kod User-a." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

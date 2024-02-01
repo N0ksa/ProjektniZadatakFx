@@ -640,7 +640,7 @@ public class DatabaseUtil {
         try (Connection connection = connectToDatabase()) {
             for (Student student : students) {
 
-                Long clubMembershipId = addClubMembershipForStudent(student);
+                Long clubMembershipId = addClubMembershipForStudent(student, connection);
 
                 String insertStudentSql = "INSERT INTO STUDENT(NAME,SURNAME,EMAIL," +
                         "YEAR_OF_STUDY, CLUB_MEMBERSHIP_ID, GENDER, PICTURE_PATH) " +
@@ -664,8 +664,8 @@ public class DatabaseUtil {
                     Map<String, Integer> studentGrades = student.getGrades();
                     Long studentMathClubId = student.getClubMembership().getClubId();
 
-                    saveStudentGrades(studentId, studentGrades);
-                    addStudentToClub(studentId, studentMathClubId);
+                    saveStudentGrades(studentId, studentGrades, connection);
+                    addStudentToClub(studentId, studentMathClubId, connection);
 
                 }
             }
@@ -678,10 +678,10 @@ public class DatabaseUtil {
         return success;
     }
 
-    private static Long addClubMembershipForStudent(Student student) {
+    private static Long addClubMembershipForStudent(Student student, Connection connection) {
 
         Long clubMembershipId = 0L;
-        try (Connection connection = connectToDatabase()) {
+        try {
 
             String insertStudentSql = "INSERT INTO CLUB_MEMBERSHIP(JOIN_DATE,CLUB_ID) VALUES(?, ?)";
 
@@ -698,7 +698,7 @@ public class DatabaseUtil {
 
             }
 
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException ex) {
             String message = "Dogodila se pogreška kod spremanja studenata u bazu podataka";
             logger.error(message, ex);
         }
@@ -707,8 +707,8 @@ public class DatabaseUtil {
 
     }
 
-    private static void addStudentToClub(Long studentId, Long mathClubId) {
-        try (Connection connection = connectToDatabase()) {
+    private static void addStudentToClub(Long studentId, Long mathClubId, Connection connection) {
+        try {
 
             String insertStudentIntoMathClubSql = "INSERT INTO MATH_CLUB_STUDENTS (CLUB_ID, STUDENT_ID) VALUES (?, ?);";
 
@@ -718,20 +718,18 @@ public class DatabaseUtil {
             pstmt.executeUpdate();
 
 
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException ex) {
             String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
             logger.error(message, ex);
         }
     }
 
-    private static void saveStudentGrades(Long studentId, Map<String, Integer> studentGrades) {
+    private static void saveStudentGrades(Long studentId, Map<String, Integer> studentGrades, Connection connection) {
 
-
-        try (Connection connection = connectToDatabase()) {
+        try {
             for (Map.Entry<String, Integer> entry : studentGrades.entrySet()) {
 
                 String insertStudentGradesSql = "INSERT INTO STUDENT_GRADES (STUDENT_ID, SUBJECT_NAME, GRADE) VALUES (?, ?, ?);";
-
 
                 PreparedStatement pstmt = connection.prepareStatement(insertStudentGradesSql);
                 pstmt.setLong(1, studentId);
@@ -740,7 +738,7 @@ public class DatabaseUtil {
                 pstmt.executeUpdate();
 
             }
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException ex) {
             String message = "Dogodila se pogreška kod spremanja matematičkih natjecanja u bazu podataka";
             logger.error(message, ex);
         }
