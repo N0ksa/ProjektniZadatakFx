@@ -74,12 +74,11 @@ public class ProjectsUserController {
         comparisonOfProjectOrganizationsBetweenClubsLineChart.setTitle
                 ("Usporedba broja organizacija projekata");
 
-        comparisonOfProjectOrganizationsBetweenClubsLineChart.getYAxis().setLabel("Broj projekata");
-
         Map<MathClub, Integer> numberOfProjectsPerClub = mathProjectsList.stream()
                 .collect(Collectors.groupingBy(MathProject::getOrganizer, Collectors.summingInt(project -> 1)));
 
         XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        series.setName("Broj projekata");
 
         for (Map.Entry<MathClub, Integer> entry : numberOfProjectsPerClub.entrySet()) {
             series.getData().add(new XYChart.Data<>(entry.getKey().getName(), entry.getValue()));
@@ -87,6 +86,7 @@ public class ProjectsUserController {
         }
 
         comparisonOfProjectOrganizationsBetweenClubsLineChart.getData().add(series);
+
 
 
     }
