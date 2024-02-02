@@ -170,7 +170,7 @@ public class StudentsSearchController {
                             , "Student/id:" + studentForDeletion.getId());
 
                     ChangesManager.setNewChangesIfChangesNotPresent().add(change);
-                    JavaFxProjectApplication.switchScene(ApplicationScreen.Students);
+                    refreshTableView();
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali studenta : " + studentForDeletion.getName() + " " +
                                     studentForDeletion.getSurname());
@@ -183,7 +183,16 @@ public class StudentsSearchController {
             }
 
         }
+
     }
+
+    public void refreshTableView() {
+        List<Student> students = DatabaseUtil.getStudents();
+        studentsTableView.setItems(FXCollections.observableList(students));
+    }
+
+
+
 
     public void reset(ActionEvent actionEvent) {
         studentNameTextField.setText("");

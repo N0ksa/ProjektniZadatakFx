@@ -109,8 +109,16 @@ public class CompetitionsSearchController {
         competitionWinnerTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Competition,String>,
                 ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Competition, String> param) {
-                return new ReadOnlyStringWrapper(param.getValue().findWinner()
-                        .map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika"));
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime competitionTime = param.getValue().getTimeOfCompetition();
+
+                if (now.isBefore(competitionTime)){
+                    return new ReadOnlyStringWrapper("Natjecanje nije završilo");
+                }else{
+                    return new ReadOnlyStringWrapper(param.getValue().findWinner()
+                            .map(student -> student.getName() + " " + student.getSurname()).orElse("Nema pobjednika"));
+                }
+
             }
         });
     }
@@ -155,7 +163,7 @@ public class CompetitionsSearchController {
 
                     ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
-                    competitionTableView.setItems(FXCollections.observableList(DatabaseUtil.getCompetitions()));
+                    refreshTableView();
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali natjecanje : " + competitionForDeletion.getName());
                 }else{
@@ -167,5 +175,11 @@ public class CompetitionsSearchController {
 
         }
 
+    }
+
+
+
+    private void refreshTableView(){
+        competitionTableView.setItems(FXCollections.observableList(DatabaseUtil.getCompetitions()));
     }
 }

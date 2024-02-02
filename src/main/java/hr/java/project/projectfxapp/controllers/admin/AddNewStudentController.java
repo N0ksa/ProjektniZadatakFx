@@ -1,5 +1,6 @@
 package hr.java.project.projectfxapp.controllers.admin;
 
+import hr.java.project.projectfxapp.constants.Constants;
 import hr.java.project.projectfxapp.entities.*;
 import hr.java.project.projectfxapp.enums.Gender;
 import hr.java.project.projectfxapp.enums.YearOfStudy;
@@ -123,6 +124,14 @@ public class AddNewStudentController {
 
         MathClub selectedMathClub = mathClubComboBox.getSelectionModel().getSelectedItem();
 
+        joinDateDatePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(date.isAfter(LocalDate.now()));
+            }
+        });
+
         if (Optional.ofNullable(selectedMathClub).isEmpty()){
             joinDateDatePicker.setVisible(false);
             chooseDateLabel.setVisible(false);
@@ -212,6 +221,7 @@ public class AddNewStudentController {
 
         Gender gender = getStudentGender();
         studentBuilder.gender(gender.getGender());
+        studentBuilder.picturePath(Constants.DEFAULT_PICTURE_MEMBER_ICON);
         return studentBuilder.build();
     }
 

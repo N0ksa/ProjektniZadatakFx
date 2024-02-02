@@ -127,7 +127,7 @@ public class ClubsSearchController {
                     SerializationUtil.serializeChanges(changes);
 
 
-                    JavaFxProjectApplication.switchScene(ApplicationScreen.Clubs);
+                    refreshTableView();
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali matematički klub : " + mathClubForDeletion.getName());
 
@@ -148,5 +148,10 @@ public class ClubsSearchController {
         clubNameTextField.setText("");
         clubsTableView.getItems().clear();
 
+    }
+
+    private void refreshTableView() {
+        List<MathClub> mathClubs = DatabaseUtil.getMathClubs();
+        clubsTableView.setItems(FXCollections.observableList(mathClubs));
     }
 }

@@ -84,7 +84,7 @@ public class AddressSearchController {
                 boolean successfulDeletion = DatabaseUtil.deleteAddress(addressForDeletion);
                 if (successfulDeletion){
 
-                    JavaFxProjectApplication.switchScene(ApplicationScreen.AddressSearch);
+                    refreshTableView();
 
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali adresu : " + addressForDeletion);
@@ -97,6 +97,12 @@ public class AddressSearchController {
 
         }
 
+    }
+
+
+    private void refreshTableView() {
+        List<Address> addressList = DatabaseUtil.getAddresses();
+        addressTableView.setItems(FXCollections.observableList(addressList));
     }
 
 

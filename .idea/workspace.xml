@@ -4,13 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Dodao mogućnost praćenja promjena kod User-a.">
+    <list default="true" id="87c24ed5-f959-4d7e-8de4-a8a4fc16c413" name="Changes" comment="Još malo popravio DatabaseUtil.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/changes.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/changes.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dat/statistics.dat" beforeDir="false" afterPath="$PROJECT_DIR$/dat/statistics.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/utility/database/DatabaseUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddNewStudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddressSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/AddressSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ClubsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ClubsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/CompetitionsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/CompetitionsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ProjectsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/ProjectsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/StudentsSearchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hr/java/project/projectfxapp/controllers/admin/StudentsSearchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hr/java/project/projectfxapp/addNewStudent.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,14 +258,10 @@
       <workItem from="1706714588617" duration="8654000" />
       <workItem from="1706799665397" duration="2594000" />
       <workItem from="1706808470388" duration="71000" />
-      <workItem from="1706809369402" duration="676000" />
-    </task>
-    <task id="LOCAL−00015" summary="Dodao do kraja logiku spremanja u bazu podataka. Sada se svi entiteti dodaju ispravno u bazu.&#10;&#10;-promijenio dodavanje novih studenata (sada se studenti ne mogu dodati prilikom kreiranja matematičkog kluba)">
-      <option name="closed" value="true" />
-      <created>1703338303786</created>
-      <option name="number" value="LOCAL−00015" />
-      <option name="presentableId" value="LOCAL−00015" />
-      <updated>1703338303786</updated>
+      <workItem from="1706809369402" duration="1061000" />
+      <workItem from="1706813957630" duration="86000" />
+      <workItem from="1706877603188" duration="532000" />
+      <workItem from="1706878149819" duration="2924000" />
     </task>
     <task id="LOCAL−00016" summary="Dodao logiku brisanja svih entiteta iz baze podataka.&#10;&#10;-malo izmijenio grafički prikaz nekih scena.">
       <option name="closed" value="true" />
@@ -599,7 +599,14 @@
       <option name="presentableId" value="LOCAL−00063" />
       <updated>1706724224437</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL−00064" summary="Još malo popravio DatabaseUtil.java">
+      <option name="closed" value="true" />
+      <created>1706810080541</created>
+      <option name="number" value="LOCAL−00064" />
+      <option name="presentableId" value="LOCAL−00064" />
+      <updated>1706810080542</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -617,7 +624,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Dodao bilježenje promjena i kod admina" />
     <MESSAGE value="Dodao pocetak threadov-a, ali ih još nisam implementirao" />
     <MESSAGE value="Ispravio sitne greške, dodao ostale korisnike i implementirao sat kao dretvu" />
     <MESSAGE value="Popravio slike, sada se mogu odabrati od bilo gdje." />
@@ -642,7 +648,8 @@
     <MESSAGE value="Ubrzao aplikaciju tako što sam predao u nekim metodama u bazi podataka connection kako bi izbjegao nepotrebno kreiranje nove veze" />
     <MESSAGE value="Dodao generičku klasu sa dva parametara i ispravio određene bugove" />
     <MESSAGE value="Dodao mogućnost praćenja promjena kod User-a." />
-    <option name="LAST_COMMIT_MESSAGE" value="Dodao mogućnost praćenja promjena kod User-a." />
+    <MESSAGE value="Još malo popravio DatabaseUtil.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Još malo popravio DatabaseUtil.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

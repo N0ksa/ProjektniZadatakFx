@@ -140,7 +140,7 @@ public class ProjectsSearchController {
 
                     ChangesManager.setNewChangesIfChangesNotPresent().add(change);
 
-                    JavaFxProjectApplication.switchScene(ApplicationScreen.Projects);
+                    refreshTableView();
                     ValidationProtocol.showSuccessAlert("Brisanje uspješno",
                             "Uspješno ste obrisali projekt : " + mathProjectForDeletion.getName());
                 }else{
@@ -153,6 +153,12 @@ public class ProjectsSearchController {
         }
 
     }
+
+   public void refreshTableView(){
+        List<MathProject> mathProjects = DatabaseUtil.getProjects();
+        projectsTableView.setItems(FXCollections.observableList(mathProjects));
+    }
+
 
     public void reset(ActionEvent actionEvent) {
         projectNameTextField.setText("");
