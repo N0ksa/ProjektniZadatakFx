@@ -30,11 +30,11 @@ A platform enabling math clubs to organize mathematical competitions, maintain r
 
 - **Adding New Competitions**: Users can add new mathematical competitions to the platform. They can specify details such as competition name, date, location, and rules to create a new competition entry.
 
-- **Registering Users for Competitions**: Club members or participants can register for upcoming competitions through the application. They can select the competitions they want to participate in and provide any necessary information required for registration.
-
-- **Creating New Projects**:
+- **Registering Users for Competitions**: Club members or participants can register for upcoming competitions through the application.
 
 - **Accessing Detailed Statistics**: Users can access detailed statistics related to club activities, competitions, and projects. These statistics may include performance metrics, participation rates, project progress, etc. Users have the option to print these statistics for further analysis or reporting purposes.
+  
+- **Creating New Projects**
 
 ![Demo 2](https://github.com/N0ksa/ProjektniZadatakFx/assets/118447696/7d652478-02db-421b-b7a2-eca28aa6b792)
 
@@ -45,3 +45,6 @@ A platform enabling math clubs to organize mathematical competitions, maintain r
 - **Multiple User Roles**: The application supports two user roles - clubs and admin. Clubs have limited access to certain functionalities, while admin has full access to all features and additional privileges.
 
 - **Admin Visibility of Club Logins and Changes**: Admin users can view detailed statistics regarding club logins and every change made by clubs within the application, ensuring transparency and oversight.
+
+## Author
+- Leon Šarko
